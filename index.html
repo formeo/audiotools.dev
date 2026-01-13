@@ -4,35 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Tools — Open Source Audio Processing</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Open source audio tools: music recognition, audiobook cleaning, audio conversion. Pure Go & Python. No ffmpeg required.">
-    <meta name="keywords" content="audio tools, music recognition, shazam, audiobook cleaner, audio converter, golang, python, mdx-net, voice separation">
+    <meta name="description"
+          content="Open source audio tools: music recognition, audiobook cleaning, audio conversion. Pure Go & Python. No ffmpeg required.">
+    <meta name="keywords"
+          content="audio tools, music recognition, shazam, audiobook cleaner, audio converter, golang, python, mdx-net, voice separation">
     <meta name="author" content="Roman Gordienko">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://audiotools.dev/">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Audio Tools — Open Source Audio Processing">
-    <meta property="og:description" content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
+    <meta property="og:description"
+          content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://audiotools.dev">
     <meta property="og:site_name" content="Audio Tools">
     <meta property="og:locale" content="en_US">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Audio Tools — Open Source Audio Processing">
-    <meta name="twitter:description" content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
-    
+    <meta name="twitter:description"
+          content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
+
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
-    
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+
     <!-- Yandex Metrika counter -->
-    <meta name="yandex-verification" content="cd3fa61a2472db14" />
+    <meta name="yandex-verification" content="cd3fa61a2472db14"/>
     <!-- ВСТАВЬ КОД МЕТРИКИ СЮДА -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106243090', 'ym');
+
+        ym(106243090, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
     <!-- /Yandex Metrika counter -->
-    
+
     <style>
         * {
             margin: 0;
@@ -229,96 +249,96 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">🎵</div>
-            <h1>Audio Tools</h1>
-            <p class="tagline">Open source audio processing ecosystem</p>
-        </header>
-        
-        <section>
-            <h2 class="section-title">Projects</h2>
-            <div class="projects">
-                <a href="https://github.com/formeo/music_recognition" class="project">
-                    <div class="project-header">
-                        <span class="project-icon">🎧</span>
-                        <span class="project-name">music_recognition</span>
-                        <span class="project-status status-ready">Ready</span>
-                    </div>
-                    <p class="project-desc">
-                        Bulk music identification via Shazam. Recognize thousands of tracks, 
-                        auto-tag files with artist and title metadata.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">asyncio</span>
-                        <span class="tech-tag">Shazam API</span>
-                    </div>
-                </a>
-                
-                <a href="https://github.com/formeo/Audiobook-Cleaner" class="project">
-                    <div class="project-header">
-                        <span class="project-icon">📚</span>
-                        <span class="project-name">audiobook-cleaner</span>
-                        <span class="project-status status-ready">Ready</span>
-                    </div>
-                    <p class="project-desc">
-                        AI-powered audiobook noise removal using MDX-Net models. 
-                        Clean up background noise, music, and artifacts.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">MDX-Net</span>
-                        <span class="tech-tag">PyTorch</span>
-                    </div>
-                </a>
-                
-                <a href="https://github.com/formeo/go-audio-converter" class="project">
-                    <div class="project-header">
-                        <span class="project-icon">🔄</span>
-                        <span class="project-name">go-audio-converter</span>
-                        <span class="project-status status-dev">In Development</span>
-                    </div>
-                    <p class="project-desc">
-                        Pure Go audio converter — no ffmpeg, no CGO. 
-                        WAV, FLAC, OGG to MP3. Single binary, works everywhere.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Go</span>
-                        <span class="tech-tag">Pure Go</span>
-                        <span class="tech-tag">Zero deps</span>
-                    </div>
-                </a>
-                
-                <div class="project" style="cursor: default; opacity: 0.7;">
-                    <div class="project-header">
-                        <span class="project-icon">💿</span>
-                        <span class="project-name">vinyl_pipeline</span>
-                        <span class="project-status status-soon">Coming Soon</span>
-                    </div>
-                    <p class="project-desc">
-                        End-to-end vinyl digitization pipeline. Recording, splitting, 
-                        recognition, tagging — all automated.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Go</span>
-                        <span class="tech-tag">Pipeline</span>
-                    </div>
+<div class="container">
+    <header>
+        <div class="logo">🎵</div>
+        <h1>Audio Tools</h1>
+        <p class="tagline">Open source audio processing ecosystem</p>
+    </header>
+
+    <section>
+        <h2 class="section-title">Projects</h2>
+        <div class="projects">
+            <a href="https://github.com/formeo/music_recognition" class="project">
+                <div class="project-header">
+                    <span class="project-icon">🎧</span>
+                    <span class="project-name">music_recognition</span>
+                    <span class="project-status status-ready">Ready</span>
+                </div>
+                <p class="project-desc">
+                    Bulk music identification via Shazam. Recognize thousands of tracks,
+                    auto-tag files with artist and title metadata.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">asyncio</span>
+                    <span class="tech-tag">Shazam API</span>
+                </div>
+            </a>
+
+            <a href="https://github.com/formeo/Audiobook-Cleaner" class="project">
+                <div class="project-header">
+                    <span class="project-icon">📚</span>
+                    <span class="project-name">audiobook-cleaner</span>
+                    <span class="project-status status-ready">Ready</span>
+                </div>
+                <p class="project-desc">
+                    AI-powered audiobook noise removal using MDX-Net models.
+                    Clean up background noise, music, and artifacts.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">MDX-Net</span>
+                    <span class="tech-tag">PyTorch</span>
+                </div>
+            </a>
+
+            <a href="https://github.com/formeo/go-audio-converter" class="project">
+                <div class="project-header">
+                    <span class="project-icon">🔄</span>
+                    <span class="project-name">go-audio-converter</span>
+                    <span class="project-status status-dev">In Development</span>
+                </div>
+                <p class="project-desc">
+                    Pure Go audio converter — no ffmpeg, no CGO.
+                    WAV, FLAC, OGG to MP3. Single binary, works everywhere.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Go</span>
+                    <span class="tech-tag">Pure Go</span>
+                    <span class="tech-tag">Zero deps</span>
+                </div>
+            </a>
+
+            <div class="project" style="cursor: default; opacity: 0.7;">
+                <div class="project-header">
+                    <span class="project-icon">💿</span>
+                    <span class="project-name">vinyl_pipeline</span>
+                    <span class="project-status status-soon">Coming Soon</span>
+                </div>
+                <p class="project-desc">
+                    End-to-end vinyl digitization pipeline. Recording, splitting,
+                    recognition, tagging — all automated.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Go</span>
+                    <span class="tech-tag">Pipeline</span>
                 </div>
             </div>
-        </section>
-        
-        <footer>
-            <div class="social-links">
-                <a href="https://github.com/formeo" class="social-link">GitHub</a>
-                <a href="https://habr.com/ru/users/formeo/" class="social-link">Habr</a>
-            </div>
-            <p class="copyright">
-                Built by <a href="https://github.com/formeo" class="highlight" style="text-decoration: none;">@formeo</a> · 
-                Tyumen, Russia
-            </p>
-        </footer>
-    </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/formeo" class="social-link">GitHub</a>
+            <a href="https://habr.com/ru/users/formeo/" class="social-link">Habr</a>
+        </div>
+        <p class="copyright">
+            Built by <a href="https://github.com/formeo" class="highlight" style="text-decoration: none;">@formeo</a> ·
+            Tyumen, Russia
+        </p>
+    </footer>
+</div>
 </body>
 </html>
