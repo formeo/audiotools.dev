@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to Text — Free Online Speech-to-Text Transcription | Audio Tools</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+          content="Free online voice-to-text transcription tool. Convert speech to text in 60+ languages using your microphone. No sign-up, no upload — everything runs in your browser.">
+    <meta name="keywords"
+          content="voice to text, speech to text, transcription online, speech recognition, voice transcription free, dictation, convert speech to text, audio to text">
+    <meta name="author" content="Roman Gordienko">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://audiotools.dev/voice-to-text/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Voice to Text — Free Online Speech-to-Text Transcription">
+    <meta property="og:description"
+          content="Convert speech to text in 60+ languages. Free, no sign-up, runs in your browser. Your audio never leaves your device.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://audiotools.dev/voice-to-text/">
+    <meta property="og:site_name" content="Audio Tools">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Voice to Text — Free Online Transcription">
+    <meta name="twitter:description"
+          content="Convert speech to text in 60+ languages. Free, browser-based, no upload required.">
+
+    <!-- Favicon -->
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Voice to Text — Online Speech Transcription",
+        "url": "https://audiotools.dev/voice-to-text/",
+        "description": "Free online voice-to-text transcription tool supporting 60+ languages. Uses browser Speech Recognition API — no audio data is uploaded or stored.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Real-time speech-to-text transcription",
+            "60+ language support",
+            "Browser-based, no data upload",
+            "Copy to clipboard",
+            "Download as TXT",
+            "Word and character count"
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Roman Gordienko",
+            "url": "https://github.com/formeo"
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Audio Tools",
+            "url": "https://audiotools.dev"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to transcribe speech to text online",
+        "description": "Use Audio Tools Voice to Text to convert spoken words into written text directly in your browser.",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Select language",
+                "text": "Choose your spoken language from the dropdown menu. Over 60 languages are supported."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Click Start Recording",
+                "text": "Press the Start Recording button and allow microphone access when prompted."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Speak clearly",
+                "text": "Speak into your microphone. Text will appear in real-time as you speak."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Export your text",
+                "text": "Copy the transcription to clipboard or download as a TXT file."
+            }
+        ]
+    }
+    </script>
+
+    <!-- Yandex Metrika counter -->
+    <meta name="yandex-verification" content="cd3fa61a2472db14"/>
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106243090', 'ym');
+        ym(106243090, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --text: #e5e5e5;
+            --text-muted: #737373;
+            --accent: #22c55e;
+            --accent-dim: #16a34a;
+            --red: #ef4444;
+            --red-dim: #dc2626;
+            --card-bg: #171717;
+            --border: #262626;
+            --input-bg: #0f0f0f;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        /* Nav */
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav a:hover { color: var(--accent); }
+        .nav span { color: var(--text-muted); }
+        .nav .current { color: var(--text); font-weight: 500; }
+        
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Controls */
+        .controls {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .controls-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .lang-select {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            min-width: 200px;
+            cursor: pointer;
+        }
+        .lang-select:focus { border-color: var(--accent); }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-start {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-start:hover:not(:disabled) { background: var(--accent-dim); }
+        .btn-stop {
+            background: var(--red);
+            color: #fff;
+        }
+        .btn-stop:hover:not(:disabled) { background: var(--red-dim); }
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            color: var(--text);
+            border-color: var(--text-muted);
+        }
+
+        /* Recording indicator */
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--red);
+            font-weight: 500;
+        }
+        .recording-indicator.active {
+            display: flex;
+        }
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* Transcript area */
+        .transcript-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .transcript-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .transcript-stats {
+            display: flex;
+            gap: 16px;
+        }
+        .transcript-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .transcript-body {
+            padding: 20px;
+            min-height: 250px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .transcript-body:empty::before {
+            content: "Your transcription will appear here...\a\aClick \"Start Recording\" and speak into your microphone.";
+            color: var(--text-muted);
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+        .transcript-interim {
+            color: var(--text-muted);
+            border-bottom: 1px dashed var(--text-muted);
+        }
+
+        /* Actions bar */
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--accent);
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Settings panel */
+        .settings {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .settings.open { display: block; }
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .settings-row label {
+            font-size: 14px;
+            color: var(--text);
+        }
+        .settings-row span {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            outline: none;
+        }
+        .toggle.on { background: var(--accent); }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .toggle.on::after { transform: translateX(20px); }
+
+        /* Browser warning */
+        .browser-warning {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        .browser-warning p {
+            color: #eab308;
+            font-size: 14px;
+        }
+
+        /* SEO content */
+        .seo-content {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+        .seo-content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .seo-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+        .seo-content p, .seo-content li {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .seo-content ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent); }
+        .copyright {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .highlight {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px 16px 40px; }
+            .page-header h1 { font-size: 22px; }
+            .controls { padding: 16px; }
+            .lang-select { min-width: 100%; }
+            .transcript-body { min-height: 180px; padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Breadcrumb nav -->
+    <nav class="nav" aria-label="Breadcrumb">
+        <a href="/">🎵 Audio Tools</a>
+        <span>/</span>
+        <span class="current">Voice to Text</span>
+    </nav>
+
+    <div class="page-header">
+        <h1>🎤 Voice to Text</h1>
+        <p>Free online speech-to-text transcription — 60+ languages, no sign-up required</p>
+    </div>
+
+    <!-- Browser compatibility warning -->
+    <div class="browser-warning" id="browserWarning">
+        <p>⚠️ Your browser doesn't support the Web Speech API. Please use <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong> for speech recognition.</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <div class="controls-row">
+            <select class="lang-select" id="langSelect" aria-label="Select language">
+                <option value="en-US">🇺🇸 English (US)</option>
+                <option value="en-GB">🇬🇧 English (UK)</option>
+                <option value="ru-RU">🇷🇺 Русский</option>
+                <option value="de-DE">🇩🇪 Deutsch</option>
+                <option value="fr-FR">🇫🇷 Français</option>
+                <option value="es-ES">🇪🇸 Español</option>
+                <option value="it-IT">🇮🇹 Italiano</option>
+                <option value="pt-BR">🇧🇷 Português (BR)</option>
+                <option value="pt-PT">🇵🇹 Português (PT)</option>
+                <option value="nl-NL">🇳🇱 Nederlands</option>
+                <option value="pl-PL">🇵🇱 Polski</option>
+                <option value="uk-UA">🇺🇦 Українська</option>
+                <option value="cs-CZ">🇨🇿 Čeština</option>
+                <option value="sv-SE">🇸🇪 Svenska</option>
+                <option value="da-DK">🇩🇰 Dansk</option>
+                <option value="fi-FI">🇫🇮 Suomi</option>
+                <option value="nb-NO">🇳🇴 Norsk</option>
+                <option value="tr-TR">🇹🇷 Türkçe</option>
+                <option value="el-GR">🇬🇷 Ελληνικά</option>
+                <option value="hu-HU">🇭🇺 Magyar</option>
+                <option value="ro-RO">🇷🇴 Română</option>
+                <option value="bg-BG">🇧🇬 Български</option>
+                <option value="hr-HR">🇭🇷 Hrvatski</option>
+                <option value="sk-SK">🇸🇰 Slovenčina</option>
+                <option value="sl-SI">🇸🇮 Slovenščina</option>
+                <option value="lt-LT">🇱🇹 Lietuvių</option>
+                <option value="lv-LV">🇱🇻 Latviešu</option>
+                <option value="et-EE">🇪🇪 Eesti</option>
+                <option value="zh-CN">🇨🇳 中文 (简体)</option>
+                <option value="zh-TW">🇹🇼 中文 (繁體)</option>
+                <option value="ja-JP">🇯🇵 日本語</option>
+                <option value="ko-KR">🇰🇷 한국어</option>
+                <option value="ar-SA">🇸🇦 العربية</option>
+                <option value="he-IL">🇮🇱 עברית</option>
+                <option value="hi-IN">🇮🇳 हिन्दी</option>
+                <option value="bn-IN">🇮🇳 বাংলা</option>
+                <option value="th-TH">🇹🇭 ไทย</option>
+                <option value="vi-VN">🇻🇳 Tiếng Việt</option>
+                <option value="id-ID">🇮🇩 Bahasa Indonesia</option>
+                <option value="ms-MY">🇲🇾 Bahasa Melayu</option>
+                <option value="tl-PH">🇵🇭 Filipino</option>
+                <option value="sw-KE">🇰🇪 Kiswahili</option>
+                <option value="af-ZA">🇿🇦 Afrikaans</option>
+                <option value="ca-ES">Català</option>
+                <option value="eu-ES">Euskara</option>
+                <option value="gl-ES">Galego</option>
+                <option value="ka-GE">🇬🇪 ქართული</option>
+                <option value="sr-RS">🇷🇸 Српски</option>
+            </select>
+
+            <button class="btn btn-start" id="startBtn" onclick="startRecording()">
+                <span>●</span> Start Recording
+            </button>
+            <button class="btn btn-stop" id="stopBtn" onclick="stopRecording()" style="display:none;">
+                <span>■</span> Stop
+            </button>
+
+            <div class="recording-indicator" id="recordingIndicator">
+                <div class="pulse"></div>
+                Recording...
+            </div>
+
+            <button class="btn btn-secondary" onclick="toggleSettings()" style="margin-left:auto;" title="Settings">⚙️</button>
+        </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings" id="settingsPanel">
+        <div class="settings-row">
+            <div>
+                <label>Continuous mode</label>
+                <span>Keep recording after pauses</span>
+            </div>
+            <button class="toggle on" id="continuousToggle" onclick="toggleContinuous()"></button>
+        </div>
+        <div class="settings-row">
+            <div>
+                <label>Auto-punctuation</label>
+                <span>Add periods after detected sentence ends</span>
+            </div>
+            <button class="toggle on" id="punctuationToggle" onclick="togglePunctuation()"></button>
+        </div>
+    </div>
+
+    <!-- Transcript -->
+    <div class="transcript-container">
+        <div class="transcript-header">
+            <span>Transcription</span>
+            <div class="transcript-stats">
+                <span id="wordCount">0 words</span>
+                <span id="charCount">0 chars</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+        <div class="transcript-body" id="transcript"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+        <button class="btn btn-secondary" onclick="copyText()" id="copyBtn" disabled>📋 Copy</button>
+        <button class="btn btn-secondary" onclick="downloadTxt()" id="downloadBtn" disabled>💾 Download .txt</button>
+        <button class="btn btn-secondary" onclick="clearText()" id="clearBtn" disabled>🗑️ Clear</button>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- SEO Content -->
+    <section class="seo-content">
+        <h2>Free Online Voice to Text Transcription</h2>
+        <p>
+            Audio Tools Voice to Text is a free online speech-to-text transcription tool that converts your
+            spoken words into written text in real-time. It works directly in your browser using the Web Speech
+            Recognition API — no software installation, no account registration, and no audio data is ever uploaded
+            to any server.
+        </p>
+
+        <h3>How It Works</h3>
+        <p>
+            Simply select your language, click "Start Recording", and speak into your microphone. The tool uses
+            your browser's built-in speech recognition engine to transcribe your speech in real-time. You can see
+            the text appearing as you speak, and when you're done, copy it to your clipboard or download it as a
+            text file.
+        </p>
+
+        <h3>Supported Languages</h3>
+        <p>
+            The Voice to Text tool supports over 60 languages and regional dialects, including English (US/UK),
+            Russian, German, French, Spanish, Italian, Portuguese, Chinese (Simplified/Traditional), Japanese,
+            Korean, Arabic, Hindi, and many more European and Asian languages.
+        </p>
+
+        <h3>Use Cases</h3>
+        <ul>
+            <li>Taking notes during meetings and lectures</li>
+            <li>Dictating emails, messages, and documents</li>
+            <li>Creating subtitles and captions for videos</li>
+            <li>Transcribing interviews and podcasts</li>
+            <li>Accessibility — hands-free text input</li>
+            <li>Language learning and pronunciation practice</li>
+        </ul>
+
+        <h3>Privacy & Security</h3>
+        <p>
+            Your privacy is our priority. All speech recognition processing happens locally in your browser
+            through the Web Speech API. Your audio is not recorded, stored, or transmitted to our servers.
+            We have no access to your microphone data or transcriptions.
+        </p>
+
+        <h3>Browser Compatibility</h3>
+        <p>
+            Voice to Text works best in Google Chrome, Microsoft Edge, and Safari. These browsers have built-in
+            support for the Web Speech Recognition API. Firefox has limited support for speech recognition.
+            For the best experience, we recommend using the latest version of Chrome or Edge.
+        </p>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">🎵 Audio Tools</a>
+            <a href="https://github.com/formeo">GitHub</a>
+            <a href="https://habr.com/ru/users/formeo/">Habr</a>
+        </div>
+        <p class="copyright">
+            Built by <a href="https://github.com/formeo" class="highlight">@formeo</a> ·
+            Tyumen, Russia
+        </p>
+    </footer>
+</div>
+
+<script>
+    // ============================================================
+    // Voice to Text — Web Speech API Implementation
+    // ============================================================
+
+    let recognition = null;
+    let isRecording = false;
+    let finalTranscript = '';
+    let startTime = null;
+    let timerInterval = null;
+    let continuous = true;
+    let autoPunctuation = true;
+
+    // Check browser support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        document.getElementById('browserWarning').style.display = 'block';
+        document.getElementById('startBtn').disabled = true;
+    }
+
+    function initRecognition() {
+        recognition = new SpeechRecognition();
+        recognition.lang = document.getElementById('langSelect').value;
+        recognition.continuous = continuous;
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = function(event) {
+            let interim = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const t = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += t + ' ';
+                } else {
+                    interim += t;
+                }
+            }
+            updateTranscript(interim);
+        };
+
+        recognition.onerror = function(event) {
+            if (event.error === 'no-speech') {
+                // Ignore — just no speech detected
+                return;
+            }
+            if (event.error === 'aborted') return;
+            console.error('Speech recognition error:', event.error);
+            if (event.error === 'not-allowed') {
+                showToast('Microphone access denied. Please allow microphone in browser settings.');
+            }
+        };
+
+        recognition.onend = function() {
+            // Auto-restart if continuous mode and still recording
+            if (isRecording && continuous) {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    // Already started
+                }
+            } else {
+                stopRecording();
+            }
+        };
+    }
+
+    function startRecording() {
+        if (!SpeechRecognition) return;
+
+        initRecognition();
+
+        try {
+            recognition.start();
+            isRecording = true;
+
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'inline-flex';
+            document.getElementById('recordingIndicator').classList.add('active');
+
+            // Start timer
+            startTime = startTime || Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showToast('Recording started');
+        } catch (e) {
+            console.error('Failed to start recognition:', e);
+        }
+    }
+
+    function stopRecording() {
+        isRecording = false;
+
+        if (recognition) {
+            try { recognition.stop(); } catch (e) {}
+        }
+
+        document.getElementById('startBtn').style.display = 'inline-flex';
+        document.getElementById('stopBtn').style.display = 'none';
+        document.getElementById('recordingIndicator').classList.remove('active');
+
+        clearInterval(timerInterval);
+        updateTranscript('');
+
+        if (finalTranscript.trim()) {
+            showToast('Recording stopped');
+        }
+    }
+
+    function updateTranscript(interim) {
+        const el = document.getElementById('transcript');
+        const text = finalTranscript.trim();
+
+        if (interim) {
+            el.innerHTML = escapeHtml(text) + (text ? ' ' : '') +
+                '<span class="transcript-interim">' + escapeHtml(interim) + '</span>';
+        } else {
+            el.textContent = text;
+        }
+
+        // Auto-scroll
+        el.scrollTop = el.scrollHeight;
+
+        // Update stats
+        updateStats();
+
+        // Enable/disable buttons
+        const hasText = text.length > 0;
+        document.getElementById('copyBtn').disabled = !hasText;
+        document.getElementById('downloadBtn').disabled = !hasText;
+        document.getElementById('clearBtn').disabled = !hasText;
+    }
+
+    function updateStats() {
+        const text = finalTranscript.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        const chars = text.length;
+        document.getElementById('wordCount').textContent = words + ' word' + (words !== 1 ? 's' : '');
+        document.getElementById('charCount').textContent = chars + ' char' + (chars !== 1 ? 's' : '');
+    }
+
+    function updateTimer() {
+        if (!startTime) return;
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const min = Math.floor(elapsed / 60);
+        const sec = elapsed % 60;
+        document.getElementById('duration').textContent = min + ':' + sec.toString().padStart(2, '0');
+    }
+
+    function copyText() {
+        const text = finalTranscript.trim();
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('Copied to clipboard!');
+        }).catch(() => {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast('Copied to clipboard!');
+        });
+    }
+
+    function downloadTxt() {
+        const text = finalTranscript.trim();
+        if (!text) return;
+        const lang = document.getElementById('langSelect').value;
+        const date = new Date().toISOString().split('T')[0];
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `transcription-${lang}-${date}.txt`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showToast('Downloaded!');
+    }
+
+    function clearText() {
+        if (finalTranscript.trim() && !confirm('Clear all transcription text?')) return;
+        finalTranscript = '';
+        startTime = null;
+        document.getElementById('transcript').textContent = '';
+        document.getElementById('duration').textContent = '0:00';
+        updateStats();
+        document.getElementById('copyBtn').disabled = true;
+        document.getElementById('downloadBtn').disabled = true;
+        document.getElementById('clearBtn').disabled = true;
+    }
+
+    function toggleSettings() {
+        document.getElementById('settingsPanel').classList.toggle('open');
+    }
+
+    function toggleContinuous() {
+        continuous = !continuous;
+        document.getElementById('continuousToggle').classList.toggle('on', continuous);
+    }
+
+    function togglePunctuation() {
+        autoPunctuation = !autoPunctuation;
+        document.getElementById('punctuationToggle').classList.toggle('on', autoPunctuation);
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Update language on change while recording
+    document.getElementById('langSelect').addEventListener('change', function() {
+        if (isRecording) {
+            stopRecording();
+            setTimeout(startRecording, 200);
+        }
+    });
+</script>
+</body>
+</html>

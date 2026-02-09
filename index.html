@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Tools — Open Source Audio Processing</title>
+    <title>Audio Tools — Free Open Source Audio Processing Tools</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-          content="Open source audio tools: music recognition, audiobook cleaning, audio conversion. Pure Go & Python. No ffmpeg required.">
+          content="Free open source audio tools: music recognition via Shazam, AI audiobook noise removal, pure Go audio converter, voice-to-text transcription. No ffmpeg required.">
     <meta name="keywords"
-          content="audio tools, music recognition, shazam, audiobook cleaner, audio converter, golang, python, mdx-net, voice separation">
+          content="audio tools, music recognition, shazam bulk, audiobook cleaner, audio converter golang, voice to text, speech recognition, mdx-net, audio processing, open source audio">
     <meta name="author" content="Roman Gordienko">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://audiotools.dev/">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Audio Tools — Open Source Audio Processing">
+    <meta property="og:title" content="Audio Tools — Free Open Source Audio Processing">
     <meta property="og:description"
-          content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
+          content="Music recognition, AI audiobook cleaning, pure Go audio conversion, voice-to-text transcription. All open source, no ffmpeg required.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://audiotools.dev">
     <meta property="og:site_name" content="Audio Tools">
@@ -25,18 +25,105 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Audio Tools — Open Source Audio Processing">
+    <meta name="twitter:title" content="Audio Tools — Free Open Source Audio Processing">
     <meta name="twitter:description"
-          content="Music recognition, audiobook cleaning, audio conversion. No ffmpeg required.">
+          content="Music recognition, AI audiobook cleaning, pure Go audio converter, voice-to-text. All open source.">
 
     <!-- Favicon -->
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
 
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Audio Tools",
+        "url": "https://audiotools.dev",
+        "description": "Open source audio processing ecosystem: music recognition, audiobook cleaning, audio conversion, and voice-to-text transcription.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Cross-platform",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Roman Gordienko",
+            "url": "https://github.com/formeo"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Audio Tools",
+        "url": "https://audiotools.dev",
+        "description": "Open source audio processing ecosystem",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://audiotools.dev/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Audio Tools Projects",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "SoftwareSourceCode",
+                    "name": "music_recognition",
+                    "description": "Bulk music identification via Shazam API. Recognize thousands of tracks, auto-tag files with artist and title metadata.",
+                    "codeRepository": "https://github.com/formeo/music_recognition",
+                    "programmingLanguage": "Python"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                    "@type": "SoftwareSourceCode",
+                    "name": "audiobook-cleaner",
+                    "description": "AI-powered audiobook noise removal using MDX-Net neural network models. Clean background noise, music, and artifacts.",
+                    "codeRepository": "https://github.com/formeo/Audiobook-Cleaner",
+                    "programmingLanguage": "Python"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                    "@type": "SoftwareSourceCode",
+                    "name": "go-audio-converter",
+                    "description": "Pure Go audio converter with zero dependencies. Convert WAV, FLAC, OGG to MP3 without ffmpeg or CGO.",
+                    "codeRepository": "https://github.com/formeo/go-audio-converter",
+                    "programmingLanguage": "Go"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "item": {
+                    "@type": "WebApplication",
+                    "name": "Voice to Text",
+                    "description": "Free online speech-to-text transcription tool. Convert voice recordings and live speech to text using browser AI.",
+                    "url": "https://audiotools.dev/voice-to-text/"
+                }
+            }
+        ]
+    }
+    </script>
+
     <!-- Yandex Metrika counter -->
     <meta name="yandex-verification" content="cd3fa61a2472db14"/>
-    <!-- ВСТАВЬ КОД МЕТРИКИ СЮДА -->
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -44,14 +131,11 @@
             for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
         })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106243090', 'ym');
-
         ym(106243090, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript>
         <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
-    <!-- /Yandex.Metrika counter -->
-    <!-- /Yandex Metrika counter -->
 
     <style>
         * {
@@ -104,6 +188,15 @@
         .tagline {
             color: var(--text-muted);
             font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
         }
         
         .projects {
@@ -127,6 +220,11 @@
         .project:hover {
             border-color: var(--accent);
             transform: translateY(-2px);
+        }
+
+        .project-featured {
+            border-color: var(--accent-dim);
+            background: linear-gradient(135deg, #171717 0%, #0f1f15 100%);
         }
         
         .project-header {
@@ -162,15 +260,16 @@
             background: rgba(234, 179, 8, 0.15);
             color: #eab308;
         }
-        
-        .status-soon {
-            background: rgba(115, 115, 115, 0.15);
-            color: var(--text-muted);
+
+        .status-new {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
         }
         
         .project-desc {
             color: var(--text-muted);
             font-size: 14px;
+            line-height: 1.6;
         }
         
         .project-tech {
@@ -194,6 +293,61 @@
             letter-spacing: 1px;
             color: var(--text-muted);
             margin-bottom: 16px;
+        }
+
+        /* SEO content section */
+        .seo-content {
+            margin-bottom: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .seo-content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .seo-content p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .seo-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .feature-item strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .feature-item span {
+            font-size: 13px;
+            color: var(--text-muted);
         }
         
         footer {
@@ -233,15 +387,12 @@
             .container {
                 padding: 40px 16px;
             }
-            
             h1 {
                 font-size: 24px;
             }
-            
             .tagline {
                 font-size: 16px;
             }
-            
             .project {
                 padding: 20px;
             }
@@ -254,10 +405,39 @@
         <div class="logo">🎵</div>
         <h1>Audio Tools</h1>
         <p class="tagline">Open source audio processing ecosystem</p>
+        <p class="hero-desc">
+            Free tools for music recognition, audiobook cleaning, audio conversion,
+            and voice-to-text transcription. Built with Python and Go.
+        </p>
     </header>
 
+    <!-- Online Tools -->
     <section>
-        <h2 class="section-title">Projects</h2>
+        <h2 class="section-title">Online Tools</h2>
+        <div class="projects">
+            <a href="/voice-to-text/" class="project project-featured">
+                <div class="project-header">
+                    <span class="project-icon">🎤</span>
+                    <span class="project-name">Voice to Text</span>
+                    <span class="project-status status-new">Try Online</span>
+                </div>
+                <p class="project-desc">
+                    Free online speech-to-text transcription. Record from microphone or upload audio files.
+                    Supports 60+ languages. No sign-up, runs in your browser — your audio never leaves your device.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Web Speech API</span>
+                    <span class="tech-tag">Browser-based</span>
+                    <span class="tech-tag">60+ Languages</span>
+                    <span class="tech-tag">Free</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Open Source Projects -->
+    <section>
+        <h2 class="section-title">Open Source Projects</h2>
         <div class="projects">
             <a href="https://github.com/formeo/music_recognition" class="project">
                 <div class="project-header">
@@ -267,7 +447,7 @@
                 </div>
                 <p class="project-desc">
                     Bulk music identification via Shazam. Recognize thousands of tracks,
-                    auto-tag files with artist and title metadata.
+                    auto-tag files with artist and title metadata. Process entire music libraries in minutes.
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Python</span>
@@ -283,8 +463,8 @@
                     <span class="project-status status-ready">Ready</span>
                 </div>
                 <p class="project-desc">
-                    AI-powered audiobook noise removal using MDX-Net models.
-                    Clean up background noise, music, and artifacts.
+                    AI-powered audiobook noise removal using MDX-Net neural network models.
+                    Clean up background noise, music, and artifacts from audiobook recordings.
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Python</span>
@@ -300,8 +480,8 @@
                     <span class="project-status status-dev">In Development</span>
                 </div>
                 <p class="project-desc">
-                    Pure Go audio converter — no ffmpeg, no CGO.
-                    WAV, FLAC, OGG to MP3. Single binary, works everywhere.
+                    Pure Go audio converter — no ffmpeg, no CGO, zero external dependencies.
+                    Convert between WAV, FLAC, OGG, and MP3. Single binary deployment.
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Go</span>
@@ -317,16 +497,60 @@
                     <span class="project-status status-dev">In Development</span>
                 </div>
                 <p class="project-desc">
-                    End-to-end vinyl digitization pipeline. Recording, splitting,
-                    recognition, tagging — all automated.
+                    End-to-end vinyl digitization pipeline. Automated recording, track splitting,
+                    music recognition, and metadata tagging in a single workflow.
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Go</span>
                     <span class="tech-tag">Pure Go</span>
                     <span class="tech-tag">Zero deps</span>
                 </div>
-                </a>
+            </a>
         </div>
+    </section>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content">
+        <h2>What is Audio Tools?</h2>
+        <p>
+            Audio Tools is a collection of free, open source utilities for audio processing. Whether you need to identify
+            unknown music tracks, remove noise from audiobook recordings, convert audio files between formats, or
+            transcribe speech to text — Audio Tools has you covered.
+        </p>
+
+        <h3>Key Features</h3>
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>🎧 Music Recognition</strong>
+                <span>Identify thousands of tracks in bulk using Shazam. Auto-tag files with artist, title, and album metadata.</span>
+            </div>
+            <div class="feature-item">
+                <strong>📚 AI Noise Removal</strong>
+                <span>Clean audiobooks using MDX-Net neural networks. Remove background music, noise, and recording artifacts.</span>
+            </div>
+            <div class="feature-item">
+                <strong>🔄 Audio Conversion</strong>
+                <span>Convert WAV, FLAC, OGG to MP3 with a pure Go binary. No ffmpeg, no dependencies, just copy and run.</span>
+            </div>
+            <div class="feature-item">
+                <strong>🎤 Voice to Text</strong>
+                <span>Transcribe speech to text online for free. 60+ languages, works in browser, no data uploaded.</span>
+            </div>
+        </div>
+
+        <h3>Why Open Source?</h3>
+        <p>
+            All command-line tools are fully open source under permissive licenses. You can inspect the code,
+            contribute improvements, or fork for your own projects. The online Voice to Text tool runs entirely
+            in your browser — your audio data never leaves your device.
+        </p>
+
+        <h3>Technology Stack</h3>
+        <p>
+            The projects are built with Python (asyncio, PyTorch, MDX-Net) for AI-powered audio processing and
+            Go for high-performance, zero-dependency audio conversion. The web tools use modern browser APIs
+            like the Web Speech API for speech recognition without any server-side processing.
+        </p>
     </section>
 
     <footer>
