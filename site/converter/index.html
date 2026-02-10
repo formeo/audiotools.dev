@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Converter Online — Free, Private, No Upload | AudioTools</title>
+    <meta name="description" content="Convert audio files between WAV, MP3 and FLAC directly in your browser. No upload, no server, 100% private. Free online audio converter powered by Web Audio API.">
+    <meta name="keywords" content="audio converter online, convert mp3 wav, wav to mp3, mp3 converter, audio format converter, free audio converter, browser audio converter, private audio converter">
+    <link rel="canonical" href="https://audiotools.dev/converter/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Audio Converter Online — Free, Private, No Upload">
+    <meta property="og:description" content="Convert audio files between WAV, MP3 and FLAC directly in your browser. No server, 100% private.">
+    <meta property="og:url" content="https://audiotools.dev/converter/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Audio Converter Online",
+        "description": "Convert audio files between WAV, MP3 and FLAC directly in your browser. No upload required.",
+        "url": "https://audiotools.dev/converter/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": {
+            "@type": "Person",
+            "name": "Roman Gordienko",
+            "url": "https://github.com/formeo"
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "AudioTools",
+            "url": "https://audiotools.dev"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is my audio file uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All audio conversion happens directly in your browser using Web Audio API. Your files never leave your device."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What audio formats are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can convert between WAV, MP3 and FLAC formats. Input: WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Output: WAV, MP3."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is there a file size limit?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Since processing happens in your browser, the limit depends on your device's memory. Most devices handle files up to 100-200 MB without issues."
+                }
+            }
+        ]
+    }
+    </script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0b10;
+            --surface: #12131a;
+            --surface2: #1a1b26;
+            --border: #2a2b3a;
+            --text: #e2e4f0;
+            --text2: #8b8ea3;
+            --accent: #6c5ce7;
+            --accent2: #a29bfe;
+            --green: #00d2a0;
+            --green2: #00f5b8;
+            --orange: #f59e0b;
+            --red: #ef4444;
+            --radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+        /* NAV */
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+        nav .container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 17px; font-weight: 700; color: var(--text);
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            color: var(--text2); text-decoration: none; font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        /* HERO */
+        .hero {
+            text-align: center; padding: 48px 0 32px;
+        }
+        .hero h1 {
+            font-size: 32px; font-weight: 800; letter-spacing: -0.03em;
+            margin-bottom: 10px;
+        }
+        .hero h1 em { font-style: normal; color: var(--green); }
+        .hero p { color: var(--text2); font-size: 16px; max-width: 500px; margin: 0 auto; }
+
+        .privacy-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(0, 210, 160, 0.1); border: 1px solid rgba(0, 210, 160, 0.2);
+            border-radius: 20px; padding: 6px 16px; margin-top: 16px;
+            font-size: 13px; color: var(--green);
+        }
+
+        /* DROP ZONE */
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            background: var(--surface);
+            margin: 24px 0;
+        }
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(108, 92, 231, 0.05);
+        }
+        .drop-zone.has-file { border-color: var(--green); border-style: solid; padding: 24px; }
+        .drop-icon { font-size: 40px; margin-bottom: 12px; }
+        .drop-text { color: var(--text2); font-size: 15px; }
+        .drop-text b { color: var(--accent2); }
+        .drop-formats { color: var(--text2); font-size: 12px; margin-top: 8px; opacity: 0.7; }
+
+        /* FILE INFO */
+        .file-info {
+            display: none; text-align: left;
+        }
+        .file-info.show { display: block; }
+        .file-header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .file-icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            background: rgba(108, 92, 231, 0.15); display: flex;
+            align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+        }
+        .file-name { font-weight: 600; font-size: 15px; word-break: break-all; }
+        .file-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+        .file-remove {
+            margin-left: auto; background: none; border: none; color: var(--text2);
+            cursor: pointer; font-size: 18px; padding: 4px; flex-shrink: 0;
+        }
+
+        /* WAVEFORM */
+        .waveform-wrap {
+            background: var(--surface2); border-radius: 8px; padding: 12px;
+            margin-bottom: 16px; display: none;
+        }
+        .waveform-wrap.show { display: block; }
+        #waveform { width: 100%; height: 64px; }
+
+        /* CONVERSION OPTIONS */
+        .convert-section {
+            display: none; margin: 24px 0;
+        }
+        .convert-section.show { display: block; }
+
+        .format-row {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .format-label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+        .format-arrow { font-size: 18px; color: var(--text2); }
+        .format-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .format-chip {
+            padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--surface2); color: var(--text2); font-size: 13px;
+            font-weight: 600; cursor: pointer; transition: all 0.2s;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .format-chip:hover { border-color: var(--accent); color: var(--text); }
+        .format-chip.active {
+            border-color: var(--green); color: var(--green);
+            background: rgba(0, 210, 160, 0.1);
+        }
+        .format-chip.disabled {
+            opacity: 0.3; cursor: not-allowed;
+        }
+
+        /* QUALITY */
+        .quality-row {
+            display: none; align-items: center; gap: 12px; margin-bottom: 20px;
+        }
+        .quality-row.show { display: flex; }
+        .quality-row label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+        .quality-row select {
+            background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+            padding: 8px 12px; border-radius: 8px; font-size: 13px; cursor: pointer;
+        }
+
+        /* CONVERT BUTTON */
+        .convert-btn {
+            width: 100%; padding: 14px 24px; border: none; border-radius: var(--radius);
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: white; transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3); }
+        .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .convert-btn.converting {
+            background: var(--surface2); color: var(--text2);
+        }
+
+        /* PROGRESS */
+        .progress-wrap {
+            display: none; margin: 16px 0;
+        }
+        .progress-wrap.show { display: block; }
+        .progress-bar {
+            height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--accent), var(--green));
+            border-radius: 2px; transition: width 0.3s; width: 0%;
+        }
+        .progress-text {
+            font-size: 12px; color: var(--text2); margin-top: 6px; text-align: center;
+        }
+
+        /* RESULT */
+        .result {
+            display: none; background: rgba(0, 210, 160, 0.05);
+            border: 1px solid rgba(0, 210, 160, 0.2); border-radius: var(--radius);
+            padding: 20px; margin: 20px 0; text-align: center;
+        }
+        .result.show { display: block; }
+        .result-icon { font-size: 36px; margin-bottom: 8px; }
+        .result-title { font-weight: 700; font-size: 16px; color: var(--green2); margin-bottom: 4px; }
+        .result-meta { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 32px; border-radius: 10px; border: none;
+            background: var(--green); color: #0a0b10; font-size: 15px;
+            font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .download-btn:hover { background: var(--green2); transform: translateY(-1px); }
+
+        /* FAQ */
+        .faq { padding: 40px 0 60px; }
+        .faq h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+        .faq-item {
+            border-bottom: 1px solid var(--border); padding: 16px 0;
+        }
+        .faq-q {
+            font-weight: 600; font-size: 15px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .faq-q::after { content: '+'; font-size: 20px; color: var(--text2); }
+        .faq-item.open .faq-q::after { content: '−'; }
+        .faq-a {
+            display: none; padding-top: 10px; color: var(--text2);
+            font-size: 14px; line-height: 1.7;
+        }
+        .faq-item.open .faq-a { display: block; }
+
+        /* HOW IT WORKS */
+        .how-it-works { padding: 32px 0; }
+        .how-it-works h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .steps {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+        }
+        .step {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 20px; text-align: center;
+        }
+        .step-num {
+            width: 32px; height: 32px; border-radius: 50%; background: rgba(108, 92, 231, 0.15);
+            color: var(--accent2); font-weight: 700; font-size: 14px;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
+        }
+        .step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .step-desc { font-size: 12px; color: var(--text2); }
+
+        /* FORMATS TABLE */
+        .formats-section { padding: 20px 0 40px; }
+        .formats-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .formats-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+        }
+        .formats-table th {
+            background: var(--surface2); padding: 10px 12px; text-align: left;
+            font-weight: 600; font-size: 12px; color: var(--text2); text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .formats-table td {
+            padding: 10px 12px; border-bottom: 1px solid var(--border);
+        }
+        .formats-table .check { color: var(--green); }
+        .formats-table .cross { color: var(--red); opacity: 0.5; }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border); padding: 24px 0;
+            text-align: center; font-size: 13px; color: var(--text2);
+        }
+        footer a { color: var(--accent2); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 24px; }
+            .steps { grid-template-columns: 1fr; }
+            .nav-links { gap: 12px; }
+            .nav-links a { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">🎵 <span>Audio</span>Tools</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/converter/" class="active">Converter</a>
+                <a href="/voice-to-text/">Voice to Text</a>
+                <a href="https://github.com/formeo" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Audio Converter <em>Online</em></h1>
+            <p>Convert audio files directly in your browser. No upload to server, no registration, 100% free.</p>
+            <div class="privacy-badge">
+                🔒 Your files never leave your device
+            </div>
+            <div class="privacy-badge" id="wasmBadge" style="display:none; margin-top:8px; border-color: rgba(108, 92, 231, 0.3); background: rgba(108, 92, 231, 0.08); color: #a29bfe;">
+                ⚡ WASM engine active — FLAC encoding enabled
+            </div>
+        </section>
+
+        <!-- DROP ZONE -->
+        <div class="drop-zone" id="dropZone">
+            <div class="drop-prompt">
+                <div class="drop-icon">📁</div>
+                <div class="drop-text">Drop audio file here or <b>click to browse</b></div>
+                <div class="drop-formats">WAV, MP3, FLAC, OGG, AAC, M4A, WebM — up to 200 MB</div>
+            </div>
+            <div class="file-info" id="fileInfo">
+                <div class="file-header">
+                    <div class="file-icon">🎵</div>
+                    <div>
+                        <div class="file-name" id="fileName"></div>
+                        <div class="file-meta" id="fileMeta"></div>
+                    </div>
+                    <button class="file-remove" id="fileRemove" title="Remove file">✕</button>
+                </div>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*" hidden>
+        </div>
+
+        <!-- WAVEFORM -->
+        <div class="waveform-wrap" id="waveformWrap">
+            <canvas id="waveform"></canvas>
+        </div>
+
+        <!-- CONVERSION OPTIONS -->
+        <div class="convert-section" id="convertSection">
+            <div class="format-row">
+                <span class="format-label" id="inputFormatLabel">WAV</span>
+                <span class="format-arrow">→</span>
+                <div class="format-chips" id="outputFormats"></div>
+            </div>
+
+            <div class="quality-row" id="qualityRow">
+                <label>MP3 Bitrate:</label>
+                <select id="mp3Bitrate">
+                    <option value="128">128 kbps — Good (smaller file)</option>
+                    <option value="192" selected>192 kbps — High quality</option>
+                    <option value="256">256 kbps — Very high</option>
+                    <option value="320">320 kbps — Maximum</option>
+                </select>
+            </div>
+
+            <button class="convert-btn" id="convertBtn" disabled>
+                Convert
+            </button>
+        </div>
+
+        <!-- PROGRESS -->
+        <div class="progress-wrap" id="progressWrap">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Decoding audio...</div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result" id="result">
+            <div class="result-icon">✅</div>
+            <div class="result-title">Conversion complete!</div>
+            <div class="result-meta" id="resultMeta"></div>
+            <button class="download-btn" id="downloadBtn">
+                ⬇ Download
+            </button>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-title">Choose File</div>
+                    <div class="step-desc">Drop or select any audio file from your device</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Pick Format</div>
+                    <div class="step-desc">Select the output format: WAV or MP3</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-title">Download</div>
+                    <div class="step-desc">Your file is converted instantly in the browser</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPORTED FORMATS -->
+        <section class="formats-section">
+            <h2>Supported Formats</h2>
+            <table class="formats-table">
+                <thead>
+                    <tr><th>Input Format</th><th>→ WAV</th><th>→ MP3</th><th>→ FLAC ⚡</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:12px; color:var(--text2); margin-top:10px;">
+                All decoding uses your browser's built-in Web Audio API. MP3 encoding uses
+                <a href="https://github.com/nicktrandafil/lamern" style="color:var(--accent2)">lamejs</a>.
+                Based on open source <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>.
+            </p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">Is my audio file uploaded to a server?</div>
+                <div class="faq-a">No. All audio conversion happens directly in your browser using Web Audio API and JavaScript. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">What is the maximum file size?</div>
+                <div class="faq-a">Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle files up to 100–200 MB without issues. For very large files, consider using our CLI tool: <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> — a pure Go converter with no file size limits.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">What audio quality can I expect?</div>
+                <div class="faq-a">WAV output is lossless — identical to the decoded audio. MP3 encoding at 192 kbps provides high quality suitable for most purposes. You can select up to 320 kbps for maximum quality.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">Does it work offline?</div>
+                <div class="faq-a">The converter works offline after the page is loaded (MP3 encoding library needs to load once). Bookmark this page for quick access.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">Can I use a command-line tool instead?</div>
+                <div class="faq-a">Yes! Our open source <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> is a pure Go audio converter — no FFmpeg, no CGO, single binary. It supports WAV, MP3, FLAC conversion and runs on any platform including as WebAssembly.</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem.
+            Built by <a href="https://github.com/formeo">Roman Gordienko</a>.
+            <a href="https://github.com/formeo/go-audio-converter">Source on GitHub</a>.
+        </div>
+    </footer>
+
+    <!-- lamejs for MP3 encoding -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ── WASM Loader ──
+        // Tries to load Go WASM module for FLAC encoding.
+        // Falls back gracefully — converter works without WASM (WAV + MP3 only).
+        let wasmReady = false;
+        (async function loadWasm() {
+            try {
+                const wasmExec = document.createElement('script');
+                wasmExec.src = '/wasm/wasm_exec.js';
+                wasmExec.onload = async () => {
+                    try {
+                        const go = new Go();
+                        const result = await WebAssembly.instantiateStreaming(
+                            fetch('/wasm/converter.wasm'), go.importObject
+                        );
+                        go.run(result.instance);
+                        wasmReady = typeof goWasmReady !== 'undefined' && goWasmReady;
+                        if (wasmReady) {
+                            console.log('[AudioTools] WASM engine loaded — FLAC encoding enabled');
+                            document.getElementById('wasmBadge').style.display = 'inline-flex';
+                        }
+                    } catch(e) {
+                        console.log('[AudioTools] WASM not available, using JS engine');
+                    }
+                };
+                wasmExec.onerror = () => console.log('[AudioTools] No WASM, JS-only mode');
+                document.head.appendChild(wasmExec);
+            } catch(e) {}
+        })();
+
+        // DOM refs
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileMeta = document.getElementById('fileMeta');
+        const fileRemove = document.getElementById('fileRemove');
+        const waveformWrap = document.getElementById('waveformWrap');
+        const waveformCanvas = document.getElementById('waveform');
+        const convertSection = document.getElementById('convertSection');
+        const inputFormatLabel = document.getElementById('inputFormatLabel');
+        const outputFormats = document.getElementById('outputFormats');
+        const qualityRow = document.getElementById('qualityRow');
+        const mp3Bitrate = document.getElementById('mp3Bitrate');
+        const convertBtn = document.getElementById('convertBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultMeta = document.getElementById('resultMeta');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let currentFile = null;
+        let audioBuffer = null;
+        let audioCtx = null;
+        let selectedOutput = 'mp3';
+        let resultBlob = null;
+        let resultFilename = '';
+
+        const FORMATS = {
+            wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
+            mp3: { label: 'MP3', ext: '.mp3', mime: 'audio/mpeg' },
+            flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac', wasm: true },
+        };
+
+        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus'];
+
+        // Detect input format
+        function getFileExt(name) {
+            return name.split('.').pop().toLowerCase();
+        }
+
+        function formatBytes(b) {
+            if (b < 1024) return b + ' B';
+            if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
+            return (b / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function formatDuration(s) {
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return m + ':' + sec.toString().padStart(2, '0');
+        }
+
+        // File handling
+        dropZone.addEventListener('click', (e) => {
+            if (e.target === fileRemove || e.target.closest('.file-remove')) return;
+            fileInput.click();
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) handleFile(e.target.files[0]);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileRemove.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetAll();
+        });
+
+        function resetAll() {
+            currentFile = null;
+            audioBuffer = null;
+            resultBlob = null;
+            dropZone.classList.remove('has-file');
+            fileInfo.classList.remove('show');
+            document.querySelector('.drop-prompt').style.display = '';
+            waveformWrap.classList.remove('show');
+            convertSection.classList.remove('show');
+            progressWrap.classList.remove('show');
+            result.classList.remove('show');
+            fileInput.value = '';
+        }
+
+        async function handleFile(file) {
+            currentFile = file;
+            const ext = getFileExt(file.name);
+
+            if (!INPUT_EXTS.includes(ext)) {
+                alert('Unsupported format. Supported: ' + INPUT_EXTS.join(', '));
+                return;
+            }
+
+            // Show file info
+            dropZone.classList.add('has-file');
+            fileInfo.classList.add('show');
+            document.querySelector('.drop-prompt').style.display = 'none';
+            fileName.textContent = file.name;
+            fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase();
+            result.classList.remove('show');
+
+            // Decode audio
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const arrayBuf = await file.arrayBuffer();
+                audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
+
+                fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase() +
+                    ' • ' + audioBuffer.sampleRate + ' Hz • ' +
+                    audioBuffer.numberOfChannels + 'ch • ' +
+                    formatDuration(audioBuffer.duration);
+
+                drawWaveform(audioBuffer);
+                showConvertOptions(ext);
+            } catch (e) {
+                fileMeta.textContent = 'Error: Could not decode this audio file. ' + e.message;
+                console.error(e);
+            }
+        }
+
+        function drawWaveform(buf) {
+            waveformWrap.classList.add('show');
+            const canvas = waveformCanvas;
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            const w = rect.width, h = rect.height;
+
+            const data = buf.getChannelData(0);
+            const step = Math.max(1, Math.floor(data.length / w));
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Gradient
+            const grad = ctx.createLinearGradient(0, 0, w, 0);
+            grad.addColorStop(0, '#6c5ce7');
+            grad.addColorStop(1, '#00d2a0');
+
+            ctx.fillStyle = grad;
+            const mid = h / 2;
+
+            for (let i = 0; i < w; i++) {
+                let min = 1, max = -1;
+                const start = i * step;
+                for (let j = 0; j < step && start + j < data.length; j++) {
+                    const v = data[start + j];
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                }
+                const top = (1 - max) * mid;
+                const bottom = (1 - min) * mid;
+                ctx.fillRect(i, top, 1, Math.max(1, bottom - top));
+            }
+        }
+
+        function showConvertOptions(inputExt) {
+            convertSection.classList.add('show');
+            inputFormatLabel.textContent = inputExt.toUpperCase();
+
+            // Build output format chips
+            outputFormats.innerHTML = '';
+            Object.keys(FORMATS).forEach(fmt => {
+                const f = FORMATS[fmt];
+                const chip = document.createElement('button');
+                const isWasmOnly = f.wasm && !wasmReady;
+                chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '') + (isWasmOnly ? ' disabled' : '');
+                chip.textContent = f.label + (isWasmOnly ? ' (WASM)' : '');
+                chip.dataset.fmt = fmt;
+                if (isWasmOnly) {
+                    chip.title = 'FLAC encoding requires WASM module. Build with: ./build-wasm.sh';
+                } else {
+                    chip.addEventListener('click', () => selectFormat(fmt));
+                }
+                outputFormats.appendChild(chip);
+            });
+
+            updateQualityRow();
+            convertBtn.disabled = false;
+            convertBtn.textContent = 'Convert to ' + FORMATS[selectedOutput].label;
+        }
+
+        function selectFormat(fmt) {
+            selectedOutput = fmt;
+            document.querySelectorAll('.format-chip').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.format-chip[data-fmt="${fmt}"]`).classList.add('active');
+            updateQualityRow();
+            convertBtn.textContent = 'Convert to ' + FORMATS[selectedOutput].label;
+        }
+
+        function updateQualityRow() {
+            if (selectedOutput === 'mp3') {
+                qualityRow.classList.add('show');
+            } else {
+                qualityRow.classList.remove('show');
+            }
+        }
+
+        // CONVERSION
+        convertBtn.addEventListener('click', startConversion);
+
+        async function startConversion() {
+            if (!audioBuffer) return;
+
+            convertBtn.disabled = true;
+            convertBtn.classList.add('converting');
+            convertBtn.textContent = 'Converting...';
+            progressWrap.classList.add('show');
+            result.classList.remove('show');
+
+            try {
+                let blob;
+                if (selectedOutput === 'wav') {
+                    updateProgress(10, 'Encoding WAV...');
+                    blob = await encodeWAV(audioBuffer);
+                } else if (selectedOutput === 'mp3') {
+                    blob = await encodeMP3(audioBuffer);
+                } else if (selectedOutput === 'flac' && wasmReady) {
+                    updateProgress(10, 'Encoding FLAC via WASM...');
+                    blob = await encodeFLACWasm(audioBuffer);
+                }
+
+                updateProgress(100, 'Done!');
+
+                // Prepare result
+                const baseName = currentFile.name.replace(/\.[^.]+$/, '');
+                resultFilename = baseName + FORMATS[selectedOutput].ext;
+                resultBlob = blob;
+
+                setTimeout(() => {
+                    progressWrap.classList.remove('show');
+                    result.classList.add('show');
+                    resultMeta.textContent = FORMATS[selectedOutput].label + ' • ' +
+                        formatBytes(blob.size) + ' • ' +
+                        formatDuration(audioBuffer.duration);
+                }, 300);
+
+            } catch (e) {
+                alert('Conversion error: ' + e.message);
+                console.error(e);
+            }
+
+            convertBtn.disabled = false;
+            convertBtn.classList.remove('converting');
+            convertBtn.textContent = 'Convert to ' + FORMATS[selectedOutput].label;
+        }
+
+        function updateProgress(pct, text) {
+            progressFill.style.width = pct + '%';
+            progressText.textContent = text;
+        }
+
+        // WAV encoder
+        function encodeWAV(buffer) {
+            return new Promise(resolve => {
+                const numCh = buffer.numberOfChannels;
+                const sr = buffer.sampleRate;
+                const len = buffer.length;
+
+                // Interleave channels
+                let interleaved;
+                if (numCh === 1) {
+                    interleaved = buffer.getChannelData(0);
+                } else {
+                    interleaved = new Float32Array(len * numCh);
+                    for (let i = 0; i < len; i++) {
+                        for (let ch = 0; ch < numCh; ch++) {
+                            interleaved[i * numCh + ch] = buffer.getChannelData(ch)[i];
+                        }
+                    }
+                }
+
+                // Convert to 16-bit PCM
+                const pcm = new Int16Array(interleaved.length);
+                for (let i = 0; i < interleaved.length; i++) {
+                    const s = Math.max(-1, Math.min(1, interleaved[i]));
+                    pcm[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                }
+
+                // Build WAV
+                const dataSize = pcm.length * 2;
+                const buf = new ArrayBuffer(44 + dataSize);
+                const view = new DataView(buf);
+
+                writeString(view, 0, 'RIFF');
+                view.setUint32(4, 36 + dataSize, true);
+                writeString(view, 8, 'WAVE');
+                writeString(view, 12, 'fmt ');
+                view.setUint32(16, 16, true);
+                view.setUint16(20, 1, true);
+                view.setUint16(22, numCh, true);
+                view.setUint32(24, sr, true);
+                view.setUint32(28, sr * numCh * 2, true);
+                view.setUint16(32, numCh * 2, true);
+                view.setUint16(34, 16, true);
+                writeString(view, 36, 'data');
+                view.setUint32(40, dataSize, true);
+
+                const output = new Int16Array(buf, 44);
+                output.set(pcm);
+
+                resolve(new Blob([buf], { type: 'audio/wav' }));
+            });
+        }
+
+        function writeString(view, offset, str) {
+            for (let i = 0; i < str.length; i++) {
+                view.setUint8(offset + i, str.charCodeAt(i));
+            }
+        }
+
+        // MP3 encoder (using lamejs)
+        function encodeMP3(buffer) {
+            return new Promise((resolve, reject) => {
+                if (typeof lamejs === 'undefined') {
+                    reject(new Error('MP3 encoder not loaded. Please reload the page.'));
+                    return;
+                }
+
+                const numCh = Math.min(buffer.numberOfChannels, 2); // lamejs supports max 2ch
+                const sr = buffer.sampleRate;
+                const kbps = parseInt(mp3Bitrate.value);
+
+                updateProgress(5, 'Initializing MP3 encoder...');
+
+                const mp3enc = new lamejs.Mp3Encoder(numCh, sr, kbps);
+                const blockSize = 1152;
+                const mp3Data = [];
+
+                // Get channel data as Int16
+                function floatTo16(arr) {
+                    const out = new Int16Array(arr.length);
+                    for (let i = 0; i < arr.length; i++) {
+                        const s = Math.max(-1, Math.min(1, arr[i]));
+                        out[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                    }
+                    return out;
+                }
+
+                const left = floatTo16(buffer.getChannelData(0));
+                const right = numCh > 1 ? floatTo16(buffer.getChannelData(1)) : null;
+
+                const totalBlocks = Math.ceil(left.length / blockSize);
+                let processedBlocks = 0;
+
+                // Process in chunks using setTimeout for UI responsiveness
+                function processChunk() {
+                    const end = Math.min(processedBlocks + 100, totalBlocks);
+
+                    for (let i = processedBlocks; i < end; i++) {
+                        const start = i * blockSize;
+                        const leftChunk = left.subarray(start, start + blockSize);
+
+                        let mp3buf;
+                        if (numCh === 1) {
+                            mp3buf = mp3enc.encodeBuffer(leftChunk);
+                        } else {
+                            const rightChunk = right.subarray(start, start + blockSize);
+                            mp3buf = mp3enc.encodeBuffer(leftChunk, rightChunk);
+                        }
+                        if (mp3buf.length > 0) mp3Data.push(mp3buf);
+                    }
+
+                    processedBlocks = end;
+                    const pct = Math.round((processedBlocks / totalBlocks) * 90) + 5;
+                    updateProgress(pct, `Encoding MP3... ${pct}%`);
+
+                    if (processedBlocks < totalBlocks) {
+                        setTimeout(processChunk, 0);
+                    } else {
+                        const last = mp3enc.flush();
+                        if (last.length > 0) mp3Data.push(last);
+                        updateProgress(98, 'Finalizing...');
+                        resolve(new Blob(mp3Data, { type: 'audio/mpeg' }));
+                    }
+                }
+
+                setTimeout(processChunk, 0);
+            });
+        }
+
+        // FLAC encoder via WASM (go-audio-converter)
+        function encodeFLACWasm(buffer) {
+            return new Promise((resolve, reject) => {
+                if (!wasmReady || typeof goAudioConvert === 'undefined') {
+                    reject(new Error('WASM FLAC encoder not loaded'));
+                    return;
+                }
+
+                updateProgress(10, 'Preparing PCM data...');
+
+                const numCh = buffer.numberOfChannels;
+                const sr = buffer.sampleRate;
+                const len = buffer.length;
+
+                // Build WAV in memory → send to WASM for WAV→FLAC
+                const totalSamples = len * numCh;
+                const dataSize = totalSamples * 2;
+                const wavBuf = new ArrayBuffer(44 + dataSize);
+                const view = new DataView(wavBuf);
+
+                writeString(view, 0, 'RIFF');
+                view.setUint32(4, 36 + dataSize, true);
+                writeString(view, 8, 'WAVE');
+                writeString(view, 12, 'fmt ');
+                view.setUint32(16, 16, true);
+                view.setUint16(20, 1, true);
+                view.setUint16(22, numCh, true);
+                view.setUint32(24, sr, true);
+                view.setUint32(28, sr * numCh * 2, true);
+                view.setUint16(32, numCh * 2, true);
+                view.setUint16(34, 16, true);
+                writeString(view, 36, 'data');
+                view.setUint32(40, dataSize, true);
+
+                const pcm = new Int16Array(wavBuf, 44);
+                for (let i = 0; i < len; i++) {
+                    for (let ch = 0; ch < numCh; ch++) {
+                        const s = Math.max(-1, Math.min(1, buffer.getChannelData(ch)[i]));
+                        pcm[i * numCh + ch] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                    }
+                }
+
+                updateProgress(40, 'WASM FLAC encoding...');
+
+                const inputBytes = new Uint8Array(wavBuf);
+                const result = goAudioConvert(inputBytes, 'wav', 'flac');
+
+                if (result && result.error) {
+                    reject(new Error(result.error));
+                    return;
+                }
+
+                updateProgress(95, 'Finalizing FLAC...');
+                const flacBytes = new Uint8Array(result.length);
+                for (let i = 0; i < result.length; i++) flacBytes[i] = result[i];
+
+                resolve(new Blob([flacBytes], { type: 'audio/flac' }));
+            });
+        }
+
+        // Download
+        downloadBtn.addEventListener('click', () => {
+            if (!resultBlob) return;
+            const url = URL.createObjectURL(resultBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = resultFilename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Responsive waveform
+        window.addEventListener('resize', () => {
+            if (audioBuffer) drawWaveform(audioBuffer);
+        });
+    })();
+    </script>
+</body>
+</html>
