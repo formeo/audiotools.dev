@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-62ZJNZFRES');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AudioTools — Free Open Source Audio Processing Tools</title>
-    <meta name="description" content="Free open source audio toolkit: convert audio without upload, transcribe voice to text, identify songs via Shazam, clean audiobooks with AI. All tools run in your browser — private and free.">
-    <meta name="keywords" content="audio tools, audio converter online, voice to text, music recognition, audiobook cleaner, free audio tools, open source audio">
+    <title>Audio Converter Online & Voice to Text — Free Browser Tools | AudioTools</title>
+    <meta name="description" content="Free online audio converter and voice-to-text tool. Convert WAV, MP3, FLAC, OGG in your browser — no upload, 100% private. Transcribe speech in 60+ languages. Open source.">
+    <meta name="keywords" content="audio converter online, voice to text, convert mp3 wav, speech to text free, audio tools, free audio converter, browser audio converter, open source audio">
+    <meta name="author" content="Roman Gordienko">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://audiotools.dev/">
 
-    <meta property="og:title" content="AudioTools — Free Open Source Audio Processing Tools">
-    <meta property="og:description" content="Convert, transcribe, identify, and clean audio — all free, open source, privacy-first.">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Audio Converter Online & Voice to Text — Free Browser Tools">
+    <meta property="og:description" content="Convert audio files and transcribe speech directly in your browser. No upload, no registration, 100% free and open source.">
     <meta property="og:url" content="https://audiotools.dev/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools">
+    <meta property="og:locale" content="en_US">
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AudioTools — Free Audio Converter & Voice to Text">
+    <meta name="twitter:description" content="Convert audio files and transcribe speech in your browser. No upload, 100% private.">
+
+    <!-- Schema.org: WebSite -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "AudioTools",
         "url": "https://audiotools.dev",
-        "description": "Free open source audio processing ecosystem: converter, voice-to-text, music recognition, audiobook cleaner.",
+        "description": "Free open source audio processing tools: converter, voice-to-text, music recognition, audiobook cleaner.",
         "author": {
             "@type": "Person",
             "name": "Roman Gordienko",
@@ -39,20 +53,79 @@
         }
     }
     </script>
+
+    <!-- Schema.org: SoftwareApplication (Audio Converter) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AudioTools Audio Converter",
+        "url": "https://audiotools.dev/converter/",
+        "description": "Convert audio files between WAV, MP3, FLAC, OGG directly in your browser. No upload, no server, 100% private.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (browser-based)",
+        "browserRequirements": "Requires a modern browser with Web Audio API support",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Browser-based audio conversion",
+            "No file upload required",
+            "WAV, MP3, FLAC, OGG support",
+            "Waveform visualization",
+            "MP3 bitrate selection (128-320 kbps)",
+            "FLAC encoding via WebAssembly"
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Roman Gordienko",
+            "url": "https://github.com/formeo"
+        }
+    }
+    </script>
+
+    <!-- Schema.org: SoftwareApplication (Voice to Text) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AudioTools Voice to Text",
+        "url": "https://audiotools.dev/voice-to-text/",
+        "description": "Free online speech-to-text transcription in 60+ languages using Web Speech API.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Real-time speech transcription",
+            "60+ language support",
+            "No data upload",
+            "Copy and download transcript"
+        ]
+    }
+    </script>
+
+    <!-- Schema.org: ItemList -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        "name": "Audio Tools",
+        "name": "AudioTools — Free Online Audio Tools",
         "itemListElement": [
             {
                 "@type": "ListItem",
                 "position": 1,
                 "item": {
                     "@type": "WebApplication",
-                    "name": "Audio Converter",
+                    "name": "Audio Converter Online",
                     "url": "https://audiotools.dev/converter/",
-                    "description": "Convert audio files in your browser — no upload, 100% private"
+                    "description": "Convert WAV, MP3, FLAC, OGG in your browser — no upload, 100% private"
                 }
             },
             {
@@ -60,7 +133,7 @@
                 "position": 2,
                 "item": {
                     "@type": "WebApplication",
-                    "name": "Voice to Text",
+                    "name": "Voice to Text Online",
                     "url": "https://audiotools.dev/voice-to-text/",
                     "description": "Free speech-to-text transcription in 60+ languages"
                 }
@@ -68,6 +141,7 @@
         ]
     }
     </script>
+
     <!-- Yandex Metrika counter -->
     <meta name="yandex-verification" content="cd3fa61a2472db14"/>
     <script type="text/javascript">
@@ -82,6 +156,7 @@
     <noscript>
         <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
+
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -165,7 +240,6 @@
         }
         .tag-live { background: rgba(0, 210, 160, 0.12); color: var(--green); }
         .tag-new { background: rgba(108, 92, 231, 0.15); color: var(--accent2); }
-        .tag-cli { background: rgba(245, 158, 11, 0.12); color: var(--orange); }
         .tool-arrow {
             position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
             font-size: 18px; color: var(--text2); opacity: 0; transition: all 0.2s;
@@ -219,13 +293,9 @@
             padding: 12px 24px; border-radius: 10px; text-decoration: none;
             font-weight: 700; font-size: 14px; transition: all 0.2s;
         }
-        .btn-primary {
-            background: var(--green); color: #0a0b10;
-        }
+        .btn-primary { background: var(--green); color: #0a0b10; }
         .btn-primary:hover { background: var(--green2); transform: translateY(-1px); }
-        .btn-secondary {
-            background: var(--surface2); color: var(--text); border: 1px solid var(--border);
-        }
+        .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
         .btn-secondary:hover { border-color: var(--accent); }
 
         /* FOOTER */
@@ -234,6 +304,9 @@
             text-align: center; font-size: 13px; color: var(--text2);
         }
         footer a { color: var(--accent2); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { margin-top: 8px; }
+        .footer-links a { margin: 0 8px; }
 
         @media (max-width: 600px) {
             .hero h1 { font-size: 28px; }
@@ -250,7 +323,7 @@
                 <a href="/" class="active">Home</a>
                 <a href="/converter/">Converter</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="https://github.com/formeo" target="_blank">GitHub</a>
+                <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a>
             </div>
         </div>
     </nav>
@@ -289,7 +362,7 @@
         <div class="oss-section">
             <div class="section-title">⚡ Open Source Projects — Download & Run</div>
             <div class="oss-grid">
-                <a href="https://github.com/formeo/go-audio-converter" class="oss-card" target="_blank">
+                <a href="https://github.com/formeo/go-audio-converter" class="oss-card" target="_blank" rel="noopener">
                     <div class="oss-left">
                         <div class="oss-icon">🔄</div>
                         <div>
@@ -299,7 +372,7 @@
                     </div>
                     <span class="oss-lang lang-go">Go</span>
                 </a>
-                <a href="https://github.com/formeo/voice-to-text" class="oss-card" target="_blank">
+                <a href="https://github.com/formeo/voice-to-text" class="oss-card" target="_blank" rel="noopener">
                     <div class="oss-left">
                         <div class="oss-icon">🎤</div>
                         <div>
@@ -309,7 +382,7 @@
                     </div>
                     <span class="oss-lang lang-py">Python</span>
                 </a>
-                <a href="https://github.com/formeo/music_recognition" class="oss-card" target="_blank">
+                <a href="https://github.com/formeo/music_recognition" class="oss-card" target="_blank" rel="noopener">
                     <div class="oss-left">
                         <div class="oss-icon">🎵</div>
                         <div>
@@ -319,7 +392,7 @@
                     </div>
                     <span class="oss-lang lang-py">Python</span>
                 </a>
-                <a href="https://github.com/formeo/Audiobook-Cleaner" class="oss-card" target="_blank">
+                <a href="https://github.com/formeo/Audiobook-Cleaner" class="oss-card" target="_blank" rel="noopener">
                     <div class="oss-left">
                         <div class="oss-icon">📚</div>
                         <div>
@@ -357,7 +430,7 @@
             <p>Use the tools online, or download and run them locally. Contribute, fork, build upon — it's MIT licensed.</p>
             <div class="cta-buttons">
                 <a href="/converter/" class="btn btn-primary">🔄 Try Audio Converter</a>
-                <a href="https://github.com/formeo" class="btn btn-secondary" target="_blank">⭐ GitHub</a>
+                <a href="https://github.com/formeo" class="btn btn-secondary" target="_blank" rel="noopener">⭐ GitHub</a>
             </div>
         </div>
     </div>
@@ -365,7 +438,12 @@
     <footer>
         <div class="container">
             <a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem.
-            Built by <a href="https://github.com/formeo">Roman Gordienko</a>.
+            Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.
+            <div class="footer-links">
+                <a href="/privacy/">Privacy Policy</a>
+                <a href="/terms/">Terms of Use</a>
+                <a href="https://github.com/formeo" rel="noopener">GitHub</a>
+            </div>
         </div>
     </footer>
 </body>
