@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice to Text — Free Online Speech-to-Text Transcription | Audio Tools</title>
+    <title>Voice to Text — Free Speech-to-Text Online | AudioTools</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description"
-          content="Free online voice-to-text transcription tool. Convert speech to text in 60+ languages using your microphone. No sign-up, no upload — everything runs in your browser.">
+    <meta name="description" content="Free voice-to-text transcription in 60+ languages. Speak into your microphone, get text instantly. No sign-up, runs in your browser.">
     <meta name="keywords"
           content="voice to text, speech to text, transcription online, speech recognition, voice transcription free, dictation, convert speech to text, audio to text">
     <meta name="author" content="Roman Gordienko">
@@ -20,18 +19,23 @@
           content="Convert speech to text in 60+ languages. Free, no sign-up, runs in your browser. Your audio never leaves your device.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://audiotools.dev/voice-to-text/">
-    <meta property="og:site_name" content="Audio Tools">
+    <meta property="og:site_name" content="AudioTools">
     <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://audiotools.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Voice to Text — Free Online Transcription">
     <meta name="twitter:description"
           content="Convert speech to text in 60+ languages. Free, browser-based, no upload required.">
+    <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
     <!-- Favicon -->
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -481,6 +485,48 @@
             .transcript-body { min-height: 180px; padding: 16px; }
         }
     </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is my voice data sent to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which languages are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Over 60 languages are supported including English, Spanish, French, German, Chinese, Japanese, Russian, Arabic, Hindi, Portuguese, and many more. The full list depends on your browser."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does it work on mobile?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Voice to text works on Chrome for Android and Safari for iOS. Simply tap the microphone button and speak. Results appear in real-time."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How accurate is the transcription?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Accuracy depends on your browser's speech recognition engine. Chrome (Google) provides the best accuracy for most languages. Clear speech in a quiet environment gives the best results."
+                }
+            }
+        ]
+    }
+    </script>
+
 </head>
 <body>
 <div class="container">
@@ -666,11 +712,30 @@
         </p>
     </section>
 
+
+    <section class="seo-content" style="margin-top: 0;">
+        <h2>Frequently Asked Questions</h2>
+        
+        <h3>Is my voice data sent to a server?</h3>
+        <p>The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend.</p>
+        
+        <h3>Which languages are supported?</h3>
+        <p>Over 60 languages including English, Spanish, French, German, Chinese, Japanese, Russian, Arabic, Hindi, Portuguese, and many more. The available languages depend on your browser.</p>
+        
+        <h3>Does it work on mobile?</h3>
+        <p>Yes. Voice to text works on Chrome for Android and Safari for iOS. Tap the microphone button and speak — results appear in real-time.</p>
+        
+        <h3>How accurate is the transcription?</h3>
+        <p>Accuracy depends on your browser's speech recognition engine. Chrome (powered by Google) provides the best accuracy for most languages. Clear speech in a quiet environment gives the best results.</p>
+    </section>
+
     <footer>
         <div class="footer-links">
-            <a href="/">🎵 Audio Tools</a>
+            <a href="/">AudioTools.dev</a>
+            <a href="/converter/">Audio Converter</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
             <a href="https://github.com/formeo">GitHub</a>
-            <a href="https://habr.com/ru/users/formeo/">Habr</a>
         </div>
         <p class="copyright">
             Built by <a href="https://github.com/formeo" class="highlight">@formeo</a> ·
