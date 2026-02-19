@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech — Free Online TTS | AudioTools</title>
+    <meta name="description" content="Free text-to-speech online. Convert text to natural speech in 50+ languages. No sign-up, no limits. Works in your browser with Web Speech API.">
+    <meta name="keywords" content="text to speech online, tts free, text to speech converter, read text aloud, text to audio, free tts, browser text to speech, speech synthesis">
+    <link rel="canonical" href="https://audiotools.dev/text-to-speech/">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:title" content="Text to Speech — Free Online TTS Converter">
+    <meta property="og:description" content="Convert text to natural speech in 50+ languages. Free, no sign-up, runs in your browser.">
+    <meta property="og:url" content="https://audiotools.dev/text-to-speech/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://audiotools.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Text to Speech — Free Online TTS">
+    <meta name="twitter:description" content="Convert text to speech in 50+ languages. Free, no limits.">
+    <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Text to Speech — AudioTools",
+        "url": "https://audiotools.dev/text-to-speech/",
+        "description": "Free online text-to-speech tool supporting 50+ languages. Uses browser Speech Synthesis API — no data uploaded.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Roman Gordienko", "url": "https://github.com/formeo" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is this text-to-speech tool free?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free with no limits. It uses your browser's built-in Speech Synthesis API, so no server costs and no restrictions." }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I download the speech as an audio file?",
+                "acceptedAnswer": { "@type": "Answer", "text": "The Web Speech Synthesis API plays audio directly through your speakers. For downloadable audio, you can use screen recording software or the MediaRecorder API to capture the output." }
+            },
+            {
+                "@type": "Question",
+                "name": "Which languages are supported?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Over 50 languages depending on your browser and operating system. Common languages include English, Spanish, French, German, Japanese, Chinese, Korean, Russian, Portuguese, and many more." }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my text sent to a server?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. All text-to-speech processing happens in your browser using the Web Speech Synthesis API. Your text never leaves your device." }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0b10; --surface: #12131a; --surface2: #1a1b26; --border: #2a2b3a;
+            --text: #e2e4f0; --text2: #8b8ea3; --accent: #6c5ce7; --accent2: #a29bfe;
+            --green: #00d2a0; --green2: #00f5b8; --radius: 12px;
+        }
+        body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+        .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+        nav { border-bottom: 1px solid var(--border); padding: 14px 0; }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .hero { text-align: center; padding: 40px 0 32px; }
+        .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+        .hero h1 em { font-style: normal; color: var(--green); }
+        .hero p { color: var(--text2); font-size: 15px; }
+
+        .tool-area { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 32px; }
+
+        textarea { width: 100%; min-height: 160px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; font-family: inherit; font-size: 15px; color: var(--text); resize: vertical; outline: none; line-height: 1.6; }
+        textarea:focus { border-color: var(--green); }
+        textarea::placeholder { color: var(--text2); }
+
+        .controls { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; margin: 16px 0; align-items: end; }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+        select, input[type="range"] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-size: 14px; outline: none; }
+        select:focus { border-color: var(--green); }
+
+        .range-group { display: flex; flex-direction: column; }
+        .range-row { display: flex; align-items: center; gap: 8px; }
+        .range-row input[type="range"] { flex: 1; accent-color: var(--green); padding: 0; border: none; background: transparent; height: 24px; }
+        .range-val { font-size: 13px; color: var(--green); font-weight: 700; min-width: 36px; text-align: center; }
+
+        .btn-row { display: flex; gap: 10px; margin-top: 16px; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-primary { background: var(--green); color: #0a0b10; flex: 1; justify-content: center; }
+        .btn-primary:hover { background: var(--green2); }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--accent); }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .char-count { font-size: 12px; color: var(--text2); text-align: right; margin-top: 6px; }
+        .status { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; }
+        .status.speaking { display: block; background: rgba(0, 210, 160, 0.1); border: 1px solid rgba(0, 210, 160, 0.2); color: var(--green); }
+        .status.error { display: block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .seo-content { margin: 48px 0; }
+        .seo-content h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+        .seo-content h3 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+        .seo-content p { font-size: 14px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
+        .seo-content ul { padding-left: 20px; margin-bottom: 12px; }
+        .seo-content li { font-size: 14px; color: var(--text2); margin-bottom: 4px; }
+        .seo-content a { color: var(--green); text-decoration: none; }
+        .seo-content a:hover { text-decoration: underline; }
+
+        .faq { margin: 32px 0; }
+        .faq h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; }
+        .faq-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text); }
+        .faq-a { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+        footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; font-size: 13px; color: var(--text2); }
+        footer a { color: var(--accent2); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { margin-top: 8px; }
+        .footer-links a { margin: 0 8px; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 24px; }
+            .controls { grid-template-columns: 1fr; }
+            .btn-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">🎵 <span>Audio</span>Tools</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/converter/">Converter</a>
+                <a href="/voice-to-text/">Voice to Text</a>
+                <a href="/text-to-speech/" class="active">Text to Speech</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>🔊 <em>Text to Speech</em></h1>
+            <p>Convert text to natural speech in 50+ languages — free, no sign-up, runs in your browser</p>
+        </section>
+
+        <div class="tool-area">
+            <textarea id="textInput" placeholder="Type or paste your text here..." maxlength="10000">AudioTools is a free, open-source collection of audio processing tools that run entirely in your browser. No uploads, no accounts, complete privacy.</textarea>
+            <div class="char-count"><span id="charCount">0</span> / 10,000 characters</div>
+
+            <div class="controls">
+                <div>
+                    <label>Voice</label>
+                    <select id="voiceSelect"><option>Loading voices...</option></select>
+                </div>
+                <div>
+                    <label>Language</label>
+                    <select id="langFilter"><option value="">All Languages</option></select>
+                </div>
+                <div class="range-group">
+                    <label>Speed</label>
+                    <div class="range-row">
+                        <input type="range" id="rateSlider" min="0.25" max="3" step="0.25" value="1">
+                        <span class="range-val" id="rateVal">1×</span>
+                    </div>
+                </div>
+            </div>
+            <div class="controls" style="grid-template-columns: 1fr 1fr;">
+                <div class="range-group">
+                    <label>Pitch</label>
+                    <div class="range-row">
+                        <input type="range" id="pitchSlider" min="0" max="2" step="0.1" value="1">
+                        <span class="range-val" id="pitchVal">1.0</span>
+                    </div>
+                </div>
+                <div class="range-group">
+                    <label>Volume</label>
+                    <div class="range-row">
+                        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                        <span class="range-val" id="volumeVal">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="speakBtn" onclick="speak()">▶ Speak</button>
+                <button class="btn btn-secondary" id="pauseBtn" onclick="pauseResume()" style="display:none;">⏸ Pause</button>
+                <button class="btn btn-danger" id="stopBtn" onclick="stop()" style="display:none;">⏹ Stop</button>
+            </div>
+
+            <div class="status" id="status"></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>Free Online Text to Speech Converter</h2>
+            <p>AudioTools Text to Speech converts any written text into natural-sounding speech directly in your browser. It uses the <strong>Web Speech Synthesis API</strong> — a built-in browser technology that provides high-quality voices in dozens of languages without requiring any server or internet connection for processing.</p>
+
+            <h3>How It Works</h3>
+            <p>Type or paste your text, select a voice and language, adjust speed and pitch, then click "Speak". The browser's speech engine processes your text locally and plays it through your speakers. Your text is never sent to any server — everything happens on your device.</p>
+
+            <h3>Supported Languages</h3>
+            <p>Available voices depend on your browser and operating system. Most modern browsers provide 50+ voices covering major world languages including English (US, UK, Australian), Spanish, French, German, Italian, Portuguese, Russian, Japanese, Chinese (Mandarin, Cantonese), Korean, Hindi, Arabic, and many more.</p>
+
+            <h3>Use Cases</h3>
+            <ul>
+                <li>Proofreading — hear your writing to catch errors your eyes miss</li>
+                <li>Language learning — listen to proper pronunciation in any language</li>
+                <li>Accessibility — convert articles and documents to audio</li>
+                <li>Content creation — preview voiceover scripts before recording</li>
+                <li>Multitasking — listen to text while doing other work</li>
+            </ul>
+
+            <h3>Privacy & Security</h3>
+            <p>All text-to-speech processing happens in your browser using the Web Speech Synthesis API. Your text never leaves your device — there are no servers, no APIs, no data collection. This is the same technology your browser uses for its built-in read-aloud features.</p>
+
+            <p>Looking for the reverse? Try our <a href="/voice-to-text/">Voice to Text</a> tool for speech-to-text transcription, or <a href="/converter/">Audio Converter</a> for format conversion.</p>
+        </section>
+
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-q">Is this text-to-speech tool free?</div>
+                <div class="faq-a">Yes, completely free with no limits. It uses your browser's built-in Speech Synthesis API, so there are no server costs and no restrictions on usage.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Can I download the speech as an audio file?</div>
+                <div class="faq-a">The Web Speech Synthesis API plays audio directly through your speakers. For downloadable audio, you can use screen recording software to capture the output. We may add a download feature in a future update.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Which voices and languages are available?</div>
+                <div class="faq-a">Available voices depend on your browser and operating system. Chrome typically offers the most voices (50+), followed by Safari and Edge. Windows, macOS, and Android each provide their own set of system voices.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Is my text sent to a server?</div>
+                <div class="faq-a">No. All processing happens locally in your browser. Your text never leaves your device.</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem.
+            Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.
+            <div class="footer-links">
+                <a href="/converter/">Converter</a>
+                <a href="/voice-to-text/">Voice to Text</a>
+                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/audio-trimmer/">Trimmer</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="/terms/">Terms</a>
+                <a href="https://github.com/formeo" rel="noopener">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const synth = window.speechSynthesis;
+        const textInput = document.getElementById('textInput');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const langFilter = document.getElementById('langFilter');
+        const rateSlider = document.getElementById('rateSlider');
+        const pitchSlider = document.getElementById('pitchSlider');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const rateVal = document.getElementById('rateVal');
+        const pitchVal = document.getElementById('pitchVal');
+        const volumeVal = document.getElementById('volumeVal');
+        const charCount = document.getElementById('charCount');
+        const status = document.getElementById('status');
+        const speakBtn = document.getElementById('speakBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+
+        let voices = [];
+        let speaking = false;
+
+        function loadVoices() {
+            voices = synth.getVoices();
+            if (!voices.length) return;
+
+            const langs = [...new Set(voices.map(v => v.lang.split('-')[0]))].sort();
+            langFilter.innerHTML = '<option value="">All Languages</option>' +
+                langs.map(l => `<option value="${l}">${new Intl.DisplayNames(['en'], {type:'language'}).of(l) || l} (${l})</option>`).join('');
+
+            populateVoices();
+        }
+
+        function populateVoices() {
+            const filter = langFilter.value;
+            const filtered = filter ? voices.filter(v => v.lang.startsWith(filter)) : voices;
+            voiceSelect.innerHTML = filtered.map((v, i) => {
+                const idx = voices.indexOf(v);
+                return `<option value="${idx}">${v.name} (${v.lang})${v.default ? ' ★' : ''}</option>`;
+            }).join('');
+        }
+
+        langFilter.addEventListener('change', populateVoices);
+
+        synth.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        rateSlider.addEventListener('input', () => rateVal.textContent = rateSlider.value + '×');
+        pitchSlider.addEventListener('input', () => pitchVal.textContent = parseFloat(pitchSlider.value).toFixed(1));
+        volumeSlider.addEventListener('input', () => volumeVal.textContent = Math.round(volumeSlider.value * 100) + '%');
+        textInput.addEventListener('input', () => charCount.textContent = textInput.value.length);
+        charCount.textContent = textInput.value.length;
+
+        function setStatus(msg, type) {
+            status.textContent = msg;
+            status.className = 'status ' + type;
+        }
+
+        function speak() {
+            const text = textInput.value.trim();
+            if (!text) return;
+
+            synth.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            const vi = parseInt(voiceSelect.value);
+            if (voices[vi]) utter.voice = voices[vi];
+            utter.rate = parseFloat(rateSlider.value);
+            utter.pitch = parseFloat(pitchSlider.value);
+            utter.volume = parseFloat(volumeSlider.value);
+
+            utter.onstart = () => {
+                speaking = true;
+                speakBtn.style.display = 'none';
+                pauseBtn.style.display = '';
+                stopBtn.style.display = '';
+                pauseBtn.textContent = '⏸ Pause';
+                setStatus('🔊 Speaking...', 'speaking');
+            };
+            utter.onend = () => {
+                speaking = false;
+                speakBtn.style.display = '';
+                pauseBtn.style.display = 'none';
+                stopBtn.style.display = 'none';
+                status.className = 'status';
+            };
+            utter.onerror = (e) => {
+                speaking = false;
+                speakBtn.style.display = '';
+                pauseBtn.style.display = 'none';
+                stopBtn.style.display = 'none';
+                if (e.error !== 'canceled') setStatus('Error: ' + e.error, 'error');
+            };
+
+            synth.speak(utter);
+        }
+
+        function pauseResume() {
+            if (synth.paused) {
+                synth.resume();
+                pauseBtn.textContent = '⏸ Pause';
+                setStatus('🔊 Speaking...', 'speaking');
+            } else {
+                synth.pause();
+                pauseBtn.textContent = '▶ Resume';
+                setStatus('⏸ Paused', 'speaking');
+            }
+        }
+
+        function stop() {
+            synth.cancel();
+            speaking = false;
+            speakBtn.style.display = '';
+            pauseBtn.style.display = 'none';
+            stopBtn.style.display = 'none';
+            status.className = 'status';
+        }
+
+        if (!('speechSynthesis' in window)) {
+            setStatus('⚠ Your browser does not support Speech Synthesis. Try Chrome, Edge, or Safari.', 'error');
+            speakBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>

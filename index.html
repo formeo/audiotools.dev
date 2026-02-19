@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-62ZJNZFRES');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Audio Converter & Voice to Text Online | AudioTools</title>
-    <meta name="description" content="Free audio converter and voice-to-text. Convert WAV, MP3, FLAC, OGG in browser — no upload. Transcribe speech in 60+ languages. Open source.">
-    <meta name="keywords" content="audio converter online, voice to text, convert mp3 wav, speech to text free, audio tools, free audio converter, browser audio converter, open source audio">
-    <meta name="author" content="Roman Gordienko">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <title>Free Audio Tools — Converter, TTS, Trimmer | AudioTools</title>
+    <meta name="description" content="Free online audio tools: converter, trimmer, text-to-speech, voice-to-text. All processing in your browser — no upload, no sign-up. Open source.">
+    <meta name="keywords" content="audio tools online, audio converter, voice to text, text to speech, audio trimmer, mp3 converter, audio editor online, free audio tools, browser audio processing">
     <link rel="canonical" href="https://audiotools.dev/">
-
-    <!-- Favicon -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Audio Converter Online & Voice to Text — Free Browser Tools">
-    <meta property="og:description" content="Convert audio files and transcribe speech directly in your browser. No upload, no registration, 100% free and open source.">
+    <meta property="og:title" content="AudioTools — Free Audio Converter, Trimmer, TTS & Voice-to-Text">
+    <meta property="og:description" content="Convert, trim, and transcribe audio in your browser. No upload, no registration, 100% free and open source.">
     <meta property="og:url" content="https://audiotools.dev/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools">
@@ -33,165 +21,60 @@
     <meta property="og:image" content="https://audiotools.dev/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="AudioTools — Free Audio Converter & Voice to Text">
+    <meta property="og:image:alt" content="AudioTools — Free Audio Tools Online">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AudioTools — Free Audio Converter & Voice to Text">
-    <meta name="twitter:description" content="Convert audio files and transcribe speech in your browser. No upload, 100% private.">
+    <meta name="twitter:title" content="AudioTools — Free Audio Converter, Trimmer, TTS">
+    <meta name="twitter:description" content="Convert, trim, and transcribe audio in your browser. No upload, 100% private.">
     <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
-    <!-- Schema.org: WebSite -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "AudioTools",
-        "url": "https://audiotools.dev",
-        "description": "Free open source audio processing tools: converter, voice-to-text, music recognition, audiobook cleaner.",
-        "author": {
-            "@type": "Person",
-            "name": "Roman Gordienko",
-            "url": "https://github.com/formeo",
-            "jobTitle": "Senior Software Developer",
-            "knowsAbout": ["Go", "Python", "Audio Processing", "Distributed Systems"]
-        }
+        "url": "https://audiotools.dev/",
+        "description": "Free open source audio processing tools that run in your browser.",
+        "author": { "@type": "Person", "name": "Roman Gordienko", "url": "https://github.com/formeo", "jobTitle": "Senior Software Developer" }
     }
     </script>
-
-    <!-- Schema.org: SoftwareApplication (Audio Converter) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AudioTools Audio Converter",
-        "url": "https://audiotools.dev/converter/",
-        "description": "Convert audio files between WAV, MP3, FLAC, OGG directly in your browser. No upload, no server, 100% private.",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Any (browser-based)",
-        "browserRequirements": "Requires a modern browser with Web Audio API support",
-        "softwareVersion": "1.0",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "featureList": [
-            "Browser-based audio conversion",
-            "No file upload required",
-            "WAV, MP3, FLAC, OGG support",
-            "Waveform visualization",
-            "MP3 bitrate selection (128-320 kbps)",
-            "FLAC encoding via WebAssembly"
-        ],
-        "author": {
-            "@type": "Person",
-            "name": "Roman Gordienko",
-            "url": "https://github.com/formeo"
-        }
-    }
-    </script>
-
-    <!-- Schema.org: SoftwareApplication (Voice to Text) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AudioTools Voice to Text",
-        "url": "https://audiotools.dev/voice-to-text/",
-        "description": "Free online speech-to-text transcription in 60+ languages using Web Speech API.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any (browser-based)",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "featureList": [
-            "Real-time speech transcription",
-            "60+ language support",
-            "No data upload",
-            "Copy and download transcript"
-        ]
-    }
-    </script>
-
-    <!-- Schema.org: ItemList -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        "name": "AudioTools — Free Online Audio Tools",
+        "name": "AudioTools Online Tools",
         "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "item": {
-                    "@type": "WebApplication",
-                    "name": "Audio Converter Online",
-                    "url": "https://audiotools.dev/converter/",
-                    "description": "Convert WAV, MP3, FLAC, OGG in your browser — no upload, 100% private"
-                }
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "item": {
-                    "@type": "WebApplication",
-                    "name": "Voice to Text Online",
-                    "url": "https://audiotools.dev/voice-to-text/",
-                    "description": "Free speech-to-text transcription in 60+ languages"
-                }
-            }
+            {"@type": "ListItem", "position": 1, "item": {"@type": "WebApplication", "name": "Audio Converter", "url": "https://audiotools.dev/converter/"}},
+            {"@type": "ListItem", "position": 2, "item": {"@type": "WebApplication", "name": "Voice to Text", "url": "https://audiotools.dev/voice-to-text/"}},
+            {"@type": "ListItem", "position": 3, "item": {"@type": "WebApplication", "name": "Text to Speech", "url": "https://audiotools.dev/text-to-speech/"}},
+            {"@type": "ListItem", "position": 4, "item": {"@type": "WebApplication", "name": "Audio Trimmer", "url": "https://audiotools.dev/audio-trimmer/"}}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Are AudioTools really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, all tools are completely free with no limits, no ads, and no sign-up required. The entire project is open source under the MIT license." }},
+            { "@type": "Question", "name": "Are my files uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. All audio processing happens directly in your browser using Web Audio API and Web Speech API. Your files and data never leave your device." }},
+            { "@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "The audio converter supports WAV, MP3, FLAC, OGG, AAC, M4A, and WebM. Input formats depend on browser support. Output formats include WAV, MP3, and FLAC." }},
+            { "@type": "Question", "name": "Does voice-to-text work offline?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on your browser. Chrome uses Google's speech servers. Safari supports on-device recognition. The audio trimmer and converter always work offline." }},
+            { "@type": "Question", "name": "Can I use AudioTools on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All tools work on mobile browsers including Chrome on Android and Safari on iOS. The interface is fully responsive." }}
         ]
     }
     </script>
 
-    <!-- Yandex Metrika counter -->
-    <meta name="yandex-verification" content="cd3fa61a2472db14"/>
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106243090', 'ym');
-        ym(106243090, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
-    </noscript>
-
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg: #0a0b10;
-            --surface: #12131a;
-            --surface2: #1a1b26;
-            --border: #2a2b3a;
-            --text: #e2e4f0;
-            --text2: #8b8ea3;
-            --accent: #6c5ce7;
-            --accent2: #a29bfe;
-            --green: #00d2a0;
-            --green2: #00f5b8;
-            --cyan: #22d3ee;
-            --orange: #f59e0b;
-            --radius: 12px;
+            --bg: #0a0b10; --surface: #12131a; --surface2: #1a1b26; --border: #2a2b3a;
+            --text: #e2e4f0; --text2: #8b8ea3; --accent: #6c5ce7; --accent2: #a29bfe;
+            --green: #00d2a0; --green2: #00f5b8; --cyan: #22d3ee; --orange: #f59e0b; --radius: 12px;
         }
-
-        body {
-            font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
+        body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
         .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
 
-        /* NAV */
         nav { border-bottom: 1px solid var(--border); padding: 14px 0; }
         nav .container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
@@ -200,123 +83,86 @@
         .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
         .nav-links a:hover, .nav-links a.active { color: var(--green); }
 
-        /* HERO */
         .hero { text-align: center; padding: 56px 0 40px; }
         .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 14px; }
         .hero h1 em { font-style: normal; color: var(--green); }
         .hero p { color: var(--text2); font-size: 17px; max-width: 520px; margin: 0 auto 24px; }
         .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .badge {
-            display: inline-flex; align-items: center; gap: 5px;
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--text2);
-        }
+        .badge { display: inline-flex; align-items: center; gap: 5px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--text2); }
         .badge b { color: var(--green); }
 
-        /* ONLINE TOOLS */
-        .section-title {
-            font-size: 13px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 16px;
-        }
+        .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 16px; }
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 48px; }
 
-        .tools-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 48px;
-        }
-
-        .tool-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 24px;
-            text-decoration: none; color: var(--text);
-            transition: all 0.25s; position: relative; overflow: hidden;
-        }
-        .tool-card:hover {
-            border-color: var(--accent); transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(108, 92, 231, 0.12);
-        }
+        .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-decoration: none; color: var(--text); transition: all 0.25s; position: relative; overflow: hidden; }
+        .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108, 92, 231, 0.12); }
         .tool-card.featured { border-color: var(--green); }
         .tool-card.featured:hover { border-color: var(--green2); box-shadow: 0 8px 24px rgba(0, 210, 160, 0.12); }
+        .tool-card.soon { opacity: 0.85; }
+        .tool-card.soon:hover { opacity: 1; border-color: var(--orange); box-shadow: 0 8px 24px rgba(245, 158, 11, 0.08); }
 
         .tool-icon { font-size: 28px; margin-bottom: 10px; }
         .tool-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
         .tool-desc { font-size: 13px; color: var(--text2); margin-bottom: 12px; line-height: 1.5; }
-        .tool-tag {
-            display: inline-block; font-size: 11px; padding: 3px 10px;
-            border-radius: 10px; font-weight: 600;
-        }
+        .tool-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; }
         .tag-live { background: rgba(0, 210, 160, 0.12); color: var(--green); }
         .tag-new { background: rgba(108, 92, 231, 0.15); color: var(--accent2); }
-        .tool-arrow {
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-            font-size: 18px; color: var(--text2); opacity: 0; transition: all 0.2s;
-        }
+        .tag-soon { background: rgba(245, 158, 11, 0.12); color: var(--orange); }
+        .tool-arrow { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--text2); opacity: 0; transition: all 0.2s; }
         .tool-card:hover .tool-arrow { opacity: 1; right: 16px; }
 
-        /* OPEN SOURCE SECTION */
         .oss-section { margin-bottom: 48px; }
         .oss-grid { display: flex; flex-direction: column; gap: 10px; }
-
-        .oss-card {
-            display: grid; grid-template-columns: 1fr auto; gap: 16px;
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 18px 20px;
-            text-decoration: none; color: var(--text); transition: all 0.2s;
-            align-items: center;
-        }
+        .oss-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-decoration: none; color: var(--text); transition: all 0.2s; align-items: center; }
         .oss-card:hover { border-color: var(--accent); }
         .oss-left { display: flex; align-items: center; gap: 14px; }
         .oss-icon { font-size: 24px; }
         .oss-name { font-weight: 700; font-size: 15px; }
         .oss-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
-        .oss-lang {
-            font-size: 11px; padding: 3px 10px; border-radius: 8px;
-            font-weight: 600; white-space: nowrap;
-        }
+        .oss-lang { font-size: 11px; padding: 3px 10px; border-radius: 8px; font-weight: 600; white-space: nowrap; }
         .lang-go { background: rgba(0, 173, 216, 0.12); color: var(--cyan); }
         .lang-py { background: rgba(255, 212, 59, 0.12); color: #ffd43b; }
 
-        /* TECH ECOSYSTEM */
         .eco-section { margin-bottom: 48px; }
-        .eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .eco-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 20px; text-align: center;
-        }
+        .eco-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .eco-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
         .eco-num { font-size: 28px; font-weight: 800; color: var(--green); }
         .eco-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
 
-        /* CTA */
-        .cta-section {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(0, 210, 160, 0.08));
-            border: 1px solid var(--border); border-radius: 16px;
-            padding: 36px; text-align: center; margin-bottom: 48px;
-        }
+        .cta-section { background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(0, 210, 160, 0.08)); border: 1px solid var(--border); border-radius: 16px; padding: 36px; text-align: center; margin-bottom: 48px; }
         .cta-section h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
         .cta-section p { color: var(--text2); font-size: 14px; margin-bottom: 20px; }
         .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 24px; border-radius: 10px; text-decoration: none;
-            font-weight: 700; font-size: 14px; transition: all 0.2s;
-        }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.2s; }
         .btn-primary { background: var(--green); color: #0a0b10; }
         .btn-primary:hover { background: var(--green2); transform: translateY(-1px); }
         .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
         .btn-secondary:hover { border-color: var(--accent); }
 
-        /* FOOTER */
-        footer {
-            border-top: 1px solid var(--border); padding: 24px 0;
-            text-align: center; font-size: 13px; color: var(--text2);
-        }
+        .seo-content { margin: 48px 0; }
+        .seo-content h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+        .seo-content h3 { font-size: 15px; font-weight: 600; margin: 24px 0 8px; color: var(--text); }
+        .seo-content p { font-size: 14px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
+        .seo-content a { color: var(--green); text-decoration: none; }
+        .seo-content a:hover { text-decoration: underline; }
+
+        .faq { margin: 32px 0 48px; }
+        .faq h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; }
+        .faq-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text); }
+        .faq-a { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+        footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; font-size: 13px; color: var(--text2); }
         footer a { color: var(--accent2); text-decoration: none; }
         footer a:hover { color: var(--text); }
         .footer-links { margin-top: 8px; }
         .footer-links a { margin: 0 8px; }
+        .footer-sister { margin-top: 6px; font-size: 12px; }
 
         @media (max-width: 600px) {
             .hero h1 { font-size: 28px; }
             .tools-grid { grid-template-columns: 1fr; }
-            .eco-grid { grid-template-columns: 1fr; }
+            .eco-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -328,7 +174,8 @@
                 <a href="/" class="active">Home</a>
                 <a href="/converter/">Converter</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a>
+                <a href="/text-to-speech/">TTS</a>
+                <a href="/audio-trimmer/">Trimmer</a>
             </div>
         </div>
     </nav>
@@ -336,7 +183,7 @@
     <div class="container">
         <section class="hero">
             <h1>Free <em>Audio Tools</em><br>That Respect Your Privacy</h1>
-            <p>Convert, transcribe, identify, and clean audio — all in your browser. No uploads, no accounts, 100% open source.</p>
+            <p>Convert, trim, transcribe, and synthesize audio — all in your browser. No uploads, no accounts, 100% open source.</p>
             <div class="hero-badges">
                 <div class="badge">🔒 <b>Privacy-first</b> — files stay on your device</div>
                 <div class="badge">⭐ <b>Open source</b> — MIT license</div>
@@ -351,7 +198,7 @@
                 <div class="tool-icon">🔄</div>
                 <div class="tool-name">Audio Converter</div>
                 <div class="tool-desc">Convert between WAV, MP3, FLAC, OGG and more. All processing happens in your browser — no file upload.</div>
-                <span class="tool-tag tag-new">NEW</span>
+                <span class="tool-tag tag-live">LIVE</span>
                 <span class="tool-arrow">→</span>
             </a>
             <a href="/voice-to-text/" class="tool-card featured">
@@ -361,6 +208,53 @@
                 <span class="tool-tag tag-live">LIVE</span>
                 <span class="tool-arrow">→</span>
             </a>
+            <a href="/text-to-speech/" class="tool-card featured">
+                <div class="tool-icon">🔊</div>
+                <div class="tool-name">Text to Speech</div>
+                <div class="tool-desc">Convert text to natural speech in 50+ languages. Adjustable speed, pitch, and voice selection.</div>
+                <span class="tool-tag tag-new">NEW</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-trimmer/" class="tool-card featured">
+                <div class="tool-icon">✂️</div>
+                <div class="tool-name">Audio Trimmer</div>
+                <div class="tool-desc">Cut and trim audio files with a visual waveform editor. Drag handles to set start and end points.</div>
+                <span class="tool-tag tag-new">NEW</span>
+                <span class="tool-arrow">→</span>
+            </a>
+        </div>
+
+        <!-- COMING SOON -->
+        <div class="section-title">🚀 Coming Soon</div>
+        <div class="tools-grid" style="margin-bottom:48px;">
+            <a href="/audio-joiner/" class="tool-card soon">
+                <div class="tool-icon">🔗</div>
+                <div class="tool-name">Audio Joiner</div>
+                <div class="tool-desc">Merge multiple audio files into one with crossfade transitions. Drag & drop ordering.</div>
+                <span class="tool-tag tag-soon">SOON</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-speed-changer/" class="tool-card soon">
+                <div class="tool-icon">⏩</div>
+                <div class="tool-name">Speed Changer</div>
+                <div class="tool-desc">Slow down or speed up audio without changing pitch. Perfect for language learning.</div>
+                <span class="tool-tag tag-soon">SOON</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-compressor/" class="tool-card soon">
+                <div class="tool-icon">📦</div>
+                <div class="tool-name">Audio Compressor</div>
+                <div class="tool-desc">Reduce audio file size by adjusting bitrate, sample rate, and format.</div>
+                <span class="tool-tag tag-soon">SOON</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/volume-booster/" class="tool-card soon">
+                <div class="tool-icon">📈</div>
+                <div class="tool-name">Volume Booster</div>
+                <div class="tool-desc">Increase audio volume up to 500% or normalize to consistent levels.</div>
+                <span class="tool-tag tag-soon">SOON</span>
+                <span class="tool-arrow">→</span>
+            </a>
         </div>
 
         <!-- OPEN SOURCE PROJECTS -->
@@ -368,43 +262,19 @@
             <div class="section-title">⚡ Open Source Projects — Download & Run</div>
             <div class="oss-grid">
                 <a href="https://github.com/formeo/go-audio-converter" class="oss-card" target="_blank" rel="noopener">
-                    <div class="oss-left">
-                        <div class="oss-icon">🔄</div>
-                        <div>
-                            <div class="oss-name">go-audio-converter</div>
-                            <div class="oss-desc">Pure Go audio converter — no FFmpeg, no CGO. Custom FLAC encoder. Single binary.</div>
-                        </div>
-                    </div>
+                    <div class="oss-left"><div class="oss-icon">🔄</div><div><div class="oss-name">go-audio-converter</div><div class="oss-desc">Pure Go audio converter — no FFmpeg, no CGO. Custom FLAC encoder. Single binary.</div></div></div>
                     <span class="oss-lang lang-go">Go</span>
                 </a>
                 <a href="https://github.com/formeo/voice-to-text" class="oss-card" target="_blank" rel="noopener">
-                    <div class="oss-left">
-                        <div class="oss-icon">🎤</div>
-                        <div>
-                            <div class="oss-name">voice-to-text</div>
-                            <div class="oss-desc">Bulk voice message transcription. Whisper, faster-whisper, OpenAI API, Groq. Telegram bot included.</div>
-                        </div>
-                    </div>
+                    <div class="oss-left"><div class="oss-icon">🎤</div><div><div class="oss-name">voice-to-text</div><div class="oss-desc">Bulk voice message transcription. Whisper, faster-whisper, OpenAI API, Groq. Telegram bot included.</div></div></div>
                     <span class="oss-lang lang-py">Python</span>
                 </a>
                 <a href="https://github.com/formeo/music_recognition" class="oss-card" target="_blank" rel="noopener">
-                    <div class="oss-left">
-                        <div class="oss-icon">🎵</div>
-                        <div>
-                            <div class="oss-name">music_recognition</div>
-                            <div class="oss-desc">Bulk music identification via Shazam. Auto ID3 tags, rename files, organize into folders.</div>
-                        </div>
-                    </div>
+                    <div class="oss-left"><div class="oss-icon">🎵</div><div><div class="oss-name">music_recognition</div><div class="oss-desc">Bulk music identification via Shazam. Auto ID3 tags, rename files, organize into folders.</div></div></div>
                     <span class="oss-lang lang-py">Python</span>
                 </a>
                 <a href="https://github.com/formeo/Audiobook-Cleaner" class="oss-card" target="_blank" rel="noopener">
-                    <div class="oss-left">
-                        <div class="oss-icon">📚</div>
-                        <div>
-                            <div class="oss-name">audiobook-cleaner</div>
-                            <div class="oss-desc">AI audiobook noise removal with MDX-Net, VR, and Roformer models. GPU & CPU.</div>
-                        </div>
-                    </div>
+                    <div class="oss-left"><div class="oss-icon">📚</div><div><div class="oss-name">audiobook-cleaner</div><div class="oss-desc">AI audiobook noise removal with MDX-Net, VR, and Roformer models. GPU & CPU.</div></div></div>
                     <span class="oss-lang lang-py">Python</span>
                 </a>
             </div>
@@ -414,18 +284,10 @@
         <div class="eco-section">
             <div class="section-title">📊 Ecosystem</div>
             <div class="eco-grid">
-                <div class="eco-card">
-                    <div class="eco-num">6</div>
-                    <div class="eco-label">Tools & Projects</div>
-                </div>
-                <div class="eco-card">
-                    <div class="eco-num">2</div>
-                    <div class="eco-label">Languages: Go & Python</div>
-                </div>
-                <div class="eco-card">
-                    <div class="eco-num">MIT</div>
-                    <div class="eco-label">Open Source License</div>
-                </div>
+                <div class="eco-card"><div class="eco-num">8</div><div class="eco-label">Tools & Projects</div></div>
+                <div class="eco-card"><div class="eco-num">4</div><div class="eco-label">Live Online Tools</div></div>
+                <div class="eco-card"><div class="eco-num">3</div><div class="eco-label">Languages: Go, Python, JS</div></div>
+                <div class="eco-card"><div class="eco-num">MIT</div><div class="eco-label">Open Source License</div></div>
             </div>
         </div>
 
@@ -434,10 +296,62 @@
             <h2>Everything is open source</h2>
             <p>Use the tools online, or download and run them locally. Contribute, fork, build upon — it's MIT licensed.</p>
             <div class="cta-buttons">
-                <a href="/converter/" class="btn btn-primary">🔄 Try Audio Converter</a>
+                <a href="/converter/" class="btn btn-primary">🔄 Audio Converter</a>
+                <a href="/audio-trimmer/" class="btn btn-primary">✂️ Audio Trimmer</a>
                 <a href="https://github.com/formeo" class="btn btn-secondary" target="_blank" rel="noopener">⭐ GitHub</a>
             </div>
         </div>
+
+        <!-- SEO CONTENT -->
+        <section class="seo-content">
+            <h2>AudioTools — Free Browser-Based Audio Processing</h2>
+            <p>AudioTools is a collection of free, open-source audio tools that run entirely in your browser. No files are uploaded to any server — all processing happens locally using modern Web APIs (Web Audio API, Web Speech API, MediaRecorder API). Every tool is free, with no limits, no ads, and no account required.</p>
+
+            <h3>Audio Converter</h3>
+            <p>Convert between <strong>WAV, MP3, FLAC, OGG, AAC, M4A, and WebM</strong> formats. The <a href="/converter/">audio converter</a> decodes your audio file using the Web Audio API, then re-encodes it in the target format. WAV encoding is native, MP3 uses the LAME encoder compiled to WebAssembly, and FLAC uses a custom WASM encoder. File sizes up to several hundred MB are supported depending on your device's memory.</p>
+
+            <h3>Voice to Text</h3>
+            <p>Real-time speech transcription using the <strong>Web Speech Recognition API</strong>. The <a href="/voice-to-text/">voice-to-text</a> tool supports 60+ languages including English, Spanish, French, German, Japanese, Chinese, Korean, Russian, Arabic, Hindi, and many more. Punctuation and formatting are automatic. Great for transcribing meetings, lectures, interviews, and voice notes.</p>
+
+            <h3>Text to Speech</h3>
+            <p>Convert written text to natural-sounding speech using the <strong>Web Speech Synthesis API</strong>. The <a href="/text-to-speech/">text-to-speech</a> tool offers 50+ voices across dozens of languages. Adjust speed (0.25x to 3x), pitch, and volume. Useful for proofreading, language learning, accessibility, and content creation.</p>
+
+            <h3>Audio Trimmer</h3>
+            <p>Cut and trim audio files with a <strong>visual waveform editor</strong>. The <a href="/audio-trimmer/">audio trimmer</a> shows your file as a waveform — drag the start and end handles to select the portion you want, preview the selection, and download the result as WAV. Uses OfflineAudioContext for precise sample-accurate trimming.</p>
+
+            <h3>How Browser Audio Processing Works</h3>
+            <p>Modern browsers include powerful audio processing capabilities through the Web Audio API. When you load a file, the browser decodes it into raw PCM audio data (an AudioBuffer). This data can then be processed — trimmed, converted, analyzed, or played back — entirely in JavaScript. The result is encoded back into a file format and downloaded. No network requests are made during processing.</p>
+
+            <h3>Privacy & Security</h3>
+            <p>AudioTools takes a zero-knowledge approach: your audio files and voice data never leave your device. There are no analytics trackers, no cookies, and no server-side processing. The entire source code is available on <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a> under the MIT license for full transparency.</p>
+
+            <p>Also check out our developer tools at <a href="https://www.devtoolkit.site/" target="_blank" rel="noopener">DevToolKit.site</a> — 21 free browser-based tools for JSON formatting, JWT decoding, PostgreSQL config generation, and more.</p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-q">Are AudioTools really free?</div>
+                <div class="faq-a">Yes, all tools are completely free with no limits, no ads, and no sign-up. The entire project is open source under the MIT license.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Are my files uploaded to a server?</div>
+                <div class="faq-a">No. All audio processing happens directly in your browser using Web Audio API and Web Speech API. Your files and data never leave your device.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">What audio formats are supported?</div>
+                <div class="faq-a">The audio converter supports WAV, MP3, FLAC, OGG, AAC, M4A, and WebM. Input formats depend on browser support. The trimmer accepts any format your browser can decode.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Does voice-to-text work offline?</div>
+                <div class="faq-a">It depends on your browser. Chrome uses Google's speech recognition servers. Some browsers like Safari support on-device recognition. The audio converter and trimmer always work fully offline.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Can I use AudioTools on mobile?</div>
+                <div class="faq-a">Yes. All tools work on mobile browsers including Chrome on Android and Safari on iOS. The interface is fully responsive.</div>
+            </div>
+        </section>
     </div>
 
     <footer>
@@ -445,12 +359,15 @@
             <a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem.
             Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.
             <div class="footer-links">
-                <a href="/converter/">Audio Converter</a>
+                <a href="/converter/">Converter</a>
                 <a href="/voice-to-text/">Voice to Text</a>
+                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/audio-trimmer/">Trimmer</a>
                 <a href="/privacy/">Privacy</a>
                 <a href="/terms/">Terms</a>
                 <a href="https://github.com/formeo" rel="noopener">GitHub</a>
             </div>
+            <div class="footer-sister">Also: <a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a> — 21 free developer tools</div>
         </div>
     </footer>
 </body>
