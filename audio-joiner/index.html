@@ -11,17 +11,16 @@
       gtag('js', new Date());
       gtag('config', 'G-62ZJNZFRES');
     </script>
-
     <title>Audio Joiner — Merge MP3, WAV Files Free | AudioTools</title>
     <meta name="description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.">
-    <meta name="keywords" content="audio joiner online, merge mp3 files, combine audio files, audio merger free, join mp3 online, concatenate audio, merge wav files">
+    <meta name="keywords" content="audio joiner, merge audio online, combine mp3, join audio files, audio merger, concatenate audio, merge wav files free">
     <link rel="canonical" href="https://audiotools.dev/audio-joiner/">
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta property="og:title" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
-    <meta property="og:description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.">
+    <meta property="og:description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, add crossfade between tracks.">
     <meta property="og:url" content="https://audiotools.dev/audio-joiner/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools">
@@ -35,11 +34,11 @@
     {"@context":"https://schema.org","@type":"WebApplication","name":"Audio Joiner — AudioTools","url":"https://audiotools.dev/audio-joiner/","description":"Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I merge audio files online?", "acceptedAnswer": {"@type": "Answer", "text": "Add your audio files, arrange them in order using drag and drop, optionally add crossfade between tracks, then click Merge & Download to get a single combined file."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All merging happens in your browser using Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "Can I merge different audio formats?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can mix MP3, WAV, FLAC, OGG and other formats. The browser decodes each file and the merged result is saved as WAV."}}]}
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I merge audio files online?", "acceptedAnswer": {"@type": "Answer", "text": "Add your audio files, arrange them in order, optionally add crossfade between tracks, then click Merge & Download to get a single combined file."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All merging happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "Can I merge different audio formats?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can mix MP3, WAV, FLAC, OGG and other formats. The browser decodes each file and the merged result is saved as WAV."}}]}
     </script>
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0b10;--surface:#12131a;--surface2:#1a1b26;--border:#2a2b3a;--text:#e2e4f0;--text2:#8b8ea3;--accent:#6c5ce7;--accent2:#a29bfe;--green:#00d2a0;--green2:#00f5b8;--radius:12px}
+        :root{--bg:#0a0b10;--surface:#12131a;--surface2:#1a1b26;--border:#2a2b3a;--text:#e2e4f0;--text2:#8b8ea3;--accent:#6c5ce7;--accent2:#a29bfe;--green:#00d2a0;--green2:#00f5b8;--red:#ef4444;--radius:12px}
         body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
         nav{border-bottom:1px solid var(--border);padding:14px 0}
@@ -49,17 +48,56 @@
         .nav-links{display:flex;gap:20px}
         .nav-links a{color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s}
         .nav-links a:hover,.nav-links a.active{color:var(--green)}
-        .hero{text-align:center;padding:56px 0 32px}
+        .hero{text-align:center;padding:40px 0 28px}
         .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
         .hero h1 em{font-style:normal;color:var(--green)}
-        .hero p{color:var(--text2);font-size:15px;max-width:480px;margin:0 auto}
-        .coming-soon{background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(0,210,160,0.08));border:1px solid var(--border);border-radius:16px;padding:48px;text-align:center;margin:32px 0}
-        .coming-soon .icon{font-size:48px;margin-bottom:16px}
-        .coming-soon h2{font-size:22px;font-weight:700;margin-bottom:8px}
-        .coming-soon p{color:var(--text2);font-size:14px;margin-bottom:20px}
-        .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .hero p{color:var(--text2);font-size:15px;max-width:500px;margin:0 auto}
+
+        .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(0,210,160,0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .track-list{list-style:none;margin:18px 0 0}
+        .track{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:grab}
+        .track.dragging{opacity:.4}
+        .track-idx{width:22px;height:22px;flex:none;border-radius:6px;background:var(--surface2);color:var(--text2);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+        .track-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .track-dur{font-size:12px;color:var(--text2);font-family:monospace}
+        .track-btns{display:flex;gap:2px}
+        .track-btns button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:15px;padding:2px 5px;border-radius:4px}
+        .track-btns button:hover{color:var(--text);background:var(--surface2)}
+        .track-btns .rm:hover{color:var(--red)}
+        .add-more{display:inline-block;margin-top:12px;color:var(--green);font-size:13px;font-weight:600;cursor:pointer;background:none;border:none}
+
+        .xfade{margin:22px 0 4px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+        .xfade label{font-size:14px;font-weight:600}
+        .xfade .xval{color:var(--green);font-weight:700;font-family:monospace}
+        input[type="range"]{flex:1;min-width:160px;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--surface2);outline:none}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        .total-line{text-align:center;font-size:13px;color:var(--text2);margin:16px 0 0}
+        .total-line b{color:var(--text)}
+
+        .btn-row{display:flex;gap:10px;margin-top:20px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
         .btn-primary{background:var(--green);color:#0a0b10}
         .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:18px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result h3{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+        .hidden{display:none!important}
+
         .features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
         .feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
         .feature-icon{font-size:24px;margin-bottom:8px}
@@ -80,7 +118,7 @@
         footer a{color:var(--accent2);text-decoration:none}
         .footer-links{margin-top:8px}
         .footer-links a{margin:0 8px}
-        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}}
+        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -88,40 +126,225 @@
     <div class="container">
         <section class="hero">
             <h1>🔗 <em>Audio Joiner</em></h1>
-            <p>Merge and combine multiple audio files into one — drag &amp; drop, crossfade, no upload</p>
+            <p>Merge and combine multiple audio files into one — reorder tracks, add crossfade, no upload</p>
         </section>
-        <div class="coming-soon">
-            <div class="icon">🚧</div>
-            <h2>Coming Soon</h2>
-            <p>Audio Joiner is currently under development. Meanwhile, try our existing tools:</p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                <a href="/audio-trimmer/" class="btn btn-primary">✂️ Audio Trimmer</a>
-                <a href="/converter/" class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);">🔄 Converter</a>
-                <a href="/text-to-speech/" class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);">🔊 Text to Speech</a>
+
+        <div class="tool-area">
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon">📁</div>
+                <p><strong>Drop audio files here</strong> or click to browse</p>
+                <p>Add several files — MP3, WAV, FLAC, OGG, M4A. Processed locally, never uploaded.</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*" multiple>
+
+            <div id="panel" class="hidden">
+                <ul class="track-list" id="trackList"></ul>
+                <button class="add-more" onclick="fileInput.click()">＋ Add more files</button>
+
+                <div class="xfade">
+                    <label>Crossfade:</label>
+                    <input type="range" id="xfade" min="0" max="3" step="0.1" value="0">
+                    <span class="xval" id="xfadeVal">0.0s</span>
+                </div>
+                <div class="total-line">Tracks: <b id="trackCount">0</b> · Total length: <b id="totalDur">0:00</b></div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="mergeBtn" onclick="merge()" style="flex:1;">🔗 Merge &amp; Download</button>
+                    <button class="btn btn-secondary" onclick="reset()">Clear</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">Merging…</div>
+                </div>
+
+                <div class="result hidden" id="result">
+                    <h3>✅ Merged — <span id="resultInfo"></span></h3>
+                    <audio id="resultAudio" controls></audio>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download WAV</button>
+                </div>
             </div>
         </div>
+
         <div class="features">
-            <div class="feature"><div class="feature-icon">📁</div><div class="feature-title">Drag & Drop Multiple Files</div><div class="feature-desc">Add any number of audio files and reorder them by dragging.</div></div>
-            <div class="feature"><div class="feature-icon">🔀</div><div class="feature-title">Crossfade Transitions</div><div class="feature-desc">Add smooth crossfade between tracks for seamless transitions.</div></div>
+            <div class="feature"><div class="feature-icon">📁</div><div class="feature-title">Multiple Files</div><div class="feature-desc">Add any number of audio files and reorder them freely.</div></div>
+            <div class="feature"><div class="feature-icon">🔀</div><div class="feature-title">Crossfade Transitions</div><div class="feature-desc">Add a smooth crossfade between tracks for seamless joins.</div></div>
             <div class="feature"><div class="feature-icon">🎵</div><div class="feature-title">Mix Formats</div><div class="feature-desc">Combine MP3, WAV, FLAC, OGG in any combination.</div></div>
-            <div class="feature"><div class="feature-icon">🔒</div><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
+            <div class="feature"><div class="feature-icon">🔒</div><div class="feature-title">100% Private</div><div class="feature-desc">All merging in your browser. Files never leave your device.</div></div>
         </div>
+
         <section class="seo-content">
-            <h2>Free Online Audio Joiner & Merger</h2>
-            <p>Audio Joiner will let you combine multiple audio files into a single track directly in your browser. Whether you need to merge podcast segments, combine music tracks, or join voice recordings, this tool handles it without uploading your files to any server.</p>
-            <h3>How Audio Merging Works</h3>
-            <p>The tool uses the Web Audio API to decode each audio file into raw PCM data, concatenates the audio buffers with optional crossfade transitions between tracks, and encodes the result. All processing happens in your browser using JavaScript — no server involved.</p>
+            <h2>Free Online Audio Joiner &amp; Merger</h2>
+            <p>Audio Joiner combines multiple audio files into a single track directly in your browser. Whether you need to merge podcast segments, combine music tracks, or join voice recordings, this tool handles it without uploading your files to any server.</p>
+            <h3>How It Works</h3>
+            <p>The tool uses the Web Audio API to decode each file into raw PCM, concatenates the buffers in the order you set, applies an optional crossfade between consecutive tracks, and encodes the result as a WAV file. All processing happens in your browser — no server involved.</p>
+            <h3>Reorder and Crossfade</h3>
+            <p>Drag tracks to reorder them, or use the up/down arrows. Set a crossfade of up to 3 seconds to smoothly blend the end of one track into the start of the next — useful for music mixes and seamless podcast edits. Set crossfade to 0 for a clean back-to-back join.</p>
             <h3>Common Use Cases</h3>
-            <p>Merging podcast episodes from separately recorded segments. Combining music tracks into a continuous mix. Joining voice recordings or meeting notes into a single file. Creating audio montages from multiple clips for presentations or social media.</p>
-            <p>While Audio Joiner is being built, try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/converter/">Audio Converter</a>, <a href="/text-to-speech/">Text to Speech</a>, or <a href="/voice-to-text/">Voice to Text</a>.</p>
+            <p>Merging podcast intro, segments, and outro. Combining multiple music tracks into one mix. Joining split voice recordings or audiobook chapters. Assembling sound effects into a single file.</p>
+            <p>Need other edits? Try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/audio-speed-changer/">Speed Changer</a>, <a href="/volume-booster/">Volume Booster</a>, or <a href="/converter/">Audio Converter</a>.</p>
         </section>
+
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
-            <div class="faq-item"><div class="faq-q">How do I merge audio files online?</div><div class="faq-a">Add your files, arrange them in order, optionally add crossfade, then click Merge & Download to get a single combined file.</div></div>
-            <div class="faq-item"><div class="faq-q">Can I merge different audio formats?</div><div class="faq-a">Yes. Mix MP3, WAV, FLAC, OGG. The browser decodes each file and the merged result is saved as WAV.</div></div>
-            <div class="faq-item"><div class="faq-q">Is my audio uploaded to a server?</div><div class="faq-a">No. All merging happens in your browser using Web Audio API. Files never leave your device.</div></div>
+            <div class="faq-item"><div class="faq-q">How do I merge audio files online?</div><div class="faq-a">Add your files, arrange them in order, optionally add crossfade, then click Merge &amp; Download to get a single combined file.</div></div>
+            <div class="faq-item"><div class="faq-q">Can I merge different formats?</div><div class="faq-a">Yes. Mix MP3, WAV, FLAC, OGG. The browser decodes each file and the merged result is saved as WAV.</div></div>
+            <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. All merging happens in your browser using the Web Audio API.</div></div>
         </section>
     </div>
     <footer><div class="container"><a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.<div class="footer-links"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const trackListEl = document.getElementById('trackList');
+        const xfadeEl = document.getElementById('xfade');
+        const xfadeVal = document.getElementById('xfadeVal');
+        const trackCountEl = document.getElementById('trackCount');
+        const totalDurEl = document.getElementById('totalDur');
+        const mergeBtn = document.getElementById('mergeBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultAudio = document.getElementById('resultAudio');
+        const resultInfo = document.getElementById('resultInfo');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let audioCtx, tracks = [], lastUrl = null, uid = 0;
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+        xfadeEl.addEventListener('input', () => { xfadeVal.textContent = parseFloat(xfadeEl.value).toFixed(1) + 's'; updateTotals(); });
+
+        function fmt(sec){ const m=Math.floor(sec/60), s=Math.round(sec%60); return m+':'+String(s).padStart(2,'0'); }
+
+        async function addFiles(fileList){
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            const files = [...fileList];
+            for (const file of files){
+                try {
+                    const buf = await audioCtx.decodeAudioData(await file.arrayBuffer());
+                    tracks.push({ id: ++uid, name: file.name, buffer: buf });
+                } catch (err) {
+                    alert('Could not decode "' + file.name + '". Skipping. Try MP3, WAV, FLAC, OGG or M4A.');
+                }
+            }
+            if (tracks.length){ dropZone.classList.add('hidden'); panel.classList.remove('hidden'); }
+            result.classList.add('hidden');
+            render();
+        }
+
+        function render(){
+            trackListEl.innerHTML = '';
+            tracks.forEach((t, i) => {
+                const li = document.createElement('li');
+                li.className = 'track'; li.draggable = true; li.dataset.i = i;
+                li.innerHTML =
+                    '<span class="track-idx">' + (i+1) + '</span>' +
+                    '<span class="track-name">' + t.name.replace(/</g,'&lt;') + '</span>' +
+                    '<span class="track-dur">' + fmt(t.buffer.duration) + '</span>' +
+                    '<span class="track-btns">' +
+                        '<button title="Move up" onclick="move(' + i + ',-1)">▲</button>' +
+                        '<button title="Move down" onclick="move(' + i + ',1)">▼</button>' +
+                        '<button class="rm" title="Remove" onclick="removeTrack(' + i + ')">✕</button>' +
+                    '</span>';
+                li.addEventListener('dragstart', e => { li.classList.add('dragging'); e.dataTransfer.setData('text/plain', i); });
+                li.addEventListener('dragend', () => li.classList.remove('dragging'));
+                li.addEventListener('dragover', e => e.preventDefault());
+                li.addEventListener('drop', e => { e.preventDefault(); const from=+e.dataTransfer.getData('text/plain'); reorder(from, i); });
+                trackListEl.appendChild(li);
+            });
+            updateTotals();
+        }
+
+        function move(i, dir){ const j=i+dir; if (j<0||j>=tracks.length) return; [tracks[i],tracks[j]]=[tracks[j],tracks[i]]; render(); }
+        function reorder(from, to){ if (from===to) return; const [m]=tracks.splice(from,1); tracks.splice(to,0,m); render(); }
+        function removeTrack(i){ tracks.splice(i,1); if (!tracks.length){ reset(); return; } render(); }
+
+        function computeTotal(){
+            if (!tracks.length) return { len:0, sr:44100, ch:1 };
+            const sr = tracks[0].buffer.sampleRate;
+            let ch = 1; tracks.forEach(t => ch = Math.max(ch, t.buffer.numberOfChannels));
+            const xf = Math.max(0, Math.round(parseFloat(xfadeEl.value) * sr));
+            let len = tracks[0].buffer.length;
+            for (let i=1;i<tracks.length;i++){
+                const ov = Math.min(xf, Math.floor(tracks[i-1].buffer.length/2), Math.floor(tracks[i].buffer.length/2));
+                len += tracks[i].buffer.length - ov;
+            }
+            return { len, sr, ch };
+        }
+        function updateTotals(){
+            const { len, sr } = computeTotal();
+            trackCountEl.textContent = tracks.length;
+            totalDurEl.textContent = fmt(len / sr);
+        }
+
+        function buildMerged(){
+            const { len, sr, ch } = computeTotal();
+            const xf = Math.max(0, Math.round(parseFloat(xfadeEl.value) * sr));
+            const out = audioCtx.createBuffer(ch, len, sr);
+            const ov = new Array(tracks.length).fill(0);
+            for (let i=1;i<tracks.length;i++) ov[i]=Math.min(xf, Math.floor(tracks[i-1].buffer.length/2), Math.floor(tracks[i].buffer.length/2));
+            const pos = new Array(tracks.length); pos[0]=0;
+            for (let i=1;i<tracks.length;i++) pos[i]=pos[i-1]+tracks[i-1].buffer.length-ov[i];
+            for (let c=0;c<ch;c++){
+                const o=out.getChannelData(c);
+                for (let i=0;i<tracks.length;i++){
+                    const b=tracks[i].buffer, src=b.getChannelData(Math.min(c, b.numberOfChannels-1));
+                    const L=b.length, p=pos[i], inN=(i>0?ov[i]:0), outN=(i<tracks.length-1?ov[i+1]:0);
+                    for (let j=0;j<L;j++){
+                        let g=1;
+                        if (inN>0 && j<inN) g=j/inN;
+                        if (outN>0 && j>=L-outN) g=Math.min(g,(L-1-j)/outN);
+                        o[p+j]+= src[j]*g;
+                    }
+                }
+            }
+            return out;
+        }
+
+        async function merge(){
+            if (!tracks.length) return;
+            mergeBtn.disabled = true; result.classList.add('hidden');
+            progressWrap.classList.remove('hidden'); progressFill.style.width='30%'; progressText.textContent='Merging…';
+            await new Promise(r => setTimeout(r, 30));
+            const out = buildMerged();
+            progressFill.style.width='70%'; progressText.textContent='Encoding…';
+            await new Promise(r => setTimeout(r, 30));
+            const blob = new Blob([encodeWAV(out)], { type: 'audio/wav' });
+            if (lastUrl) URL.revokeObjectURL(lastUrl);
+            lastUrl = URL.createObjectURL(blob);
+            resultAudio.src = lastUrl;
+            resultInfo.textContent = tracks.length + ' tracks · ' + fmt(out.duration) + ' · ' + (blob.size/1024/1024).toFixed(1) + ' MB';
+            downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download='merged.wav'; a.click(); };
+            progressFill.style.width='100%';
+            progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+            mergeBtn.disabled = false;
+        }
+
+        function encodeWAV(audioBuffer){
+            const ch=audioBuffer.numberOfChannels, sr=audioBuffer.sampleRate, len=audioBuffer.length;
+            const ab=new ArrayBuffer(44+len*ch*2), view=new DataView(ab);
+            function s(o,str){ for(let i=0;i<str.length;i++) view.setUint8(o+i,str.charCodeAt(i)); }
+            s(0,'RIFF'); view.setUint32(4,36+len*ch*2,true); s(8,'WAVE'); s(12,'fmt ');
+            view.setUint32(16,16,true); view.setUint16(20,1,true); view.setUint16(22,ch,true);
+            view.setUint32(24,sr,true); view.setUint32(28,sr*ch*2,true); view.setUint16(32,ch*2,true);
+            view.setUint16(34,16,true); s(36,'data'); view.setUint32(40,len*ch*2,true);
+            let offset=44;
+            for(let i=0;i<len;i++) for(let c=0;c<ch;c++){ let v=Math.max(-1,Math.min(1,audioBuffer.getChannelData(c)[i])); view.setInt16(offset, v<0?v*0x8000:v*0x7FFF, true); offset+=2; }
+            return ab;
+        }
+
+        function reset(){
+            tracks=[]; if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl=null; }
+            resultAudio.pause(); resultAudio.removeAttribute('src'); fileInput.value='';
+            panel.classList.add('hidden'); result.classList.add('hidden'); progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden'); trackListEl.innerHTML='';
+        }
+    </script>
 </body>
 </html>

@@ -11,12 +11,11 @@
       gtag('js', new Date());
       gtag('config', 'G-62ZJNZFRES');
     </script>
-
     <title>Audio Compressor — Reduce File Size Free | AudioTools</title>
     <meta name="description" content="Compress audio files online for free. Reduce MP3, WAV file size by adjusting bitrate and sample rate. No upload, runs in your browser.">
-    <meta name="keywords" content="audio compressor online, reduce audio file size, compress mp3, audio file compressor, reduce mp3 size, compress wav file, audio bitrate reducer">
+    <meta name="keywords" content="audio compressor, reduce audio file size, compress mp3 online, shrink audio file, audio bitrate reducer, compress wav free">
     <link rel="canonical" href="https://audiotools.dev/audio-compressor/">
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -35,11 +34,11 @@
     {"@context":"https://schema.org","@type":"WebApplication","name":"Audio Compressor — AudioTools","url":"https://audiotools.dev/audio-compressor/","description":"Compress audio files online for free. Reduce MP3, WAV file size by adjusting bitrate and sample rate. No upload, runs in your browser.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can I reduce audio file size?", "acceptedAnswer": {"@type": "Answer", "text": "Depending on the source format, you can reduce WAV files by 5-20x by converting to MP3. A 50MB WAV becomes approximately 5MB at 128kbps."}}, {"@type": "Question", "name": "Does compression affect audio quality?", "acceptedAnswer": {"@type": "Answer", "text": "Lossy compression removes some audio data. At 192kbps or higher, most listeners cannot tell the difference from the original."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All compression happens in your browser using Web Audio API. Your files never leave your device."}}]}
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can I reduce audio file size?", "acceptedAnswer": {"@type": "Answer", "text": "Depending on the source format, you can reduce WAV files by 5-20x by converting to MP3. A 50MB WAV becomes approximately 5MB at 128kbps."}}, {"@type": "Question", "name": "Does compression affect audio quality?", "acceptedAnswer": {"@type": "Answer", "text": "Lossy compression removes some audio data. At 192kbps or higher, most listeners cannot tell the difference from the original."}}, {"@type": "Question", "name": "Is my audio file uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All compression happens in your browser using the Web Audio API. Your files never leave your device."}}]}
     </script>
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0b10;--surface:#12131a;--surface2:#1a1b26;--border:#2a2b3a;--text:#e2e4f0;--text2:#8b8ea3;--accent:#6c5ce7;--accent2:#a29bfe;--green:#00d2a0;--green2:#00f5b8;--radius:12px}
+        :root{--bg:#0a0b10;--surface:#12131a;--surface2:#1a1b26;--border:#2a2b3a;--text:#e2e4f0;--text2:#8b8ea3;--accent:#6c5ce7;--accent2:#a29bfe;--green:#00d2a0;--green2:#00f5b8;--red:#ef4444;--radius:12px}
         body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
         nav{border-bottom:1px solid var(--border);padding:14px 0}
@@ -49,17 +48,53 @@
         .nav-links{display:flex;gap:20px}
         .nav-links a{color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s}
         .nav-links a:hover,.nav-links a.active{color:var(--green)}
-        .hero{text-align:center;padding:56px 0 32px}
+        .hero{text-align:center;padding:40px 0 28px}
         .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
         .hero h1 em{font-style:normal;color:var(--green)}
-        .hero p{color:var(--text2);font-size:15px;max-width:480px;margin:0 auto}
-        .coming-soon{background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(0,210,160,0.08));border:1px solid var(--border);border-radius:16px;padding:48px;text-align:center;margin:32px 0}
-        .coming-soon .icon{font-size:48px;margin-bottom:16px}
-        .coming-soon h2{font-size:22px;font-weight:700;margin-bottom:8px}
-        .coming-soon p{color:var(--text2);font-size:14px;margin-bottom:20px}
-        .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .hero p{color:var(--text2);font-size:15px;max-width:500px;margin:0 auto}
+
+        .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(0,210,160,0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2)}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+
+        .ctrl{margin-bottom:16px}
+        .ctrl-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block}
+        select{width:100%;padding:11px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;cursor:pointer}
+        select:focus{outline:none;border-color:var(--green)}
+
+        .size-preview{display:flex;justify-content:space-around;align-items:center;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:20px 0}
+        .size-box .num{font-size:22px;font-weight:800}
+        .size-box .lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+        .size-orig .num{color:var(--text2)}
+        .size-new .num{color:var(--green)}
+        .size-arrow{font-size:20px;color:var(--text2)}
+        .size-save{font-size:12px;color:var(--green);font-weight:700}
+
+        .btn-row{display:flex;gap:10px;margin-top:8px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
         .btn-primary{background:var(--green);color:#0a0b10}
         .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:18px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result h3{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+        .hidden{display:none!important}
+
         .features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
         .feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
         .feature-icon{font-size:24px;margin-bottom:8px}
@@ -80,7 +115,7 @@
         footer a{color:var(--accent2);text-decoration:none}
         .footer-links{margin-top:8px}
         .footer-links a{margin:0 8px}
-        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}}
+        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -88,40 +123,227 @@
     <div class="container">
         <section class="hero">
             <h1>📦 <em>Audio Compressor</em></h1>
-            <p>Reduce audio file size by adjusting bitrate, sample rate, and format — no upload</p>
+            <p>Reduce audio file size by adjusting bitrate and sample rate — output as MP3, no upload</p>
         </section>
-        <div class="coming-soon">
-            <div class="icon">🚧</div>
-            <h2>Coming Soon</h2>
-            <p>Audio Compressor is currently under development. Meanwhile, try our existing tools:</p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                <a href="/audio-trimmer/" class="btn btn-primary">✂️ Audio Trimmer</a>
-                <a href="/converter/" class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);">🔄 Converter</a>
-                <a href="/text-to-speech/" class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);">🔊 Text to Speech</a>
+
+        <div class="tool-area">
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon">📁</div>
+                <p><strong>Drop audio file here</strong> or click to browse</p>
+                <p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*">
+
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="Remove">✕</button>
+                </div>
+
+                <div class="ctrl">
+                    <label class="ctrl-label">Bitrate — lower means smaller file</label>
+                    <select id="bitrate">
+                        <option value="64">64 kbps — voice / podcast (smallest)</option>
+                        <option value="128" selected>128 kbps — general purpose (recommended)</option>
+                        <option value="192">192 kbps — high quality music</option>
+                        <option value="256">256 kbps — very high quality</option>
+                        <option value="320">320 kbps — maximum quality</option>
+                    </select>
+                </div>
+                <div class="ctrl">
+                    <label class="ctrl-label">Sample rate</label>
+                    <select id="sampleRate">
+                        <option value="0" selected>Keep original</option>
+                        <option value="44100">44100 Hz — CD quality</option>
+                        <option value="22050">22050 Hz — smaller, fine for voice</option>
+                        <option value="16000">16000 Hz — smallest, speech only</option>
+                    </select>
+                </div>
+
+                <div class="size-preview">
+                    <div class="size-box size-orig"><div class="num" id="origSize">—</div><div class="lbl">Original</div></div>
+                    <div class="size-arrow">→</div>
+                    <div class="size-box size-new"><div class="num" id="estSize">—</div><div class="lbl">Estimated</div><div class="size-save" id="estSave"></div></div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="compressBtn" onclick="compress()" style="flex:1;">📦 Compress &amp; Download</button>
+                    <button class="btn btn-secondary" onclick="reset()">Reset</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">Compressing…</div>
+                </div>
+
+                <div class="result hidden" id="result">
+                    <h3>✅ Compressed — <span id="resultInfo"></span></h3>
+                    <audio id="resultAudio" controls></audio>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download MP3</button>
+                </div>
             </div>
         </div>
+
         <div class="features">
-            <div class="feature"><div class="feature-icon">📉</div><div class="feature-title">Bitrate Control</div><div class="feature-desc">Choose bitrate from 64kbps to 320kbps for optimal size vs quality.</div></div>
-            <div class="feature"><div class="feature-icon">🎚️</div><div class="feature-title">Sample Rate Options</div><div class="feature-desc">Reduce sample rate from 48kHz to 22kHz or 16kHz for smaller files.</div></div>
-            <div class="feature"><div class="feature-icon">📊</div><div class="feature-title">Size Preview</div><div class="feature-desc">See estimated file size before compressing.</div></div>
-            <div class="feature"><div class="feature-icon">🔒</div><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
+            <div class="feature"><div class="feature-icon">📉</div><div class="feature-title">Bitrate Control</div><div class="feature-desc">Choose from 64 to 320 kbps for the right size vs quality.</div></div>
+            <div class="feature"><div class="feature-icon">🎚️</div><div class="feature-title">Sample Rate Options</div><div class="feature-desc">Downsample to 22 kHz or 16 kHz for even smaller files.</div></div>
+            <div class="feature"><div class="feature-icon">📊</div><div class="feature-title">Size Preview</div><div class="feature-desc">See the estimated output size before you compress.</div></div>
+            <div class="feature"><div class="feature-icon">🔒</div><div class="feature-title">100% Private</div><div class="feature-desc">All compression in your browser. Files never leave your device.</div></div>
         </div>
+
         <section class="seo-content">
-            <h2>Free Online Audio File Compressor</h2>
-            <p>Audio Compressor lets you reduce the file size of your audio by adjusting bitrate, sample rate, and output format. Perfect for when you need to fit audio files into email attachments, messaging apps, or storage limits.</p>
-            <h3>How Audio Compression Works</h3>
-            <p>Lossy audio compression (MP3, OGG) removes inaudible frequencies to reduce file size. A 44MB WAV file can be compressed to a 4MB MP3 at 128kbps — a 10x reduction with minimal quality loss for most use cases. Higher bitrates (256-320kbps) preserve more detail for music.</p>
+            <h2>Free Online Audio Compressor</h2>
+            <p>Audio Compressor reduces the file size of your audio by re-encoding it to MP3 at a bitrate and sample rate you choose. Perfect for fitting audio into email attachments, messaging apps, or storage limits.</p>
+            <h3>How It Works</h3>
+            <p>Lossy MP3 compression removes inaudible data to shrink the file. A 44 MB WAV can become a 4 MB MP3 at 128 kbps — roughly a 10x reduction with minimal quality loss for most uses. Higher bitrates (256–320 kbps) preserve more detail for music. Everything runs in your browser via the Web Audio API and a JavaScript MP3 encoder — nothing is uploaded.</p>
             <h3>Choosing the Right Bitrate</h3>
-            <p>64kbps — voice recordings, podcasts (smallest files). 128kbps — general purpose, good quality for most uses. 192kbps — high quality for music. 320kbps — maximum quality, indistinguishable from uncompressed for most listeners.</p>
-            <p>While Audio Compressor is being built, try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/converter/">Audio Converter</a>, <a href="/text-to-speech/">Text to Speech</a>, or <a href="/voice-to-text/">Voice to Text</a>.</p>
+            <p>64 kbps — voice recordings and podcasts (smallest files). 128 kbps — general purpose, good quality for most uses. 192 kbps — high quality for music. 320 kbps — maximum quality, indistinguishable from uncompressed for most listeners. Lowering the sample rate to 22 kHz or 16 kHz shrinks speech files further.</p>
+            <p>Need other edits? Try our <a href="/converter/">Audio Converter</a>, <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/audio-joiner/">Audio Joiner</a>, or <a href="/volume-booster/">Volume Booster</a>.</p>
         </section>
+
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
-            <div class="faq-item"><div class="faq-q">How much can I reduce audio file size?</div><div class="faq-a">Depending on the source, you can reduce WAV files by 5-20x by converting to MP3. A 50MB WAV becomes ~5MB at 128kbps.</div></div>
-            <div class="faq-item"><div class="faq-q">Does compression affect quality?</div><div class="faq-a">Yes, lossy compression removes some audio data. At 192kbps+ most people cannot tell the difference from the original.</div></div>
-            <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. All compression happens in your browser. Files never leave your device.</div></div>
+            <div class="faq-item"><div class="faq-q">How much can I reduce file size?</div><div class="faq-a">Depending on the source, you can reduce WAV files by 5–20x by converting to MP3. A 50 MB WAV becomes ~5 MB at 128 kbps.</div></div>
+            <div class="faq-item"><div class="faq-q">Does compression affect quality?</div><div class="faq-a">Lossy compression removes some data. At 192 kbps or higher, most listeners cannot tell the difference from the original.</div></div>
+            <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. All compression happens in your browser using the Web Audio API.</div></div>
         </section>
     </div>
     <footer><div class="container"><a href="https://audiotools.dev">AudioTools.dev</a> — Open source audio processing ecosystem. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.<div class="footer-links"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+
+    <!-- lamejs for MP3 encoding -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const bitrateEl = document.getElementById('bitrate');
+        const sampleRateEl = document.getElementById('sampleRate');
+        const origSizeEl = document.getElementById('origSize');
+        const estSizeEl = document.getElementById('estSize');
+        const estSaveEl = document.getElementById('estSave');
+        const compressBtn = document.getElementById('compressBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultAudio = document.getElementById('resultAudio');
+        const resultInfo = document.getElementById('resultInfo');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let audioCtx, buffer, origBytes = 0, fileBase = 'audio', lastUrl = null;
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+        bitrateEl.addEventListener('change', updateEstimate);
+        sampleRateEl.addEventListener('change', updateEstimate);
+
+        function fmtSize(bytes){ return bytes >= 1048576 ? (bytes/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(bytes/1024))+' KB'; }
+
+        function updateEstimate(){
+            if (!buffer) return;
+            const kbps = parseInt(bitrateEl.value, 10);
+            const est = (kbps * 1000 / 8) * buffer.duration; // CBR MP3 bytes
+            estSizeEl.textContent = '~' + fmtSize(est);
+            if (origBytes > 0){
+                const save = Math.round((1 - est/origBytes) * 100);
+                estSaveEl.textContent = save > 0 ? '−' + save + '%' : (save < 0 ? '+' + (-save) + '% (larger)' : '');
+                estSaveEl.style.color = save > 0 ? 'var(--green)' : 'var(--text2)';
+            }
+        }
+
+        async function handleFile(file){
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            try {
+                buffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+            } catch (err){
+                alert('Could not decode this audio file. Try a different format (MP3, WAV, FLAC, OGG, M4A).');
+                return;
+            }
+            origBytes = file.size;
+            fileBase = (file.name || 'audio').replace(/\.[^.]+$/, '');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = fmtSize(file.size) + ' · ' + buffer.sampleRate + ' Hz · ' + buffer.numberOfChannels + 'ch';
+            origSizeEl.textContent = fmtSize(file.size);
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            result.classList.add('hidden');
+            updateEstimate();
+        }
+
+        // Resample to target sample rate via OfflineAudioContext (returns original if same/keep)
+        async function resample(buf, targetSr){
+            if (!targetSr || targetSr === buf.sampleRate) return buf;
+            const oac = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(
+                buf.numberOfChannels, Math.ceil(buf.duration * targetSr), targetSr);
+            const src = oac.createBufferSource(); src.buffer = buf; src.connect(oac.destination); src.start();
+            return await oac.startRendering();
+        }
+
+        // MP3 encoder (lamejs) — same approach as the Converter
+        function encodeMP3(buf, kbps){
+            return new Promise((resolve, reject) => {
+                if (typeof lamejs === 'undefined'){ reject(new Error('MP3 encoder not loaded. Please reload the page.')); return; }
+                const numCh = Math.min(buf.numberOfChannels, 2);
+                const sr = buf.sampleRate;
+                const enc = new lamejs.Mp3Encoder(numCh, sr, kbps);
+                const blockSize = 1152, mp3Data = [];
+                function to16(arr){ const o = new Int16Array(arr.length); for (let i=0;i<arr.length;i++){ const s=Math.max(-1,Math.min(1,arr[i])); o[i]=s<0?s*0x8000:s*0x7FFF; } return o; }
+                const left = to16(buf.getChannelData(0));
+                const right = numCh > 1 ? to16(buf.getChannelData(1)) : null;
+                const totalBlocks = Math.ceil(left.length / blockSize);
+                let done = 0;
+                function chunk(){
+                    const end = Math.min(done + 100, totalBlocks);
+                    for (let i=done;i<end;i++){
+                        const s = i*blockSize;
+                        const lc = left.subarray(s, s+blockSize);
+                        const mb = numCh === 1 ? enc.encodeBuffer(lc) : enc.encodeBuffer(lc, right.subarray(s, s+blockSize));
+                        if (mb.length > 0) mp3Data.push(mb);
+                    }
+                    done = end;
+                    const pct = Math.round(done/totalBlocks * 90) + 8;
+                    progressFill.style.width = pct + '%'; progressText.textContent = 'Encoding MP3… ' + pct + '%';
+                    if (done < totalBlocks) setTimeout(chunk, 0);
+                    else { const last = enc.flush(); if (last.length > 0) mp3Data.push(last); resolve(new Blob(mp3Data, { type: 'audio/mpeg' })); }
+                }
+                setTimeout(chunk, 0);
+            });
+        }
+
+        async function compress(){
+            if (!buffer) return;
+            compressBtn.disabled = true; result.classList.add('hidden');
+            progressWrap.classList.remove('hidden'); progressFill.style.width = '4%'; progressText.textContent = 'Preparing…';
+            try {
+                const targetSr = parseInt(sampleRateEl.value, 10);
+                const kbps = parseInt(bitrateEl.value, 10);
+                const rbuf = await resample(buffer, targetSr);
+                const blob = await encodeMP3(rbuf, kbps);
+                if (lastUrl) URL.revokeObjectURL(lastUrl);
+                lastUrl = URL.createObjectURL(blob);
+                resultAudio.src = lastUrl;
+                const save = origBytes > 0 ? Math.round((1 - blob.size/origBytes) * 100) : 0;
+                resultInfo.textContent = fmtSize(blob.size) + (save > 0 ? '  ·  −' + save + '% vs original' : '');
+                downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download=fileBase + '_' + kbps + 'kbps.mp3'; a.click(); };
+                progressFill.style.width = '100%';
+                progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+            } catch (err){
+                progressWrap.classList.add('hidden');
+                alert(err.message || 'Compression failed. Please try again.');
+            }
+            compressBtn.disabled = false;
+        }
+
+        function reset(){
+            buffer = null; origBytes = 0;
+            if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl = null; }
+            resultAudio.pause(); resultAudio.removeAttribute('src'); fileInput.value = '';
+            panel.classList.add('hidden'); result.classList.add('hidden'); progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
