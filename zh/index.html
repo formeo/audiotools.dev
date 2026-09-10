@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免费在线音频工具 — 转换、剪辑、语音转文字 | AudioTools</title>
+    <meta name="description" content="免费在线音频工具：格式转换、音频剪辑、语音转文字、文字转语音、音频合并、音量增强。完全在浏览器中处理，无需上传，开源免费。">
+    <meta name="keywords" content="音频转换器, 在线音频工具, 语音转文字, 文字转语音, MP3转换, 音频剪辑, 音量增强, 音频合并, 免费音频工具">
+    <link rel="canonical" href="https://audiotools.dev/zh/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:title" content="免费在线音频工具 — 转换、剪辑、语音转文字 | AudioTools">
+    <meta property="og:description" content="8个免费音频工具，完全在浏览器中处理。无需上传，100%开源。">
+    <meta property="og:url" content="https://audiotools.dev/zh/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:image" content="https://audiotools.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AudioTools",
+        "url": "https://audiotools.dev/zh/",
+        "inLanguage": "zh-CN",
+        "description": "免费开源音频处理工具，完全在浏览器中运行。"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type":"Question","name":"AudioTools是免费的吗？","acceptedAnswer":{"@type":"Answer","text":"是的，所有工具完全免费，无限制、无广告、无需注册。MIT开源许可。"}},
+            {"@type":"Question","name":"我的文件会上传到服务器吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有处理在浏览器中完成，使用Web Audio API。文件不会离开您的设备。"}},
+            {"@type":"Question","name":"支持哪些音频格式？","acceptedAnswer":{"@type":"Answer","text":"支持WAV、MP3、FLAC、OGG、AAC、M4A、WebM格式。"}},
+            {"@type":"Question","name":"手机上能用吗？","acceptedAnswer":{"@type":"Answer","text":"可以。支持Android Chrome和iOS Safari。界面完全响应式设计。"}}
+        ]
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0b10; --surface: #12131a; --surface2: #1a1b26; --border: #2a2b3a;
+            --text: #e2e4f0; --text2: #8b8ea3; --accent: #6c5ce7; --accent2: #a29bfe;
+            --green: #00d2a0; --green2: #00f5b8; --cyan: #22d3ee; --orange: #f59e0b; --radius: 12px;
+        }
+        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+        .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+        nav { border-bottom: 1px solid var(--border); padding: 14px 0; }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .hero { text-align: center; padding: 56px 0 40px; }
+        .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 14px; }
+        .hero h1 em { font-style: normal; color: var(--green); }
+        .hero p { color: var(--text2); font-size: 17px; max-width: 520px; margin: 0 auto 24px; }
+        .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .badge { display: inline-flex; align-items: center; gap: 5px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--text2); }
+        .badge b { color: var(--green); }
+
+        .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 16px; }
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 48px; }
+
+        .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-decoration: none; color: var(--text); transition: all 0.25s; position: relative; overflow: hidden; }
+        .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108, 92, 231, 0.12); }
+        .tool-card.featured { border-color: var(--green); }
+        .tool-card.featured:hover { border-color: var(--green2); box-shadow: 0 8px 24px rgba(0, 210, 160, 0.12); }
+        .tool-card.soon { opacity: 0.85; }
+        .tool-card.soon:hover { opacity: 1; border-color: var(--orange); box-shadow: 0 8px 24px rgba(245, 158, 11, 0.08); }
+
+        .tool-icon { font-size: 28px; margin-bottom: 10px; }
+        .tool-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+        .tool-desc { font-size: 13px; color: var(--text2); margin-bottom: 12px; line-height: 1.5; }
+        .tool-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; }
+        .tag-live { background: rgba(0, 210, 160, 0.12); color: var(--green); }
+        .tag-new { background: rgba(108, 92, 231, 0.15); color: var(--accent2); }
+        .tag-soon { background: rgba(245, 158, 11, 0.12); color: var(--orange); }
+        .tool-arrow { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--text2); opacity: 0; transition: all 0.2s; }
+        .tool-card:hover .tool-arrow { opacity: 1; right: 16px; }
+
+        .oss-section { margin-bottom: 48px; }
+        .oss-grid { display: flex; flex-direction: column; gap: 10px; }
+        .oss-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-decoration: none; color: var(--text); transition: all 0.2s; align-items: center; }
+        .oss-card:hover { border-color: var(--accent); }
+        .oss-left { display: flex; align-items: center; gap: 14px; }
+        .oss-icon { font-size: 24px; }
+        .oss-name { font-weight: 700; font-size: 15px; }
+        .oss-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+        .oss-lang { font-size: 11px; padding: 3px 10px; border-radius: 8px; font-weight: 600; white-space: nowrap; }
+        .lang-go { background: rgba(0, 173, 216, 0.12); color: var(--cyan); }
+        .lang-py { background: rgba(255, 212, 59, 0.12); color: #ffd43b; }
+
+        .eco-section { margin-bottom: 48px; }
+        .eco-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .eco-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
+        .eco-num { font-size: 28px; font-weight: 800; color: var(--green); }
+        .eco-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+        .cta-section { background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(0, 210, 160, 0.08)); border: 1px solid var(--border); border-radius: 16px; padding: 36px; text-align: center; margin-bottom: 48px; }
+        .cta-section h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .cta-section p { color: var(--text2); font-size: 14px; margin-bottom: 20px; }
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.2s; }
+        .btn-primary { background: var(--green); color: #0a0b10; }
+        .btn-primary:hover { background: var(--green2); transform: translateY(-1px); }
+        .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--accent); }
+
+        .seo-content { margin: 48px 0; }
+        .seo-content h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+        .seo-content h3 { font-size: 15px; font-weight: 600; margin: 24px 0 8px; color: var(--text); }
+        .seo-content p { font-size: 14px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
+        .seo-content a { color: var(--green); text-decoration: none; }
+        .seo-content a:hover { text-decoration: underline; }
+
+        .faq { margin: 32px 0 48px; }
+        .faq h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; }
+        .faq-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text); }
+        .faq-a { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+        footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; font-size: 13px; color: var(--text2); }
+        footer a { color: var(--accent2); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { margin-top: 8px; }
+        .footer-links a { margin: 0 8px; }
+        .footer-sister { margin-top: 6px; font-size: 12px; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 28px; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .eco-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/zh/" class="logo">🎵 <span>Audio</span>Tools</a>
+            <div class="nav-links">
+                <a href="/zh/" class="active">首页</a>
+                <a href="/converter/">转换器</a>
+                <a href="/voice-to-text/">语音转文字</a>
+                <a href="/text-to-speech/">文字转语音</a>
+                <a href="/" style="font-size:12px;padding:4px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>免费<em>音频工具</em><br>保护您的隐私</h1>
+            <p>转换、剪辑、转录、合成音频 — 完全在浏览器中处理。无需上传，无需注册，100%开源。</p>
+            <div class="hero-badges">
+                <div class="badge">🔒 <b>隐私优先</b> — 文件留在设备上</div>
+                <div class="badge">⭐ <b>开源</b> — MIT许可证</div>
+                <div class="badge">💰 <b>免费</b> — 无限制，无广告</div>
+            </div>
+        </section>
+
+        <div class="section-title">🌐 在线工具 — 即刻使用</div>
+        <div class="tools-grid">
+            <a href="/converter/" class="tool-card featured">
+                <div class="tool-icon">🔄</div>
+                <div class="tool-name">音频转换器</div>
+                <div class="tool-desc">WAV、MP3、FLAC、OGG格式互转。WebAssembly编码器，无需上传。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/voice-to-text/" class="tool-card featured">
+                <div class="tool-icon">🎤</div>
+                <div class="tool-name">语音转文字</div>
+                <div class="tool-desc">60+语言实时语音转录，包括中文普通话和粤语。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/text-to-speech/" class="tool-card featured">
+                <div class="tool-icon">🔊</div>
+                <div class="tool-name">文字转语音</div>
+                <div class="tool-desc">50+语言自然语音，可调语速、音调、音量。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-trimmer/" class="tool-card featured">
+                <div class="tool-icon">✂️</div>
+                <div class="tool-name">音频剪辑</div>
+                <div class="tool-desc">可视化波形编辑器，拖动手柄裁剪，预览并下载。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-speed-changer/" class="tool-card featured">
+                <div class="tool-icon">⏩</div>
+                <div class="tool-name">音频变速</div>
+                <div class="tool-desc">加速或减速音频，不改变音调。0.25x到4x。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/volume-booster/" class="tool-card featured">
+                <div class="tool-icon">📈</div>
+                <div class="tool-name">音量增强</div>
+                <div class="tool-desc">音量提升500%或自动标准化，软削波保护。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-joiner/" class="tool-card featured">
+                <div class="tool-icon">🔗</div>
+                <div class="tool-name">音频合并</div>
+                <div class="tool-desc">多文件合并，支持淡入淡出过渡和拖拽排序。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+            <a href="/audio-compressor/" class="tool-card featured">
+                <div class="tool-icon">📦</div>
+                <div class="tool-name">音频压缩</div>
+                <div class="tool-desc">调整比特率和采样率减小文件大小。</div>
+                <span class="tool-tag tag-live">在线</span>
+                <span class="tool-arrow">→</span>
+            </a>
+        </div>
+
+        <section class="seo-content">
+            <h2>AudioTools — 免费的浏览器音频处理工具</h2>
+            <p>AudioTools是一套完全在浏览器中运行的免费开源音频工具。使用Web Audio API和WebAssembly在本地处理，不上传任何文件到服务器。完全免费，无限制，无广告。</p>
+
+            <h3>音频转换器</h3>
+            <p><a href="/converter/">音频转换器</a>支持WAV、MP3、FLAC、OGG、AAC、M4A、WebM格式互转。使用WebAssembly编译的LAME编码器和自定义FLAC编码器。</p>
+
+            <h3>语音转文字</h3>
+            <p><a href="/voice-to-text/">语音转文字</a>支持60多种语言实时转录，包括中文普通话和粤语。自动标点，适合会议记录、课堂笔记、采访转录。</p>
+
+            <h3>文字转语音</h3>
+            <p><a href="/text-to-speech/">文字转语音</a>将文字转为自然语音，50多种语言。可调语速（0.25x到3x）、音调、音量。适合校对、语言学习、无障碍阅读。</p>
+
+            <h3>隐私保护</h3>
+            <p>您的音频文件永远不会离开设备。没有追踪器，没有Cookie，没有服务器处理。源代码在<a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a>上MIT开源。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item">
+                <div class="faq-q">AudioTools是免费的吗？</div>
+                <div class="faq-a">是的，完全免费，无限制、无广告、无需注册。MIT开源许可。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">文件会上传到服务器吗？</div>
+                <div class="faq-a">不会。所有处理在浏览器中完成。文件不会离开您的设备。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">支持哪些格式？</div>
+                <div class="faq-a">WAV、MP3、FLAC、OGG、AAC、M4A、WebM。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">手机能用吗？</div>
+                <div class="faq-a">可以。支持Android Chrome和iOS Safari。</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <a href="https://audiotools.dev">AudioTools.dev</a> — 开源音频处理工具。
+            <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。
+            <div class="footer-links">
+                <a href="/converter/">转换器</a>
+                <a href="/voice-to-text/">语音转文字</a>
+                <a href="/text-to-speech/">文字转语音</a>
+                <a href="/audio-trimmer/">剪辑</a>
+                <a href="/">English</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

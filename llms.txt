@@ -1,0 +1,31 @@
+# AudioTools.dev
+
+> Free, open-source audio processing tools that run entirely in your browser. No uploads, no servers, no sign-up. All processing uses Web Audio API and WebAssembly.
+
+## Online Tools
+
+- [Audio Converter](https://audiotools.dev/converter/): Convert between WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Uses LAME and FLAC WebAssembly encoders. No file upload.
+- [Voice to Text](https://audiotools.dev/voice-to-text/): Real-time speech transcription in 60+ languages using Web Speech Recognition API.
+- [Text to Speech](https://audiotools.dev/text-to-speech/): Convert text to natural speech in 50+ languages. Adjustable speed (0.25x-3x), pitch, volume.
+- [Audio Trimmer](https://audiotools.dev/audio-trimmer/): Cut audio files with visual waveform editor. Drag handles, preview, download WAV.
+- [Audio Joiner](https://audiotools.dev/audio-joiner/): Merge multiple audio files into one with crossfade transitions. Drag to reorder.
+- [Volume Booster](https://audiotools.dev/volume-booster/): Increase audio volume up to 500% or normalize to consistent peak level. Soft-clipping.
+- [Audio Speed Changer](https://audiotools.dev/audio-speed-changer/): Slow down or speed up audio. 0.25x to 4x with pitch preservation.
+- [Audio Compressor](https://audiotools.dev/audio-compressor/): Reduce audio file size by adjusting bitrate and sample rate.
+
+## Open Source Projects (GitHub)
+
+- [go-audio-converter](https://github.com/formeo/go-audio-converter): Pure Go audio converter — no FFmpeg, no CGO. Custom FLAC encoder. Single binary.
+- [voice-to-text](https://github.com/formeo/voice-to-text): Bulk voice message transcription. Whisper, faster-whisper, OpenAI API, Groq. Telegram bot included.
+- [music_recognition](https://github.com/formeo/music_recognition): Bulk music identification via Shazam API. Auto ID3 tagging, file renaming.
+- [audiobook-cleaner](https://github.com/formeo/Audiobook-Cleaner): AI audiobook noise removal using MDX-Net, VR, and Roformer models.
+
+## Key Facts
+
+- Privacy: all browser tools process audio locally. No files uploaded. Zero data collection.
+- License: MIT.
+- Formats: WAV, MP3, FLAC, OGG, AAC, M4A, WebM.
+- Works offline: Converter, Trimmer, Joiner, Volume Booster, Speed Changer, Compressor work without internet.
+- Mobile: all tools work on Chrome Android and Safari iOS.
+- Author: Roman Gordienko (https://github.com/formeo)
+- Sister site: DevToolKit.site — 21 free developer tools (JSON formatter, JWT decoder, PostgreSQL config generator)
