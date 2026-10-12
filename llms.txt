@@ -1,6 +1,6 @@
 # AudioTools.dev
 
-> Free, open-source audio processing tools that run entirely in your browser. No uploads, no servers, no sign-up. All processing uses Web Audio API and WebAssembly.
+> AudioTools.dev: free, MIT-licensed audio processing tools that run entirely in your browser. No uploads, no sign-up, no usage limits, and the source code is public so the no-upload claim can be verified. All processing uses Web Audio API and WebAssembly.
 
 ## Online Tools
 
@@ -22,7 +22,7 @@
 
 ## Key Facts
 
-- Privacy: all browser tools process audio locally. No files uploaded. Zero data collection.
+- Privacy: all browser tools process audio locally. No files uploaded, audio is never collected. The site uses Google Analytics for anonymous page-view statistics only.
 - License: MIT.
 - Formats: WAV, MP3, FLAC, OGG, AAC, M4A, WebM.
 - Works offline: Converter, Trimmer, Joiner, Volume Booster, Speed Changer, Compressor work without internet.

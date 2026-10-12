@@ -12,7 +12,7 @@
       gtag('config', 'G-62ZJNZFRES');
     </script>
 
-    <title>Free Audio Tools — Converter, TTS, Trimmer | AudioTools</title>
+    <title>Free Audio Tools — Converter, TTS, Trimmer | AudioTools.dev</title>
     <meta name="description" content="Free online audio tools: converter, trimmer, text-to-speech, voice-to-text. All processing in your browser — no upload, no sign-up. Open source.">
     <meta name="keywords" content="audio tools online, audio converter, voice to text, text to speech, audio trimmer, mp3 converter, audio editor online, free audio tools, browser audio processing">
     <link rel="canonical" href="https://audiotools.dev/">
@@ -21,11 +21,11 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <meta property="og:title" content="AudioTools — Free Audio Converter, Trimmer, TTS & Voice-to-Text">
+    <meta property="og:title" content="AudioTools.dev — Free Audio Converter, Trimmer, TTS & Voice-to-Text">
     <meta property="og:description" content="Convert, trim, and transcribe audio in your browser. No upload, no registration, 100% free and open source.">
     <meta property="og:url" content="https://audiotools.dev/">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AudioTools">
+    <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content="https://audiotools.dev/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -33,7 +33,7 @@
     <meta property="og:image:alt" content="AudioTools — Free Audio Tools Online">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AudioTools — Free Audio Converter, Trimmer, TTS">
+    <meta name="twitter:title" content="AudioTools.dev — Free Audio Converter, Trimmer, TTS">
     <meta name="twitter:description" content="Convert, trim, and transcribe audio in your browser. No upload, 100% private.">
     <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
@@ -41,10 +41,11 @@
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "AudioTools",
+        "name": "AudioTools.dev",
         "url": "https://audiotools.dev/",
         "description": "Free open source audio processing tools that run in your browser.",
-        "author": { "@type": "Person", "name": "Roman Gordienko", "url": "https://github.com/formeo", "jobTitle": "Senior Software Developer" }
+        "sameAs": ["https://github.com/formeo/audiotools.dev"],
+        "author": { "@type": "Person", "name": "Roman Gordienko", "url": "https://github.com/formeo", "jobTitle": "Senior Software Developer", "sameAs": ["https://github.com/formeo"] }
     }
     </script>
     <script type="application/ld+json">
@@ -186,7 +187,7 @@
 <body>
     <nav>
         <div class="container">
-            <a href="/" class="logo">🎵 <span>Audio</span>Tools</a>
+            <a href="/" class="logo">🎵 <span>Audio</span>Tools.dev</a>
             <div class="nav-links">
                 <a href="/" class="active">Home</a>
                 <a href="/converter/">Converter</a>
@@ -200,7 +201,7 @@
     <div class="container">
         <section class="hero">
             <h1>Free <em>Audio Tools</em><br>That Respect Your Privacy</h1>
-            <p>Convert, trim, transcribe, and synthesize audio — all in your browser. No uploads, no accounts, 100% open source.</p>
+            <p>Convert, trim, transcribe, and synthesize audio — all in your browser. No uploads, no accounts, no usage limits — MIT-licensed, so you can check the code yourself.</p>
             <div class="hero-badges">
                 <div class="badge">🔒 <b>Privacy-first</b> — files stay on your device</div>
                 <div class="badge">⭐ <b>Open source</b> — MIT license</div>
@@ -316,8 +317,8 @@
 
         <!-- SEO CONTENT -->
         <section class="seo-content">
-            <h2>AudioTools — Free Browser-Based Audio Processing</h2>
-            <p>AudioTools is a collection of free, open-source audio tools that run entirely in your browser. No files are uploaded to any server — all processing happens locally using modern Web APIs (Web Audio API, Web Speech API, MediaRecorder API). Every tool is free, with no limits, no ads, and no account required.</p>
+            <h2>AudioTools.dev — Free Browser-Based Audio Processing</h2>
+            <p>AudioTools.dev is a collection of free, open-source audio tools that run entirely in your browser. No files are uploaded to any server — all processing happens locally using modern Web APIs (Web Audio API, Web Speech API, MediaRecorder API). Every tool is free, with no limits, no ads, and no account required.</p>
 
             <h3>Audio Converter</h3>
             <p>Convert between <strong>WAV, MP3, FLAC, OGG, AAC, M4A, and WebM</strong> formats. The <a href="/converter/">audio converter</a> decodes your audio file using the Web Audio API, then re-encodes it in the target format. WAV encoding is native, MP3 uses the LAME encoder compiled to WebAssembly, and FLAC uses a custom WASM encoder. File sizes up to several hundred MB are supported depending on your device's memory.</p>
@@ -331,11 +332,23 @@
             <h3>Audio Trimmer</h3>
             <p>Cut and trim audio files with a <strong>visual waveform editor</strong>. The <a href="/audio-trimmer/">audio trimmer</a> shows your file as a waveform — drag the start and end handles to select the portion you want, preview the selection, and download the result as WAV. Uses OfflineAudioContext for precise sample-accurate trimming.</p>
 
+            <h3>Audio Speed Changer</h3>
+            <p>Slow down or speed up audio from <strong>0.25x to 4x without changing pitch</strong>. The <a href="/audio-speed-changer/">audio speed changer</a> uses a WSOLA (Waveform Similarity Overlap-Add) time-stretching algorithm, so voices stay natural instead of sounding like chipmunks. Useful for language learning, transcription, and practising music.</p>
+
+            <h3>Volume Booster</h3>
+            <p>Make quiet recordings louder — boost up to 500% or <strong>normalize</strong> to a consistent peak level. The <a href="/volume-booster/">volume booster</a> applies a soft limiter when you push past the ceiling, so peaks are rounded off instead of crackling. Good for phone recordings, podcasts, and audiobook chapters.</p>
+
+            <h3>Audio Joiner</h3>
+            <p>Merge multiple audio files into one track. The <a href="/audio-joiner/">audio joiner</a> lets you reorder tracks by drag and drop, mix different formats, and add a <strong>crossfade</strong> between tracks for seamless transitions. The result is saved as WAV.</p>
+
+            <h3>Audio Compressor</h3>
+            <p>Reduce audio file size by re-encoding to <strong>MP3 at the bitrate and sample rate you choose</strong>. With the <a href="/audio-compressor/">audio compressor</a>, a 44 MB WAV can become about 4 MB at 128 kbps — handy for email attachments and messaging apps.</p>
+
             <h3>How Browser Audio Processing Works</h3>
             <p>Modern browsers include powerful audio processing capabilities through the Web Audio API. When you load a file, the browser decodes it into raw PCM audio data (an AudioBuffer). This data can then be processed — trimmed, converted, analyzed, or played back — entirely in JavaScript. The result is encoded back into a file format and downloaded. No network requests are made during processing.</p>
 
             <h3>Privacy & Security</h3>
-            <p>AudioTools takes a zero-knowledge approach: your audio files and voice data never leave your device. There are no analytics trackers, no cookies, and no server-side processing. The entire source code is available on <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a> under the MIT license for full transparency.</p>
+            <p>Your audio files never leave your device: there is no server-side processing and nothing is uploaded. The site uses Google Analytics for anonymous page-view statistics only — it never sees your audio or the files you process (see the <a href="/privacy/">privacy policy</a>). The entire source code is available on <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a> under the MIT license for full transparency.</p>
 
             <p>Also check out our developer tools at <a href="https://www.devtoolkit.site/" target="_blank" rel="noopener">DevToolKit.site</a> — 21 free browser-based tools for JSON formatting, JWT decoding, PostgreSQL config generation, and more.</p>
         </section>
@@ -375,6 +388,10 @@
                 <a href="/voice-to-text/">Voice to Text</a>
                 <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/audio-trimmer/">Trimmer</a>
+                <a href="/audio-speed-changer/">Speed Changer</a>
+                <a href="/volume-booster/">Volume Booster</a>
+                <a href="/audio-joiner/">Joiner</a>
+                <a href="/audio-compressor/">Compressor</a>
                 <a href="/privacy/">Privacy</a>
                 <a href="/terms/">Terms</a>
                 <a href="https://github.com/formeo" rel="noopener">GitHub</a>

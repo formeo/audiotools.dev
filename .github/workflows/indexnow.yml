@@ -1,0 +1,27 @@
+# Notify Bing (and other IndexNow engines) after each GitHub Pages build.
+# Bing powers ChatGPT search and Copilot, so fresh pages reach AI assistants sooner.
+name: IndexNow
+
+on:
+  page_build:
+  workflow_dispatch:
+
+jobs:
+  ping:
+    if: github.event_name == 'workflow_dispatch' || github.event.build.status == 'built'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submit sitemap URLs to IndexNow
+        env:
+          HOST: audiotools.dev
+          KEY: 9eb21f51338379bfa53543d8124a9d4b
+        run: |
+          urls=$(grep -oP '(?<=<loc>)[^<]+' sitemap.xml | jq -R . | jq -s .)
+          jq -n --arg host "$HOST" --arg key "$KEY" --argjson urls "$urls" \
+            '{host: $host, key: $key, keyLocation: "https://\($host)/\($key).txt", urlList: $urls}' > payload.json
+          status=$(curl -sS -o response.txt -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data @payload.json)
+          echo "IndexNow HTTP $status"; cat response.txt
+          # 200 = accepted, 202 = accepted pending key check
+          [ "$status" = 200 ] || [ "$status" = 202 ]
