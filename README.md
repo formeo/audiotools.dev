@@ -2,7 +2,7 @@
 
 **Free open source audio processing ecosystem** — [audiotools.dev](https://audiotools.dev)
 
-Privacy-first audio tools that run entirely in your browser. No uploads, no accounts, no tracking.
+Privacy-first audio tools that run entirely in your browser. No uploads, no accounts, no usage limits.
 
 ## Online Tools
 
