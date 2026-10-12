@@ -15,7 +15,7 @@ jobs:
       - name: Submit sitemap URLs to IndexNow
         env:
           HOST: audiotools.dev
-          KEY: 9eb21f51338379bfa53543d8124a9d4b
+          KEY: 29d4a9077e8049749e64d29d20abc5a8
         run: |
           urls=$(grep -oP '(?<=<loc>)[^<]+' sitemap.xml | jq -R . | jq -s .)
           jq -n --arg host "$HOST" --arg key "$KEY" --argjson urls "$urls" \
