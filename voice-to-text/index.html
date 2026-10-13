@@ -15,7 +15,7 @@
     <title>Voice to Text — Free Speech-to-Text Online | AudioTools.dev</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free voice-to-text transcription in 60+ languages. Speak into your microphone, get text instantly. No sign-up, runs in your browser.">
+    <meta name="description" content="Free voice-to-text in 60+ languages: live dictation, or transcribe audio files privately with Whisper running on your device. No sign-up, no upload.">
     <meta name="keywords"
           content="voice to text, speech to text, transcription online, speech recognition, voice transcription free, dictation, convert speech to text, audio to text">
     <meta name="author" content="Roman Gordienko">
@@ -25,7 +25,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Voice to Text — Free Online Speech-to-Text Transcription">
     <meta property="og:description"
-          content="Convert speech to text in 60+ languages. Free, no sign-up, runs in your browser. Your audio never leaves your device.">
+          content="Convert speech to text in 60+ languages. Free, no sign-up. Private mode transcribes audio files with Whisper on your device.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://audiotools.dev/voice-to-text/">
     <meta property="og:site_name" content="AudioTools.dev">
@@ -53,7 +53,7 @@
         "@type": "WebApplication",
         "name": "Voice to Text — Online Speech Transcription",
         "url": "https://audiotools.dev/voice-to-text/",
-        "description": "Free online voice-to-text transcription tool supporting 60+ languages. Uses browser Speech Recognition API — no audio data is uploaded or stored.",
+        "description": "Free online voice-to-text transcription tool supporting 60+ languages. Live dictation uses the browser Speech Recognition API; Private mode transcribes audio files and recordings with Whisper running on-device, so audio never leaves the browser.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any (browser-based)",
         "isAccessibleForFree": true,
@@ -64,6 +64,7 @@
         },
         "featureList": [
             "Real-time speech-to-text transcription",
+            "On-device Whisper transcription of audio files and recordings",
             "60+ language support",
             "Browser-based, no data upload",
             "Copy to clipboard",
@@ -494,6 +495,11 @@
             .lang-select { min-width: 100%; }
             .transcript-body { min-height: 180px; padding: 16px; }
         }
+
+        /* Private mode (on-device Whisper) */
+        .whisper h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+        .whisper-note { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+        .whisper-status { color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
     </style>
 
     <script type="application/ld+json">
@@ -506,7 +512,7 @@
                 "name": "Is my voice data sent to a server?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend."
+                    "text": "The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend. In Private mode, speech is transcribed by the Whisper model running in your browser, so your audio never leaves your device."
                 }
             },
             {
@@ -554,12 +560,12 @@
 
     <div class="page-header">
         <h1>🎤 Voice to Text</h1>
-        <p>Free online speech-to-text transcription — 60+ languages, no sign-up required</p>
+        <p>Free online speech-to-text — live dictation in 60+ languages, or private on-device transcription of audio files</p>
     </div>
 
     <!-- Browser compatibility warning -->
     <div class="browser-warning" id="browserWarning">
-        <p>⚠️ Your browser doesn't support the Web Speech API. Please use <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong> for speech recognition.</p>
+        <p>⚠️ Your browser doesn't support the Web Speech API. Please use <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong> for live speech recognition, or use <strong>Private mode</strong> below — it works in any modern browser.</p>
     </div>
 
     <!-- Controls -->
@@ -650,6 +656,22 @@
         </div>
     </div>
 
+    <!-- Private mode: on-device Whisper -->
+    <div class="controls whisper">
+        <h2>🔒 Private mode — Whisper on your device</h2>
+        <p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached. Uses the language selected above.</p>
+        <div class="controls-row">
+            <select class="lang-select" id="whisperModel" aria-label="Select Whisper model">
+                <option value="Xenova/whisper-tiny">Whisper Tiny · ~45 MB · fastest</option>
+                <option value="Xenova/whisper-base" selected>Whisper Base · ~80 MB · more accurate</option>
+            </select>
+            <button class="btn btn-start" id="whisperFileBtn" onclick="document.getElementById('whisperFile').click()">📁 Transcribe file</button>
+            <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) transcribeBlob(this.files[0]); this.value = '';">
+            <button class="btn btn-secondary" id="whisperRecBtn" onclick="toggleWhisperRecording()">🎙️ Record &amp; transcribe</button>
+        </div>
+        <div class="whisper-status" id="whisperStatus" aria-live="polite"></div>
+    </div>
+
     <!-- Transcript -->
     <div class="transcript-container">
         <div class="transcript-header">
@@ -678,9 +700,9 @@
         <h2>Free Online Voice to Text Transcription</h2>
         <p>
             Audio Tools Voice to Text is a free online speech-to-text transcription tool that converts your
-            spoken words into written text in real-time. It works directly in your browser using the Web Speech
-            Recognition API — no software installation, no account registration, and no audio data is ever uploaded
-            to any server.
+            spoken words into written text in real-time using your browser's Web Speech Recognition API — no software
+            installation and no account registration. Private mode transcribes audio files and recordings with the
+            Whisper speech model running entirely in your browser, so the audio is never uploaded anywhere.
         </p>
 
         <h3>How It Works</h3>
@@ -710,9 +732,10 @@
 
         <h3>Privacy & Security</h3>
         <p>
-            Your privacy is our priority. All speech recognition processing happens locally in your browser
-            through the Web Speech API. Your audio is not recorded, stored, or transmitted to our servers.
-            We have no access to your microphone data or transcriptions.
+            Live dictation uses your browser's speech recognition engine, which may send audio to the browser
+            vendor (Google in Chrome, Apple in Safari). Private mode runs the Whisper model on your device: the
+            model is downloaded once from Hugging Face, and your audio never leaves the browser. AudioTools.dev has
+            no backend — we never receive your audio or transcriptions.
         </p>
 
         <h3>Browser Compatibility</h3>
@@ -728,7 +751,7 @@
         <h2>Frequently Asked Questions</h2>
         
         <h3>Is my voice data sent to a server?</h3>
-        <p>The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend.</p>
+        <p>The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend. In Private mode, speech is transcribed by the Whisper model running in your browser, so your audio never leaves your device.</p>
         
         <h3>Which languages are supported?</h3>
         <p>Over 60 languages including English, Spanish, French, German, Chinese, Japanese, Russian, Arabic, Hindi, Portuguese, and many more. The available languages depend on your browser.</p>
@@ -759,6 +782,98 @@
 </div>
 
 <script>
+    // ============================================================
+    // Private mode — on-device Whisper (see whisper-worker.js)
+    // ============================================================
+    let whisperWorker = null;
+    let whisperRecorder = null;
+
+    function setWhisperBusy(busy, status) {
+        document.getElementById('whisperFileBtn').disabled = busy;
+        document.getElementById('whisperRecBtn').disabled = busy;
+        document.getElementById('whisperModel').disabled = busy;
+        document.getElementById('whisperStatus').textContent = status;
+    }
+
+    // Whisper expects 16 kHz mono PCM; OfflineAudioContext resamples and downmixes.
+    async function decodeTo16kMono(blob) {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const decoded = await ctx.decodeAudioData(await blob.arrayBuffer());
+        ctx.close();
+        const off = new OfflineAudioContext(1, Math.ceil(decoded.duration * 16000), 16000);
+        const src = off.createBufferSource();
+        src.buffer = decoded;
+        src.connect(off.destination);
+        src.start();
+        return (await off.startRendering()).getChannelData(0);
+    }
+
+    function getWhisperWorker() {
+        if (whisperWorker) return whisperWorker;
+        whisperWorker = new Worker('/voice-to-text/whisper-worker.js', { type: 'module' });
+        whisperWorker.onmessage = ({ data }) => {
+            if (data.type === 'progress') {
+                setWhisperBusy(true, `Downloading model (first time only): ${(data.loaded / 1048576).toFixed(0)} MB…`);
+            } else if (data.type === 'transcribing') {
+                setWhisperBusy(true, 'Transcribing on your device… (long files take a while)');
+            } else if (data.type === 'done') {
+                finalTranscript += data.text.trim() + ' ';
+                updateTranscript('');
+                setWhisperBusy(false, '✓ Done');
+            } else {
+                setWhisperBusy(false, '');
+                showToast('Transcription failed: ' + data.message);
+            }
+        };
+        return whisperWorker;
+    }
+
+    async function transcribeBlob(blob) {
+        setWhisperBusy(true, 'Decoding audio…');
+        let audio;
+        try {
+            audio = await decodeTo16kMono(blob);
+        } catch (e) {
+            setWhisperBusy(false, '');
+            showToast('Could not decode this file. Try another format.');
+            return;
+        }
+        const lang = document.getElementById('langSelect').value.split('-')[0];
+        getWhisperWorker().postMessage({
+            audio,
+            model: document.getElementById('whisperModel').value,
+            language: lang === 'nb' ? 'no' : lang,  // Whisper uses "no" for Norwegian
+        }, [audio.buffer]);
+    }
+
+    async function toggleWhisperRecording() {
+        const btn = document.getElementById('whisperRecBtn');
+        if (whisperRecorder) {
+            whisperRecorder.stop();
+            return;
+        }
+        let stream;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (e) {
+            showToast('Microphone access denied. Please allow microphone in browser settings.');
+            return;
+        }
+        const chunks = [];
+        whisperRecorder = new MediaRecorder(stream);
+        whisperRecorder.ondataavailable = (e) => chunks.push(e.data);
+        whisperRecorder.onstop = () => {
+            stream.getTracks().forEach((t) => t.stop());
+            const blob = new Blob(chunks, { type: whisperRecorder.mimeType });
+            whisperRecorder = null;
+            btn.textContent = '🎙️ Record & transcribe';
+            transcribeBlob(blob);
+        };
+        whisperRecorder.start();
+        btn.textContent = '■ Stop & transcribe';
+        document.getElementById('whisperStatus').textContent = 'Recording… (audio stays on your device)';
+    }
+
     // ============================================================
     // Voice to Text — Web Speech API Implementation
     // ============================================================

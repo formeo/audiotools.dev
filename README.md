@@ -9,7 +9,7 @@ Privacy-first audio tools that run entirely in your browser. No uploads, no acco
 | Tool | URL | Technology |
 |------|-----|------------|
 | **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Web Audio API + lamejs + Go WASM |
-| **Voice to Text** | [/voice-to-text/](https://audiotools.dev/voice-to-text/) | Web Speech API |
+| **Voice to Text** | [/voice-to-text/](https://audiotools.dev/voice-to-text/) | Web Speech API + Whisper (Transformers.js) |
 
 ## Architecture
 
@@ -49,7 +49,8 @@ The converter has two engines:
 
 ### Voice to Text
 
-Uses the browser's built-in Web Speech Recognition API. No audio leaves the device.
+- **Live dictation** uses the browser's built-in Web Speech Recognition API (Chrome/Safari may process audio on the vendor's servers).
+- **Private mode** transcribes audio files and microphone recordings with Whisper (tiny/base, q8) via [Transformers.js](https://github.com/huggingface/transformers.js) in a Web Worker (`voice-to-text/whisper-worker.js`). Audio is decoded and resampled to 16 kHz mono in the browser; only the model weights are downloaded from Hugging Face and cached.
 
 ## Building WASM (optional)
 

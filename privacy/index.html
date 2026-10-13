@@ -83,7 +83,7 @@
         <p>All AudioTools work entirely in your browser using client-side JavaScript and Web APIs:</p>
         <ul>
             <li><strong>Audio Converter</strong> — uses Web Audio API for decoding and lamejs/WebAssembly for encoding. Your files are processed in browser memory and never uploaded.</li>
-            <li><strong>Voice to Text</strong> — uses the browser's built-in Web Speech Recognition API. Audio data is handled by your browser, not our servers.</li>
+            <li><strong>Voice to Text</strong> — uses the browser's built-in Web Speech Recognition API. Audio data is handled by your browser, not our servers. In Private mode, speech is transcribed by the Whisper model running in your browser; the model files are downloaded from Hugging Face, and your audio is never sent anywhere.</li>
         </ul>
         <p>You can verify this by checking the Network tab in your browser's DevTools — no audio data is transmitted.</p>
 
