@@ -86,6 +86,7 @@
             <li><strong>Voice to Text</strong> — uses the browser's built-in Web Speech Recognition API. Audio data is handled by your browser, not our servers. In Private mode, speech is transcribed by the Whisper model running in your browser; the model files are downloaded from Hugging Face, and your audio is never sent anywhere.</li>
         </ul>
         <p>You can verify this by checking the Network tab in your browser's DevTools — no audio data is transmitted.</p>
+        <p>When you drop a file on the homepage helper and pick a tool, the file is handed to that tool through your browser's local storage (IndexedDB) and deleted as soon as the tool opens it. It never leaves your device.</p>
 
         <h2>Cookies</h2>
         <p>AudioTools.dev itself does not set cookies. Google Analytics and Yandex Metrika may set cookies for analytics purposes. These are standard analytics cookies used across the web.</p>

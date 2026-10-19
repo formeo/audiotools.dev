@@ -179,6 +179,21 @@
             .eco-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 600px) { nav .container, .site-nav { flex-wrap: wrap; row-gap: 8px; } .nav-links { flex-wrap: wrap; gap: 6px 16px; } }
+        /* Helper: drop a file or say what you need (logic in /assistant.js) */
+        .assistant { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 40px; transition: border-color 0.2s; }
+        .assistant.drag { border-color: var(--green); }
+        .assistant-title { font-weight: 700; margin-bottom: 12px; }
+        .assistant input[type=text] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--text); font-size: 15px; outline: none; }
+        .assistant input[type=text]:focus { border-color: var(--green); }
+        .assistant-hint { font-size: 13px; color: var(--text2); margin-top: 10px; }
+        .assistant-hint label { color: var(--green); cursor: pointer; text-decoration: underline; }
+        .assistant-results { display: grid; gap: 8px; margin-top: 12px; }
+        .assistant-results:empty { display: none; }
+        .assistant-pick { display: block; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); text-decoration: none; }
+        .assistant-pick:hover { border-color: var(--green); }
+        .assistant-pick b { display: block; color: var(--green); }
+        .assistant-pick span { font-size: 13px; color: var(--text2); }
+        .assistant-msg { font-size: 13px; color: var(--text2); }
     </style>
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/">
@@ -211,6 +226,14 @@
         </section>
 
         <!-- ONLINE TOOLS -->
+        <!-- HELPER -->
+        <section class="assistant" id="assistant">
+            <div class="assistant-title">🪄 Drop a file or say what you need</div>
+            <input type="text" id="assistantText" autocomplete="off" aria-label="What do you need to do?" placeholder="e.g. make my MP3 smaller · the recording is too quiet · voice message to text">
+            <div class="assistant-hint">…or drop an audio/video file here, or <label>choose a file<input type="file" id="assistantFile" accept="audio/*,video/*" multiple hidden></label>. It's analyzed in your browser — nothing is uploaded.</div>
+            <div class="assistant-results" id="assistantResults" aria-live="polite"></div>
+        </section>
+
         <div class="section-title">🌐 Online Tools — Use Instantly</div>
         <div class="tools-grid">
             <a href="/converter/" class="tool-card featured">
@@ -401,5 +424,6 @@
             <div class="footer-support" style="margin-top:8px"><a href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></div>
         </div>
     </footer>
+    <script src="/assistant.js"></script>
 </body>
 </html>
