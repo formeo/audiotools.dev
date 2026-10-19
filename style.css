@@ -2,6 +2,7 @@
    tool header and panel. Tool-specific layout stays in each page's own <style>. */
 
 :root {
+    color-scheme: only light; /* light design only: opt out of browsers' automatic dark mode */
     --bg: #EEF1F0;          /* page ground: cool light grey */
     --surface: #FFFFFF;     /* panels and cards */
     --surface2: #F5F7F6;    /* insets: drop zones, waveforms */
