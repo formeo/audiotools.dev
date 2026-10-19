@@ -818,6 +818,7 @@
                 setTimeout(() => {
                     progressWrap.classList.remove('show');
                     result.classList.add('show');
+                    toolSuccess('converter', downloadBtn);
                     resultMeta.textContent = FORMATS[selectedOutput].label + ' • ' +
                         formatBytes(blob.size) + ' • ' +
                         formatDuration(audioBuffer.duration);
@@ -1046,5 +1047,6 @@
         });
     })();
     </script>
+    <script src="/support.js"></script>
 </body>
 </html>

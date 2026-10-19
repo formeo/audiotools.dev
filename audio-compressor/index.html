@@ -330,6 +330,7 @@
                 downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download=fileBase + '_' + kbps + 'kbps.mp3'; a.click(); };
                 progressFill.style.width = '100%';
                 progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+                toolSuccess('audio-compressor', downloadBtn);
             } catch (err){
                 progressWrap.classList.add('hidden');
                 alert(err.message || 'Compression failed. Please try again.');
@@ -345,5 +346,6 @@
             dropZone.classList.remove('hidden');
         }
     </script>
+    <script src="/support.js"></script>
 </body>
 </html>

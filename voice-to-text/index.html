@@ -820,6 +820,7 @@
                 finalTranscript += data.text.trim() + ' ';
                 updateTranscript('');
                 setWhisperBusy(false, '✓ Done');
+                toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
             } else {
                 setWhisperBusy(false, '');
                 showToast('Transcription failed: ' + data.message);
@@ -978,6 +979,7 @@
 
         if (finalTranscript.trim()) {
             showToast('Recording stopped');
+            toolSuccess('voice-to-text', document.querySelector('.actions'));
         }
     }
 
@@ -1099,5 +1101,6 @@
         }
     });
 </script>
+    <script src="/support.js"></script>
 </body>
 </html>
