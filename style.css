@@ -1,0 +1,53 @@
+/* AudioTools.dev — shared look: design tokens, base text, site nav and footer.
+   Tool-specific layout stays in each page's own <style>. */
+
+:root {
+    --bg: #0a0b10;
+    --surface: #12131a;
+    --surface2: #1a1b26;
+    --border: #2a2b3a;
+    --text: #e2e4f0;
+    --text2: #8b8ea3;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --green: #00d2a0;
+    --green2: #00f5b8;
+    --cyan: #22d3ee;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 12px;
+    --chrome-width: 860px;
+}
+
+body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; }
+html[lang^="zh"] body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif; }
+
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- nav ---------- */
+.at-nav { border-bottom: 1px solid var(--border); padding: 14px 20px; }
+.at-nav-inner { max-width: var(--chrome-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 24px; }
+.at-logo { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
+.at-logo b { color: var(--green); font-weight: inherit; }
+.at-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; }
+.at-nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.at-nav-links a:hover, .at-nav-links a[aria-current="page"] { color: var(--green); }
+.at-nav-links .at-lang { font-size: 12px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+
+/* ---------- footer ---------- */
+.at-footer { border-top: 1px solid var(--border); margin-top: 48px; padding: 32px 20px 40px; color: var(--text2); font-size: 13px; text-align: center; }
+.at-footer-inner { max-width: var(--chrome-width); margin: 0 auto; display: grid; gap: 14px; }
+.at-footer p { margin: 0; }
+.at-footer a { color: var(--text2); text-decoration: none; transition: color 0.2s; }
+.at-footer a:hover { color: var(--green); }
+.at-footer-tools, .at-footer-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+.at-footer-tools a { color: var(--text); }
+.at-footer .at-support { color: var(--green); }
+
+@media (max-width: 600px) {
+    .at-nav-links { gap: 6px 16px; }
+}

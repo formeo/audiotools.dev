@@ -133,24 +133,20 @@
         <div><img src="https://mc.yandex.ru/watch/106243090" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
 
+    <link rel="stylesheet" href="/style.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0a0a0a;
-            --text: #e5e5e5;
-            --text-muted: #737373;
-            --accent: #22c55e;
-            --accent-dim: #16a34a;
-            --red: #ef4444;
+            --text-muted: var(--text2);
+            --accent: var(--green);
+            --accent-dim: #00b38a;
             --red-dim: #dc2626;
-            --card-bg: #171717;
-            --border: #262626;
-            --input-bg: #0f0f0f;
+            --card-bg: var(--surface);
+            --input-bg: var(--bg);
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -162,30 +158,6 @@
             margin: 0 auto;
             padding: 40px 20px 60px;
         }
-
-        /* Nav */
-        .site-nav {
-            position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0; margin: 0 -20px;
-            padding-left: 20px; padding-right: 20px;
-            background: rgba(10, 11, 16, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 32px;
-        }
-        .site-nav .logo {
-            font-size: 17px; font-weight: 700; color: var(--text);
-            text-decoration: none; display: flex; align-items: center; gap: 8px;
-        }
-        .site-nav .logo .g { color: #00d2a0; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a {
-            color: var(--text-muted); text-decoration: none; font-size: 14px;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: #00d2a0; }
-        .nav-links a.active { color: #00d2a0; }
         
         /* Header */
         .page-header {
@@ -329,7 +301,7 @@
             word-break: break-word;
         }
         .transcript-body:empty::before {
-            content: "Your transcription will appear here...\a\aClick \"Start Recording\" and speak into your microphone.";
+            content: "Your transcription will appear here...\a\a Click \"Start Recording\" and speak into your microphone.";
             color: var(--text-muted);
             font-style: italic;
             white-space: pre-wrap;
@@ -459,35 +431,6 @@
             margin-bottom: 16px;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding-top: 40px;
-            margin-top: 40px;
-            border-top: 1px solid var(--border);
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover { color: var(--accent); }
-        .copyright {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        .highlight {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
         @media (max-width: 600px) {
             .container { padding: 24px 16px 40px; }
             .page-header h1 { font-size: 22px; }
@@ -500,8 +443,6 @@
         .whisper h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
         .whisper-note { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
         .whisper-status { color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
-        @media (max-width: 600px) { nav .container, .site-nav { flex-wrap: wrap; row-gap: 8px; } .nav-links { flex-wrap: wrap; gap: 6px 16px; } }
-        @media (max-width: 600px) { .site-nav { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; } .footer-links { flex-wrap: wrap; gap: 8px 20px; } }
     </style>
 
     <script type="application/ld+json">
@@ -547,18 +488,20 @@
 
 </head>
 <body>
-<div class="container">
-    <!-- Site nav -->
-    <nav class="site-nav">
-        <a href="/" class="logo">🎵 <span class="g">Audio</span>Tools.dev</a>
-        <div class="nav-links">
-                <a href="/">Home</a>
+    <nav class="at-nav" aria-label="Main">
+        <div class="at-nav-inner">
+            <a href="/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/voice-to-text/" class="active">Voice to Text</a>
-                <a href="/text-to-speech/">TTS</a>
-                <a href="/audio-trimmer/">Trimmer</a>
+                <a href="/volume-booster/">Volume Booster</a>
+                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/voice-to-text/" aria-current="page">Voice to Text</a>
+                <a href="/">All tools</a>
             </div>
+        </div>
     </nav>
+
+<div class="container">
 
     <div class="page-header">
         <h1>🎤 Voice to Text</h1>
@@ -764,28 +707,16 @@
         <h3>How accurate is the transcription?</h3>
         <p>Accuracy depends on your browser's speech recognition engine. Chrome (powered by Google) provides the best accuracy for most languages. Clear speech in a quiet environment gives the best results.</p>
     </section>
-
-    <footer>
-        <div class="footer-links">
-                <a href="/converter/">Converter</a>
-                <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/text-to-speech/">Text to Speech</a>
-                <a href="/audio-trimmer/">Trimmer</a>
-                <a href="/audio-speed-changer/">Speed Changer</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/audio-joiner/">Joiner</a>
-                <a href="/audio-compressor/">Compressor</a>
-                <a href="/privacy/">Privacy</a>
-                <a href="/terms/">Terms</a>
-                <a href="https://github.com/formeo" rel="noopener">GitHub</a>
-            </div>
-        <p class="copyright">
-            Built by <a href="https://github.com/formeo" class="highlight">@formeo</a> ·
-            Tyumen, Russia
-        </p>
-        <div class="footer-links footer-support" style="margin-top:8px"><a href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></div>
-    </footer>
 </div>
+
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/" aria-current="page">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
+            <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
+            <p class="at-footer-meta"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></p>
+        </div>
+    </footer>
 
 <script>
     // ============================================================
