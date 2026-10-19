@@ -58,7 +58,7 @@
             {
                 "@type": "Question",
                 "name": "How do I trim an audio file online?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Drop or select your audio file, then drag the green start and red end handles on the waveform to set trim points. Click 'Cut & Download' to save the trimmed file as WAV." }
+                "acceptedAnswer": { "@type": "Answer", "text": "Drop or select your audio file, then drag the blue start and red end handles on the waveform to set trim points. Click 'Cut & Download' to save the trimmed file as MP3 or WAV." }
             },
             {
                 "@type": "Question",
@@ -68,7 +68,7 @@
             {
                 "@type": "Question",
                 "name": "What audio formats can I trim?",
-                "acceptedAnswer": { "@type": "Answer", "text": "You can trim any format your browser supports: MP3, WAV, FLAC, OGG, AAC, M4A, and WebM. The output is saved as WAV." }
+                "acceptedAnswer": { "@type": "Answer", "text": "You can trim any format your browser supports: MP3, WAV, FLAC, OGG, AAC, M4A, and WebM. The result is saved as MP3 or WAV." }
             }
         ]
     }
@@ -122,19 +122,6 @@
         .btn-secondary:hover { border-color: var(--accent); }
 
         .hidden { display: none !important; }
-
-        .seo-content { margin: 48px 0; }
-        .seo-content h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
-        .seo-content h3 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
-        .seo-content p { font-size: 14px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
-        .seo-content a { color: var(--green); text-decoration: none; }
-        .seo-content a:hover { text-decoration: underline; }
-
-        .faq { margin: 32px 0; }
-        .faq h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; }
-        .faq-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text); }
-        .faq-a { font-size: 13px; color: var(--text2); line-height: 1.6; }
 
         @media (max-width: 600px) { .btn-row { flex-direction: column; } }
     </style>
@@ -212,10 +199,10 @@
             <p>AudioTools Audio Trimmer lets you cut any audio file directly in your browser. Drop your MP3, WAV, FLAC, or OGG file, see the waveform, drag the trim handles to select the portion you want, and download the result. No upload to any server — all processing uses the <strong>Web Audio API</strong>.</p>
 
             <h3>How to Trim an Audio File</h3>
-            <p>Drop or select your audio file. A visual waveform appears with green (start) and red (end) trim handles. Drag the handles or type exact timestamps to define your trim region. Click "Preview" to hear the selection, then "Cut & Download" to save as WAV.</p>
+            <p>Drop or select your audio file. A visual waveform appears with blue (start) and red (end) trim handles. Drag the handles or type exact timestamps to define your trim region. Click "Preview" to hear the selection, then "Cut & Download" to save it as MP3 or WAV.</p>
 
             <h3>Supported Formats</h3>
-            <p>Input: MP3, WAV, FLAC, OGG, AAC, M4A, WebM — any format your browser can decode. Output is always WAV (uncompressed, lossless). Need a different format? Use our <a href="/converter/">Audio Converter</a> to convert the result.</p>
+            <p>Input: MP3, WAV, FLAC, OGG, AAC, M4A, WebM — any format your browser can decode. Output is MP3 (192 kbps) or WAV (uncompressed, lossless), your choice. The <a href="/converter/">Audio Converter</a> reads even more formats.</p>
 
             <h3>Privacy</h3>
             <p>Your audio file never leaves your device. Trimming uses the Web Audio API's OfflineAudioContext to process audio entirely in your browser. There are no servers and no uploads — your audio is never collected.</p>
@@ -227,7 +214,7 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <div class="faq-q">How do I trim an audio file online?</div>
-                <div class="faq-a">Drop or select your file, drag the green start and red end handles on the waveform, then click "Cut & Download". The trimmed file saves as WAV.</div>
+                <div class="faq-a">Drop or select your file, drag the blue start and red end handles on the waveform, then click "Cut & Download". The trimmed file saves as MP3 or WAV.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Is my audio uploaded to a server?</div>
@@ -235,7 +222,7 @@
             </div>
             <div class="faq-item">
                 <div class="faq-q">What formats can I trim?</div>
-                <div class="faq-a">Any format your browser supports: MP3, WAV, FLAC, OGG, AAC, M4A, WebM. Output is WAV.</div>
+                <div class="faq-a">Any format your browser supports: MP3, WAV, FLAC, OGG, AAC, M4A, WebM. Output is MP3 or WAV.</div>
             </div>
         </section>
     </div>

@@ -103,7 +103,7 @@
 
         <h2>What you can do here</h2>
         <ul>
-            <li><a href="/converter/">Audio Converter</a> — WAV, MP3, FLAC, OGG, AAC, M4A, WebM</li>
+            <li><a href="/converter/">Audio Converter</a> — WAV, FLAC, OGG, AAC, M4A, WebM to MP3 or WAV</li>
             <li><a href="/audio-trimmer/">Audio Trimmer</a> — cut a part of a recording on a waveform</li>
             <li><a href="/audio-joiner/">Audio Joiner</a> — merge files, with optional crossfade</li>
             <li><a href="/volume-booster/">Volume Booster</a> — make quiet audio louder or normalize it</li>
@@ -149,7 +149,7 @@
         <h2>How it is built</h2>
         <ul>
             <li>Decoding and processing: Web Audio API (<code>OfflineAudioContext</code>)</li>
-            <li>MP3 encoding: lamejs; FLAC encoding: a WebAssembly build of <a href="https://github.com/formeo/go-audio-converter" rel="noopener">go-audio-converter</a></li>
+            <li>MP3 encoding: lamejs</li>
             <li>Speed change without pitch shift: WSOLA time-stretching</li>
             <li>Private transcription: Whisper (tiny/base) via Transformers.js in a Web Worker</li>
         </ul>

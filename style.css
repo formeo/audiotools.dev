@@ -77,3 +77,37 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 .next-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 14px; color: var(--text2); }
 .next-actions a { padding: 6px 14px; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; background: var(--surface); }
 .next-actions a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- tool pages: below the panel (how it works, formats, features, explanations, FAQ) ---------- */
+.privacy-badge { display: inline-flex; margin-top: 20px; padding: 6px 14px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.how-it-works, .formats-section, .features, .seo-content, .faq { margin: 56px 0 0; }
+.how-it-works h2, .formats-section h2, .seo-content h2, .faq h2 { margin: 0 0 18px; font-size: 26px; font-weight: 800; line-height: 1.15; color: var(--ink); }
+
+/* steps and features: one ink-outlined block, cells split by ink rules */
+.steps, .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--ink); border: 1.5px solid var(--ink); border-radius: var(--radius); overflow: hidden; }
+.features { grid-template-columns: 1fr 1fr; }
+.step, .feature { background: var(--surface); padding: 20px; text-align: left; }
+.step-num { margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--accent); }
+.step-title, .feature-title { margin-bottom: 4px; font-size: 16px; font-weight: 700; color: var(--ink); }
+.step-desc, .feature-desc { font-size: 14px; color: var(--text2); }
+
+.formats-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface); border: 1.5px solid var(--ink); border-radius: var(--radius); overflow: hidden; font-size: 14px; }
+.formats-table th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2); background: var(--surface2); border-bottom: 1.5px solid var(--ink); }
+.formats-table td { padding: 11px 16px; border-top: 1px solid var(--border); }
+.formats-table tr:first-child td { border-top: 0; }
+.formats-table .check { color: var(--accent); font-weight: 700; }
+
+.seo-content h3 { margin: 24px 0 8px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.seo-content p, .seo-content li { margin: 0 0 12px; font-size: 15px; line-height: 1.7; color: var(--text2); }
+.seo-content ul { margin: 0 0 12px; padding-left: 20px; }
+
+.faq-item { padding: 18px 0; border-top: 1.5px solid var(--ink); }
+.faq-item:last-child { border-bottom: 1.5px solid var(--ink); }
+.faq-q { margin-bottom: 6px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.faq-a { font-size: 15px; line-height: 1.6; color: var(--text2); }
+
+.seo-content a, .faq-a a, .formats-section a { color: var(--accent2); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 600px) {
+    .steps, .features { grid-template-columns: 1fr; }
+}

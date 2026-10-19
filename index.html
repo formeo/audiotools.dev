@@ -74,8 +74,8 @@
         "mainEntity": [
             { "@type": "Question", "name": "Are AudioTools really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, all tools are completely free with no limits, no ads, and no sign-up required. The entire project is open source under the MIT license." }},
             { "@type": "Question", "name": "Are my files uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every tool processes audio in your browser, so your files never leave your device. The one exception is live dictation in Voice to Text: it uses your browser's speech engine, which Chrome and Safari may run on Google's or Apple's servers. Private mode does not." }},
-            { "@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "The audio converter supports WAV, MP3, FLAC, OGG, AAC, M4A, and WebM. Input formats depend on browser support. Output formats include WAV, MP3, and FLAC." }},
-            { "@type": "Question", "name": "Does voice-to-text work offline?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on your browser. Chrome uses Google's speech servers. Safari supports on-device recognition. The audio trimmer and converter always work offline." }},
+            { "@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "The audio converter reads WAV, MP3, FLAC, OGG, AAC, M4A and WebM (anything your browser can decode) and saves MP3 or WAV. The other tools save MP3 or WAV too." }},
+            { "@type": "Question", "name": "Does voice-to-text work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Private mode does: Whisper runs in your browser, and after the model downloads once it works without a connection. Live dictation uses your browser's speech engine, which in Chrome and Safari may run on Google's or Apple's servers. Once a page has loaded, the other tools also work without a connection." }},
             { "@type": "Question", "name": "Can I use AudioTools on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All tools work on mobile browsers including Chrome on Android and Safari on iOS. The interface is fully responsive." }}
         ]
     }
@@ -132,6 +132,14 @@
         .strip b { font-stretch: 115%; font-weight: 800; font-size: 21px; }
         .strip span { color: var(--text2); font-size: 15px; }
         .strip small { margin-top: auto; font-size: 13px; color: var(--text2); }
+        @media (max-width: 600px) {
+            .strips { grid-template-columns: 1fr 1fr; }
+            .strip { min-height: 0; padding: 16px 14px; gap: 6px; }
+            .strip svg { height: 34px; }
+            .strip b { font-size: 17px; }
+            .strip span { font-size: 13px; line-height: 1.4; }
+            .strip small { display: none; }
+        }
 
         /* where your file goes */
         .path { display: flex; flex-wrap: wrap; align-items: stretch; }
@@ -158,12 +166,19 @@
         .projects li div { font-size: 14px; color: var(--text2); }
 
         /* long-form text and FAQ (kept for search) */
-        .seo-content { margin: 72px auto 0; max-width: 760px; }
+        .seo-content { margin: 72px auto 0; max-width: var(--chrome-width); padding: 0 24px; }
+        .seo-content > *, .faq > * { max-width: 760px; }
+        .more { margin: 8px 0 16px; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+        .more summary { cursor: pointer; list-style: none; padding: 14px 0; font-weight: 700; font-size: 17px; color: var(--ink); display: flex; justify-content: space-between; }
+        .more summary::-webkit-details-marker { display: none; }
+        .more summary::after { content: "+"; font-weight: 400; font-size: 22px; line-height: 1; }
+        .more[open] summary::after { content: "\2212"; }
+        .more h3:first-of-type { margin-top: 4px; }
         .seo-content h2 { font-size: 26px; font-weight: 800; margin-bottom: 16px; }
         .seo-content h3 { font-size: 17px; font-weight: 700; margin: 24px 0 8px; }
         .seo-content p { font-size: 15px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
         .seo-content a { color: var(--accent2); }
-        .faq { margin: 48px auto 0; max-width: 760px; }
+        .faq { margin: 48px auto 0; max-width: var(--chrome-width); padding: 0 24px; }
         .faq h2 { font-size: 26px; font-weight: 800; margin-bottom: 16px; }
         .faq-item { border-top: 1.5px solid var(--ink); padding: 16px 0; }
         .faq-item:last-child { border-bottom: 1.5px solid var(--ink); }
@@ -222,7 +237,7 @@
                         <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
                         <b>Convert</b>
                         <span>Change the format of any recording.</span>
-                        <small>WAV, MP3, FLAC, OGG, M4A, WebM</small>
+                        <small>Any audio to MP3 or WAV</small>
                     </a>
                     <a class="strip" href="/audio-trimmer/">
                         <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><polyline class="g-faint" points="4,28 12,18 20,38 28,12 36,44 44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34 124,14 132,42 140,24 148,30 156,28"/><polyline class="g-ink" points="44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34"/><path class="g-acc" d="M44 4 H38 V52 H44 M116 4 H122 V52 H116"/></svg>
@@ -296,35 +311,38 @@
             <h2>AudioTools.dev — Free Browser-Based Audio Processing</h2>
             <p>AudioTools.dev is a collection of free, open-source audio tools that run entirely in your browser. No files are uploaded to any server — all processing happens locally using modern Web APIs (Web Audio API, Web Speech API, MediaRecorder API). Every tool is free, with no limits, no ads, and no account required.</p>
 
-            <h3>Audio Converter</h3>
-            <p>Convert between <strong>WAV, MP3, FLAC, OGG, AAC, M4A, and WebM</strong> formats. The <a href="/converter/">audio converter</a> decodes your audio file using the Web Audio API, then re-encodes it in the target format. WAV encoding is native, MP3 uses the LAME encoder compiled to WebAssembly, and FLAC uses a custom WASM encoder. File sizes up to several hundred MB are supported depending on your device's memory.</p>
+            <details class="more">
+                <summary>How each tool works</summary>
+                <h3>Audio Converter</h3>
+                <p>Convert <strong>WAV, FLAC, OGG, AAC, M4A and WebM</strong> to <strong>MP3 or WAV</strong>. The <a href="/converter/">audio converter</a> decodes your audio file using the Web Audio API, then re-encodes it in the target format. WAV encoding is native and MP3 uses the LAME encoder (lamejs). File sizes up to several hundred MB are supported depending on your device's memory.</p>
 
-            <h3>Voice to Text</h3>
-            <p>Real-time speech transcription using the <strong>Web Speech Recognition API</strong>. The <a href="/voice-to-text/">voice-to-text</a> tool supports 60+ languages including English, Spanish, French, German, Japanese, Chinese, Korean, Russian, Arabic, Hindi, and many more. Punctuation and formatting are automatic. Great for transcribing meetings, lectures, interviews, and voice notes. <strong>Private mode</strong> transcribes audio files and recordings with the Whisper speech model running entirely in your browser — the audio never leaves your device.</p>
+                <h3>Voice to Text</h3>
+                <p>Real-time speech transcription using the <strong>Web Speech Recognition API</strong>. The <a href="/voice-to-text/">voice-to-text</a> tool supports 60+ languages including English, Spanish, French, German, Japanese, Chinese, Korean, Russian, Arabic, Hindi, and many more. Punctuation and formatting are automatic. Great for transcribing meetings, lectures, interviews, and voice notes. <strong>Private mode</strong> transcribes audio files and recordings with the Whisper speech model running entirely in your browser — the audio never leaves your device.</p>
 
-            <h3>Text to Speech</h3>
-            <p>Convert written text to natural-sounding speech using the <strong>Web Speech Synthesis API</strong>. The <a href="/text-to-speech/">text-to-speech</a> tool offers 50+ voices across dozens of languages. Adjust speed (0.25x to 3x), pitch, and volume. Useful for proofreading, language learning, accessibility, and content creation.</p>
+                <h3>Text to Speech</h3>
+                <p>Convert written text to natural-sounding speech using the <strong>Web Speech Synthesis API</strong>. The <a href="/text-to-speech/">text-to-speech</a> tool offers 50+ voices across dozens of languages. Adjust speed (0.25x to 3x), pitch, and volume. Useful for proofreading, language learning, accessibility, and content creation.</p>
 
-            <h3>Audio Trimmer</h3>
-            <p>Cut and trim audio files with a <strong>visual waveform editor</strong>. The <a href="/audio-trimmer/">audio trimmer</a> shows your file as a waveform — drag the start and end handles to select the portion you want, preview the selection, and download the result as WAV. Uses OfflineAudioContext for precise sample-accurate trimming.</p>
+                <h3>Audio Trimmer</h3>
+                <p>Cut and trim audio files with a <strong>visual waveform editor</strong>. The <a href="/audio-trimmer/">audio trimmer</a> shows your file as a waveform — drag the start and end handles to select the portion you want, preview the selection, and download the result as MP3 or WAV. Uses OfflineAudioContext for precise sample-accurate trimming.</p>
 
-            <h3>Audio Speed Changer</h3>
-            <p>Slow down or speed up audio from <strong>0.25x to 4x without changing pitch</strong>. The <a href="/audio-speed-changer/">audio speed changer</a> uses a WSOLA (Waveform Similarity Overlap-Add) time-stretching algorithm, so voices stay natural instead of sounding like chipmunks. Useful for language learning, transcription, and practising music.</p>
+                <h3>Audio Speed Changer</h3>
+                <p>Slow down or speed up audio from <strong>0.25x to 4x without changing pitch</strong>. The <a href="/audio-speed-changer/">audio speed changer</a> uses a WSOLA (Waveform Similarity Overlap-Add) time-stretching algorithm, so voices stay natural instead of sounding like chipmunks. Useful for language learning, transcription, and practising music.</p>
 
-            <h3>Volume Booster</h3>
-            <p>Make quiet recordings louder — boost up to 500% or <strong>normalize</strong> to a consistent peak level. The <a href="/volume-booster/">volume booster</a> applies a soft limiter when you push past the ceiling, so peaks are rounded off instead of crackling. Good for phone recordings, podcasts, and audiobook chapters.</p>
+                <h3>Volume Booster</h3>
+                <p>Make quiet recordings louder — boost up to 500% or <strong>normalize</strong> to a consistent peak level. The <a href="/volume-booster/">volume booster</a> applies a soft limiter when you push past the ceiling, so peaks are rounded off instead of crackling. Good for phone recordings, podcasts, and audiobook chapters.</p>
 
-            <h3>Audio Joiner</h3>
-            <p>Merge multiple audio files into one track. The <a href="/audio-joiner/">audio joiner</a> lets you reorder tracks by drag and drop, mix different formats, and add a <strong>crossfade</strong> between tracks for seamless transitions. The result is saved as WAV.</p>
+                <h3>Audio Joiner</h3>
+                <p>Merge multiple audio files into one track. The <a href="/audio-joiner/">audio joiner</a> lets you reorder tracks by drag and drop, mix different formats, and add a <strong>crossfade</strong> between tracks for seamless transitions. The result is saved as MP3 or WAV.</p>
 
-            <h3>Audio Compressor</h3>
-            <p>Reduce audio file size by re-encoding to <strong>MP3 at the bitrate and sample rate you choose</strong>. With the <a href="/audio-compressor/">audio compressor</a>, a 44 MB WAV can become about 4 MB at 128 kbps — handy for email attachments and messaging apps.</p>
+                <h3>Audio Compressor</h3>
+                <p>Reduce audio file size by re-encoding to <strong>MP3 at the bitrate and sample rate you choose</strong>. With the <a href="/audio-compressor/">audio compressor</a>, a 44 MB WAV can become about 4 MB at 128 kbps — handy for email attachments and messaging apps.</p>
 
-            <h3>How Browser Audio Processing Works</h3>
-            <p>Modern browsers include powerful audio processing capabilities through the Web Audio API. When you load a file, the browser decodes it into raw PCM audio data (an AudioBuffer). This data can then be processed — trimmed, converted, analyzed, or played back — entirely in JavaScript. The result is encoded back into a file format and downloaded. No network requests are made during processing.</p>
+                <h3>How Browser Audio Processing Works</h3>
+                <p>Modern browsers include powerful audio processing capabilities through the Web Audio API. When you load a file, the browser decodes it into raw PCM audio data (an AudioBuffer). This data can then be processed — trimmed, converted, analyzed, or played back — entirely in JavaScript. The result is encoded back into a file format and downloaded. No network requests are made during processing.</p>
 
-            <h3>Privacy & Security</h3>
-            <p>Your audio files never leave your device: there is no server-side processing and nothing is uploaded. The site uses Google Analytics for anonymous page-view statistics only — it never sees your audio or the files you process (see the <a href="/privacy/">privacy policy</a>). The entire source code is available on <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a> under the MIT license for full transparency.</p>
+                <h3>Privacy & Security</h3>
+                <p>Your audio files never leave your device: there is no server-side processing and nothing is uploaded. The site uses Google Analytics for anonymous page-view statistics only — it never sees your audio or the files you process (see the <a href="/privacy/">privacy policy</a>). The entire source code is available on <a href="https://github.com/formeo" target="_blank" rel="noopener">GitHub</a> under the MIT license for full transparency.</p>
+            </details>
 
             <p>Also check out our developer tools at <a href="https://www.devtoolkit.site/" target="_blank" rel="noopener">DevToolKit.site</a> — 21 free browser-based tools for JSON formatting, JWT decoding, PostgreSQL config generation, and more.</p>
         </section>
@@ -340,11 +358,11 @@
             </div>
             <div class="faq-item">
                 <div class="faq-q">What audio formats are supported?</div>
-                <div class="faq-a">The audio converter supports WAV, MP3, FLAC, OGG, AAC, M4A, and WebM. Input formats depend on browser support. The trimmer accepts any format your browser can decode.</div>
+                <div class="faq-a">The tools read WAV, MP3, FLAC, OGG, AAC, M4A and WebM, or anything else your browser can decode. Results are saved as MP3 or WAV.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Does voice-to-text work offline?</div>
-                <div class="faq-a">It depends on your browser. Chrome uses Google's speech recognition servers. Some browsers like Safari support on-device recognition. The audio converter and trimmer always work fully offline.</div>
+                <div class="faq-a">Private mode does: Whisper runs in your browser, and after the model downloads once it works without a connection. Live dictation uses your browser's speech engine, which in Chrome and Safari may run on Google's or Apple's servers. Once a page has loaded, the other tools also work without a connection.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Can I use AudioTools on mobile?</div>
