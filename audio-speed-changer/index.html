@@ -37,7 +37,7 @@
     {"@context":"https://schema.org","@type":"WebApplication","name":"Audio Speed Changer — AudioTools.dev","url":"https://audiotools.dev/audio-speed-changer/","description":"Change audio playback speed online for free. Slow down or speed up MP3, WAV files without pitch change. No upload, runs in browser.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I change audio speed without changing pitch?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The tool uses a WSOLA time-stretching algorithm to preserve the original pitch while adjusting playback speed from 0.25x to 4x."}}, {"@type": "Question", "name": "Is my audio file uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All processing happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": {"@type": "Answer", "text": "MP3, WAV, FLAC, OGG, AAC, M4A, and WebM. The output is saved as WAV."}}]}
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I change audio speed without changing pitch?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The tool uses a WSOLA time-stretching algorithm to preserve the original pitch while adjusting playback speed from 0.25x to 4x."}}, {"@type": "Question", "name": "Is my audio file uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All processing happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": {"@type": "Answer", "text": "MP3, WAV, FLAC, OGG, AAC, M4A, and WebM. The result is saved as MP3 or WAV."}}]}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,23 +92,7 @@
 
         .hidden{display:none!important}
 
-        .features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
-        .feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-        .feature-icon{font-size:24px;margin-bottom:8px}
-        .feature-title{font-weight:700;font-size:14px;margin-bottom:4px}
-        .feature-desc{font-size:13px;color:var(--text2)}
-        .seo-content{margin:48px 0}
-        .seo-content h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .seo-content h3{font-size:15px;font-weight:600;margin:20px 0 8px}
-        .seo-content p{font-size:14px;color:var(--text2);margin-bottom:12px;line-height:1.7}
-        .seo-content a{color:var(--green);text-decoration:none}
-        .seo-content a:hover{text-decoration:underline}
-        .faq{margin:32px 0}
-        .faq h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
-        .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
-        .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -183,7 +167,7 @@
         <div class="features">
             <div class="feature"><div class="feature-title">Adjustable Speed</div><div class="feature-desc">0.25x to 4x speed with a slider and quick presets.</div></div>
             <div class="feature"><div class="feature-title">Pitch Preservation</div><div class="feature-desc">WSOLA time-stretching keeps voices natural — no chipmunk effect.</div></div>
-            <div class="feature"><div class="feature-title">Download Result</div><div class="feature-desc">Save the speed-adjusted audio as a WAV file.</div></div>
+            <div class="feature"><div class="feature-title">Download Result</div><div class="feature-desc">Save the speed-adjusted audio as MP3 or WAV.</div></div>
             <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
         </div>
 
@@ -193,7 +177,7 @@
             <h3>Speed Change with Pitch Preservation</h3>
             <p>A naive speed change also alters pitch — making things sound higher when sped up and lower when slowed down. This tool uses a WSOLA (Waveform Similarity Overlap-Add) time-stretching algorithm to change speed while keeping the original pitch, so voices and music sound natural at any speed.</p>
             <h3>How It Works</h3>
-            <p>Drop or select your audio file, choose a speed with the slider or a preset, then click "Apply &amp; Process". The file is decoded with the Web Audio API, time-stretched directly in your browser, and offered as a downloadable WAV. Nothing is uploaded to any server.</p>
+            <p>Drop or select your audio file, choose a speed with the slider or a preset, then click "Apply &amp; Process". The file is decoded with the Web Audio API, time-stretched directly in your browser, and offered for download as MP3 or WAV. Nothing is uploaded to any server.</p>
             <h3>Common Use Cases</h3>
             <p>Language learning — slow down native speakers to catch every word. Music practice — slow down guitar solos or drum patterns to learn at your pace. Transcription — slow down recordings for accurate typing. Podcasts — speed up to 1.5–2x to listen faster.</p>
             <p>Need other edits? Try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/converter/">Audio Converter</a>, <a href="/text-to-speech/">Text to Speech</a>, or <a href="/voice-to-text/">Voice to Text</a>.</p>
@@ -202,7 +186,7 @@
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item"><div class="faq-q">Can I change speed without pitch change?</div><div class="faq-a">Yes. The tool uses WSOLA time-stretching to preserve original pitch while adjusting playback speed from 0.25x to 4x.</div></div>
-            <div class="faq-item"><div class="faq-q">What formats are supported?</div><div class="faq-a">MP3, WAV, FLAC, OGG, AAC, M4A, WebM. Output is saved as WAV.</div></div>
+            <div class="faq-item"><div class="faq-q">What formats are supported?</div><div class="faq-a">MP3, WAV, FLAC, OGG, AAC, M4A, WebM. Output is saved as MP3 or WAV.</div></div>
             <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. Everything happens in your browser using the Web Audio API.</div></div>
         </section>
     </div>

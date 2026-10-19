@@ -15,7 +15,7 @@
     </script>
 
     <title>Audio Converter Online — Free, No Upload | AudioTools.dev</title>
-    <meta name="description" content="Convert audio files between WAV, MP3, FLAC in your browser. No upload, no server, 100% private. Free online audio converter with Web Audio API.">
+    <meta name="description" content="Convert any audio file to MP3 or WAV in your browser. No upload, no server, 100% private. Free online audio converter with Web Audio API.">
     <meta name="keywords" content="audio converter online, convert mp3 wav, wav to mp3, mp3 converter, audio format converter, free audio converter, browser audio converter, private audio converter">
     <link rel="canonical" href="https://audiotools.dev/converter/">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/converter/">
@@ -30,7 +30,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Audio Converter Online — Free, Private, No Upload">
-    <meta property="og:description" content="Convert audio files between WAV, MP3 and FLAC directly in your browser. No server, 100% private.">
+    <meta property="og:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
     <meta property="og:url" content="https://audiotools.dev/converter/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools.dev">
@@ -43,7 +43,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Audio Converter Online — Free, No Upload">
-    <meta name="twitter:description" content="Convert WAV, MP3, FLAC in your browser. No upload, 100% private.">
+    <meta name="twitter:description" content="Convert audio to MP3 or WAV in your browser. No upload, 100% private.">
     <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
     <script type="application/ld+json">
@@ -51,7 +51,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Audio Converter Online",
-        "description": "Convert audio files between WAV, MP3 and FLAC directly in your browser. No upload required.",
+        "description": "Convert WAV, FLAC, OGG, M4A, AAC and WebM audio to MP3 or WAV directly in your browser. No upload required.",
         "url": "https://audiotools.dev/converter/",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any (browser-based)",
@@ -87,7 +87,7 @@
                 "name": "What audio formats are supported?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "You can convert between WAV, MP3 and FLAC formats. Input: WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Output: WAV, MP3."
+                    "text": "You can convert any of these to MP3 or WAV. Input: WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Output: WAV, MP3."
                 }
             },
             {
@@ -115,14 +115,7 @@
             line-height: 1.6;
         }
 
-        .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
-        .privacy-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(35, 70, 245, 0.1); border: 1px solid rgba(35, 70, 245, 0.2);
-            border-radius: 20px; padding: 6px 16px; margin-top: 16px;
-            font-size: 13px; color: var(--green);
-        }
+        .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
 
         /* DROP ZONE */
         .drop-zone {
@@ -196,9 +189,6 @@
             border-color: var(--green); color: var(--green);
             background: rgba(35, 70, 245, 0.1);
         }
-        .format-chip.disabled {
-            opacity: 0.3; cursor: not-allowed;
-        }
 
         /* QUALITY */
         .quality-row {
@@ -259,61 +249,11 @@
         .download-btn:hover { background: var(--green2); transform: translateY(-1px); }
 
         /* FAQ */
-        .faq { padding: 40px 0 60px; }
-        .faq h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
-        .faq-item {
-            border-bottom: 1px solid var(--border); padding: 16px 0;
-        }
-        .faq-q {
-            font-weight: 600; font-size: 15px; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .faq-q::after { content: '+'; font-size: 20px; color: var(--text2); }
-        .faq-item.open .faq-q::after { content: '−'; }
-        .faq-a {
-            display: none; padding-top: 10px; color: var(--text2);
-            font-size: 14px; line-height: 1.7;
-        }
-        .faq-item.open .faq-a { display: block; }
 
         /* HOW IT WORKS */
-        .how-it-works { padding: 32px 0; }
-        .how-it-works h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-        .steps {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-        }
-        .step {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 20px; text-align: center;
-        }
-        .step-num {
-            width: 32px; height: 32px; border-radius: 50%; background: rgba(35, 70, 245, 0.15);
-            color: var(--accent2); font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
-        }
-        .step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-        .step-desc { font-size: 12px; color: var(--text2); }
 
         /* FORMATS TABLE */
-        .formats-section { padding: 20px 0 40px; }
-        .formats-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-        .formats-table {
-            width: 100%; border-collapse: collapse; font-size: 13px;
-        }
-        .formats-table th {
-            background: var(--surface2); padding: 10px 12px; text-align: left;
-            font-weight: 600; font-size: 12px; color: var(--text2); text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .formats-table td {
-            padding: 10px 12px; border-bottom: 1px solid var(--border);
-        }
-        .formats-table .check { color: var(--green); }
-        .formats-table .cross { color: var(--red); opacity: 0.5; }
 
-        @media (max-width: 600px) {
-            .steps { grid-template-columns: 1fr; }
-        }
         .tool-area { padding: 24px; margin-bottom: 8px; }
         .tool-area .result { margin-bottom: 0; }
     </style>
@@ -341,9 +281,6 @@
             <p>Convert audio files directly in your browser. No upload to server, no registration, 100% free.</p>
             <div class="privacy-badge">
                 Your files never leave your device
-            </div>
-            <div class="privacy-badge" id="wasmBadge" style="display:none; margin-top:8px; border-color: rgba(35, 70, 245, 0.3); background: rgba(35, 70, 245, 0.08); color: #1D3BD1;">
-                WASM engine active — FLAC encoding enabled
             </div>
         </section>
 
@@ -442,15 +379,15 @@
             <h2>Supported Formats</h2>
             <table class="formats-table">
                 <thead>
-                    <tr><th>Input Format</th><th>→ WAV</th><th>→ MP3</th><th>→ FLAC</th></tr>
+                    <tr><th>Input Format</th><th>→ WAV</th><th>→ MP3</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td></tr>
                 </tbody>
             </table>
             <p style="font-size:12px; color:var(--text2); margin-top:10px;">
@@ -463,23 +400,23 @@
         <!-- FAQ -->
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">Is my audio file uploaded to a server?</div>
                 <div class="faq-a">No. All audio conversion happens directly in your browser using Web Audio API and JavaScript. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">What is the maximum file size?</div>
                 <div class="faq-a">Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle files up to 100–200 MB without issues. For very large files, consider using our CLI tool: <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> — a pure Go converter with no file size limits.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">What audio quality can I expect?</div>
                 <div class="faq-a">WAV output is lossless — identical to the decoded audio. MP3 encoding at 192 kbps provides high quality suitable for most purposes. You can select up to 320 kbps for maximum quality.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">Does it work offline?</div>
                 <div class="faq-a">The converter works offline after the page is loaded (MP3 encoding library needs to load once). Bookmark this page for quick access.</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">Can I use a command-line tool instead?</div>
                 <div class="faq-a">Yes! Our open source <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> is a pure Go audio converter — no FFmpeg, no CGO, single binary. It supports WAV, MP3, FLAC conversion and runs on any platform including as WebAssembly.</div>
             </div>
@@ -502,34 +439,6 @@
     (function() {
         'use strict';
 
-        // ── WASM Loader ──
-        // Tries to load Go WASM module for FLAC encoding.
-        // Falls back gracefully — converter works without WASM (WAV + MP3 only).
-        let wasmReady = false;
-        (async function loadWasm() {
-            try {
-                const wasmExec = document.createElement('script');
-                wasmExec.src = '/wasm/wasm_exec.js';
-                wasmExec.onload = async () => {
-                    try {
-                        const go = new Go();
-                        const result = await WebAssembly.instantiateStreaming(
-                            fetch('/wasm/converter.wasm'), go.importObject
-                        );
-                        go.run(result.instance);
-                        wasmReady = typeof goWasmReady !== 'undefined' && goWasmReady;
-                        if (wasmReady) {
-                            console.log('[AudioTools] WASM engine loaded — FLAC encoding enabled');
-                            document.getElementById('wasmBadge').style.display = 'inline-flex';
-                        }
-                    } catch(e) {
-                        console.log('[AudioTools] WASM not available, using JS engine');
-                    }
-                };
-                wasmExec.onerror = () => console.log('[AudioTools] No WASM, JS-only mode');
-                document.head.appendChild(wasmExec);
-            } catch(e) {}
-        })();
 
         // DOM refs
         const dropZone = document.getElementById('dropZone');
@@ -563,7 +472,6 @@
         const FORMATS = {
             wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
             mp3: { label: 'MP3', ext: '.mp3', mime: 'audio/mpeg' },
-            flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac', wasm: true },
         };
 
         const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus'];
@@ -707,16 +615,10 @@
             Object.keys(FORMATS).forEach(fmt => {
                 const f = FORMATS[fmt];
                 const chip = document.createElement('button');
-                const isWasmOnly = f.wasm && !wasmReady;
-                chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '') + (isWasmOnly ? ' disabled' : '');
-                if (isWasmOnly) chip.setAttribute('aria-disabled', 'true');
-                chip.textContent = f.label + (isWasmOnly ? ' (WASM)' : '');
+                chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '');
+                chip.textContent = f.label;
                 chip.dataset.fmt = fmt;
-                if (isWasmOnly) {
-                    chip.title = 'FLAC encoding requires WASM module. Build with: ./build-wasm.sh';
-                } else {
-                    chip.addEventListener('click', () => selectFormat(fmt));
-                }
+                chip.addEventListener('click', () => selectFormat(fmt));
                 outputFormats.appendChild(chip);
             });
 
@@ -760,9 +662,6 @@
                     blob = await encodeWAV(audioBuffer);
                 } else if (selectedOutput === 'mp3') {
                     blob = await encodeMP3(audioBuffer);
-                } else if (selectedOutput === 'flac' && wasmReady) {
-                    updateProgress(10, 'Encoding FLAC via WASM...');
-                    blob = await encodeFLACWasm(audioBuffer);
                 }
 
                 updateProgress(100, 'Done!');
@@ -926,65 +825,6 @@
             });
         }
 
-        // FLAC encoder via WASM (go-audio-converter)
-        function encodeFLACWasm(buffer) {
-            return new Promise((resolve, reject) => {
-                if (!wasmReady || typeof goAudioConvert === 'undefined') {
-                    reject(new Error('WASM FLAC encoder not loaded'));
-                    return;
-                }
-
-                updateProgress(10, 'Preparing PCM data...');
-
-                const numCh = buffer.numberOfChannels;
-                const sr = buffer.sampleRate;
-                const len = buffer.length;
-
-                // Build WAV in memory → send to WASM for WAV→FLAC
-                const totalSamples = len * numCh;
-                const dataSize = totalSamples * 2;
-                const wavBuf = new ArrayBuffer(44 + dataSize);
-                const view = new DataView(wavBuf);
-
-                writeString(view, 0, 'RIFF');
-                view.setUint32(4, 36 + dataSize, true);
-                writeString(view, 8, 'WAVE');
-                writeString(view, 12, 'fmt ');
-                view.setUint32(16, 16, true);
-                view.setUint16(20, 1, true);
-                view.setUint16(22, numCh, true);
-                view.setUint32(24, sr, true);
-                view.setUint32(28, sr * numCh * 2, true);
-                view.setUint16(32, numCh * 2, true);
-                view.setUint16(34, 16, true);
-                writeString(view, 36, 'data');
-                view.setUint32(40, dataSize, true);
-
-                const pcm = new Int16Array(wavBuf, 44);
-                for (let i = 0; i < len; i++) {
-                    for (let ch = 0; ch < numCh; ch++) {
-                        const s = Math.max(-1, Math.min(1, buffer.getChannelData(ch)[i]));
-                        pcm[i * numCh + ch] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                    }
-                }
-
-                updateProgress(40, 'WASM FLAC encoding...');
-
-                const inputBytes = new Uint8Array(wavBuf);
-                const result = goAudioConvert(inputBytes, 'wav', 'flac');
-
-                if (result && result.error) {
-                    reject(new Error(result.error));
-                    return;
-                }
-
-                updateProgress(95, 'Finalizing FLAC...');
-                const flacBytes = new Uint8Array(result.length);
-                for (let i = 0; i < result.length; i++) flacBytes[i] = result[i];
-
-                resolve(new Blob([flacBytes], { type: 'audio/flac' }));
-            });
-        }
 
         // Download
         downloadBtn.addEventListener('click', () => {

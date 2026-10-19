@@ -4,7 +4,7 @@
 
 ## Online Tools
 
-- [Audio Converter](https://audiotools.dev/converter/): Convert between WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Uses LAME and FLAC WebAssembly encoders. No file upload.
+- [Audio Converter](https://audiotools.dev/converter/): Convert WAV, FLAC, OGG, AAC, M4A, WebM to MP3 or WAV. MP3 via lamejs. No file upload.
 - [Voice to Text](https://audiotools.dev/voice-to-text/): Live dictation in 60+ languages (Web Speech Recognition API), plus Private mode: transcribe audio files and recordings with Whisper running on-device (Transformers.js) — audio never leaves the browser.
 - [Text to Speech](https://audiotools.dev/text-to-speech/): Convert text to natural speech in 50+ languages. Adjustable speed (0.25x-3x), pitch, volume.
 - [Audio Trimmer](https://audiotools.dev/audio-trimmer/): Cut audio files with visual waveform editor. Drag handles, preview, download WAV.
@@ -30,7 +30,7 @@
 
 - Privacy: all browser tools process audio locally. No files uploaded, audio is never collected. The site uses Google Analytics for anonymous page-view statistics only.
 - License: MIT.
-- Formats: WAV, MP3, FLAC, OGG, AAC, M4A, WebM.
+- Formats: reads WAV, MP3, FLAC, OGG, AAC, M4A, WebM; saves MP3 or WAV.
 - Works offline: Converter, Trimmer, Joiner, Volume Booster, Speed Changer, Compressor work without internet.
 - Mobile: all tools work on Chrome Android and Safari iOS.
 - Author: Roman Gordienko (https://github.com/formeo)

@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /site/
 
 Sitemap: https://audiotools.dev/sitemap.xml

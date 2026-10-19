@@ -15,8 +15,8 @@
     </script>
 
     <title>在线音频转换器 — 免费，无需上传 | AudioTools.dev</title>
-    <meta name="description" content="在浏览器中转换 WAV、MP3、FLAC 等音频格式。无需上传，不经过服务器，100% 私密。基于 Web Audio API 的免费在线音频转换器。">
-    <meta name="keywords" content="在线音频转换器, 音频格式转换, WAV转MP3, MP3转WAV, FLAC转换, MP3转换器, 免费音频转换器, 浏览器音频转换, 无需上传">
+    <meta name="description" content="在浏览器中将任意音频转换为 MP3 或 WAV。无需上传，不经过服务器，100% 私密。基于 Web Audio API 的免费在线音频转换器。">
+    <meta name="keywords" content="在线音频转换器, 音频格式转换, WAV转MP3, MP3转WAV, FLAC转MP3, MP3转换器, 免费音频转换器, 浏览器音频转换, 无需上传">
     <link rel="canonical" href="https://audiotools.dev/zh/converter/">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/converter/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/converter/">
@@ -30,7 +30,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="在线音频转换器 — 免费、私密、无需上传">
-    <meta property="og:description" content="直接在浏览器中转换 WAV、MP3 和 FLAC 音频文件。不经过服务器，100% 私密。">
+    <meta property="og:description" content="直接在浏览器中将音频转换为 MP3 或 WAV。不经过服务器，100% 私密。">
     <meta property="og:url" content="https://audiotools.dev/zh/converter/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools.dev">
@@ -43,7 +43,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="在线音频转换器 — 免费，无需上传">
-    <meta name="twitter:description" content="在浏览器中转换 WAV、MP3、FLAC。无需上传，100% 私密。">
+    <meta name="twitter:description" content="在浏览器中将音频转换为 MP3 或 WAV。无需上传，100% 私密。">
     <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
     <script type="application/ld+json">
@@ -51,7 +51,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "在线音频转换器",
-        "description": "直接在浏览器中转换 WAV、MP3 和 FLAC 音频文件，无需上传。",
+        "description": "直接在浏览器中将 WAV、FLAC、OGG、M4A、AAC、WebM 音频转换为 MP3 或 WAV，无需上传。",
         "inLanguage": "zh-CN",
         "url": "https://audiotools.dev/zh/converter/",
         "applicationCategory": "MultimediaApplication",
@@ -88,7 +88,7 @@
                 "name": "支持哪些音频格式？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "支持 WAV、MP3 和 FLAC 之间的转换。输入：WAV、MP3、FLAC、OGG、AAC、M4A、WebM。输出：WAV、MP3。"
+                    "text": "可转换为 MP3 或 WAV。输入：WAV、MP3、FLAC、OGG、AAC、M4A、WebM。输出：WAV、MP3。"
                 }
             },
             {
@@ -116,14 +116,7 @@
             line-height: 1.6;
         }
 
-        .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
-        .privacy-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(35, 70, 245, 0.1); border: 1px solid rgba(35, 70, 245, 0.2);
-            border-radius: 20px; padding: 6px 16px; margin-top: 16px;
-            font-size: 13px; color: var(--green);
-        }
+        .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
 
         /* DROP ZONE */
         .drop-zone {
@@ -197,9 +190,6 @@
             border-color: var(--green); color: var(--green);
             background: rgba(35, 70, 245, 0.1);
         }
-        .format-chip.disabled {
-            opacity: 0.3; cursor: not-allowed;
-        }
 
         /* QUALITY */
         .quality-row {
@@ -260,61 +250,11 @@
         .download-btn:hover { background: var(--green2); transform: translateY(-1px); }
 
         /* FAQ */
-        .faq { padding: 40px 0 60px; }
-        .faq h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
-        .faq-item {
-            border-bottom: 1px solid var(--border); padding: 16px 0;
-        }
-        .faq-q {
-            font-weight: 600; font-size: 15px; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .faq-q::after { content: '+'; font-size: 20px; color: var(--text2); }
-        .faq-item.open .faq-q::after { content: '−'; }
-        .faq-a {
-            display: none; padding-top: 10px; color: var(--text2);
-            font-size: 14px; line-height: 1.7;
-        }
-        .faq-item.open .faq-a { display: block; }
 
         /* HOW IT WORKS */
-        .how-it-works { padding: 32px 0; }
-        .how-it-works h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-        .steps {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-        }
-        .step {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 20px; text-align: center;
-        }
-        .step-num {
-            width: 32px; height: 32px; border-radius: 50%; background: rgba(35, 70, 245, 0.15);
-            color: var(--accent2); font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
-        }
-        .step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-        .step-desc { font-size: 12px; color: var(--text2); }
 
         /* FORMATS TABLE */
-        .formats-section { padding: 20px 0 40px; }
-        .formats-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-        .formats-table {
-            width: 100%; border-collapse: collapse; font-size: 13px;
-        }
-        .formats-table th {
-            background: var(--surface2); padding: 10px 12px; text-align: left;
-            font-weight: 600; font-size: 12px; color: var(--text2); text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .formats-table td {
-            padding: 10px 12px; border-bottom: 1px solid var(--border);
-        }
-        .formats-table .check { color: var(--green); }
-        .formats-table .cross { color: var(--red); opacity: 0.5; }
 
-        @media (max-width: 600px) {
-            .steps { grid-template-columns: 1fr; }
-        }
         .tool-area { padding: 24px; margin-bottom: 8px; }
         .tool-area .result { margin-bottom: 0; }
     </style>
@@ -342,9 +282,6 @@
             <p>直接在浏览器中转换音频文件。无需上传到服务器，无需注册，100% 免费。</p>
             <div class="privacy-badge">
                 文件永远不会离开您的设备
-            </div>
-            <div class="privacy-badge" id="wasmBadge" style="display:none; margin-top:8px; border-color: rgba(35, 70, 245, 0.3); background: rgba(35, 70, 245, 0.08); color: #1D3BD1;">
-                WASM 引擎已启用 — 支持 FLAC 编码
             </div>
         </section>
 
@@ -443,15 +380,15 @@
             <h2>支持的格式</h2>
             <table class="formats-table">
                 <thead>
-                    <tr><th>输入格式</th><th>→ WAV</th><th>→ MP3</th><th>→ FLAC</th></tr>
+                    <tr><th>输入格式</th><th>→ WAV</th><th>→ MP3</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
-                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
+                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td></tr>
                 </tbody>
             </table>
             <p style="font-size:12px; color:var(--text2); margin-top:10px;">
@@ -464,23 +401,23 @@
         <!-- FAQ -->
         <section class="faq">
             <h2>常见问题</h2>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">我的音频文件会上传到服务器吗？</div>
                 <div class="faq-a">不会。所有音频转换都通过 Web Audio API 和 JavaScript 在您的浏览器中完成，文件永远不会离开您的设备。没有任何服务器端处理——您可以在开发者工具的“网络”面板中自行验证。</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">最大文件大小是多少？</div>
                 <div class="faq-a">由于处理在浏览器中进行，限制取决于设备的可用内存。大多数现代设备可以顺利处理 100–200 MB 的文件。对于超大文件，可以使用我们的命令行工具 <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>——纯 Go 实现，没有文件大小限制。</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">转换后的音质如何？</div>
                 <div class="faq-a">WAV 输出是无损的，与解码后的音频完全一致。192 kbps 的 MP3 编码可满足大多数用途的高质量需求，最高可选 320 kbps。</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">可以离线使用吗？</div>
                 <div class="faq-a">页面加载完成后即可离线使用（MP3 编码库需要加载一次）。建议收藏本页面以便快速访问。</div>
             </div>
-            <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item">
                 <div class="faq-q">可以使用命令行工具吗？</div>
                 <div class="faq-a">可以！我们的开源项目 <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> 是纯 Go 编写的音频转换器——无需 FFmpeg、无需 CGO、单个可执行文件。支持 WAV、MP3、FLAC 转换，可在任何平台运行，也可编译为 WebAssembly。</div>
             </div>
@@ -503,34 +440,6 @@
     (function() {
         'use strict';
 
-        // ── WASM Loader ──
-        // Tries to load Go WASM module for FLAC encoding.
-        // Falls back gracefully — converter works without WASM (WAV + MP3 only).
-        let wasmReady = false;
-        (async function loadWasm() {
-            try {
-                const wasmExec = document.createElement('script');
-                wasmExec.src = '/wasm/wasm_exec.js';
-                wasmExec.onload = async () => {
-                    try {
-                        const go = new Go();
-                        const result = await WebAssembly.instantiateStreaming(
-                            fetch('/wasm/converter.wasm'), go.importObject
-                        );
-                        go.run(result.instance);
-                        wasmReady = typeof goWasmReady !== 'undefined' && goWasmReady;
-                        if (wasmReady) {
-                            console.log('[AudioTools] WASM engine loaded — FLAC encoding enabled');
-                            document.getElementById('wasmBadge').style.display = 'inline-flex';
-                        }
-                    } catch(e) {
-                        console.log('[AudioTools] WASM not available, using JS engine');
-                    }
-                };
-                wasmExec.onerror = () => console.log('[AudioTools] No WASM, JS-only mode');
-                document.head.appendChild(wasmExec);
-            } catch(e) {}
-        })();
 
         // DOM refs
         const dropZone = document.getElementById('dropZone');
@@ -564,7 +473,6 @@
         const FORMATS = {
             wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
             mp3: { label: 'MP3', ext: '.mp3', mime: 'audio/mpeg' },
-            flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac', wasm: true },
         };
 
         const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus'];
@@ -708,16 +616,10 @@
             Object.keys(FORMATS).forEach(fmt => {
                 const f = FORMATS[fmt];
                 const chip = document.createElement('button');
-                const isWasmOnly = f.wasm && !wasmReady;
-                chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '') + (isWasmOnly ? ' disabled' : '');
-                if (isWasmOnly) chip.setAttribute('aria-disabled', 'true');
-                chip.textContent = f.label + (isWasmOnly ? ' (WASM)' : '');
+                chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '');
+                chip.textContent = f.label;
                 chip.dataset.fmt = fmt;
-                if (isWasmOnly) {
-                    chip.title = 'FLAC 编码需要 WASM 模块。构建命令：./build-wasm.sh';
-                } else {
-                    chip.addEventListener('click', () => selectFormat(fmt));
-                }
+                chip.addEventListener('click', () => selectFormat(fmt));
                 outputFormats.appendChild(chip);
             });
 
@@ -761,9 +663,6 @@
                     blob = await encodeWAV(audioBuffer);
                 } else if (selectedOutput === 'mp3') {
                     blob = await encodeMP3(audioBuffer);
-                } else if (selectedOutput === 'flac' && wasmReady) {
-                    updateProgress(10, '正在通过 WASM 编码 FLAC…');
-                    blob = await encodeFLACWasm(audioBuffer);
                 }
 
                 updateProgress(100, '完成！');
@@ -927,65 +826,6 @@
             });
         }
 
-        // FLAC encoder via WASM (go-audio-converter)
-        function encodeFLACWasm(buffer) {
-            return new Promise((resolve, reject) => {
-                if (!wasmReady || typeof goAudioConvert === 'undefined') {
-                    reject(new Error('WASM FLAC 编码器未加载'));
-                    return;
-                }
-
-                updateProgress(10, '正在准备 PCM 数据…');
-
-                const numCh = buffer.numberOfChannels;
-                const sr = buffer.sampleRate;
-                const len = buffer.length;
-
-                // Build WAV in memory → send to WASM for WAV→FLAC
-                const totalSamples = len * numCh;
-                const dataSize = totalSamples * 2;
-                const wavBuf = new ArrayBuffer(44 + dataSize);
-                const view = new DataView(wavBuf);
-
-                writeString(view, 0, 'RIFF');
-                view.setUint32(4, 36 + dataSize, true);
-                writeString(view, 8, 'WAVE');
-                writeString(view, 12, 'fmt ');
-                view.setUint32(16, 16, true);
-                view.setUint16(20, 1, true);
-                view.setUint16(22, numCh, true);
-                view.setUint32(24, sr, true);
-                view.setUint32(28, sr * numCh * 2, true);
-                view.setUint16(32, numCh * 2, true);
-                view.setUint16(34, 16, true);
-                writeString(view, 36, 'data');
-                view.setUint32(40, dataSize, true);
-
-                const pcm = new Int16Array(wavBuf, 44);
-                for (let i = 0; i < len; i++) {
-                    for (let ch = 0; ch < numCh; ch++) {
-                        const s = Math.max(-1, Math.min(1, buffer.getChannelData(ch)[i]));
-                        pcm[i * numCh + ch] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                    }
-                }
-
-                updateProgress(40, '正在进行 WASM FLAC 编码…');
-
-                const inputBytes = new Uint8Array(wavBuf);
-                const result = goAudioConvert(inputBytes, 'wav', 'flac');
-
-                if (result && result.error) {
-                    reject(new Error(result.error));
-                    return;
-                }
-
-                updateProgress(95, '正在完成 FLAC…');
-                const flacBytes = new Uint8Array(result.length);
-                for (let i = 0; i < result.length; i++) flacBytes[i] = result[i];
-
-                resolve(new Blob([flacBytes], { type: 'audio/flac' }));
-            });
-        }
 
         // Download
         downloadBtn.addEventListener('click', () => {

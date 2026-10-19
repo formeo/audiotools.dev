@@ -102,23 +102,7 @@
 
         .hidden{display:none!important}
 
-        .features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
-        .feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-        .feature-icon{font-size:24px;margin-bottom:8px}
-        .feature-title{font-weight:700;font-size:14px;margin-bottom:4px}
-        .feature-desc{font-size:13px;color:var(--text2)}
-        .seo-content{margin:48px 0}
-        .seo-content h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .seo-content h3{font-size:15px;font-weight:600;margin:20px 0 8px}
-        .seo-content p{font-size:14px;color:var(--text2);margin-bottom:12px;line-height:1.7}
-        .seo-content a{color:var(--green);text-decoration:none}
-        .seo-content a:hover{text-decoration:underline}
-        .faq{margin:32px 0}
-        .faq h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
-        .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
-        .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -205,7 +189,7 @@
             <h3>Volume Boost vs Normalization</h3>
             <p>Volume boost increases the entire signal by a fixed amount (for example +6 dB or 200%). Normalization analyzes the peak level and scales the volume so the loudest part reaches a target level (−1 dBFS here). Normalization is smarter — it prevents clipping while maximizing perceived loudness. When you boost manually past the ceiling, a soft limiter rounds off the peaks so the result stays clean instead of crackling.</p>
             <h3>How It Works</h3>
-            <p>Drop or select your file, pick Normalize or Manual Boost, and click "Apply &amp; Process". The audio is decoded with the Web Audio API, gain is applied sample-by-sample directly in your browser, and the result is offered as a downloadable WAV. Nothing is uploaded.</p>
+            <p>Drop or select your file, pick Normalize or Manual Boost, and click "Apply &amp; Process". The audio is decoded with the Web Audio API, gain is applied sample-by-sample directly in your browser, and the result is offered for download as MP3 or WAV. Nothing is uploaded.</p>
             <h3>Common Use Cases</h3>
             <p>Boosting quiet voice recordings from phone or laptop microphones. Normalizing podcast episodes to a consistent volume. Matching volume levels across multiple tracks. Making quiet audiobook chapters louder.</p>
             <p>Need other edits? Try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/audio-speed-changer/">Speed Changer</a>, <a href="/converter/">Audio Converter</a>, or <a href="/text-to-speech/">Text to Speech</a>.</p>

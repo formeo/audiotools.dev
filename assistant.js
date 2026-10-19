@@ -144,7 +144,7 @@
         render(scored.map(([tool]) => ({ tool, why: WHY[tool] })), 'text');
     }
     const WHY = {
-        'converter': T('Change the format: MP3, WAV, FLAC, OGG, M4A…', '转换格式：MP3、WAV、FLAC、OGG、M4A…'),
+        'converter': T('Change the format to MP3 or WAV', '转换为 MP3 或 WAV'),
         'audio-compressor': T('Make the file smaller (MP3, choose the bitrate)', '减小文件体积（MP3，可选码率）'),
         'volume-booster': T('Make a quiet recording louder or normalize it', '提高音量或标准化'),
         'audio-trimmer': T('Cut out the part you need', '剪出需要的片段'),
@@ -189,7 +189,7 @@
         if (peakDb < -12) out.push({ tool: 'volume-booster', why: T(`Quiet recording (peak ${peakDb.toFixed(0)} dB) → make it louder`, `录音偏小声（峰值 ${peakDb.toFixed(0)} dB）→ 提高音量`) });
         if (mb > 5 && mp3mb < mb * 0.7) out.push({ tool: 'audio-compressor', why: T(`${mb.toFixed(1)} MB → about ${mp3mb.toFixed(1)} MB as MP3 (128 kbps)`, `${mb.toFixed(1)} MB → 转为 MP3 约 ${mp3mb.toFixed(1)} MB（128 kbps）`) });
         if (buf.duration >= 20) out.push({ tool: 'voice-to-text', why: T(`${len} long — if it's speech, turn it into text on your device`, `时长 ${len}——如果是语音，可在本机转为文字`) });
-        out.push({ tool: 'converter', why: T(`${ext} → MP3, WAV or FLAC`, `${ext} → MP3、WAV 或 FLAC`) });
+        out.push({ tool: 'converter', why: T(`${ext} → MP3 or WAV`, `${ext} → MP3 或 WAV`) });
         out.push({ tool: 'audio-trimmer', why: T(`Cut a part of the ${len} recording`, `从 ${len} 的录音中剪出片段`) });
         out.push({ tool: 'audio-speed-changer', why: WHY['audio-speed-changer'] });
         render(out.slice(0, 3), 'file', `${f.name} · ${len} · ${mb.toFixed(1)} MB`);

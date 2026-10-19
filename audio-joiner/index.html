@@ -36,7 +36,7 @@
     {"@context":"https://schema.org","@type":"WebApplication","name":"Audio Joiner — AudioTools.dev","url":"https://audiotools.dev/audio-joiner/","description":"Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I merge audio files online?", "acceptedAnswer": {"@type": "Answer", "text": "Add your audio files, arrange them in order, optionally add crossfade between tracks, then click Merge & Download to get a single combined file."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All merging happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "Can I merge different audio formats?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can mix MP3, WAV, FLAC, OGG and other formats. The browser decodes each file and the merged result is saved as WAV."}}]}
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I merge audio files online?", "acceptedAnswer": {"@type": "Answer", "text": "Add your audio files, arrange them in order, optionally add crossfade between tracks, then click Merge & Download to get a single combined file."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All merging happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "Can I merge different audio formats?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can mix MP3, WAV, FLAC, OGG and other formats. The browser decodes each file and the merged result is saved as MP3 or WAV."}}]}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,23 +92,7 @@
         .result audio{width:100%;margin-bottom:14px}
         .hidden{display:none!important}
 
-        .features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
-        .feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-        .feature-icon{font-size:24px;margin-bottom:8px}
-        .feature-title{font-weight:700;font-size:14px;margin-bottom:4px}
-        .feature-desc{font-size:13px;color:var(--text2)}
-        .seo-content{margin:48px 0}
-        .seo-content h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .seo-content h3{font-size:15px;font-weight:600;margin:20px 0 8px}
-        .seo-content p{font-size:14px;color:var(--text2);margin-bottom:12px;line-height:1.7}
-        .seo-content a{color:var(--green);text-decoration:none}
-        .seo-content a:hover{text-decoration:underline}
-        .faq{margin:32px 0}
-        .faq h2{font-size:20px;font-weight:700;margin-bottom:16px}
-        .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
-        .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
-        .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -181,7 +165,7 @@
             <h2>Free Online Audio Joiner &amp; Merger</h2>
             <p>Audio Joiner combines multiple audio files into a single track directly in your browser. Whether you need to merge podcast segments, combine music tracks, or join voice recordings, this tool handles it without uploading your files to any server.</p>
             <h3>How It Works</h3>
-            <p>The tool uses the Web Audio API to decode each file into raw PCM, concatenates the buffers in the order you set, applies an optional crossfade between consecutive tracks, and encodes the result as a WAV file. All processing happens in your browser — no server involved.</p>
+            <p>The tool uses the Web Audio API to decode each file into raw PCM, concatenates the buffers in the order you set, applies an optional crossfade between consecutive tracks, and encodes the result as MP3 or WAV. All processing happens in your browser — no server involved.</p>
             <h3>Reorder and Crossfade</h3>
             <p>Drag tracks to reorder them, or use the up/down arrows. Set a crossfade of up to 3 seconds to smoothly blend the end of one track into the start of the next — useful for music mixes and seamless podcast edits. Set crossfade to 0 for a clean back-to-back join.</p>
             <h3>Common Use Cases</h3>
@@ -192,7 +176,7 @@
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item"><div class="faq-q">How do I merge audio files online?</div><div class="faq-a">Add your files, arrange them in order, optionally add crossfade, then click Merge &amp; Download to get a single combined file.</div></div>
-            <div class="faq-item"><div class="faq-q">Can I merge different formats?</div><div class="faq-a">Yes. Mix MP3, WAV, FLAC, OGG. The browser decodes each file and the merged result is saved as WAV.</div></div>
+            <div class="faq-item"><div class="faq-q">Can I merge different formats?</div><div class="faq-a">Yes. Mix MP3, WAV, FLAC, OGG. The browser decodes each file and the merged result is saved as MP3 or WAV.</div></div>
             <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. All merging happens in your browser using the Web Audio API.</div></div>
         </section>
     </div>

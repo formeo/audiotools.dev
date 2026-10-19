@@ -8,75 +8,46 @@ Privacy-first audio tools that run entirely in your browser. No uploads, no acco
 
 | Tool | URL | Technology |
 |------|-----|------------|
-| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Web Audio API + lamejs + Go WASM |
+| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Web Audio API + lamejs |
 | **Voice to Text** | [/voice-to-text/](https://audiotools.dev/voice-to-text/) | Web Speech API + Whisper (Transformers.js) |
+| **Text to Speech** | [/text-to-speech/](https://audiotools.dev/text-to-speech/) | Web Speech Synthesis API |
+| **Audio Trimmer** | [/audio-trimmer/](https://audiotools.dev/audio-trimmer/) | Web Audio API |
+| **Speed Changer** | [/audio-speed-changer/](https://audiotools.dev/audio-speed-changer/) | WSOLA time-stretching |
+| **Volume Booster** | [/volume-booster/](https://audiotools.dev/volume-booster/) | Web Audio API, soft limiter |
+| **Audio Joiner** | [/audio-joiner/](https://audiotools.dev/audio-joiner/) | Web Audio API, crossfade |
+| **Audio Compressor** | [/audio-compressor/](https://audiotools.dev/audio-compressor/) | lamejs |
+
+Chinese pages: [/zh/](https://audiotools.dev/zh/) and [/zh/converter/](https://audiotools.dev/zh/converter/).
 
 ## Architecture
 
 ```
 audiotools.dev/
-├── index.html              ← Main hub page
-├── converter/
-│   └── index.html          ← Audio converter (JS + optional WASM)
-├── voice-to-text/
-│   └── index.html          ← Speech-to-text transcription
-├── wasm/
-│   ├── main.go             ← Go WASM source (FLAC encoder)
-│   ├── build-wasm.sh       ← Build script
-│   ├── converter.wasm      ← Compiled WASM binary (build it!)
-│   └── wasm_exec.js        ← Go WASM runtime (from Go installation)
-├── sitemap.xml
-├── robots.txt
-├── CNAME
-└── README.md
+├── index.html, zh/         ← Home page (EN, ZH) with the tool helper
+├── <tool>/index.html       ← One folder per tool; tool-specific styles inline
+├── style.css               ← Shared look: tokens, nav, footer, tool header and panel, sections
+├── assistant.js            ← Home helper + "continue with this file" hand-off between tools
+├── audio-export.js         ← MP3 (lamejs, 192 kbps) or WAV download for edited audio
+├── support.js              ← GA4 events + support line after a successful result
+├── voice-to-text/whisper-worker.js ← Whisper in a Web Worker
+├── about/, changelog/, privacy/, terms/, 404.html
+├── sitemap.xml, robots.txt, llms.txt
+└── CNAME
 ```
 
 ## How it works
 
-### Audio Converter
+### Audio tools
 
-The converter has two engines:
-
-1. **JavaScript engine** (always available):
-   - **Decoding**: Web Audio API (supports WAV, MP3, FLAC, OGG, AAC, M4A, WebM)
-   - **WAV encoding**: Custom JS encoder (lossless)
-   - **MP3 encoding**: [lamejs](https://github.com/nicktrandafil/lamern) (128–320 kbps)
-
-2. **WASM engine** (optional, adds FLAC output):
-   - Compiles [go-audio-converter](https://github.com/formeo/go-audio-converter) to WebAssembly
-   - Enables **FLAC encoding** in the browser — a pure Go FLAC encoder running as WASM
-   - The page auto-detects WASM availability and enables/disables FLAC accordingly
+- **Decoding**: Web Audio API (WAV, MP3, FLAC, OGG, AAC, M4A, WebM, or anything else the browser can decode)
+- **WAV encoding**: custom JS encoder (lossless)
+- **MP3 encoding**: [lamejs](https://github.com/zhuker/lamejs) (64–320 kbps)
+- Output is MP3 or WAV. Nothing is uploaded; there is no server.
 
 ### Voice to Text
 
 - **Live dictation** uses the browser's built-in Web Speech Recognition API (Chrome/Safari may process audio on the vendor's servers).
 - **Private mode** transcribes audio files and microphone recordings with Whisper (tiny/base, q8) via [Transformers.js](https://github.com/huggingface/transformers.js) in a Web Worker (`voice-to-text/whisper-worker.js`). Audio is decoded and resampled to 16 kHz mono in the browser; only the model weights are downloaded from Hugging Face and cached.
-
-## Building WASM (optional)
-
-To enable FLAC encoding in the browser:
-
-```bash
-# 1. Clone go-audio-converter
-git clone https://github.com/formeo/go-audio-converter.git
-cd go-audio-converter
-
-# 2. Copy WASM source
-mkdir -p cmd/wasm
-cp /path/to/audiotools.dev/wasm/main.go cmd/wasm/main.go
-
-# 3. Build
-GOOS=js GOARCH=wasm go build -o converter.wasm -ldflags="-s -w" ./cmd/wasm/
-
-# 4. Copy Go's WASM runtime
-cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" .
-
-# 5. Deploy to site
-cp converter.wasm /path/to/audiotools.dev/wasm/
-cp wasm_exec.js /path/to/audiotools.dev/wasm/
-```
-
-The converter page will auto-detect `wasm/converter.wasm` and show a "WASM engine active" badge with FLAC enabled.
 
 ## Deployment
 
@@ -104,7 +75,7 @@ This site is the hub for the audio tools ecosystem:
 ## Tech Stack
 
 - **Frontend**: Vanilla HTML/CSS/JS (no frameworks, fast loading)
-- **Audio Processing**: Web Audio API, lamejs, Go WASM
+- **Audio Processing**: Web Audio API, lamejs, Transformers.js (Whisper)
 - **Hosting**: GitHub Pages
 - **SEO**: JSON-LD structured data, Open Graph, semantic HTML
 
