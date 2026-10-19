@@ -100,27 +100,11 @@
         ]
     }
     </script>
+    <link rel="stylesheet" href="/style.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --bg: #0a0b10;
-            --surface: #12131a;
-            --surface2: #1a1b26;
-            --border: #2a2b3a;
-            --text: #e2e4f0;
-            --text2: #8b8ea3;
-            --accent: #6c5ce7;
-            --accent2: #a29bfe;
-            --green: #00d2a0;
-            --green2: #00f5b8;
-            --orange: #f59e0b;
-            --red: #ef4444;
-            --radius: 12px;
-        }
-
         body {
-            font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -128,26 +112,6 @@
         }
 
         .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
-        /* NAV */
-        nav {
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-        nav .container {
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo {
-            font-size: 17px; font-weight: 700; color: var(--text);
-            text-decoration: none; display: flex; align-items: center; gap: 8px;
-        }
-        .logo span { color: var(--green); }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a {
-            color: var(--text2); text-decoration: none; font-size: 14px;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--green); }
 
         /* HERO */
         .hero {
@@ -354,36 +318,27 @@
         .formats-table .check { color: var(--green); }
         .formats-table .cross { color: var(--red); opacity: 0.5; }
 
-        /* FOOTER */
-        footer {
-            border-top: 1px solid var(--border); padding: 24px 0;
-            text-align: center; font-size: 13px; color: var(--text2);
-        }
-        footer a { color: var(--accent2); text-decoration: none; }
-        footer a:hover { color: var(--text); }
-
         @media (max-width: 600px) {
             .hero h1 { font-size: 24px; }
             .steps { grid-template-columns: 1fr; }
-            .nav-links { gap: 12px; }
-            .nav-links a { font-size: 13px; }
         }
-        @media (max-width: 600px) { nav .container, .site-nav { flex-wrap: wrap; row-gap: 8px; } .nav-links { flex-wrap: wrap; gap: 6px 16px; } }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <a href="/zh/" class="logo">🎵 <span>Audio</span>Tools.dev</a>
-            <div class="nav-links">
-                <a href="/zh/">首页</a>
-                <a href="/zh/converter/" class="active">转换器</a>
-                <a href="/voice-to-text/">语音转文字</a>
+    <nav class="at-nav" aria-label="主导航">
+        <div class="at-nav-inner">
+            <a href="/zh/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <div class="at-nav-links">
+                <a href="/zh/converter/" aria-current="page">转换器</a>
+                <a href="/volume-booster/">音量增强</a>
                 <a href="/text-to-speech/">文字转语音</a>
-                <a href="/converter/" style="font-size:12px;padding:4px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;">EN</a>
+                <a href="/voice-to-text/">语音转文字</a>
+                <a href="/zh/">全部工具</a>
+                <a href="/converter/" class="at-lang" hreflang="en" lang="en">EN</a>
             </div>
         </div>
     </nav>
+
 
     <div class="container">
         <section class="hero">
@@ -534,13 +489,12 @@
         </section>
     </div>
 
-    <footer>
-        <div class="container">
-            <a href="https://audiotools.dev/zh/">AudioTools.dev</a> — 开源音频处理工具。
-            <a href="https://github.com/formeo">Roman Gordienko</a> 开发。
-            <br>
-            <a href="/voice-to-text/">语音转文字</a> · <a href="/text-to-speech/">文字转语音</a> · <a href="/audio-trimmer/">剪辑</a> · <a href="/audio-speed-changer/">变速</a> · <a href="/volume-booster/">音量增强</a> · <a href="/audio-joiner/">合并</a> · <a href="/audio-compressor/">压缩</a> · <a href="/privacy/">隐私政策</a> · <a href="/terms/">使用条款</a> · <a href="https://github.com/formeo/go-audio-converter">GitHub 源代码</a> · <a href="/converter/">English</a>
-            <div class="footer-support" style="margin-top:8px"><a href="https://boosty.to/formeo" rel="noopener">❤️ 在 Boosty 上支持本项目</a></div>
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/" aria-current="page">转换器</a><a href="/voice-to-text/">语音转文字</a><a href="/text-to-speech/">文字转语音</a><a href="/audio-trimmer/">剪辑</a><a href="/audio-speed-changer/">变速</a><a href="/volume-booster/">音量增强</a><a href="/audio-joiner/">合并</a><a href="/audio-compressor/">压缩</a></nav>
+            <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
+            <p class="at-footer-meta"><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ 在 Boosty 上支持本项目</a></p>
         </div>
     </footer>
 
