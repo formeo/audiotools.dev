@@ -1,4 +1,5 @@
-// "Drop a file or say what you need" helper (home pages) + hand-off of that file to the tool page.
+// "Drop a file or say what you need" helper (home pages), "continue with this file" (tool pages),
+// and the hand-off of the file to the next tool page.
 // Everything stays in the browser: the file is analyzed with Web Audio and passed to the tool
 // through IndexedDB, which is cleared as soon as the tool picks it up.
 (function () {
@@ -23,7 +24,32 @@
     const putPending = (files) => store('readwrite', (s) => s.put(files, 'pending'));
     const takePending = () => store('readwrite', (s) => { const g = s.get('pending'); s.delete('pending'); return g; });
 
-    // ---------- tool pages: pick up a file sent from the home page ----------
+    // ---------- tool pages: "continue with this file" after a result ----------
+    const NEXT = [['audio-compressor', 'Compress', '压缩'], ['audio-trimmer', 'Trim', '剪辑'], ['volume-booster', 'Boost volume', '增强音量'],
+                  ['converter', 'Convert format', '转换格式'], ['audio-speed-changer', 'Change speed', '变速'], ['audio-joiner', 'Join with more', '合并']];
+    window.offerNext = function (tool, anchor, file) {
+        const old = document.getElementById('next-actions');
+        if (old) old.remove();
+        const el = document.createElement('div');
+        el.id = 'next-actions';
+        el.className = 'next-actions';
+        el.append(T('Continue with this file:', '继续处理此文件：'));
+        NEXT.filter(([t]) => t !== tool).slice(0, 3).forEach(([t, en, zh]) => {
+            const a = document.createElement('a');
+            a.href = t === 'converter' && ZH ? '/zh/converter/' : '/' + t + '/';
+            a.textContent = T(en, zh);
+            a.addEventListener('click', async (e) => {
+                e.preventDefault();
+                track('next_pick', { from: tool, tool: t });
+                await putPending([file]);
+                location.href = a.href + '#from-assistant';
+            });
+            el.appendChild(a);
+        });
+        anchor.after(el);
+    };
+
+    // ---------- tool pages: pick up a file sent from the home page or another tool ----------
     const assistant = document.getElementById('assistant');
     if (!assistant) {
         if (location.hash !== '#from-assistant') return;

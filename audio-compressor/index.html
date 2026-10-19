@@ -41,10 +41,6 @@
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
-        .hero{text-align:center;padding:40px 0 28px}
-        .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
-        .hero h1 em{font-style:normal;color:var(--green)}
-        .hero p{color:var(--text2);font-size:15px;max-width:500px;margin:0 auto}
 
         .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
         .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
@@ -104,7 +100,7 @@
         .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
         .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
         .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -339,6 +335,7 @@
                 progressFill.style.width = '100%';
                 progressWrap.classList.add('hidden'); result.classList.remove('hidden');
                 toolSuccess('audio-compressor', downloadBtn);
+                offerNext('audio-compressor', downloadBtn, new File([blob], fileBase + '_' + kbps + 'kbps.mp3', { type: 'audio/mpeg' }));
             } catch (err){
                 progressWrap.classList.add('hidden');
                 alert(err.message || 'Compression failed. Please try again.');

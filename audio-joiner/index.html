@@ -41,10 +41,6 @@
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
-        .hero{text-align:center;padding:40px 0 28px}
-        .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
-        .hero h1 em{font-style:normal;color:var(--green)}
-        .hero p{color:var(--text2);font-size:15px;max-width:500px;margin:0 auto}
 
         .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
         .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px;text-align:center;cursor:pointer;transition:all .2s}
@@ -107,7 +103,7 @@
         .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
         .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
         .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -162,7 +158,8 @@
                 <div class="result hidden" id="result">
                     <h3>✅ Merged — <span id="resultInfo"></span></h3>
                     <audio id="resultAudio" controls></audio>
-                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download WAV</button>
+                    <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download</button>
                 </div>
             </div>
         </div>
@@ -328,10 +325,11 @@
             lastUrl = URL.createObjectURL(blob);
             resultAudio.src = lastUrl;
             resultInfo.textContent = tracks.length + ' tracks · ' + fmt(out.duration) + ' · ' + (blob.size/1024/1024).toFixed(1) + ' MB';
-            downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download='merged.wav'; a.click(); };
+            downloadBtn.onclick = () => downloadAudio(out, blob, document.getElementById('outFormat'), 'merged', downloadBtn);
             progressFill.style.width='100%';
             progressWrap.classList.add('hidden'); result.classList.remove('hidden');
             toolSuccess('audio-joiner', downloadBtn);
+            offerNext('audio-joiner', downloadBtn, new File([blob], 'merged.wav', { type: 'audio/wav' }));
             mergeBtn.disabled = false;
         }
 
@@ -355,6 +353,8 @@
             dropZone.classList.remove('hidden'); trackListEl.innerHTML='';
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <script src="/audio-export.js"></script>
     <script src="/support.js"></script>
     <script src="/assistant.js"></script>
 </body>

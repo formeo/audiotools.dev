@@ -113,17 +113,6 @@
 
         .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
 
-        /* HERO */
-        .hero {
-            text-align: center; padding: 48px 0 32px;
-        }
-        .hero h1 {
-            font-size: 32px; font-weight: 800; letter-spacing: -0.03em;
-            margin-bottom: 10px;
-        }
-        .hero h1 em { font-style: normal; color: var(--green); }
-        .hero p { color: var(--text2); font-size: 16px; max-width: 500px; margin: 0 auto; }
-
         .privacy-badge {
             display: inline-flex; align-items: center; gap: 6px;
             background: rgba(0, 210, 160, 0.1); border: 1px solid rgba(0, 210, 160, 0.2);
@@ -222,10 +211,10 @@
         .convert-btn {
             width: 100%; padding: 14px 24px; border: none; border-radius: var(--radius);
             font-size: 16px; font-weight: 700; cursor: pointer;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
-            color: white; transition: all 0.3s; position: relative; overflow: hidden;
+            background: var(--green);
+            color: #0a0b10; transition: all 0.3s; position: relative; overflow: hidden;
         }
-        .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3); }
+        .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 210, 160, 0.25); }
         .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .convert-btn.converting {
             background: var(--surface2); color: var(--text2);
@@ -319,7 +308,6 @@
         .formats-table .cross { color: var(--red); opacity: 0.5; }
 
         @media (max-width: 600px) {
-            .hero h1 { font-size: 24px; }
             .steps { grid-template-columns: 1fr; }
         }
     </style>
@@ -342,7 +330,7 @@
 
     <div class="container">
         <section class="hero">
-            <h1>在线<em>音频转换器</em></h1>
+            <h1>🔄 <em>在线音频转换器</em></h1>
             <p>直接在浏览器中转换音频文件。无需上传到服务器，无需注册，100% 免费。</p>
             <div class="privacy-badge">
                 🔒 文件永远不会离开您的设备
@@ -778,6 +766,7 @@
                     progressWrap.classList.remove('show');
                     result.classList.add('show');
                     toolSuccess('converter', downloadBtn);
+                    offerNext('converter', downloadBtn, new File([blob], resultFilename, { type: FORMATS[selectedOutput].mime }));
                     resultMeta.textContent = FORMATS[selectedOutput].label + ' • ' +
                         formatBytes(blob.size) + ' • ' +
                         formatDuration(audioBuffer.duration);

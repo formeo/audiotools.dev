@@ -158,22 +158,6 @@
             margin: 0 auto;
             padding: 40px 20px 60px;
         }
-        
-        /* Header */
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 16px;
-        }
 
         /* Controls */
         .controls {
@@ -433,7 +417,6 @@
 
         @media (max-width: 600px) {
             .container { padding: 24px 16px 40px; }
-            .page-header h1 { font-size: 22px; }
             .controls { padding: 16px; }
             .lang-select { min-width: 100%; }
             .transcript-body { min-height: 180px; padding: 16px; }
@@ -503,10 +486,10 @@
 
 <div class="container">
 
-    <div class="page-header">
-        <h1>🎤 Voice to Text</h1>
+    <section class="hero">
+        <h1>🎤 <em>Voice to Text</em></h1>
         <p>Free online speech-to-text — live dictation in 60+ languages, or private on-device transcription of audio files</p>
-    </div>
+    </section>
 
     <!-- Browser compatibility warning -->
     <div class="browser-warning" id="browserWarning">
