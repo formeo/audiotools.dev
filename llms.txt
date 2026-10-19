@@ -20,6 +20,12 @@
 - [music_recognition](https://github.com/formeo/music_recognition): Bulk music identification via Shazam API. Auto ID3 tagging, file renaming.
 - [audiobook-cleaner](https://github.com/formeo/Audiobook-Cleaner): AI audiobook noise removal using MDX-Net, VR, and Roformer models.
 
+## About
+
+- [About AudioTools.dev](https://audiotools.dev/about/): who builds it, how files stay on the device (and how to verify it in DevTools), what the site loads from the network, and how it is built.
+- [Changelog](https://audiotools.dev/changelog/): dated list of everything that has shipped since January 2026.
+- Chinese versions: [homepage](https://audiotools.dev/zh/), [audio converter](https://audiotools.dev/zh/converter/).
+
 ## Key Facts
 
 - Privacy: all browser tools process audio locally. No files uploaded, audio is never collected. The site uses Google Analytics for anonymous page-view statistics only.
