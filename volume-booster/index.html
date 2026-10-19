@@ -370,6 +370,7 @@
                     a.click();
                 };
                 result.classList.remove('hidden');
+                toolSuccess('volume-booster', downloadBtn);
                 applyBtn.disabled = false;
                 applyBtn.textContent = '⚡ Apply & Process';
             }, 30);
@@ -405,5 +406,6 @@
             dropZone.classList.remove('hidden');
         }
     </script>
+    <script src="/support.js"></script>
 </body>
 </html>

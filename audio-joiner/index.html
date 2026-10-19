@@ -323,6 +323,7 @@
             downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download='merged.wav'; a.click(); };
             progressFill.style.width='100%';
             progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+            toolSuccess('audio-joiner', downloadBtn);
             mergeBtn.disabled = false;
         }
 
@@ -346,5 +347,6 @@
             dropZone.classList.remove('hidden'); trackListEl.innerHTML='';
         }
     </script>
+    <script src="/support.js"></script>
 </body>
 </html>

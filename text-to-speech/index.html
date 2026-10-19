@@ -368,6 +368,7 @@
                 pauseBtn.style.display = 'none';
                 stopBtn.style.display = 'none';
                 status.className = 'status';
+                toolSuccess('text-to-speech', status);
             };
             utter.onerror = (e) => {
                 speaking = false;
@@ -406,5 +407,6 @@
             speakBtn.disabled = true;
         }
     </script>
+    <script src="/support.js"></script>
 </body>
 </html>
