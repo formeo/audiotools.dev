@@ -78,11 +78,6 @@
         body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
         .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
 
-        .hero { text-align: center; padding: 40px 0 32px; }
-        .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
-        .hero h1 em { font-style: normal; color: var(--green); }
-        .hero p { color: var(--text2); font-size: 15px; }
-
         .tool-area { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 32px; }
 
         .drop-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 48px; text-align: center; cursor: pointer; transition: all 0.2s; }
@@ -136,7 +131,7 @@
         .faq-q { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text); }
         .faq-a { font-size: 13px; color: var(--text2); line-height: 1.6; }
 
-        @media (max-width: 600px) { .hero h1 { font-size: 24px; } .btn-row { flex-direction: column; } }
+        @media (max-width: 600px) { .btn-row { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -198,9 +193,10 @@
                     </div>
                 </div>
 
+                <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
                 <div class="btn-row">
                     <button class="btn btn-secondary" onclick="preview()">▶ Preview</button>
-                    <button class="btn btn-primary" onclick="cutAndDownload()" style="flex:1;">✂️ Cut & Download WAV</button>
+                    <button class="btn btn-primary" id="cutBtn" onclick="cutAndDownload()" style="flex:1;">✂️ Cut & Download</button>
                 </div>
             </div>
         </div>
@@ -422,11 +418,9 @@
             offline.startRendering().then(rendered => {
                 const wav = encodeWAV(rendered);
                 const blob = new Blob([wav], { type: 'audio/wav' });
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = 'trimmed_audio.wav';
-                a.click();
+                downloadAudio(rendered, blob, document.getElementById('outFormat'), 'trimmed_audio', document.getElementById('cutBtn'));
                 toolSuccess('audio-trimmer', document.querySelector('.btn-row'));
+                offerNext('audio-trimmer', document.querySelector('.btn-row'), new File([blob], 'trimmed_audio.wav', { type: 'audio/wav' }));
             });
         }
 
@@ -474,6 +468,8 @@
 
         window.addEventListener('resize', () => { if (buffer) { drawWaveform(); updateHandles(); } });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <script src="/audio-export.js"></script>
     <script src="/support.js"></script>
     <script src="/assistant.js"></script>
 </body>

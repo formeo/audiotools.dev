@@ -42,10 +42,6 @@
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
-        .hero{text-align:center;padding:40px 0 28px}
-        .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
-        .hero h1 em{font-style:normal;color:var(--green)}
-        .hero p{color:var(--text2);font-size:15px;max-width:480px;margin:0 auto}
 
         .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
         .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
@@ -117,7 +113,7 @@
         .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px}
         .faq-q{font-weight:700;font-size:14px;margin-bottom:6px}
         .faq-a{font-size:13px;color:var(--text2);line-height:1.6}
-        @media(max-width:600px){.hero h1{font-size:24px}.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
+        @media(max-width:600px){.features{grid-template-columns:1fr}.btn-row{flex-direction:column}}
     </style>
 </head>
 <body>
@@ -184,7 +180,8 @@
                 <div class="result hidden" id="result">
                     <h3>✅ Result — <span id="resultInfo"></span></h3>
                     <audio id="resultAudio" controls></audio>
-                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download WAV</button>
+                    <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download</button>
                 </div>
             </div>
         </div>
@@ -371,14 +368,11 @@
                 lastUrl = URL.createObjectURL(blob);
                 resultAudio.src = lastUrl;
                 resultInfo.textContent = infoTxt + '  ·  peak ' + dbStr(outPeak);
-                downloadBtn.onclick = () => {
-                    const a = document.createElement('a');
-                    a.href = lastUrl;
-                    a.download = fileBase + (mode === 'normalize' ? '_normalized' : '_boosted') + '.wav';
-                    a.click();
-                };
+                const outName = fileBase + (mode === 'normalize' ? '_normalized' : '_boosted');
+                downloadBtn.onclick = () => downloadAudio(out, blob, document.getElementById('outFormat'), outName, downloadBtn);
                 result.classList.remove('hidden');
                 toolSuccess('volume-booster', downloadBtn);
+                offerNext('volume-booster', downloadBtn, new File([blob], outName + '.wav', { type: 'audio/wav' }));
                 applyBtn.disabled = false;
                 applyBtn.textContent = '⚡ Apply & Process';
             }, 30);
@@ -414,6 +408,8 @@
             dropZone.classList.remove('hidden');
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <script src="/audio-export.js"></script>
     <script src="/support.js"></script>
     <script src="/assistant.js"></script>
 </body>
