@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+
+    <title>Changelog — AudioTools.dev</title>
+    <meta name="description" content="Everything that has shipped on AudioTools.dev, newest first: new tools, Private mode transcription, MP3 output and more.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://audiotools.dev/changelog/">
+    <meta property="og:title" content="Changelog — AudioTools.dev">
+    <meta property="og:description" content="Everything that has shipped on AudioTools.dev, newest first: new tools, Private mode transcription, MP3 output and more.">
+    <meta property="og:url" content="https://audiotools.dev/changelog/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:image" content="https://audiotools.dev/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7; }
+        .container { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+        .content { padding-top: 48px; padding-bottom: 64px; }
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .updated { font-size: 13px; color: var(--text2); margin-bottom: 32px; }
+        h2 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; color: var(--green); }
+        p { color: var(--text2); margin-bottom: 14px; font-size: 15px; }
+        ul { color: var(--text2); margin: 0 0 14px 20px; font-size: 15px; }
+        li { margin-bottom: 6px; }
+        a { color: var(--accent2); }
+            .entry { border-left: 2px solid var(--border); padding-left: 18px; margin: 26px 0; }
+        .entry h2 { margin-top: 0; }
+    </style>
+</head>
+<body>
+    <nav class="at-nav" aria-label="Main">
+        <div class="at-nav-inner">
+            <a href="/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <div class="at-nav-links">
+                <a href="/converter/">Converter</a>
+                <a href="/volume-booster/">Volume Booster</a>
+                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/voice-to-text/">Voice to Text</a>
+                <a href="/">All tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container content">
+        <h1>Changelog</h1>
+        <p>What's new on AudioTools.dev, newest first. The full history is on <a href="https://github.com/formeo/audiotools.dev/commits/main" rel="noopener">GitHub</a>.</p>
+        <section class="entry">
+            <h2><time datetime="2026-10-19">October 19, 2026</time></h2>
+            <ul>
+                <li>One design across all pages: the same navigation, footer, headers and buttons everywhere.</li>
+                <li>Homepage helper: drop a file or describe what you need, and it suggests the right tool and opens it with your file.</li>
+                <li>Trimmer, Joiner, Volume Booster and Speed Changer can now save as MP3 as well as WAV.</li>
+                <li>After a result, “Continue with this file” sends it straight to the next tool.</li>
+                <li>Audio Converter in Chinese at <a href="/zh/converter/">/zh/converter/</a>.</li>
+                <li>This changelog and the <a href="/about/">About</a> page.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-10-13">October 13, 2026</time></h2>
+            <ul>
+                <li>Voice to Text: Private mode transcribes audio files and recordings with the Whisper model running on your device.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-10-12">October 12, 2026</time></h2>
+            <ul>
+                <li>Clearer privacy wording: the site now says exactly what it loads, including anonymous page analytics.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-09-10">September 10, 2026</time></h2>
+            <ul>
+                <li>Homepage in Chinese at <a href="/zh/">/zh/</a>.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-07-16">July 16, 2026</time></h2>
+            <ul>
+                <li><a href="/audio-joiner/">Audio Joiner</a>: merge several files into one, with optional crossfade.</li>
+                <li><a href="/audio-compressor/">Audio Compressor</a>: make files smaller by choosing MP3 bitrate and sample rate.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-06-29">June 29, 2026</time></h2>
+            <ul>
+                <li><a href="/audio-speed-changer/">Speed Changer</a>: 0.25× to 4× without changing pitch (WSOLA time-stretching).</li>
+                <li><a href="/volume-booster/">Volume Booster</a>: boost up to 500% or normalize, with a soft limiter against clipping.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-02-19">February 19, 2026</time></h2>
+            <ul>
+                <li><a href="/audio-trimmer/">Audio Trimmer</a> with a visual waveform editor.</li>
+                <li><a href="/text-to-speech/">Text to Speech</a> in 50+ languages.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-02-10">February 10, 2026</time></h2>
+            <ul>
+                <li><a href="/converter/">Audio Converter</a>: WAV, MP3 and FLAC output.</li>
+                <li>Privacy policy and terms of use.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-02-09">February 9, 2026</time></h2>
+            <ul>
+                <li><a href="/voice-to-text/">Voice to Text</a>: live dictation in 60+ languages.</li>
+            </ul>
+        </section>
+        <section class="entry">
+            <h2><time datetime="2026-01-13">January 13, 2026</time></h2>
+            <ul>
+                <li>AudioTools.dev goes live as the home of the open-source audio projects.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
+            <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
+            <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></p>
+        </div>
+    </footer>
+</body>
+</html>
