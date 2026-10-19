@@ -18,35 +18,42 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
     <link rel="stylesheet" href="/style.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7; }
         .container { max-width: 700px; margin: 0 auto; padding: 0 20px; }
         .content { padding-top: 48px; padding-bottom: 64px; }
-        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        h1 { font-size: clamp(34px, 4vw, 52px); font-weight: 800; font-stretch: 125%; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 14px; }
         .updated { font-size: 13px; color: var(--text2); margin-bottom: 32px; }
-        h2 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; color: var(--green); }
+        h2 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; color: var(--ink); }
         p { color: var(--text2); margin-bottom: 14px; font-size: 15px; }
         ul { color: var(--text2); margin: 0 0 14px 20px; font-size: 15px; }
         li { margin-bottom: 6px; }
         a { color: var(--accent2); }
-            /* Helper: drop a file or say what you need (logic in /assistant.js) */
-        .assistant { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 40px; transition: border-color 0.2s; }
-        .assistant.drag { border-color: var(--green); }
-        .assistant-title { font-weight: 700; margin-bottom: 12px; }
-        .assistant input[type=text] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--text); font-size: 15px; outline: none; }
-        .assistant input[type=text]:focus { border-color: var(--green); }
-        .assistant-hint { font-size: 13px; color: var(--text2); margin-top: 10px; }
-        .assistant-hint label { color: var(--green); cursor: pointer; text-decoration: underline; }
-        .assistant-results { display: grid; gap: 8px; margin-top: 12px; }
+            /* helper panel (logic in /assistant.js) */
+        .assistant { flex: 1 1 420px; min-width: 0; background: var(--surface); border: 1.5px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s; }
+        .assistant.drag { border-color: var(--accent); box-shadow: 6px 6px 0 var(--accent); }
+        .assistant-drop { border-radius: 14px; background: var(--surface2); padding: 28px 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+        .assistant-drop svg { width: 100%; height: 56px; fill: none; stroke-width: 2.2; stroke-linejoin: round; }
+        .assistant-title { font-stretch: 112%; font-weight: 700; font-size: 22px; line-height: 1.2; }
+        .assistant-hint { font-size: 15px; color: var(--text2); }
+        .assistant-choose { font: inherit; font-weight: 700; font-size: 15px; background: var(--ink); color: #fff; border: 0; border-radius: 10px; padding: 12px 18px; min-height: 44px; cursor: pointer; }
+        .assistant-choose:hover { background: #2B3136; }
+        .assistant-ask { font-weight: 600; font-size: 15px; }
+        .assistant input[type=text] { font: inherit; font-size: 16px; padding: 12px 14px; min-height: 44px; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--surface); color: var(--ink); width: 100%; outline: none; }
+        .assistant input[type=text]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(35, 70, 245, 0.15); }
+        .assistant-results { display: grid; gap: 8px; margin-top: 6px; }
         .assistant-results:empty { display: none; }
-        .assistant-pick { display: block; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); text-decoration: none; }
-        .assistant-pick:hover { border-color: var(--green); }
-        .assistant-pick b { display: block; color: var(--green); }
-        .assistant-pick span { font-size: 13px; color: var(--text2); }
-        .assistant-msg { font-size: 13px; color: var(--text2); }
-        .assistant { margin: 24px 0; }
+        .assistant-pick { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; padding: 12px 14px; border: 1.5px solid var(--ink); border-radius: 10px; color: var(--ink); text-decoration: none; }
+        .assistant-pick:hover { border-color: var(--accent); color: var(--accent); }
+        .assistant-pick b { font-weight: 700; }
+        .assistant-pick span { font-size: 14px; color: var(--text2); }
+        .assistant-msg { font-size: 14px; color: var(--text2); }
+        .assistant { margin: 24px 0 32px; }
         .tool-list { list-style: none; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
         .tool-list a { display: block; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none; }
         .tool-list a:hover { border-color: var(--green); }
@@ -55,7 +62,7 @@
 <body>
     <nav class="at-nav" aria-label="Main">
         <div class="at-nav-inner">
-            <a href="/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
                 <a href="/volume-booster/">Volume Booster</a>
@@ -69,12 +76,18 @@
     <main class="container content">
         <h1>Page not found</h1>
         <p>There's nothing at this address — the link may be old or mistyped. Tell the helper what you wanted to do, or pick a tool.</p>
-        <section class="assistant" id="assistant">
-            <div class="assistant-title">🪄 Drop a file or say what you need</div>
-            <input type="text" id="assistantText" autocomplete="off" aria-label="What do you need to do?" placeholder="e.g. make my MP3 smaller · the recording is too quiet · voice message to text">
-            <div class="assistant-hint">…or drop an audio/video file here, or <label>choose a file<input type="file" id="assistantFile" accept="audio/*,video/*" multiple hidden></label>. It's analyzed in your browser — nothing is uploaded.</div>
-            <div class="assistant-results" id="assistantResults" aria-live="polite"></div>
-        </section>
+        <section class="assistant" id="assistant" aria-label="Find the right tool">
+                    <div class="assistant-drop">
+                        <svg viewBox="0 0 360 56" preserveAspectRatio="none" aria-hidden="true"><polyline class="g-acc" points="0,28 12,22 24,34 36,18 48,38 60,12 72,44 84,20 96,36 108,8 120,48 132,16 144,40 156,10 168,46 180,22 192,34 204,14 216,42 228,24 240,32 252,16 264,40 276,20 288,36 300,26 312,30 324,22 336,34 348,27 360,28"/></svg>
+                        <div class="assistant-title">Drop an audio or video file</div>
+                        <div class="assistant-hint">It's analyzed in this tab, and we suggest the right tool for it.</div>
+                        <button type="button" class="assistant-choose" onclick="document.getElementById('assistantFile').click()">Choose a file</button>
+                        <input type="file" id="assistantFile" accept="audio/*,video/*" multiple hidden>
+                    </div>
+                    <label class="assistant-ask" for="assistantText">Or say what you need</label>
+                    <input type="text" id="assistantText" autocomplete="off" placeholder="make my MP3 smaller">
+                    <div class="assistant-results" id="assistantResults" aria-live="polite"></div>
+                </section>
         <ul class="tool-list"><li><a href="/converter/">Audio Converter</a></li><li><a href="/audio-trimmer/">Audio Trimmer</a></li><li><a href="/audio-joiner/">Audio Joiner</a></li><li><a href="/volume-booster/">Volume Booster</a></li><li><a href="/audio-speed-changer/">Speed Changer</a></li><li><a href="/audio-compressor/">Audio Compressor</a></li><li><a href="/text-to-speech/">Text to Speech</a></li><li><a href="/voice-to-text/">Voice to Text</a></li></ul>
     </main>
 
@@ -83,7 +96,7 @@
             <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
-            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
         </div>
     </footer>
     <script src="/assistant.js"></script>

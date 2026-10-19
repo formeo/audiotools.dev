@@ -100,6 +100,9 @@
         ]
     }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
     <link rel="stylesheet" href="/style.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -115,7 +118,7 @@
 
         .privacy-badge {
             display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(0, 210, 160, 0.1); border: 1px solid rgba(0, 210, 160, 0.2);
+            background: rgba(35, 70, 245, 0.1); border: 1px solid rgba(35, 70, 245, 0.2);
             border-radius: 20px; padding: 6px 16px; margin-top: 16px;
             font-size: 13px; color: var(--green);
         }
@@ -133,13 +136,13 @@
         }
         .drop-zone:hover, .drop-zone.drag-over {
             border-color: var(--accent);
-            background: rgba(108, 92, 231, 0.05);
+            background: rgba(35, 70, 245, 0.05);
         }
         .drop-zone.has-file { border-color: var(--green); border-style: solid; padding: 24px; }
         .drop-icon { font-size: 40px; margin-bottom: 12px; }
         .drop-text { color: var(--text2); font-size: 15px; }
         .drop-text b { color: var(--accent2); }
-        .drop-formats { color: var(--text2); font-size: 12px; margin-top: 8px; opacity: 0.7; }
+        .drop-formats { color: var(--text2); font-size: 12px; margin-top: 8px; }
 
         /* FILE INFO */
         .file-info {
@@ -151,7 +154,7 @@
         }
         .file-icon {
             width: 44px; height: 44px; border-radius: 10px;
-            background: rgba(108, 92, 231, 0.15); display: flex;
+            background: rgba(35, 70, 245, 0.15); display: flex;
             align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
         }
         .file-name { font-weight: 600; font-size: 15px; word-break: break-all; }
@@ -190,7 +193,7 @@
         .format-chip:hover { border-color: var(--accent); color: var(--text); }
         .format-chip.active {
             border-color: var(--green); color: var(--green);
-            background: rgba(0, 210, 160, 0.1);
+            background: rgba(35, 70, 245, 0.1);
         }
         .format-chip.disabled {
             opacity: 0.3; cursor: not-allowed;
@@ -212,9 +215,9 @@
             width: 100%; padding: 14px 24px; border: none; border-radius: var(--radius);
             font-size: 16px; font-weight: 700; cursor: pointer;
             background: var(--green);
-            color: #0a0b10; transition: all 0.3s; position: relative; overflow: hidden;
+            color: #fff; transition: all 0.3s; position: relative; overflow: hidden;
         }
-        .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 210, 160, 0.25); }
+        .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(35, 70, 245, 0.25); }
         .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
         .convert-btn.converting {
             background: var(--surface2); color: var(--text2);
@@ -238,8 +241,8 @@
 
         /* RESULT */
         .result {
-            display: none; background: rgba(0, 210, 160, 0.05);
-            border: 1px solid rgba(0, 210, 160, 0.2); border-radius: var(--radius);
+            display: none; background: rgba(35, 70, 245, 0.05);
+            border: 1px solid rgba(35, 70, 245, 0.2); border-radius: var(--radius);
             padding: 20px; margin: 20px 0; text-align: center;
         }
         .result.show { display: block; }
@@ -249,7 +252,7 @@
         .download-btn {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 12px 32px; border-radius: 10px; border: none;
-            background: var(--green); color: #0a0b10; font-size: 15px;
+            background: var(--green); color: #fff; font-size: 15px;
             font-weight: 700; cursor: pointer; transition: all 0.2s;
         }
         .download-btn:hover { background: var(--green2); transform: translateY(-1px); }
@@ -283,7 +286,7 @@
             border-radius: var(--radius); padding: 20px; text-align: center;
         }
         .step-num {
-            width: 32px; height: 32px; border-radius: 50%; background: rgba(108, 92, 231, 0.15);
+            width: 32px; height: 32px; border-radius: 50%; background: rgba(35, 70, 245, 0.15);
             color: var(--accent2); font-weight: 700; font-size: 14px;
             display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
         }
@@ -310,12 +313,14 @@
         @media (max-width: 600px) {
             .steps { grid-template-columns: 1fr; }
         }
+        .tool-area { padding: 24px; margin-bottom: 8px; }
+        .tool-area .result { margin-bottom: 0; }
     </style>
 </head>
 <body>
     <nav class="at-nav" aria-label="主导航">
         <div class="at-nav-inner">
-            <a href="/zh/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/zh/converter/" aria-current="page">转换器</a>
                 <a href="/volume-booster/">音量增强</a>
@@ -330,26 +335,28 @@
 
     <div class="container">
         <section class="hero">
-            <h1>🔄 <em>在线音频转换器</em></h1>
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
+            <h1>在线音频转换器</h1>
             <p>直接在浏览器中转换音频文件。无需上传到服务器，无需注册，100% 免费。</p>
             <div class="privacy-badge">
-                🔒 文件永远不会离开您的设备
+                文件永远不会离开您的设备
             </div>
-            <div class="privacy-badge" id="wasmBadge" style="display:none; margin-top:8px; border-color: rgba(108, 92, 231, 0.3); background: rgba(108, 92, 231, 0.08); color: #a29bfe;">
-                ⚡ WASM 引擎已启用 — 支持 FLAC 编码
+            <div class="privacy-badge" id="wasmBadge" style="display:none; margin-top:8px; border-color: rgba(35, 70, 245, 0.3); background: rgba(35, 70, 245, 0.08); color: #1D3BD1;">
+                WASM 引擎已启用 — 支持 FLAC 编码
             </div>
         </section>
 
+        <div class="tool-area">
         <!-- DROP ZONE -->
         <div class="drop-zone" id="dropZone">
             <div class="drop-prompt">
-                <div class="drop-icon">📁</div>
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
                 <div class="drop-text">将音频文件拖放到此处，或<b>点击选择</b></div>
                 <div class="drop-formats">WAV、MP3、FLAC、OGG、AAC、M4A、WebM — 最大 200 MB</div>
             </div>
             <div class="file-info" id="fileInfo">
                 <div class="file-header">
-                    <div class="file-icon">🎵</div>
+                    <div class="file-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18V5l11-2v13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
                     <div>
                         <div class="file-name" id="fileName"></div>
                         <div class="file-meta" id="fileMeta"></div>
@@ -398,12 +405,13 @@
 
         <!-- RESULT -->
         <div class="result" id="result">
-            <div class="result-icon">✅</div>
+            <div class="result-icon"><svg width="44" height="44" viewBox="0 0 36 36" fill="none" aria-hidden="true"><circle cx="18" cy="18" r="16" stroke="var(--accent)" stroke-width="2.4"/><path d="M11 18.5l5 5 9-11" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="result-title">转换完成！</div>
             <div class="result-meta" id="resultMeta"></div>
             <button class="download-btn" id="downloadBtn">
-                ⬇ 下载
+                下载
             </button>
+        </div>
         </div>
 
         <!-- HOW IT WORKS -->
@@ -433,7 +441,7 @@
             <h2>支持的格式</h2>
             <table class="formats-table">
                 <thead>
-                    <tr><th>输入格式</th><th>→ WAV</th><th>→ MP3</th><th>→ FLAC ⚡</th></tr>
+                    <tr><th>输入格式</th><th>→ WAV</th><th>→ MP3</th><th>→ FLAC</th></tr>
                 </thead>
                 <tbody>
                     <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓ WASM</td></tr>
@@ -482,7 +490,7 @@
             <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/" aria-current="page">转换器</a><a href="/voice-to-text/">语音转文字</a><a href="/text-to-speech/">文字转语音</a><a href="/audio-trimmer/">剪辑</a><a href="/audio-speed-changer/">变速</a><a href="/volume-booster/">音量增强</a><a href="/audio-joiner/">合并</a><a href="/audio-compressor/">压缩</a></nav>
             <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
             <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
-            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ 在 Boosty 上支持本项目</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
         </div>
     </footer>
 
@@ -669,8 +677,8 @@
 
             // Gradient
             const grad = ctx.createLinearGradient(0, 0, w, 0);
-            grad.addColorStop(0, '#6c5ce7');
-            grad.addColorStop(1, '#00d2a0');
+            grad.addColorStop(0, '#15191C');
+            grad.addColorStop(1, '#2346F5');
 
             ctx.fillStyle = grad;
             const mid = h / 2;
@@ -700,6 +708,7 @@
                 const chip = document.createElement('button');
                 const isWasmOnly = f.wasm && !wasmReady;
                 chip.className = 'format-chip' + (fmt === selectedOutput ? ' active' : '') + (isWasmOnly ? ' disabled' : '');
+                if (isWasmOnly) chip.setAttribute('aria-disabled', 'true');
                 chip.textContent = f.label + (isWasmOnly ? ' (WASM)' : '');
                 chip.dataset.fmt = fmt;
                 if (isWasmOnly) {

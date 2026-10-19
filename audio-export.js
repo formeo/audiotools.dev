@@ -42,7 +42,7 @@
     window.downloadAudio = async function (buffer, wavBlob, select, baseName, button) {
         const mp3 = select.value === 'mp3';
         const label = button && button.textContent;
-        if (button) { button.disabled = true; if (mp3) button.textContent = '⏳ Encoding MP3…'; }
+        if (button) { button.disabled = true; if (mp3) button.textContent = 'Encoding MP3…'; }
         try {
             const blob = mp3 ? await encodeMP3(await toMp3Rate(buffer), 192) : wavBlob;
             const a = document.createElement('a');

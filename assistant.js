@@ -112,7 +112,7 @@
             a.className = 'assistant-pick';
             a.href = TOOLS[tool].url;
             a.innerHTML = '<b></b><span></span>';
-            a.querySelector('b').textContent = TOOLS[tool].name + ' →';
+            a.querySelector('b').textContent = TOOLS[tool].name;
             a.querySelector('span').textContent = why;
             a.addEventListener('click', async (e) => {
                 track('assistant_pick', { tool, method });

@@ -37,15 +37,18 @@
     <script type="application/ld+json">
     {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I change audio speed without changing pitch?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The tool uses a WSOLA time-stretching algorithm to preserve the original pitch while adjusting playback speed from 0.25x to 4x."}}, {"@type": "Question", "name": "Is my audio file uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All processing happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "What audio formats are supported?", "acceptedAnswer": {"@type": "Answer", "text": "MP3, WAV, FLAC, OGG, AAC, M4A, and WebM. The output is saved as WAV."}}]}
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
     <link rel="stylesheet" href="/style.css">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
 
-        .tool-area{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+        .tool-area{ padding:28px;margin-bottom:32px}
         .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
-        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(0,210,160,0.04)}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
         .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
         .drop-icon{font-size:36px}
         input[type="file"]{display:none}
@@ -64,13 +67,13 @@
         .presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
         .preset{background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
         .preset:hover{border-color:var(--accent)}
-        .preset.active{background:rgba(0,210,160,0.12);border-color:var(--green);color:var(--green)}
+        .preset.active{background:rgba(35, 70, 245, 0.12);border-color:var(--green);color:var(--green)}
         .duration-line{text-align:center;font-size:13px;color:var(--text2);margin:14px 0 20px}
         .duration-line b{color:var(--text)}
 
         .btn-row{display:flex;gap:10px}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
-        .btn-primary{background:var(--green);color:#0a0b10}
+        .btn-primary{background:var(--green);color: #fff}
         .btn-primary:hover{background:var(--green2)}
         .btn-primary:disabled{opacity:.4;cursor:not-allowed}
         .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
@@ -109,7 +112,7 @@
 <body>
     <nav class="at-nav" aria-label="Main">
         <div class="at-nav-inner">
-            <a href="/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
                 <a href="/volume-booster/">Volume Booster</a>
@@ -122,14 +125,15 @@
 
     <div class="container">
         <section class="hero">
-            <h1>⏩ <em>Audio Speed Changer</em></h1>
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C14 6 24 6 34 28 S54 50 64 28"/><polyline class="g-acc" points="74,28 78,12 82,44 86,12 90,44 94,12 98,44 102,12 106,44 110,12 114,44 118,12 122,44 126,12 130,44 134,12 138,44 142,12 146,44 150,28"/></svg>
+            <h1>Audio Speed Changer</h1>
             <p>Slow down or speed up any audio file — adjust tempo without changing the pitch</p>
         </section>
 
         <div class="tool-area">
             <!-- Drop zone -->
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
-                <div class="drop-icon">📁</div>
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
                 <p><strong>Drop audio file here</strong> or click to browse</p>
                 <p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>
             </div>
@@ -156,7 +160,7 @@
                 <div class="duration-line">Duration: <b id="origDur">0:00</b> → <b id="newDur">0:00</b></div>
 
                 <div class="btn-row">
-                    <button class="btn btn-primary" id="applyBtn" onclick="applySpeed()" style="flex:1;">⚡ Apply &amp; Process</button>
+                    <button class="btn btn-primary" id="applyBtn" onclick="applySpeed()" style="flex:1;">Apply &amp; Process</button>
                     <button class="btn btn-secondary" onclick="reset()">Reset</button>
                 </div>
 
@@ -166,19 +170,19 @@
                 </div>
 
                 <div class="result hidden" id="result">
-                    <h3>✅ Result — <span id="resultSpeed"></span></h3>
+                    <h3>Result — <span id="resultSpeed"></span></h3>
                     <audio id="resultAudio" controls></audio>
                     <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
-                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">📥 Download</button>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">Download</button>
                 </div>
             </div>
         </div>
 
         <div class="features">
-            <div class="feature"><div class="feature-icon">🎚️</div><div class="feature-title">Adjustable Speed</div><div class="feature-desc">0.25x to 4x speed with a slider and quick presets.</div></div>
-            <div class="feature"><div class="feature-icon">🎵</div><div class="feature-title">Pitch Preservation</div><div class="feature-desc">WSOLA time-stretching keeps voices natural — no chipmunk effect.</div></div>
-            <div class="feature"><div class="feature-icon">📥</div><div class="feature-title">Download Result</div><div class="feature-desc">Save the speed-adjusted audio as a WAV file.</div></div>
-            <div class="feature"><div class="feature-icon">🔒</div><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
+            <div class="feature"><div class="feature-title">Adjustable Speed</div><div class="feature-desc">0.25x to 4x speed with a slider and quick presets.</div></div>
+            <div class="feature"><div class="feature-title">Pitch Preservation</div><div class="feature-desc">WSOLA time-stretching keeps voices natural — no chipmunk effect.</div></div>
+            <div class="feature"><div class="feature-title">Download Result</div><div class="feature-desc">Save the speed-adjusted audio as a WAV file.</div></div>
+            <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
         </div>
 
         <section class="seo-content">
@@ -205,7 +209,7 @@
             <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/" aria-current="page">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
-            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
         </div>
     </footer>
 
