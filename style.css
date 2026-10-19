@@ -1,67 +1,78 @@
-/* AudioTools.dev — shared look: design tokens, base text, site nav and footer.
-   Tool-specific layout stays in each page's own <style>. */
+/* AudioTools.dev — shared look ("Signal path"): design tokens, type, site nav and footer,
+   tool header and panel. Tool-specific layout stays in each page's own <style>. */
 
 :root {
-    --bg: #0a0b10;
-    --surface: #12131a;
-    --surface2: #1a1b26;
-    --border: #2a2b3a;
-    --text: #e2e4f0;
-    --text2: #8b8ea3;
-    --accent: #6c5ce7;
-    --accent2: #a29bfe;
-    --green: #00d2a0;
-    --green2: #00f5b8;
-    --cyan: #22d3ee;
-    --orange: #f59e0b;
-    --red: #ef4444;
-    --radius: 12px;
-    --chrome-width: 860px;
+    --bg: #EEF1F0;          /* page ground: cool light grey */
+    --surface: #FFFFFF;     /* panels and cards */
+    --surface2: #F5F7F6;    /* insets: drop zones, waveforms */
+    --border: #D5DAD8;      /* quiet lines */
+    --ink: #15191C;         /* text and strong outlines */
+    --text: #15191C;
+    --text2: #4A5257;
+    --accent: #2346F5;      /* cobalt: the one accent */
+    --accent2: #1D3BD1;     /* links */
+    --green: #2346F5;       /* legacy name used by pages for the primary accent */
+    --green2: #1A36C9;
+    --cyan: #0E7490;
+    --orange: #B45309;
+    --red: #C62828;
+    --radius: 14px;
+    --chrome-width: 1240px;
 }
 
-body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; }
-html[lang^="zh"] body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif; }
+body { font-family: 'Archivo', system-ui, sans-serif; }
+html[lang^="zh"] body { font-family: 'Archivo', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif; }
+h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 
-:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
+/* waveform glyph strokes (logo, tool headers) */
+.g-ink { stroke: var(--ink); }
+.g-acc { stroke: var(--accent); }
+.g-faint { stroke: var(--ink); stroke-opacity: 0.22; }
+
 /* ---------- nav ---------- */
-.at-nav { border-bottom: 1px solid var(--border); padding: 14px 20px; }
-.at-nav-inner { max-width: var(--chrome-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 24px; }
-.at-logo { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
-.at-logo b { color: var(--green); font-weight: inherit; }
-.at-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; }
-.at-nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-.at-nav-links a:hover, .at-nav-links a[aria-current="page"] { color: var(--green); }
-.at-nav-links .at-lang { font-size: 12px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+.at-nav { border-bottom: 1.5px solid var(--ink); padding: 16px 24px; background: var(--bg); }
+.at-nav-inner { max-width: var(--chrome-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 32px; }
+.at-logo { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; font-stretch: 125%; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.at-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 24px; }
+.at-nav-links a { color: var(--ink); text-decoration: none; font-size: 15px; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.at-nav-links a:hover { color: var(--accent); }
+.at-nav-links a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); }
+.at-nav-links .at-lang { font-size: 13px; padding: 3px 10px; border: 1.5px solid var(--ink); border-radius: 999px; }
 
 /* ---------- footer ---------- */
-.at-footer { border-top: 1px solid var(--border); margin-top: 48px; padding: 32px 20px 40px; color: var(--text2); font-size: 13px; text-align: center; }
-.at-footer-inner { max-width: var(--chrome-width); margin: 0 auto; display: grid; gap: 14px; }
-.at-footer p { margin: 0; }
-.at-footer a { color: var(--text2); text-decoration: none; transition: color 0.2s; }
-.at-footer a:hover { color: var(--green); }
-.at-footer-tools, .at-footer-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
-.at-footer-tools a { color: var(--text); }
-.at-footer .at-support { color: var(--green); }
+.at-footer { background: var(--ink); color: #D9DEDC; margin-top: 64px; padding: 40px 24px 48px; font-size: 14px; }
+.at-footer-inner { max-width: var(--chrome-width); margin: 0 auto; display: grid; gap: 16px; }
+.at-footer p { margin: 0; color: #D9DEDC; }
+.at-footer a { color: #FFFFFF; text-decoration: none; }
+.at-footer a:hover { text-decoration: underline; }
+.at-footer-tools, .at-footer-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.at-footer-tools { font-weight: 600; padding-bottom: 16px; border-bottom: 1px solid #3A4146; }
+.at-footer-meta a { color: #D9DEDC; }
+.at-footer .at-support { color: #A9BBFF; font-weight: 600; }
 
 @media (max-width: 600px) {
-    .at-nav-links { gap: 6px 16px; }
+    .at-nav-links { gap: 6px 18px; }
 }
 
 /* ---------- tool pages: header ---------- */
-.hero { text-align: center; padding: 40px 0 28px; }
-.hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 8px; }
-.hero h1 em { font-style: normal; color: var(--green); }
-.hero p { color: var(--text2); font-size: 15px; max-width: 500px; margin: 0 auto; }
-@media (max-width: 600px) { .hero h1 { font-size: 26px; } }
+.hero { text-align: left; padding: 52px 0 32px; }
+.hero-glyph { display: block; width: 150px; height: 44px; margin-bottom: 16px; fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.hero h1 { font-size: clamp(36px, 4.6vw, 60px); font-weight: 800; font-stretch: 125%; letter-spacing: -0.025em; line-height: 1; margin: 0 0 14px; color: var(--ink); }
+.hero h1 em { font-style: normal; color: inherit; }
+.hero p { color: var(--text2); font-size: 18px; max-width: 620px; margin: 0; }
+
+/* ---------- tool pages: the working panel ---------- */
+.tool-area { background: var(--surface); border: 1.5px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); }
 
 /* ---------- tool pages: result — format choice and next steps ---------- */
-.out-format { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0; font-size: 13px; color: var(--text2); }
-.out-format select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 14px; }
-.next-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 13px; color: var(--text2); }
-.next-actions a { padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; color: var(--text); text-decoration: none; background: var(--surface2); }
-.next-actions a:hover { border-color: var(--green); color: var(--green); }
+.out-format { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0; font-size: 14px; color: var(--text2); }
+.out-format select { background: var(--surface); color: var(--ink); border: 1.5px solid var(--ink); border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 14px; min-height: 40px; }
+.next-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 14px; color: var(--text2); }
+.next-actions a { padding: 6px 14px; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; background: var(--surface); }
+.next-actions a:hover { color: var(--accent); border-color: var(--accent); }

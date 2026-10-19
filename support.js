@@ -13,8 +13,8 @@
         el.id = 'support-cta';
         el.style.cssText = 'margin-top:12px;font-size:14px;text-align:center;opacity:.85';
         const zh = document.documentElement.lang.startsWith('zh');
-        el.innerHTML = (zh ? '节省了时间？' : 'Saved you time? ') + '<a href="' + BOOSTY + '" target="_blank" rel="noopener" style="color:var(--green, var(--accent))">'
-            + (zh ? '☕ 在 Boosty 上支持 AudioTools.dev' : '☕ Support AudioTools.dev on Boosty') + '</a>';
+        el.innerHTML = (zh ? '节省了时间？' : 'Saved you time? ') + '<a href="' + BOOSTY + '" target="_blank" rel="noopener" style="color:var(--accent2)">'
+            + (zh ? '在 Boosty 上支持 AudioTools.dev' : 'Support AudioTools.dev on Boosty') + '</a>';
         anchor.after(el);
     };
 

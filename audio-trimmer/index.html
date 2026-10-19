@@ -72,16 +72,19 @@
     }
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
     <link rel="stylesheet" href="/style.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
         .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
 
-        .tool-area { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 32px; }
+        .tool-area { padding: 28px; margin-bottom: 32px; }
 
         .drop-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 48px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: var(--green); background: rgba(0,210,160,0.04); }
+        .drop-zone:hover, .drop-zone.dragover { border-color: var(--green); background: rgba(35, 70, 245, 0.04); }
         .drop-zone p { color: var(--text2); font-size: 14px; margin-top: 8px; }
         .drop-icon { font-size: 36px; }
         input[type="file"] { display: none; }
@@ -96,7 +99,7 @@
         .trim-handle { position: absolute; top: 0; width: 4px; height: 100%; cursor: col-resize; z-index: 10; }
         .trim-handle::after { content: ''; position: absolute; top: 50%; left: -6px; width: 16px; height: 28px; transform: translateY(-50%); border-radius: 4px; border: 2px solid; }
         .handle-start { background: var(--green); }
-        .handle-start::after { border-color: var(--green); background: rgba(0,210,160,0.2); }
+        .handle-start::after { border-color: var(--green); background: rgba(35, 70, 245, 0.2); }
         .handle-end { background: var(--red); }
         .handle-end::after { border-color: var(--red); background: rgba(239,68,68,0.2); }
         .trim-overlay-left, .trim-overlay-right { position: absolute; top: 0; height: 100%; background: rgba(0,0,0,0.5); pointer-events: none; }
@@ -110,7 +113,7 @@
 
         .btn-row { display: flex; gap: 10px; }
         .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.2s; border: none; cursor: pointer; }
-        .btn-primary { background: var(--green); color: #0a0b10; }
+        .btn-primary { background: var(--green); color: #fff; }
         .btn-primary:hover { background: var(--green2); }
         .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
         .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
@@ -137,7 +140,7 @@
 <body>
     <nav class="at-nav" aria-label="Main">
         <div class="at-nav-inner">
-            <a href="/" class="at-logo">🎵 <b>Audio</b>Tools.dev</a>
+            <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
                 <a href="/volume-booster/">Volume Booster</a>
@@ -151,14 +154,15 @@
 
     <div class="container">
         <section class="hero">
-            <h1>✂️ <em>Audio Trimmer</em></h1>
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><polyline class="g-faint" points="4,28 12,18 20,38 28,12 36,44 44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34 124,14 132,42 140,24 148,30 156,28"/><polyline class="g-ink" points="44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34"/><path class="g-acc" d="M44 4 H38 V52 H44 M116 4 H122 V52 H116"/></svg>
+            <h1>Audio Trimmer</h1>
             <p>Cut and trim audio files in your browser — visual waveform, no upload, 100% private</p>
         </section>
 
         <div class="tool-area">
             <!-- Drop zone -->
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
-                <div class="drop-icon">📁</div>
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
                 <p><strong>Drop audio file here</strong> or click to browse</p>
                 <p style="font-size:12px;margin-top:4px;">MP3, WAV, FLAC, OGG, AAC, M4A, WebM</p>
             </div>
@@ -195,8 +199,8 @@
 
                 <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
                 <div class="btn-row">
-                    <button class="btn btn-secondary" onclick="preview()">▶ Preview</button>
-                    <button class="btn btn-primary" id="cutBtn" onclick="cutAndDownload()" style="flex:1;">✂️ Cut & Download</button>
+                    <button class="btn btn-secondary" onclick="preview()">Preview</button>
+                    <button class="btn btn-primary" id="cutBtn" onclick="cutAndDownload()" style="flex:1;">Cut & Download</button>
                 </div>
             </div>
         </div>
@@ -239,7 +243,7 @@
             <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/" aria-current="page">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
-            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">❤️ Support the project on Boosty</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
         </div>
     </footer>
 
@@ -294,10 +298,10 @@
             const data = buffer.getChannelData(0);
             const step = Math.ceil(data.length / w);
 
-            ctx.fillStyle = '#0a0b10';
+            ctx.fillStyle = '#F5F7F6';
             ctx.fillRect(0, 0, w, h);
 
-            ctx.fillStyle = '#6c5ce7';
+            ctx.fillStyle = '#15191C';
             const mid = h / 2;
             for (let i = 0; i < w; i++) {
                 let min = 1, max = -1;
