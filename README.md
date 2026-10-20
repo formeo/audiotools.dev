@@ -49,6 +49,12 @@ audiotools.dev/
 - **Live dictation** uses the browser's built-in Web Speech Recognition API (Chrome/Safari may process audio on the vendor's servers).
 - **Private mode** transcribes audio files and microphone recordings with Whisper (tiny/base, q8) via [Transformers.js](https://github.com/huggingface/transformers.js) in a Web Worker (`voice-to-text/whisper-worker.js`). Audio is decoded and resampled to 16 kHz mono in the browser; only the model weights are downloaded from Hugging Face and cached.
 
+## SEO maintenance
+
+- `python3 scripts/seo_sync.py` rewrites the FAQPage JSON-LD on every page from the FAQ that is visible on that page, and refreshes `<lastmod>` in `sitemap.xml` from git. Run it after editing a FAQ or a page (needs `beautifulsoup4`).
+- CI (`.github/workflows/seo-check.yml`) runs `scripts/seo_sync.py --check` and fails if the markup and the visible FAQ drift apart.
+- Social preview images live in `og/` (1200×630, one per tool).
+
 ## Deployment
 
 The site is static HTML — deploy to GitHub Pages:

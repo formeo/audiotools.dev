@@ -18,26 +18,58 @@
     <meta name="description" content="Boost audio volume online for free. Increase or normalize MP3, WAV volume in your browser. No upload, no sign-up required.">
     <meta name="keywords" content="volume booster online, increase audio volume, boost mp3 volume, audio normalizer, audio volume increase, loud audio online, normalize audio free">
     <link rel="canonical" href="https://audiotools.dev/volume-booster/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://audiotools.dev/volume-booster/">
+    <meta property="og:title" content="Volume Booster — Increase Audio Volume Free | AudioTools">
+    <meta property="og:description" content="Boost audio volume online for free. Increase or normalize MP3, WAV volume in your browser. No upload, no sign-up required.">
+    <meta property="og:image" content="https://audiotools.dev/og/volume-booster.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Volume Booster — Increase Audio Volume Free | AudioTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Volume Booster — Increase Audio Volume Free | AudioTools">
+    <meta name="twitter:description" content="Boost audio volume online for free. Increase or normalize MP3, WAV volume in your browser. No upload, no sign-up required.">
+    <meta name="twitter:image" content="https://audiotools.dev/og/volume-booster.png">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta property="og:title" content="Volume Booster — Increase Audio Volume Free | AudioTools">
-    <meta property="og:description" content="Boost audio volume online for free. Increase or normalize MP3, WAV volume in your browser. No upload, no sign-up required.">
-    <meta property="og:url" content="https://audiotools.dev/volume-booster/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AudioTools.dev">
-    <meta property="og:image" content="https://audiotools.dev/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Volume Booster — Increase Audio Volume Free | AudioTools">
-    <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"WebApplication","name":"Volume Booster — AudioTools.dev","url":"https://audiotools.dev/volume-booster/","description":"Boost audio volume online for free. Increase or normalize MP3, WAV volume in your browser. No upload, no sign-up required.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can I boost audio volume?", "acceptedAnswer": {"@type": "Answer", "text": "Up to 500% (5x) increase. For best results, use normalization which automatically finds the optimal level without clipping."}}, {"@type": "Question", "name": "What is audio normalization?", "acceptedAnswer": {"@type": "Answer", "text": "Normalization analyzes the peak volume and adjusts the entire file so the loudest part reaches a target level, maximizing loudness without distortion."}}, {"@type": "Question", "name": "Is my audio file uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All processing happens in your browser using the Web Audio API. Your files never leave your device."}}]}
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How much can I boost audio volume?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Up to 500% (5x). For best results use Normalize, which finds the optimal level without clipping."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is audio normalization?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It analyzes the peak volume and scales the file so the loudest part reaches a target level (−1 dBFS), maximizing loudness without distortion."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my audio uploaded?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Everything happens in your browser using the Web Audio API."
+                }
+            }
+        ]
+    }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,7 +129,7 @@
         .btn-secondary:hover{border-color:var(--accent)}
 
         .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
-        .result h3{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
         .result audio{width:100%;margin-bottom:14px}
 
         .hidden{display:none!important}
@@ -168,7 +200,7 @@
                 </div>
 
                 <div class="result hidden" id="result">
-                    <h3>Result — <span id="resultInfo"></span></h3>
+                    <p class="result-title">Result — <span id="resultInfo"></span></p>
                     <audio id="resultAudio" controls></audio>
                     <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
                     <button class="btn btn-primary" id="downloadBtn" style="width:100%;">Download</button>
