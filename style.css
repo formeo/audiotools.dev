@@ -58,7 +58,17 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 .at-footer .at-support { color: #A9BBFF; font-weight: 600; }
 
 @media (max-width: 600px) {
-    .at-nav-links { gap: 6px 18px; }
+    /* phones: every nav and footer link is at least 44px tall */
+    .at-nav { padding-top: 6px; padding-bottom: 6px; }
+    .at-nav-inner { row-gap: 0; }
+    .at-logo { min-height: 44px; }
+    .at-nav-links { gap: 0 18px; }
+    .at-nav-links a { display: inline-flex; align-items: center; min-height: 44px; }
+    .at-nav-links .at-lang { min-height: 34px; margin: 5px 0; }
+    .at-footer-tools, .at-footer-meta { row-gap: 0; }
+    .at-footer-tools a, .at-footer-meta a, .at-footer .at-support { display: inline-flex; align-items: center; min-height: 44px; }
+    .at-nav-links a, .at-footer-tools a, .at-footer-meta a { min-width: 44px; justify-content: center; }
+    button, select, input[type="range"] { min-height: 44px; }
 }
 
 /* ---------- tool pages: header ---------- */

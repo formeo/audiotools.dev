@@ -17,26 +17,58 @@
     <meta name="description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.">
     <meta name="keywords" content="audio joiner, merge audio online, combine mp3, join audio files, audio merger, concatenate audio, merge wav files free">
     <link rel="canonical" href="https://audiotools.dev/audio-joiner/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://audiotools.dev/audio-joiner/">
+    <meta property="og:title" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
+    <meta property="og:description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, add crossfade between tracks.">
+    <meta property="og:image" content="https://audiotools.dev/og/audio-joiner.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
+    <meta name="twitter:description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, add crossfade between tracks.">
+    <meta name="twitter:image" content="https://audiotools.dev/og/audio-joiner.png">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta property="og:title" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
-    <meta property="og:description" content="Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, add crossfade between tracks.">
-    <meta property="og:url" content="https://audiotools.dev/audio-joiner/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AudioTools.dev">
-    <meta property="og:image" content="https://audiotools.dev/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Audio Joiner — Merge MP3, WAV Files Free | AudioTools">
-    <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"WebApplication","name":"Audio Joiner — AudioTools.dev","url":"https://audiotools.dev/audio-joiner/","description":"Free online audio joiner. Merge and combine MP3, WAV, FLAC files in your browser. No upload, no sign-up. Add crossfade between tracks.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I merge audio files online?", "acceptedAnswer": {"@type": "Answer", "text": "Add your audio files, arrange them in order, optionally add crossfade between tracks, then click Merge & Download to get a single combined file."}}, {"@type": "Question", "name": "Is my audio uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. All merging happens in your browser using the Web Audio API. Your files never leave your device."}}, {"@type": "Question", "name": "Can I merge different audio formats?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can mix MP3, WAV, FLAC, OGG and other formats. The browser decodes each file and the merged result is saved as MP3 or WAV."}}]}
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I merge audio files online?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Add your files, arrange them in order, optionally add crossfade, then click Merge & Download to get a single combined file."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I merge different formats?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Mix MP3, WAV, FLAC, OGG. The browser decodes each file and the merged result is saved as MP3 or WAV."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my audio uploaded?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All merging happens in your browser using the Web Audio API."
+                }
+            }
+        ]
+    }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,7 +120,7 @@
         .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
         .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
         .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
-        .result h3{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
         .result audio{width:100%;margin-bottom:14px}
         .hidden{display:none!important}
 
@@ -146,7 +178,7 @@
                 </div>
 
                 <div class="result hidden" id="result">
-                    <h3>Merged — <span id="resultInfo"></span></h3>
+                    <p class="result-title">Merged — <span id="resultInfo"></span></p>
                     <audio id="resultAudio" controls></audio>
                     <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
                     <button class="btn btn-primary" id="downloadBtn" style="width:100%;">Download</button>

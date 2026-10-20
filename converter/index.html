@@ -18,6 +18,20 @@
     <meta name="description" content="Convert any audio file to MP3 or WAV in your browser. No upload, no server, 100% private. Free online audio converter with Web Audio API.">
     <meta name="keywords" content="audio converter online, convert mp3 wav, wav to mp3, mp3 converter, audio format converter, free audio converter, browser audio converter, private audio converter">
     <link rel="canonical" href="https://audiotools.dev/converter/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://audiotools.dev/converter/">
+    <meta property="og:title" content="Audio Converter Online — Free, Private, No Upload">
+    <meta property="og:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
+    <meta property="og:image" content="https://audiotools.dev/og/converter.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Audio Converter Online — Free, Private, No Upload">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Converter Online — Free, Private, No Upload">
+    <meta name="twitter:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
+    <meta name="twitter:image" content="https://audiotools.dev/og/converter.png">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/converter/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/converter/">
     <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/converter/">
@@ -28,23 +42,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Audio Converter Online — Free, Private, No Upload">
-    <meta property="og:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
-    <meta property="og:url" content="https://audiotools.dev/converter/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AudioTools.dev">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:image" content="https://audiotools.dev/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
     <!-- JSON-LD Structured Data -->
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Audio Converter Online — Free, No Upload">
-    <meta name="twitter:description" content="Convert audio to MP3 or WAV in your browser. No upload, 100% private.">
-    <meta name="twitter:image" content="https://audiotools.dev/og-image.png">
 
     <script type="application/ld+json">
     {
@@ -79,23 +77,39 @@
                 "name": "Is my audio file uploaded to a server?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No. All audio conversion happens directly in your browser using Web Audio API. Your files never leave your device."
+                    "text": "No. All audio conversion happens directly in your browser using Web Audio API and JavaScript. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify."
                 }
             },
             {
                 "@type": "Question",
-                "name": "What audio formats are supported?",
+                "name": "What is the maximum file size?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "You can convert any of these to MP3 or WAV. Input: WAV, MP3, FLAC, OGG, AAC, M4A, WebM. Output: WAV, MP3."
+                    "text": "Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle files up to 100–200 MB without issues. For very large files, consider using our CLI tool: go-audio-converter — a pure Go converter with no file size limits."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Is there a file size limit?",
+                "name": "What audio quality can I expect?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Since processing happens in your browser, the limit depends on your device's memory. Most devices handle files up to 100-200 MB without issues."
+                    "text": "WAV output is lossless — identical to the decoded audio. MP3 encoding at 192 kbps provides high quality suitable for most purposes. You can select up to 320 kbps for maximum quality."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does it work offline?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The converter works offline after the page is loaded (MP3 encoding library needs to load once). Bookmark this page for quick access."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use a command-line tool instead?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Our open source go-audio-converter is a pure Go audio converter — no FFmpeg, no CGO, single binary. It supports WAV, MP3, FLAC conversion and runs on any platform including as WebAssembly."
                 }
             }
         ]
@@ -273,7 +287,6 @@
         </div>
     </nav>
 
-
     <div class="container">
         <section class="hero">
             <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
@@ -438,7 +451,6 @@
     <script>
     (function() {
         'use strict';
-
 
         // DOM refs
         const dropZone = document.getElementById('dropZone');
@@ -824,7 +836,6 @@
                 setTimeout(processChunk, 0);
             });
         }
-
 
         // Download
         downloadBtn.addEventListener('click', () => {
