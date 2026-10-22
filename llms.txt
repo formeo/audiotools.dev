@@ -24,11 +24,11 @@
 
 - [About AudioTools.dev](https://audiotools.dev/about/): who builds it, how files stay on the device (and how to verify it in DevTools), what the site loads from the network, and how it is built.
 - [Changelog](https://audiotools.dev/changelog/): dated list of everything that has shipped since January 2026.
-- Chinese versions: [homepage](https://audiotools.dev/zh/), [audio converter](https://audiotools.dev/zh/converter/).
+- Chinese versions: [homepage](https://audiotools.dev/zh/), [audio converter](https://audiotools.dev/zh/converter/), [volume booster](https://audiotools.dev/zh/volume-booster/), [text to speech](https://audiotools.dev/zh/text-to-speech/), [audio joiner](https://audiotools.dev/zh/audio-joiner/), [audio compressor](https://audiotools.dev/zh/audio-compressor/).
 
 ## Key Facts
 
-- Privacy: all browser tools process audio locally. No files uploaded, audio is never collected. The site uses Google Analytics for anonymous page-view statistics only.
+- Privacy: all browser tools process audio locally. No files uploaded, audio is never collected. The site uses Google Analytics (and Yandex Metrika on Voice to Text) for anonymous page-view statistics only. Text to Speech uses the browser's voices; voices marked “online” are processed by the browser vendor.
 - License: MIT.
 - Formats: reads WAV, MP3, FLAC, OGG, AAC, M4A, WebM and video (MP4, MOV, MKV); the converter saves MP3, M4A, WAV or FLAC, the other tools MP3 or WAV.
 - Works offline: Converter, Trimmer, Joiner, Volume Booster, Speed Changer, Compressor work without internet.

@@ -18,6 +18,9 @@
     <meta name="description" content="Free text-to-speech online. Convert text to natural speech in 50+ languages. No sign-up, no limits. Works in your browser with Web Speech API.">
     <meta name="keywords" content="text to speech online, tts free, text to speech converter, read text aloud, text to audio, free tts, browser text to speech, speech synthesis">
     <link rel="canonical" href="https://audiotools.dev/text-to-speech/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/text-to-speech/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/text-to-speech/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/text-to-speech/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="en_US">
@@ -43,7 +46,7 @@
         "@type": "WebApplication",
         "name": "Text to Speech — AudioTools.dev",
         "url": "https://audiotools.dev/text-to-speech/",
-        "description": "Free online text-to-speech tool supporting 50+ languages. Uses browser Speech Synthesis API — no data uploaded.",
+        "description": "Free online text-to-speech tool supporting 50+ languages. Uses the browser's Speech Synthesis API; AudioTools.dev has no server.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
         "isAccessibleForFree": true,
@@ -85,7 +88,7 @@
                 "name": "Is my text sent to a server?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No. All processing happens locally in your browser. Your text never leaves your device."
+                    "text": "Not to us: AudioTools.dev has no backend. System voices run on your device; voices marked “online”, such as Chrome's “Google” voices, are processed by the browser vendor, so pick a system voice for full privacy."
                 }
             }
         ]
@@ -147,6 +150,7 @@
                 <a href="/text-to-speech/" aria-current="page">Text to Speech</a>
                 <a href="/voice-to-text/">Voice to Text</a>
                 <a href="/">All tools</a>
+                <a href="/zh/text-to-speech/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
         </div>
     </nav>
@@ -207,10 +211,10 @@
 
         <section class="seo-content">
             <h2>Free Online Text to Speech Converter</h2>
-            <p>AudioTools Text to Speech converts any written text into natural-sounding speech directly in your browser. It uses the <strong>Web Speech Synthesis API</strong> — a built-in browser technology that provides high-quality voices in dozens of languages without requiring any server or internet connection for processing.</p>
+            <p>AudioTools Text to Speech converts any written text into natural-sounding speech directly in your browser. It uses the <strong>Web Speech Synthesis API</strong> — a built-in browser technology that provides voices in dozens of languages. AudioTools.dev itself has no server: your text goes only to your browser's speech engine.</p>
 
             <h3>How It Works</h3>
-            <p>Type or paste your text, select a voice and language, adjust speed and pitch, then click "Speak". The browser's speech engine processes your text locally and plays it through your speakers. Your text is never sent to any server — everything happens on your device.</p>
+            <p>Type or paste your text, select a voice and language, adjust speed and pitch, then click "Speak". The browser's speech engine processes your text locally and plays it through your speakers. Your text is never sent to AudioTools.dev. Most voices run on your device; voices marked “online” in the list (for example Chrome's “Google” voices) are processed by the browser vendor.</p>
 
             <h3>Supported Languages</h3>
             <p>Available voices depend on your browser and operating system. Most modern browsers provide 50+ voices covering major world languages including English (US, UK, Australian), Spanish, French, German, Italian, Portuguese, Russian, Japanese, Chinese (Mandarin, Cantonese), Korean, Hindi, Arabic, and many more.</p>
@@ -246,7 +250,7 @@
             </div>
             <div class="faq-item">
                 <div class="faq-q">Is my text sent to a server?</div>
-                <div class="faq-a">No. All processing happens locally in your browser. Your text never leaves your device.</div>
+                <div class="faq-a">Not to us: AudioTools.dev has no backend. System voices run on your device; voices marked “online”, such as Chrome's “Google” voices, are processed by the browser vendor, so pick a system voice for full privacy.</div>
             </div>
         </section>
     </div>
@@ -278,6 +282,8 @@
         const stopBtn = document.getElementById('stopBtn');
 
         let voices = [];
+        const PAGE_LANG = document.documentElement.lang.split('-')[0];   // the Chinese page starts on Chinese voices
+        const ONLINE = PAGE_LANG === 'zh' ? ' · 在线' : ' · online';
         let speaking = false;
 
         function loadVoices() {
@@ -286,8 +292,8 @@
 
             const langs = [...new Set(voices.map(v => v.lang.split('-')[0]))].sort();
             langFilter.innerHTML = '<option value="">All Languages</option>' +
-                langs.map(l => `<option value="${l}">${new Intl.DisplayNames(['en'], {type:'language'}).of(l) || l} (${l})</option>`).join('');
-
+                langs.map(l => `<option value="${l}">${new Intl.DisplayNames([PAGE_LANG], {type:'language'}).of(l) || l} (${l})</option>`).join('');
+            if (PAGE_LANG !== 'en' && langs.includes(PAGE_LANG)) langFilter.value = PAGE_LANG;
             populateVoices();
         }
 
@@ -296,7 +302,7 @@
             const filtered = filter ? voices.filter(v => v.lang.startsWith(filter)) : voices;
             voiceSelect.innerHTML = filtered.map((v, i) => {
                 const idx = voices.indexOf(v);
-                return `<option value="${idx}">${v.name} (${v.lang})${v.default ? ' ★' : ''}</option>`;
+                return `<option value="${idx}">${v.name} (${v.lang})${v.localService ? '' : ONLINE}${v.default ? ' ★' : ''}</option>`;
             }).join('');
         }
 
