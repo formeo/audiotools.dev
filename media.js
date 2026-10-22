@@ -1,11 +1,11 @@
 // Shared audio encoding on top of Mediabunny (vendored in /vendor/mediabunny, MPL-2.0).
-// Pages map the bare specifier: <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
+// Imported by path (no import map), so it also loads in browsers without import-map support (Safari < 16.4).
 // Everything runs in the browser; encoders that the browser lacks (MP3, FLAC, sometimes AAC) are WebAssembly
 // extensions loaded on first use.
 import {
     Input, Output, Conversion, BlobSource, BufferTarget, ALL_FORMATS, AudioBufferSource, canEncodeAudio,
     Mp3OutputFormat, Mp4OutputFormat, WavOutputFormat, FlacOutputFormat,
-} from 'mediabunny';
+} from '/vendor/mediabunny/mediabunny.min.mjs';
 
 const V = '/vendor/mediabunny/';
 const MP3_RATES = [8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000];

@@ -1,13 +1,17 @@
 // Shared by tool pages: GA4 events + a Boosty support line shown after a successful result.
-// Events carry only the tool name / link placement — never file names or content.
+// Events carry only tool names, how the user got to the tool and link placement — never file names, file content or typed text.
 (function () {
     const BOOSTY = 'https://boosty.to/formeo';
     const track = (name, params) => { if (typeof gtag === 'function') gtag('event', name, params); };
 
     // Call when a tool has successfully produced its result.
     // The support line is inserted once, right after `anchor`.
+    // via: how the user got here with this file ('assistant' / 'next', set by assistant.js) or 'direct'.
     window.toolSuccess = function (tool, anchor) {
-        track('file_processed', { tool });
+        let via = 'direct';
+        try { via = sessionStorage.getItem('at_via:' + location.pathname) || 'direct'; } catch (e) { /* private mode */ }
+        track('file_processed', { tool, via });
+        document.dispatchEvent(new CustomEvent('at:processed', { detail: { tool } }));
         if (!anchor || document.getElementById('support-cta')) return;
         const el = document.createElement('p');
         el.id = 'support-cta';

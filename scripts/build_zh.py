@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the Chinese tool pages from the English ones.
 
-    python3 scripts/build_zh.py && python3 scripts/seo_sync.py
+    python3 scripts/build_zh.py   # then runs scripts/seo_sync.py (FAQ JSON-LD from the translated FAQ)
 
 /zh/<tool>/ is /<tool>/ with the same code and translated text. Every English string in a table below must
 still be on the English page: if the English copy changes, the script stops and names the string to update,
@@ -13,6 +13,7 @@ The Chinese converter (/zh/converter/) and home page (/zh/) are maintained by ha
 footer and tool links are updated here.
 """
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -499,6 +500,8 @@ def main():
     english_page('converter')
     update_hand_made(ROOT / 'zh' / 'converter' / 'index.html', 'converter', '/converter/')
     update_hand_made(ROOT / 'zh' / 'index.html', 'home', '/')
+    # FAQ JSON-LD is copied in English; rebuild it from the translated, visible FAQ
+    subprocess.run([sys.executable, str(ROOT / 'scripts' / 'seo_sync.py')], check=True)
 
 
 if __name__ == '__main__':

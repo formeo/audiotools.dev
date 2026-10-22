@@ -112,11 +112,21 @@
                 if (!st.normalize) setControl('gain', st.gain, 'input');
             } },
     };
+    // Controls a setting lands in; compared when the file is processed to see if the user kept it.
+    const SNAPSHOT = { 'converter': ['#mp3Bitrate', '.format-chip.active'], 'audio-compressor': ['#bitrate'],
+        'audio-trimmer': ['#startTime', '#endTime'], 'audio-speed-changer': ['#speed'], 'volume-booster': ['#gain', '.mode-btn.active'] };
+    const snapshot = (tool) => SNAPSHOT[tool].map((sel) => { const el = document.querySelector(sel); return el ? el.dataset.fmt || el.dataset.mode || el.value : ''; }).join('|');
     function applyWhenReady(settings) {
         const tool = location.pathname.replace(/^\/zh/, '').replace(/\//g, '');
         const a = APPLY[tool], st = settings && settings[tool];
         if (!a || !st) return;
-        const timer = setInterval(() => { if (a.ready()) { clearInterval(timer); a.run(st); } }, 250);
+        const timer = setInterval(() => {
+            if (!a.ready()) return;
+            clearInterval(timer);
+            a.run(st);
+            const applied = snapshot(tool);
+            document.addEventListener('at:processed', () => track('settings_kept', { tool, kept: snapshot(tool) === applied ? 'yes' : 'no' }), { once: true });
+        }, 250);
     }
 
     // ---------- hand-off store (one pending entry) ----------
@@ -133,7 +143,8 @@
             };
         });
     }
-    const putPending = (files, settings) => store('readwrite', (s) => s.put({ files, settings }, 'pending'));
+    // via: 'assistant' (home helper) or 'next' ("continue with this file"); reported with file_processed
+    const putPending = (files, settings, via) => store('readwrite', (s) => s.put({ files, settings, via }, 'pending'));
     const takePending = () => store('readwrite', (s) => { const g = s.get('pending'); s.delete('pending'); return g; });
 
     // ---------- tool pages: "continue with this file" after a result ----------
@@ -154,7 +165,7 @@
             a.addEventListener('click', async (e) => {
                 e.preventDefault();
                 track('next_pick', { from: tool, tool: t });
-                await putPending([file], null);
+                await putPending([file], null, 'next');
                 location.href = a.href + '#from-assistant';
             });
             el.appendChild(a);
@@ -170,6 +181,7 @@
         takePending().then((pending) => {
             const input = document.getElementById('fileInput') || document.getElementById('whisperFile');
             if (!pending || !input) return;
+            try { sessionStorage.setItem('at_via:' + location.pathname, pending.via || 'assistant'); } catch (e) { /* private mode */ }
             applyWhenReady(pending.settings);   // also works if the user picks the file here
             const files = pending.files;
             if (!files || !files.length) return;
@@ -215,8 +227,10 @@
     let files = null;            // files dropped on the helper, handed to the picked tool
     let fileInfo = null;         // { duration, text, items } of the dropped file
     const used = {};
+    let noMatchTimer;
 
     function render(items, method, message) {
+        clearTimeout(noMatchTimer);
         results.innerHTML = '';
         if (message) {
             const p = document.createElement('p');
@@ -224,7 +238,7 @@
             p.textContent = message;
             results.appendChild(p);
         }
-        items.forEach(({ tool, why, settings }) => {
+        items.forEach(({ tool, why, settings }, i) => {
             const a = document.createElement('a');
             a.className = 'assistant-pick';
             a.href = TOOLS[tool].url;
@@ -232,10 +246,10 @@
             a.querySelector('b').textContent = TOOLS[tool].name;
             a.querySelector('span').textContent = why;
             a.addEventListener('click', async (e) => {
-                track('assistant_pick', { tool, method });
+                track('assistant_pick', { tool, method, rank: i + 1, with_settings: settings ? 'yes' : 'no' });
                 if (!files && !settings) return;
                 e.preventDefault();
-                await putPending(files || [], settings ? { [tool]: settings } : null);
+                await putPending(files || [], settings ? { [tool]: settings } : null, 'assistant');
                 location.href = a.href + '#from-assistant';
             });
             results.appendChild(a);
@@ -259,6 +273,8 @@
         if (!scored.length) {
             render([], method, T('Not sure what you need — try other words, or pick a tool below.',
                                  '没太明白您的需求——换个说法试试，或直接在下方选择工具。'));
+            // counted once per visit, after typing settles; the text itself is never sent
+            noMatchTimer = setTimeout(() => { if (!used.nomatch) { used.nomatch = true; track('assistant_nomatch', { method }); } }, 1500);
             return;
         }
         render(scored.map(([tool]) => (found[tool]
