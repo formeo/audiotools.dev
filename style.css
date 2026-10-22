@@ -139,3 +139,11 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
     .batch-status { grid-row: 1 / span 2; grid-column: 2; }
     .batch-status a { min-height: 44px; }
 }
+
+/* ---------- links to the format pages (MP4 to MP3, WAV to MP3, …) ---------- */
+.conversions { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding: 0; }
+.seo-content .conversions { padding: 0; }   /* beats .seo-content ul */
+.seo-content .conversions li { margin: 0; }
+.conversions a { display: inline-flex; align-items: center; min-height: 36px; padding: 4px 14px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.conversions a:hover { color: var(--accent2); border-color: var(--accent2); }
+@media (max-width: 600px) { .conversions a { min-height: 44px; } }

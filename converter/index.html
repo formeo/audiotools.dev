@@ -422,6 +422,13 @@
             </p>
         </section>
 
+        <!-- CONVERSIONS (scripts/build_landing.py) -->
+        <section class="seo-content">
+            <h2>Popular conversions</h2>
+            <ul class="conversions"><li><a href="/mp4-to-mp3/">MP4 to MP3</a></li><li><a href="/video-to-mp3/">Video to MP3</a></li><li><a href="/mp3-to-wav/">MP3 to WAV</a></li><li><a href="/wav-to-mp3/">WAV to MP3</a></li></ul>
+        </section>
+        <!-- /CONVERSIONS -->
+
         <!-- FAQ -->
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
@@ -498,7 +505,7 @@
         let audioBuffer = null;   // decoded audio: for the waveform, and the fallback path
         let duration = 0;
         let audioCtx = null;
-        let selectedOutput = 'mp3';
+        let selectedOutput = document.body.dataset.defaultFormat || 'mp3';   // format pages preselect theirs
         let resultBlob = null;
         let resultFilename = '';
 
