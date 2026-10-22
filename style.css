@@ -109,7 +109,7 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 
 .seo-content h3 { margin: 24px 0 8px; font-size: 17px; font-weight: 700; color: var(--ink); }
 .seo-content p, .seo-content li { margin: 0 0 12px; font-size: 15px; line-height: 1.7; color: var(--text2); }
-.seo-content ul { margin: 0 0 12px; padding-left: 20px; }
+.seo-content ul, .seo-content ol { margin: 0 0 12px; padding-left: 22px; }
 
 .faq-item { padding: 18px 0; border-top: 1.5px solid var(--ink); }
 .faq-item:last-child { border-bottom: 1.5px solid var(--ink); }
