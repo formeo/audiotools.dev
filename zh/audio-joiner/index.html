@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#EEF1F0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+    <title>音频合并 — 免费在线合并 MP3、WAV 文件 | AudioTools.dev</title>
+    <meta name="description" content="免费在线音频合并工具：在浏览器中合并、拼接 MP3、WAV、FLAC 文件。无需上传，无需注册，可在音轨之间添加淡入淡出。">
+    <meta name="keywords" content="音频合并, 在线合并音频, MP3合并, 拼接音频文件, 音频拼接, 合并WAV, 免费音频合并">
+    <link rel="canonical" href="https://audiotools.dev/zh/audio-joiner/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/audio-joiner/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/audio-joiner/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/audio-joiner/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:url" content="https://audiotools.dev/zh/audio-joiner/">
+    <meta property="og:title" content="音频合并 — 免费在线合并 MP3、WAV 文件 | AudioTools">
+    <meta property="og:description" content="免费在线音频合并工具：在浏览器中合并 MP3、WAV、FLAC 文件。无需上传，可添加淡入淡出。">
+    <meta property="og:image" content="https://audiotools.dev/og/zh-audio-joiner.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="音频合并 — 免费在线合并 MP3、WAV 文件 | AudioTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="音频合并 — 免费在线合并 MP3、WAV 文件 | AudioTools">
+    <meta name="twitter:description" content="免费在线音频合并工具：在浏览器中合并 MP3、WAV、FLAC 文件。无需上传，可添加淡入淡出。">
+    <meta name="twitter:image" content="https://audiotools.dev/og/zh-audio-joiner.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","inLanguage": "zh-CN","name":"音频合并 — AudioTools.dev","url":"https://audiotools.dev/zh/audio-joiner/","description":"免费在线音频合并工具：在浏览器中合并、拼接 MP3、WAV、FLAC 文件。无需上传，无需注册，可在音轨之间添加淡入淡出。","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "如何在线合并音频文件？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "添加文件，排好顺序，可选添加淡入淡出，然后点击“合并并下载”，即可得到一个合并后的文件。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以合并不同格式的文件吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。MP3、WAV、FLAC、OGG 可混合使用。浏览器会分别解码每个文件，合并结果保存为 MP3 或 WAV。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "我的音频会被上传吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。所有合并都通过 Web Audio API 在您的浏览器中完成。"
+                }
+            }
+        ]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+        .container{max-width:860px;margin:0 auto;padding:0 20px}
+
+        .tool-area{ padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .track-list{list-style:none;margin:18px 0 0}
+        .track{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:grab}
+        .track.dragging{opacity:.4}
+        .track-idx{width:22px;height:22px;flex:none;border-radius:6px;background:var(--surface2);color:var(--text2);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+        .track-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .track-dur{font-size:12px;color:var(--text2);font-family:monospace}
+        .track-btns{display:flex;gap:2px}
+        .track-btns button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:15px;padding:2px 5px;border-radius:4px}
+        .track-btns button:hover{color:var(--text);background:var(--surface2)}
+        .track-btns .rm:hover{color:var(--red)}
+        .add-more{display:inline-block;margin-top:12px;color:var(--green);font-size:13px;font-weight:600;cursor:pointer;background:none;border:none}
+
+        .xfade{margin:22px 0 4px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+        .xfade label{font-size:14px;font-weight:600}
+        .xfade .xval{color:var(--green);font-weight:700;font-family:monospace}
+        input[type="range"]{flex:1;min-width:160px;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--surface2);outline:none}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        .total-line{text-align:center;font-size:13px;color:var(--text2);margin:16px 0 0}
+        .total-line b{color:var(--text)}
+
+        .btn-row{display:flex;gap:10px;margin-top:20px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color: #fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:18px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+        .hidden{display:none!important}
+
+        @media(max-width:600px){.btn-row{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <nav class="at-nav" aria-label="主导航">
+        <div class="at-nav-inner">
+            <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
+            <div class="at-nav-links">
+                <a href="/zh/converter/">转换器</a>
+                <a href="/zh/volume-booster/">音量增强</a>
+                <a href="/zh/text-to-speech/">文字转语音</a>
+                <a href="/voice-to-text/">语音转文字</a>
+                <a href="/zh/">全部工具</a>
+                <a href="/audio-joiner/" class="at-lang" hreflang="en" lang="en">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><polyline class="g-ink" points="4,28 10,18 16,38 22,14 28,42 34,20 40,36 46,24 52,30 58,28"/><polyline class="g-ink" points="102,28 108,22 114,34 120,12 126,44 132,18 138,38 144,16 150,40 156,28"/><path class="g-acc" d="M58 28 C72 28 72 14 80 14 S88 28 102 28 M58 28 C72 28 72 42 80 42 S88 28 102 28"/></svg>
+            <h1>音频合并</h1>
+            <p>把多个音频文件合并为一个——可调整顺序、添加淡入淡出，无需上传</p>
+        </section>
+
+        <div class="tool-area">
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <p><strong>将音频文件拖放到此处</strong>，或点击选择</p>
+                <p>可添加多个文件——MP3、WAV、FLAC、OGG、M4A。在本地处理，绝不上传。</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*" multiple>
+
+            <div id="panel" class="hidden">
+                <ul class="track-list" id="trackList"></ul>
+                <button class="add-more" onclick="fileInput.click()">＋ 添加更多文件</button>
+
+                <div class="xfade">
+                    <label>淡入淡出：</label>
+                    <input type="range" id="xfade" min="0" max="3" step="0.1" value="0">
+                    <span class="xval" id="xfadeVal">0.0s</span>
+                </div>
+                <div class="total-line">音轨：<b id="trackCount">0</b> · 总时长：<b id="totalDur">0:00</b></div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="mergeBtn" onclick="merge()" style="flex:1;">合并并下载</button>
+                    <button class="btn btn-secondary" onclick="reset()">清空</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">合并中…</div>
+                </div>
+
+                <div class="result hidden" id="result">
+                    <p class="result-title">合并完成 — <span id="resultInfo"></span></p>
+                    <audio id="resultAudio" controls></audio>
+                    <label class="out-format">格式 <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · 无损</option></select></label>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">下载</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">多个文件</div><div class="feature-desc">可添加任意数量的音频文件，并自由调整顺序。</div></div>
+            <div class="feature"><div class="feature-title">淡入淡出过渡</div><div class="feature-desc">在音轨之间添加平滑的淡入淡出，衔接自然。</div></div>
+            <div class="feature"><div class="feature-title">混合格式</div><div class="feature-desc">MP3、WAV、FLAC、OGG 可任意组合。</div></div>
+            <div class="feature"><div class="feature-title">100% 私密</div><div class="feature-desc">所有合并都在浏览器中完成，文件不会离开您的设备。</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>免费在线音频合并与拼接</h2>
+            <p>音频合并工具直接在浏览器中把多个音频文件合成一条音轨。无论是合并播客片段、拼接音乐，还是连接语音录音，都不需要把文件上传到任何服务器。</p>
+            <h3>工作原理</h3>
+            <p>工具使用 Web Audio API 把每个文件解码为原始 PCM，按您设定的顺序拼接，可选在相邻音轨之间添加淡入淡出，再编码为 MP3 或 WAV。所有处理都在浏览器中完成，不涉及服务器。</p>
+            <h3>调整顺序与淡入淡出</h3>
+            <p>拖动音轨即可调整顺序，也可以使用上下箭头。淡入淡出最长可设为 3 秒，让上一条音轨的结尾平滑过渡到下一条的开头，适合音乐串烧和无缝的播客剪辑。设为 0 则直接首尾相接。</p>
+            <h3>常见用途</h3>
+            <p>合并播客的片头、正片和片尾；把多首音乐拼成一个串烧；连接分段的语音录音或有声书章节；把多个音效合成一个文件。</p>
+            <p>还需要其他处理？试试<a href="/audio-trimmer/">音频剪辑</a>、<a href="/audio-speed-changer/">音频变速</a>、<a href="/zh/volume-booster/">音量增强器</a>或<a href="/zh/converter/">音频转换器</a>。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item"><div class="faq-q">如何在线合并音频文件？</div><div class="faq-a">添加文件，排好顺序，可选添加淡入淡出，然后点击“合并并下载”，即可得到一个合并后的文件。</div></div>
+            <div class="faq-item"><div class="faq-q">可以合并不同格式的文件吗？</div><div class="faq-a">可以。MP3、WAV、FLAC、OGG 可混合使用。浏览器会分别解码每个文件，合并结果保存为 MP3 或 WAV。</div></div>
+            <div class="faq-item"><div class="faq-q">我的音频会被上传吗？</div><div class="faq-a">不会。所有合并都通过 Web Audio API 在您的浏览器中完成。</div></div>
+        </section>
+    </div>
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/audio-trimmer/">剪辑</a><a href="/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/" aria-current="page">合并</a><a href="/zh/audio-compressor/">压缩</a></nav>
+            <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
+            <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const trackListEl = document.getElementById('trackList');
+        const xfadeEl = document.getElementById('xfade');
+        const xfadeVal = document.getElementById('xfadeVal');
+        const trackCountEl = document.getElementById('trackCount');
+        const totalDurEl = document.getElementById('totalDur');
+        const mergeBtn = document.getElementById('mergeBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultAudio = document.getElementById('resultAudio');
+        const resultInfo = document.getElementById('resultInfo');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let audioCtx, tracks = [], lastUrl = null, uid = 0;
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+        xfadeEl.addEventListener('input', () => { xfadeVal.textContent = parseFloat(xfadeEl.value).toFixed(1) + 's'; updateTotals(); });
+
+        function fmt(sec){ const m=Math.floor(sec/60), s=Math.round(sec%60); return m+':'+String(s).padStart(2,'0'); }
+
+        async function addFiles(fileList){
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            const files = [...fileList];
+            for (const file of files){
+                try {
+                    const buf = await audioCtx.decodeAudioData(await file.arrayBuffer());
+                    tracks.push({ id: ++uid, name: file.name, buffer: buf });
+                } catch (err) {
+                    alert('无法解码“' + file.name + '”，已跳过。请使用 MP3、WAV、FLAC、OGG 或 M4A。');
+                }
+            }
+            if (tracks.length){ dropZone.classList.add('hidden'); panel.classList.remove('hidden'); }
+            result.classList.add('hidden');
+            render();
+        }
+
+        function render(){
+            trackListEl.innerHTML = '';
+            tracks.forEach((t, i) => {
+                const li = document.createElement('li');
+                li.className = 'track'; li.draggable = true; li.dataset.i = i;
+                li.innerHTML =
+                    '<span class="track-idx">' + (i+1) + '</span>' +
+                    '<span class="track-name">' + t.name.replace(/</g,'&lt;') + '</span>' +
+                    '<span class="track-dur">' + fmt(t.buffer.duration) + '</span>' +
+                    '<span class="track-btns">' +
+                        '<button title="上移" onclick="move(' + i + ',-1)">▲</button>' +
+                        '<button title="下移" onclick="move(' + i + ',1)">▼</button>' +
+                        '<button class="rm" title="移除" onclick="removeTrack(' + i + ')">✕</button>' +
+                    '</span>';
+                li.addEventListener('dragstart', e => { li.classList.add('dragging'); e.dataTransfer.setData('text/plain', i); });
+                li.addEventListener('dragend', () => li.classList.remove('dragging'));
+                li.addEventListener('dragover', e => e.preventDefault());
+                li.addEventListener('drop', e => { e.preventDefault(); const from=+e.dataTransfer.getData('text/plain'); reorder(from, i); });
+                trackListEl.appendChild(li);
+            });
+            updateTotals();
+        }
+
+        function move(i, dir){ const j=i+dir; if (j<0||j>=tracks.length) return; [tracks[i],tracks[j]]=[tracks[j],tracks[i]]; render(); }
+        function reorder(from, to){ if (from===to) return; const [m]=tracks.splice(from,1); tracks.splice(to,0,m); render(); }
+        function removeTrack(i){ tracks.splice(i,1); if (!tracks.length){ reset(); return; } render(); }
+
+        function computeTotal(){
+            if (!tracks.length) return { len:0, sr:44100, ch:1 };
+            const sr = tracks[0].buffer.sampleRate;
+            let ch = 1; tracks.forEach(t => ch = Math.max(ch, t.buffer.numberOfChannels));
+            const xf = Math.max(0, Math.round(parseFloat(xfadeEl.value) * sr));
+            let len = tracks[0].buffer.length;
+            for (let i=1;i<tracks.length;i++){
+                const ov = Math.min(xf, Math.floor(tracks[i-1].buffer.length/2), Math.floor(tracks[i].buffer.length/2));
+                len += tracks[i].buffer.length - ov;
+            }
+            return { len, sr, ch };
+        }
+        function updateTotals(){
+            const { len, sr } = computeTotal();
+            trackCountEl.textContent = tracks.length;
+            totalDurEl.textContent = fmt(len / sr);
+        }
+
+        function buildMerged(){
+            const { len, sr, ch } = computeTotal();
+            const xf = Math.max(0, Math.round(parseFloat(xfadeEl.value) * sr));
+            const out = audioCtx.createBuffer(ch, len, sr);
+            const ov = new Array(tracks.length).fill(0);
+            for (let i=1;i<tracks.length;i++) ov[i]=Math.min(xf, Math.floor(tracks[i-1].buffer.length/2), Math.floor(tracks[i].buffer.length/2));
+            const pos = new Array(tracks.length); pos[0]=0;
+            for (let i=1;i<tracks.length;i++) pos[i]=pos[i-1]+tracks[i-1].buffer.length-ov[i];
+            for (let c=0;c<ch;c++){
+                const o=out.getChannelData(c);
+                for (let i=0;i<tracks.length;i++){
+                    const b=tracks[i].buffer, src=b.getChannelData(Math.min(c, b.numberOfChannels-1));
+                    const L=b.length, p=pos[i], inN=(i>0?ov[i]:0), outN=(i<tracks.length-1?ov[i+1]:0);
+                    for (let j=0;j<L;j++){
+                        let g=1;
+                        if (inN>0 && j<inN) g=j/inN;
+                        if (outN>0 && j>=L-outN) g=Math.min(g,(L-1-j)/outN);
+                        o[p+j]+= src[j]*g;
+                    }
+                }
+            }
+            return out;
+        }
+
+        async function merge(){
+            if (!tracks.length) return;
+            mergeBtn.disabled = true; result.classList.add('hidden');
+            progressWrap.classList.remove('hidden'); progressFill.style.width='30%'; progressText.textContent='合并中…';
+            await new Promise(r => setTimeout(r, 30));
+            const out = buildMerged();
+            progressFill.style.width='70%'; progressText.textContent='编码中…';
+            await new Promise(r => setTimeout(r, 30));
+            const blob = new Blob([encodeWAV(out)], { type: 'audio/wav' });
+            if (lastUrl) URL.revokeObjectURL(lastUrl);
+            lastUrl = URL.createObjectURL(blob);
+            resultAudio.src = lastUrl;
+            resultInfo.textContent = tracks.length + ' 条音轨 · ' + fmt(out.duration) + ' · ' + (blob.size/1024/1024).toFixed(1) + ' MB';
+            downloadBtn.onclick = () => downloadAudio(out, blob, document.getElementById('outFormat'), 'merged', downloadBtn);
+            progressFill.style.width='100%';
+            progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+            toolSuccess('audio-joiner', downloadBtn);
+            offerNext('audio-joiner', downloadBtn, new File([blob], 'merged.wav', { type: 'audio/wav' }));
+            mergeBtn.disabled = false;
+        }
+
+        function encodeWAV(audioBuffer){
+            const ch=audioBuffer.numberOfChannels, sr=audioBuffer.sampleRate, len=audioBuffer.length;
+            const ab=new ArrayBuffer(44+len*ch*2), view=new DataView(ab);
+            function s(o,str){ for(let i=0;i<str.length;i++) view.setUint8(o+i,str.charCodeAt(i)); }
+            s(0,'RIFF'); view.setUint32(4,36+len*ch*2,true); s(8,'WAVE'); s(12,'fmt ');
+            view.setUint32(16,16,true); view.setUint16(20,1,true); view.setUint16(22,ch,true);
+            view.setUint32(24,sr,true); view.setUint32(28,sr*ch*2,true); view.setUint16(32,ch*2,true);
+            view.setUint16(34,16,true); s(36,'data'); view.setUint32(40,len*ch*2,true);
+            let offset=44;
+            for(let i=0;i<len;i++) for(let c=0;c<ch;c++){ let v=Math.max(-1,Math.min(1,audioBuffer.getChannelData(c)[i])); view.setInt16(offset, v<0?v*0x8000:v*0x7FFF, true); offset+=2; }
+            return ab;
+        }
+
+        function reset(){
+            tracks=[]; if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl=null; }
+            resultAudio.pause(); resultAudio.removeAttribute('src'); fileInput.value='';
+            panel.classList.add('hidden'); result.classList.add('hidden'); progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden'); trackListEl.innerHTML='';
+        }
+    </script>
+    <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
+    <script src="/audio-export.js"></script>
+    <script src="/support.js"></script>
+    <script src="/assistant.js"></script>
+</body>
+</html>

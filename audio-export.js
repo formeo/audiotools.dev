@@ -5,7 +5,7 @@
     window.downloadAudio = async function (buffer, wavBlob, select, baseName, button) {
         const mp3 = select.value === 'mp3';
         const label = button && button.textContent;
-        if (button) { button.disabled = true; if (mp3) button.textContent = 'Encoding MP3…'; }
+        if (button) { button.disabled = true; if (mp3) button.textContent = document.documentElement.lang.startsWith('zh') ? '正在编码 MP3…' : 'Encoding MP3…'; }
         try {
             const blob = mp3 ? await (await import('/media.js')).encodeBuffer(buffer, { format: 'mp3', bitrate: 192000 }) : wavBlob;
             const a = document.createElement('a');

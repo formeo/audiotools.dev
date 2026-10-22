@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#EEF1F0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+    <title>音频压缩 — 免费在线减小音频文件大小 | AudioTools.dev</title>
+    <meta name="description" content="免费在线压缩音频：调整码率和采样率，减小 MP3、WAV 文件体积。无需上传，在浏览器中运行。">
+    <meta name="keywords" content="音频压缩, 减小音频文件大小, 在线压缩MP3, 音频变小, 降低码率, 压缩WAV, 免费音频压缩">
+    <link rel="canonical" href="https://audiotools.dev/zh/audio-compressor/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/audio-compressor/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/audio-compressor/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/audio-compressor/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:url" content="https://audiotools.dev/zh/audio-compressor/">
+    <meta property="og:title" content="音频压缩 — 免费在线减小音频文件大小 | AudioTools">
+    <meta property="og:description" content="免费在线压缩音频：调整码率和采样率，减小 MP3、WAV 文件体积。无需上传，在浏览器中运行。">
+    <meta property="og:image" content="https://audiotools.dev/og/zh-audio-compressor.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="音频压缩 — 免费在线减小音频文件大小 | AudioTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="音频压缩 — 免费在线减小音频文件大小 | AudioTools">
+    <meta name="twitter:description" content="免费在线压缩音频：调整码率和采样率，减小 MP3、WAV 文件体积。无需上传，在浏览器中运行。">
+    <meta name="twitter:image" content="https://audiotools.dev/og/zh-audio-compressor.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","inLanguage": "zh-CN","name":"音频压缩 — AudioTools.dev","url":"https://audiotools.dev/zh/audio-compressor/","description":"免费在线压缩音频：调整码率和采样率，减小 MP3、WAV 文件体积。无需上传，在浏览器中运行。","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "文件能缩小多少？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "视原文件而定，WAV 转为 MP3 后通常可缩小 5–20 倍。一个 50 MB 的 WAV 以 128 kbps 编码约为 5 MB。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "压缩会影响音质吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "有损压缩会去掉一部分数据。在 192 kbps 及以上，大多数听众听不出与原文件的区别。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以一次压缩多个文件吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。拖入多个文件，它们会使用相同的设置压缩，可以单独下载，也可以打包成 ZIP 一次下载。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "我的音频会被上传吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。所有压缩都在您的浏览器中完成。"
+                }
+            }
+        ]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+        .container{max-width:860px;margin:0 auto;padding:0 20px}
+
+        .tool-area{ padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2)}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+
+        .ctrl{margin-bottom:16px}
+        .ctrl-label{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block}
+        select{width:100%;padding:11px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;cursor:pointer}
+        select:focus{outline:none;border-color:var(--green)}
+
+        .size-preview{display:flex;justify-content:space-around;align-items:center;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:20px 0}
+        .size-box .num{font-size:22px;font-weight:800}
+        .size-box .lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+        .size-orig .num{color:var(--text2)}
+        .size-new .num{color:var(--green)}
+        .size-arrow{font-size:20px;color:var(--text2)}
+        .size-save{font-size:12px;color:var(--green);font-weight:700}
+
+        .btn-row{display:flex;gap:10px;margin-top:8px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color: #fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:18px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+        .hidden{display:none!important}
+
+        @media(max-width:600px){.btn-row{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <nav class="at-nav" aria-label="主导航">
+        <div class="at-nav-inner">
+            <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
+            <div class="at-nav-links">
+                <a href="/zh/converter/">转换器</a>
+                <a href="/zh/volume-booster/">音量增强</a>
+                <a href="/zh/text-to-speech/">文字转语音</a>
+                <a href="/voice-to-text/">语音转文字</a>
+                <a href="/zh/">全部工具</a>
+                <a href="/audio-compressor/" class="at-lang" hreflang="en" lang="en">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><polyline class="g-ink" style="stroke-width:1.6" points="4,28 7,14 10,40 13,18 16,36 19,10 22,44 25,20 28,34 31,12 34,42 37,22 40,30 43,16 46,38 49,24 52,32 55,20 58,28"/><polyline class="g-acc" points="72,28 88,14 104,40 120,16 136,38 152,24 156,28"/></svg>
+            <h1>音频压缩</h1>
+            <p>通过调整码率和采样率减小音频文件体积——输出 MP3，无需上传</p>
+        </section>
+
+        <div class="tool-area">
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <p><strong>将一个或多个音频文件拖放到此处</strong>，或点击选择</p>
+                <p>MP3、WAV、FLAC、OGG、M4A — 在本地处理，绝不上传</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*" multiple>
+
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="移除">✕</button>
+                </div>
+
+                <div class="ctrl">
+                    <label class="ctrl-label">码率——越低文件越小</label>
+                    <select id="bitrate">
+                        <option value="64">64 kbps — 语音 / 播客（最小）</option>
+                        <option value="128" selected>128 kbps — 通用（推荐）</option>
+                        <option value="192">192 kbps — 高品质音乐</option>
+                        <option value="256">256 kbps — 极高品质</option>
+                        <option value="320">320 kbps — 最高品质</option>
+                    </select>
+                </div>
+                <div class="ctrl">
+                    <label class="ctrl-label">采样率</label>
+                    <select id="sampleRate">
+                        <option value="0" selected>保持原样</option>
+                        <option value="44100">44100 Hz — CD 音质</option>
+                        <option value="22050">22050 Hz — 更小，适合语音</option>
+                        <option value="16000">16000 Hz — 最小，仅限语音</option>
+                    </select>
+                </div>
+
+                <div class="size-preview">
+                    <div class="size-box size-orig"><div class="num" id="origSize">—</div><div class="lbl">原始</div></div>
+                    <div class="size-arrow">→</div>
+                    <div class="size-box size-new"><div class="num" id="estSize">—</div><div class="lbl">预计</div><div class="size-save" id="estSave"></div></div>
+                </div>
+
+                <ul class="batch-list" id="batchList" hidden></ul>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="compressBtn" onclick="compress()" style="flex:1;">压缩并下载</button>
+                    <button class="btn btn-secondary" onclick="reset()">重置</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">压缩中…</div>
+                </div>
+
+                <div class="result hidden" id="result">
+                    <p class="result-title">压缩完成 — <span id="resultInfo"></span></p>
+                    <audio id="resultAudio" controls></audio>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">下载 MP3</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">码率控制</div><div class="feature-desc">在 64 到 320 kbps 之间选择，平衡体积与音质。</div></div>
+            <div class="feature"><div class="feature-title">采样率选项</div><div class="feature-desc">降到 22 kHz 或 16 kHz，文件更小。</div></div>
+            <div class="feature"><div class="feature-title">大小预览</div><div class="feature-desc">压缩前即可看到预计的输出大小。</div></div>
+            <div class="feature"><div class="feature-title">100% 私密</div><div class="feature-desc">所有压缩都在浏览器中完成，文件不会离开您的设备。</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>免费在线音频压缩</h2>
+            <p>音频压缩工具按您选择的码率和采样率把音频重新编码为 MP3，从而减小文件体积。非常适合发送邮件附件、通过聊天软件分享，或节省存储空间。</p>
+            <h3>工作原理</h3>
+            <p>有损 MP3 压缩会去掉人耳听不到的数据来缩小文件。一个 44 MB 的 WAV 以 128 kbps 编码后约为 4 MB，体积缩小约 10 倍，对大多数用途来说音质损失很小。更高的码率（256–320 kbps）能为音乐保留更多细节。一切都在浏览器中运行，使用编译为 WebAssembly 的 LAME MP3 编码器，不上传任何内容。</p>
+            <h3>如何选择码率</h3>
+            <p>64 kbps：语音录音和播客（文件最小）。128 kbps：通用，适合大多数用途。192 kbps：高品质音乐。320 kbps：最高品质，大多数听众分辨不出与无损的区别。把采样率降到 22 kHz 或 16 kHz，可以让语音文件更小。</p>
+            <p>还需要其他处理？试试<a href="/zh/converter/">音频转换器</a>、<a href="/audio-trimmer/">音频剪辑</a>、<a href="/zh/audio-joiner/">音频合并</a>或<a href="/zh/volume-booster/">音量增强器</a>。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item"><div class="faq-q">文件能缩小多少？</div><div class="faq-a">视原文件而定，WAV 转为 MP3 后通常可缩小 5–20 倍。一个 50 MB 的 WAV 以 128 kbps 编码约为 5 MB。</div></div>
+            <div class="faq-item"><div class="faq-q">压缩会影响音质吗？</div><div class="faq-a">有损压缩会去掉一部分数据。在 192 kbps 及以上，大多数听众听不出与原文件的区别。</div></div>
+            <div class="faq-item"><div class="faq-q">可以一次压缩多个文件吗？</div><div class="faq-a">可以。拖入多个文件，它们会使用相同的设置压缩，可以单独下载，也可以打包成 ZIP 一次下载。</div></div>
+            <div class="faq-item"><div class="faq-q">我的音频会被上传吗？</div><div class="faq-a">不会。所有压缩都在您的浏览器中完成。</div></div>
+        </section>
+    </div>
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/audio-trimmer/">剪辑</a><a href="/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/" aria-current="page">压缩</a></nav>
+            <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
+            <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
+        </div>
+    </footer>
+
+    <!-- MP3 encoding: Mediabunny (self-hosted), see /media.js -->
+    <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const bitrateEl = document.getElementById('bitrate');
+        const sampleRateEl = document.getElementById('sampleRate');
+        const origSizeEl = document.getElementById('origSize');
+        const estSizeEl = document.getElementById('estSize');
+        const estSaveEl = document.getElementById('estSave');
+        const compressBtn = document.getElementById('compressBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultAudio = document.getElementById('resultAudio');
+        const resultInfo = document.getElementById('resultInfo');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let audioCtx, buffer, origBytes = 0, fileBase = 'audio', lastUrl = null;
+        let batch = null, batchDuration = 0;   // several files at once (/batch.js)
+        const batchList = document.getElementById('batchList');
+        const compressText = compressBtn.textContent, downloadText = downloadBtn.textContent;
+        const B = { files: (n) => n + ' 个文件', compress: (n) => '压缩 ' + n + ' 个文件', zip: '全部下载（ZIP）',
+            done: (ok, n) => (ok === n ? n + ' 个文件' : n + ' 个中的 ' + ok + ' 个') };
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+        bitrateEl.addEventListener('change', updateEstimate);
+        sampleRateEl.addEventListener('change', updateEstimate);
+
+        function fmtSize(bytes){ return bytes >= 1048576 ? (bytes/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(bytes/1024))+' KB'; }
+
+        function updateEstimate(){
+            const duration = batch ? batchDuration : buffer && buffer.duration;
+            if (!duration) return;
+            const kbps = parseInt(bitrateEl.value, 10);
+            const est = (kbps * 1000 / 8) * duration; // CBR MP3 bytes
+            estSizeEl.textContent = '~' + fmtSize(est);
+            if (origBytes > 0){
+                const save = Math.round((1 - est/origBytes) * 100);
+                estSaveEl.textContent = save > 0 ? '−' + save + '%' : (save < 0 ? '+' + (-save) + '%（变大）' : '');
+                estSaveEl.style.color = save > 0 ? 'var(--green)' : 'var(--text2)';
+            }
+        }
+
+        function handleFiles(list){
+            if (list.length > 1) startBatch(Array.from(list));
+            else if (list.length === 1) handleFile(list[0]);
+        }
+
+        async function startBatch(files){
+            reset();
+            const mod = await import('/batch.js');
+            batch = new mod.BatchList(batchList, files);
+            origBytes = batch.totalBytes; batchDuration = 0;
+            document.getElementById('fileName').textContent = B.files(files.length);
+            document.getElementById('fileMeta').textContent = fmtSize(origBytes);
+            origSizeEl.textContent = fmtSize(origBytes);
+            estSizeEl.textContent = '…'; estSaveEl.textContent = '';
+            compressBtn.textContent = B.compress(files.length);
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            // lengths for the size estimate, read from each file's header
+            const media = await import('/media.js'), list = batch;
+            await Promise.all(files.map((f, i) => media.probe(f).then((info) => {
+                if (batch !== list) return;
+                batchDuration += info.duration;
+                batch.meta(i, fmtSize(f.size) + ' · ' + mod.fmtTime(info.duration));
+            }).catch(() => {})));
+            if (batch === list) updateEstimate();
+        }
+
+        // One file of a batch: stream it, or decode with Web Audio where streaming isn't possible.
+        async function compressOne(file, kbps, targetSr, onProgress){
+            const media = await import('/media.js');
+            try {
+                return await media.convertFile(file, { format: 'mp3', bitrate: kbps * 1000, sampleRate: targetSr || undefined, onProgress });
+            } catch (err){
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                onProgress(0.3);
+                const buf = await resample(await audioCtx.decodeAudioData(await file.arrayBuffer()), targetSr);
+                return media.encodeBuffer(buf, { format: 'mp3', bitrate: kbps * 1000 });
+            }
+        }
+
+        async function compressBatch(){
+            const list = batch, kbps = parseInt(bitrateEl.value, 10), targetSr = parseInt(sampleRateEl.value, 10);
+            compressBtn.disabled = true; result.classList.add('hidden');
+            list.restart();
+            for (let i = 0; i < list.items.length; i++){
+                const file = list.items[i].file;
+                list.progress(i, 0);
+                try {
+                    const blob = await compressOne(file, kbps, targetSr, (p) => list.progress(i, p));
+                    list.done(i, blob, (file.name || 'audio').replace(/\.[^.]+$/, '') + '_' + kbps + 'kbps.mp3');
+                    toolSuccess('audio-compressor', downloadBtn);
+                } catch (err){
+                    list.fail(i, err.message);
+                }
+                if (batch !== list) return;   // reset meanwhile
+            }
+            const done = list.results, out = done.reduce((s, it) => s + it.blob.size, 0);
+            const inBytes = done.reduce((s, it) => s + it.file.size, 0);
+            const save = inBytes ? Math.round((1 - out / inBytes) * 100) : 0;
+            resultInfo.textContent = B.done(done.length, list.items.length) + '  ·  ' + fmtSize(out) + (save > 0 ? '  ·  −' + save + '%' : '');
+            resultAudio.hidden = true;
+            downloadBtn.textContent = B.zip;
+            downloadBtn.hidden = !done.length;
+            downloadBtn.onclick = () => list.downloadZip('audiotools-compressed.zip');
+            result.classList.remove('hidden');
+            compressBtn.disabled = false;
+        }
+
+        async function handleFile(file){
+            if (batch) reset();
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            try {
+                buffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+            } catch (err){
+                alert('无法解码此音频文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
+                return;
+            }
+            origBytes = file.size;
+            fileBase = (file.name || 'audio').replace(/\.[^.]+$/, '');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = fmtSize(file.size) + ' · ' + buffer.sampleRate + ' Hz · ' + buffer.numberOfChannels + 'ch';
+            origSizeEl.textContent = fmtSize(file.size);
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            result.classList.add('hidden');
+            updateEstimate();
+        }
+
+        // Resample to target sample rate via OfflineAudioContext (returns original if same/keep)
+        async function resample(buf, targetSr){
+            if (!targetSr || targetSr === buf.sampleRate) return buf;
+            const oac = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(
+                buf.numberOfChannels, Math.ceil(buf.duration * targetSr), targetSr);
+            const src = oac.createBufferSource(); src.buffer = buf; src.connect(oac.destination); src.start();
+            return await oac.startRendering();
+        }
+
+        // MP3 encoder: LAME in WebAssembly via Mediabunny, off the main thread (/media.js)
+        async function encodeMP3(buf, kbps){
+            progressFill.style.width = '30%'; progressText.textContent = '正在编码 MP3…';
+            return (await import('/media.js')).encodeBuffer(buf, { format: 'mp3', bitrate: kbps * 1000 });
+        }
+
+        async function compress(){
+            if (batch) return compressBatch();
+            if (!buffer) return;
+            compressBtn.disabled = true; result.classList.add('hidden');
+            progressWrap.classList.remove('hidden'); progressFill.style.width = '4%'; progressText.textContent = '准备中…';
+            try {
+                const targetSr = parseInt(sampleRateEl.value, 10);
+                const kbps = parseInt(bitrateEl.value, 10);
+                const rbuf = await resample(buffer, targetSr);
+                const blob = await encodeMP3(rbuf, kbps);
+                if (lastUrl) URL.revokeObjectURL(lastUrl);
+                lastUrl = URL.createObjectURL(blob);
+                resultAudio.src = lastUrl;
+                const save = origBytes > 0 ? Math.round((1 - blob.size/origBytes) * 100) : 0;
+                resultInfo.textContent = fmtSize(blob.size) + (save > 0 ? '  ·  −' + save + '%（相比原文件）' : '');
+                downloadBtn.onclick = () => { const a=document.createElement('a'); a.href=lastUrl; a.download=fileBase + '_' + kbps + 'kbps.mp3'; a.click(); };
+                progressFill.style.width = '100%';
+                progressWrap.classList.add('hidden'); result.classList.remove('hidden');
+                toolSuccess('audio-compressor', downloadBtn);
+                offerNext('audio-compressor', downloadBtn, new File([blob], fileBase + '_' + kbps + 'kbps.mp3', { type: 'audio/mpeg' }));
+            } catch (err){
+                progressWrap.classList.add('hidden');
+                alert(err.message || '压缩失败，请重试。');
+            }
+            compressBtn.disabled = false;
+        }
+
+        function reset(){
+            if (batch){ batch.clear(); batch = null; }
+            compressBtn.textContent = compressText; downloadBtn.textContent = downloadText;
+            downloadBtn.hidden = false; resultAudio.hidden = false;
+            buffer = null; origBytes = 0;
+            if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl = null; }
+            resultAudio.pause(); resultAudio.removeAttribute('src'); fileInput.value = '';
+            panel.classList.add('hidden'); result.classList.add('hidden'); progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+        }
+    </script>
+    <script src="/support.js"></script>
+    <script src="/assistant.js"></script>
+</body>
+</html>

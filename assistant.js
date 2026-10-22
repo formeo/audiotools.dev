@@ -137,6 +137,7 @@
     const takePending = () => store('readwrite', (s) => { const g = s.get('pending'); s.delete('pending'); return g; });
 
     // ---------- tool pages: "continue with this file" after a result ----------
+    const ZH_PAGES = ['converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor'];   // tools with a Chinese page
     const NEXT = [['audio-compressor', 'Compress', '压缩'], ['audio-trimmer', 'Trim', '剪辑'], ['volume-booster', 'Boost volume', '增强音量'],
                   ['converter', 'Convert format', '转换格式'], ['audio-speed-changer', 'Change speed', '变速'], ['audio-joiner', 'Join with more', '合并']];
     window.offerNext = function (tool, anchor, file) {
@@ -148,7 +149,7 @@
         el.append(T('Continue with this file:', '继续处理此文件：'));
         NEXT.filter(([t]) => t !== tool).slice(0, 3).forEach(([t, en, zh]) => {
             const a = document.createElement('a');
-            a.href = t === 'converter' && ZH ? '/zh/converter/' : '/' + t + '/';
+            a.href = (ZH && ZH_PAGES.includes(t) ? '/zh/' : '/') + t + '/';
             a.textContent = T(en, zh);
             a.addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -185,16 +186,16 @@
         'converter': { url: ZH ? '/zh/converter/' : '/converter/', name: T('Audio Converter', '音频转换器'),
             kw: ['convert', 'format', 'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aac', 'webm', 'mp4', 'video', 'extract audio',
                  'конверт', 'формат', 'преобраз', 'видео', '转换', '格式', '视频', '提取音频'] },
-        'audio-compressor': { url: '/audio-compressor/', name: T('Audio Compressor', '音频压缩'),
+        'audio-compressor': { url: ZH ? '/zh/audio-compressor/' : '/audio-compressor/', name: T('Audio Compressor', '音频压缩'),
             kw: ['compress', 'smaller', 'reduce', 'file size', 'shrink', 'bitrate', 'email', 'telegram', 'whatsapp',
                  'сжать', 'уменьш', 'размер', 'меньше', 'битрейт', '压缩', '变小', '缩小', '大小', '体积'] },
-        'volume-booster': { url: '/volume-booster/', name: T('Volume Booster', '音量增强'),
+        'volume-booster': { url: ZH ? '/zh/volume-booster/' : '/volume-booster/', name: T('Volume Booster', '音量增强'),
             kw: ['quiet', 'louder', 'volume', 'boost', 'normalize', 'amplify', 'gain',
                  'тих', 'громк', 'громч', 'усил', 'нормализ', '音量', '声音太小', '太小声', '放大', '增强', '标准化'] },
         'audio-trimmer': { url: '/audio-trimmer/', name: T('Audio Trimmer', '音频剪辑'),
             kw: ['trim', 'cut', 'crop', 'shorten', 'ringtone', 'clip', 'remove the start', 'remove the end',
                  'обрез', 'обреж', 'вырез', 'отрез', 'отреж', 'рингтон', 'укорот', '剪辑', '裁剪', '剪切', '铃声', '截取'] },
-        'audio-joiner': { url: '/audio-joiner/', name: T('Audio Joiner', '音频合并'),
+        'audio-joiner': { url: ZH ? '/zh/audio-joiner/' : '/audio-joiner/', name: T('Audio Joiner', '音频合并'),
             kw: ['join', 'merge', 'combine', 'concatenate', 'several files', 'multiple files',
                  'склеить', 'склей', 'объедин', 'соедин', 'несколько', '合并', '拼接', '连接', '多个'] },
         'audio-speed-changer': { url: '/audio-speed-changer/', name: T('Speed Changer', '音频变速'),
@@ -203,7 +204,7 @@
         'voice-to-text': { url: '/voice-to-text/', name: T('Voice to Text', '语音转文字'),
             kw: ['transcri', 'to text', 'subtitle', 'speech to text', 'dictat', 'voice message', 'lecture', 'interview',
                  'расшифр', 'в текст', 'субтитр', 'голосов', 'лекци', 'диктов', '转文字', '转录', '字幕', '语音转', '听写'] },
-        'text-to-speech': { url: '/text-to-speech/', name: T('Text to Speech', '文字转语音'),
+        'text-to-speech': { url: ZH ? '/zh/text-to-speech/' : '/text-to-speech/', name: T('Text to Speech', '文字转语音'),
             kw: ['text to speech', 'read aloud', 'tts', 'voice over', 'narrat', 'speak',
                  'озвуч', 'вслух', 'синтез речи', 'прочитать', '朗读', '配音', '文字转语音', '语音合成'] },
     };
