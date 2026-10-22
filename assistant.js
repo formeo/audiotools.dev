@@ -282,7 +282,8 @@
         fileInfo = null;
         if (files.length > 1) {
             fileInfo = { text: '', items: [{ tool: 'audio-joiner', why: T(`${files.length} files → merge them into one`, `${files.length} 个文件 → 合并为一个`) },
-                                            { tool: 'converter', why: WHY.converter }] };
+                                            { tool: 'converter', why: T(`Convert all ${files.length} at once, download as ZIP`, `一次转换全部 ${files.length} 个，打包下载`) },
+                                            { tool: 'audio-compressor', why: T(`Make all ${files.length} smaller at once`, `一次压缩全部 ${files.length} 个文件`) }] };
             render(fileInfo.items, 'file');
             return;
         }

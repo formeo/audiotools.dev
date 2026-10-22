@@ -4,14 +4,14 @@
 
 ## Online Tools
 
-- [Audio Converter](https://audiotools.dev/converter/): Convert audio (WAV, FLAC, OGG, AAC, M4A, WebM) or the soundtrack of a video (MP4, MOV, MKV) to MP3, M4A, WAV or FLAC. Streams large files. Built on Mediabunny. No file upload.
+- [Audio Converter](https://audiotools.dev/converter/): Convert audio (WAV, FLAC, OGG, AAC, M4A, WebM) or the soundtrack of a video (MP4, MOV, MKV) to MP3, M4A, WAV or FLAC. Streams large files; converts several files at once with a ZIP download. Built on Mediabunny. No file upload.
 - [Voice to Text](https://audiotools.dev/voice-to-text/): Live dictation in 60+ languages (Web Speech Recognition API), plus Private mode: transcribe audio files and recordings with Whisper running on-device (Transformers.js) — audio never leaves the browser.
 - [Text to Speech](https://audiotools.dev/text-to-speech/): Convert text to natural speech in 50+ languages. Adjustable speed (0.25x-3x), pitch, volume.
 - [Audio Trimmer](https://audiotools.dev/audio-trimmer/): Cut audio files with visual waveform editor. Drag handles, preview, download WAV.
 - [Audio Joiner](https://audiotools.dev/audio-joiner/): Merge multiple audio files into one with crossfade transitions. Drag to reorder.
 - [Volume Booster](https://audiotools.dev/volume-booster/): Increase audio volume up to 500% or normalize to consistent peak level. Soft-clipping.
 - [Audio Speed Changer](https://audiotools.dev/audio-speed-changer/): Slow down or speed up audio. 0.25x to 4x with pitch preservation.
-- [Audio Compressor](https://audiotools.dev/audio-compressor/): Reduce audio file size by adjusting bitrate and sample rate.
+- [Audio Compressor](https://audiotools.dev/audio-compressor/): Reduce audio file size by adjusting bitrate and sample rate, one file or a whole batch (ZIP download).
 
 ## Open Source Projects (GitHub)
 

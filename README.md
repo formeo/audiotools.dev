@@ -29,6 +29,7 @@ audiotools.dev/
 ├── assistant.js            ← Home helper + "continue with this file" hand-off between tools
 ├── media.js                ← Shared decoding/encoding on Mediabunny: convertFile (streams, video in), encodeBuffer
 ├── vendor/mediabunny/      ← Self-hosted Mediabunny + MP3/FLAC/AAC encoder bundles (MPL-2.0)
+├── batch.js                ← Several files at once: per-file list + ZIP download (Converter, Compressor)
 ├── audio-export.js         ← MP3 (192 kbps) or WAV download for edited audio
 ├── support.js              ← GA4 events + support line after a successful result
 ├── voice-to-text/whisper-worker.js ← Whisper in a Web Worker

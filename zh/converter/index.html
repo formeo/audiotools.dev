@@ -99,6 +99,14 @@
             },
             {
                 "@type": "Question",
+                "name": "可以一次转换多个文件吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。拖放或选择多个文件，它们会依次转换，可以单独下载，也可以打包成 ZIP 一次下载。"
+                }
+            },
+            {
+                "@type": "Question",
                 "name": "可以离线使用吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
@@ -303,7 +311,7 @@
         <div class="drop-zone" id="dropZone">
             <div class="drop-prompt">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <div class="drop-text">将音频或视频文件拖放到此处，或<b>点击选择</b></div>
+                <div class="drop-text">将一个或多个音频、视频文件拖放到此处，或<b>点击选择</b></div>
                 <div class="drop-formats">音频：MP3、WAV、FLAC、OGG、M4A、AAC、WebM · 视频：MP4、MOV、MKV、WebM</div>
             </div>
             <div class="file-info" id="fileInfo">
@@ -316,13 +324,16 @@
                     <button class="file-remove" id="fileRemove" title="移除文件">✕</button>
                 </div>
             </div>
-            <input type="file" id="fileInput" accept="audio/*,video/*" hidden>
+            <input type="file" id="fileInput" accept="audio/*,video/*" multiple hidden>
         </div>
 
         <!-- WAVEFORM -->
         <div class="waveform-wrap" id="waveformWrap">
             <canvas id="waveform"></canvas>
         </div>
+
+        <!-- SEVERAL FILES -->
+        <ul class="batch-list" id="batchList" hidden></ul>
 
         <!-- CONVERSION OPTIONS -->
         <div class="convert-section" id="convertSection">
@@ -373,7 +384,7 @@
                 <div class="step">
                     <div class="step-num">1</div>
                     <div class="step-title">选择文件</div>
-                    <div class="step-desc">从设备中拖放或选择任意音频或视频文件</div>
+                    <div class="step-desc">拖放或选择一个或多个音频、视频文件</div>
                 </div>
                 <div class="step">
                     <div class="step-num">2</div>
@@ -427,6 +438,10 @@
                 <div class="faq-a">WAV 和 FLAC 是无损格式，FLAC 的文件大小约为 WAV 的一半。192 kbps 的 MP3 和 M4A 可满足大多数用途，最高可选 320 kbps。</div>
             </div>
             <div class="faq-item">
+                <div class="faq-q">可以一次转换多个文件吗？</div>
+                <div class="faq-a">可以。拖放或选择多个文件，它们会依次转换，可以单独下载，也可以打包成 ZIP 一次下载。</div>
+            </div>
+            <div class="faq-item">
                 <div class="faq-q">可以离线使用吗？</div>
                 <div class="faq-a">页面和编码器加载完成后即可离线使用。建议收藏本页面以便快速访问。</div>
             </div>
@@ -476,6 +491,12 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         let currentFile = null;
+        let batch = null;         // BatchList when several files are converted at once (/batch.js)
+        const batchList = document.getElementById('batchList');
+        const resultTitle = result.querySelector('.result-title');
+        const resultTitleText = resultTitle.textContent, downloadText = downloadBtn.textContent;
+        const B = { files: (n) => n + ' 个文件', convert: (n, f) => '将 ' + n + ' 个文件转换为 ' + f, video: '视频',
+            done: (ok, bad) => bad ? '已转换 ' + ok + ' 个，失败 ' + bad + ' 个' : '已转换 ' + ok + ' 个文件', zip: '全部下载（ZIP）' };
         let audioBuffer = null;   // decoded audio: for the waveform, and the fallback path
         let duration = 0;
         let audioCtx = null;
@@ -517,9 +538,7 @@
             if (e.target === fileRemove || e.target.closest('.file-remove')) return;
             fileInput.click();
         });
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files[0]) handleFile(e.target.files[0]);
-        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -529,7 +548,7 @@
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
-            if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+            handleFiles(e.dataTransfer.files);
         });
 
         fileRemove.addEventListener('click', (e) => {
@@ -538,6 +557,9 @@
         });
 
         function resetAll() {
+            if (batch) { batch.clear(); batch = null; }
+            resultTitle.textContent = resultTitleText;
+            downloadBtn.textContent = downloadText;
             currentFile = null;
             audioBuffer = null;
             resultBlob = null;
@@ -551,7 +573,76 @@
             fileInput.value = '';
         }
 
+        function handleFiles(list) {
+            if (list.length > 1) startBatch(Array.from(list).filter((f) => INPUT_EXTS.includes(getFileExt(f.name))));
+            else if (list.length === 1) handleFile(list[0]);
+        }
+
+        async function startBatch(files) {
+            if (!files.length) return;
+            resetAll();
+            batch = new (await import('/batch.js')).BatchList(batchList, files);
+            dropZone.classList.add('has-file');
+            fileInfo.classList.add('show');
+            document.querySelector('.drop-prompt').style.display = 'none';
+            fileName.textContent = B.files(files.length);
+            fileMeta.textContent = formatBytes(batch.totalBytes);
+            showConvertOptions('');
+            inputFormatLabel.textContent = B.files(files.length);
+            const m = await media();
+            files.forEach((f, i) => m.probe(f).then((info) => batch && batch.items[i] && batch.items[i].file === f &&
+                batch.meta(i, formatBytes(f.size) + ' · ' + formatDuration(info.duration) + (info.hasVideo ? ' · ' + B.video : ''))).catch(() => {}));
+        }
+
+        // One file of a batch: stream it, or decode with Web Audio where streaming isn't possible.
+        async function convertForBatch(file, onProgress) {
+            const m = await media(), bitrate = parseInt(mp3Bitrate.value, 10) * 1000;
+            try {
+                return await m.convertFile(file, { format: selectedOutput, bitrate, onProgress });
+            } catch (e) {
+                console.warn('[AudioTools] streaming conversion failed, decoding instead:', e);
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                onProgress(0.3);
+                return m.encodeBuffer(await audioCtx.decodeAudioData(await file.arrayBuffer()), { format: selectedOutput, bitrate });
+            }
+        }
+
+        async function runBatch() {
+            const list = batch, fmt = FORMATS[selectedOutput];
+            convertBtn.disabled = true;
+            result.classList.remove('show');
+            const next = document.getElementById('next-actions'); if (next) next.remove();
+            list.restart();
+            let failed = 0;
+            for (let i = 0; i < list.items.length; i++) {
+                const file = list.items[i].file;
+                list.progress(i, 0);
+                try {
+                    const blob = await convertForBatch(file, (p) => list.progress(i, p));
+                    list.done(i, blob, file.name.replace(/\.[^.]+$/, '') + fmt.ext);
+                    toolSuccess('converter', downloadBtn);
+                } catch (e) {
+                    failed++;
+                    list.fail(i, e.message);
+                    console.error(e);
+                }
+                if (batch !== list) return;   // the user cleared the list meanwhile
+            }
+            const done = list.results;
+            resultTitle.textContent = B.done(done.length, failed);
+            resultMeta.textContent = fmt.label + ' • ' + formatBytes(done.reduce((s, it) => s + it.blob.size, 0));
+            downloadBtn.textContent = B.zip;
+            downloadBtn.hidden = !done.length;
+            result.classList.add('show');
+            convertBtn.disabled = false;
+            convertBtn.textContent = buttonLabel();
+        }
+
+        const buttonLabel = () => (batch ? B.convert(batch.items.length, FORMATS[selectedOutput].label) : '转换为 ' + FORMATS[selectedOutput].label);
+
         async function handleFile(file) {
+            if (batch) resetAll();
+            downloadBtn.hidden = false;
             currentFile = file;
             const ext = getFileExt(file.name);
 
@@ -650,7 +741,7 @@
 
             updateQualityRow();
             convertBtn.disabled = false;
-            convertBtn.textContent = '转换为 ' + FORMATS[selectedOutput].label;
+            convertBtn.textContent = buttonLabel();
         }
 
         function selectFormat(fmt) {
@@ -658,7 +749,7 @@
             document.querySelectorAll('.format-chip').forEach(c => c.classList.remove('active'));
             document.querySelector(`.format-chip[data-fmt="${fmt}"]`).classList.add('active');
             updateQualityRow();
-            convertBtn.textContent = '转换为 ' + FORMATS[selectedOutput].label;
+            convertBtn.textContent = buttonLabel();
         }
 
         function updateQualityRow() {
@@ -673,6 +764,7 @@
         convertBtn.addEventListener('click', startConversion);
 
         async function startConversion() {
+            if (batch) return runBatch();
             if (!currentFile) return;
 
             convertBtn.disabled = true;
@@ -726,7 +818,7 @@
 
             convertBtn.disabled = false;
             convertBtn.classList.remove('converting');
-            convertBtn.textContent = '转换为 ' + FORMATS[selectedOutput].label;
+            convertBtn.textContent = buttonLabel();
         }
 
         function updateProgress(pct, text) {
@@ -736,6 +828,7 @@
 
         // Download
         downloadBtn.addEventListener('click', () => {
+            if (batch) return batch.downloadZip('audiotools-' + selectedOutput + '.zip');
             if (!resultBlob) return;
             const url = URL.createObjectURL(resultBlob);
             const a = document.createElement('a');

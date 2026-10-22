@@ -53,7 +53,8 @@ export async function probe(file) {
 }
 
 // Audio or video file → audio file in `format` (mp3 | m4a | wav | flac). Streams; video is dropped.
-export async function convertFile(file, { format, bitrate, onProgress } = {}) {
+// `sampleRate` (optional) resamples, e.g. for smaller files.
+export async function convertFile(file, { format, bitrate, sampleRate, onProgress } = {}) {
     await ensureEncoder(format);
     const input = openInput(file);
     const track = await input.getPrimaryAudioTrack();
@@ -62,7 +63,7 @@ export async function convertFile(file, { format, bitrate, onProgress } = {}) {
     const conversion = await Conversion.init({
         input, output, tracks: 'primary',
         video: { discard: true },
-        audio: { codec: FORMATS[format].codec, bitrate, forceTranscode: true, ...fit(format, track.sampleRate, track.numberOfChannels) },
+        audio: { codec: FORMATS[format].codec, bitrate, forceTranscode: true, ...fit(format, sampleRate || track.sampleRate, track.numberOfChannels) },
     });
     if (!conversion.isValid) throw new Error(conversion.discardedTracks.map((t) => t.reason).join(', ') || 'Cannot convert this file');
     if (onProgress) conversion.onProgress = onProgress;
