@@ -14,12 +14,12 @@
       gtag('config', 'G-62ZJNZFRES');
     </script>
 
-    <title>Voice to Text — Free Speech-to-Text Online | AudioTools.dev</title>
+    <title>Voice to Text — Free Private Transcription | AudioTools.dev</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free voice-to-text in 60+ languages: live dictation, or transcribe audio files privately with Whisper running on your device. No sign-up, no upload.">
+    <meta name="description" content="Transcribe voice messages, recordings and audio files to text for free. Whisper runs in your browser, so nothing is uploaded. Live dictation in 60+ languages.">
     <meta name="keywords"
-          content="voice to text, speech to text, transcription online, speech recognition, voice transcription free, dictation, convert speech to text, audio to text">
+          content="voice to text, audio to text, transcribe audio to text free, speech to text online, voice message to text, mp3 to text, whisper online, dictation">
     <meta name="author" content="Roman Gordienko">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://audiotools.dev/voice-to-text/">
@@ -27,15 +27,15 @@
     <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://audiotools.dev/voice-to-text/">
-    <meta property="og:title" content="Voice to Text — Free Online Speech-to-Text Transcription">
-    <meta property="og:description" content="Free voice-to-text in 60+ languages: live dictation, or transcribe audio files privately with Whisper running on your device. No sign-up, no upload.">
+    <meta property="og:title" content="Voice to Text — Free, Private Transcription in Your Browser">
+    <meta property="og:description" content="Transcribe voice messages, recordings and audio files to text for free. Whisper runs in your browser, so nothing is uploaded. Live dictation in 60+ languages.">
     <meta property="og:image" content="https://audiotools.dev/og/voice-to-text.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Voice to Text — Free Online Speech-to-Text Transcription">
+    <meta property="og:image:alt" content="Voice to Text — Free, Private Transcription in Your Browser">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Voice to Text — Free Online Speech-to-Text Transcription">
-    <meta name="twitter:description" content="Free voice-to-text in 60+ languages: live dictation, or transcribe audio files privately with Whisper running on your device. No sign-up, no upload.">
+    <meta name="twitter:title" content="Voice to Text — Free, Private Transcription in Your Browser">
+    <meta name="twitter:description" content="Transcribe voice messages, recordings and audio files to text for free. Whisper runs in your browser, so nothing is uploaded. Live dictation in 60+ languages.">
     <meta name="twitter:image" content="https://audiotools.dev/og/voice-to-text.png">
 
     <!-- Favicon -->
@@ -84,32 +84,38 @@
     {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "How to transcribe speech to text online",
-        "description": "Use Audio Tools Voice to Text to convert spoken words into written text directly in your browser.",
+        "name": "How to transcribe an audio file to text",
+        "description": "Transcribe an audio file or voice message to text with Whisper running in your browser.",
         "step": [
             {
                 "@type": "HowToStep",
                 "position": 1,
-                "name": "Select language",
-                "text": "Choose your spoken language from the dropdown menu. Over 60 languages are supported."
+                "name": "Choose the language",
+                "text": "Choose the spoken language at the top."
             },
             {
                 "@type": "HowToStep",
                 "position": 2,
-                "name": "Click Start Recording",
-                "text": "Press the Start Recording button and allow microphone access when prompted."
+                "name": "Pick a model",
+                "text": "In Private mode, pick a model: Tiny is faster, Base is more accurate."
             },
             {
                 "@type": "HowToStep",
                 "position": 3,
-                "name": "Speak clearly",
-                "text": "Speak into your microphone. Text will appear in real-time as you speak."
+                "name": "Choose the file",
+                "text": "Click Transcribe file and choose an audio or video file, or Record & transcribe to use the microphone."
             },
             {
                 "@type": "HowToStep",
                 "position": 4,
-                "name": "Export your text",
-                "text": "Copy the transcription to clipboard or download as a TXT file."
+                "name": "Wait for the model once",
+                "text": "The first time, the model downloads once (about 45–80 MB) and is then kept by your browser."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 5,
+                "name": "Copy or download the text",
+                "text": "Copy the text or download it as a .txt file."
             }
         ]
     }
@@ -411,10 +417,34 @@
         "mainEntity": [
             {
                 "@type": "Question",
+                "name": "How do I convert a voice recording to text?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Choose the language, click “Transcribe file” in Private mode and pick the recording. Whisper transcribes it in your browser, then you can copy the text or download it as a.txt file."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I transcribe WhatsApp or Telegram voice messages?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Save the voice message from the chat (an.opus or.ogg file) and open it with “Transcribe file”. It is transcribed on your device and never uploaded."
+                }
+            },
+            {
+                "@type": "Question",
                 "name": "Is my voice data sent to a server?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend. In Private mode, speech is transcribed by the Whisper model running in your browser, so your audio never leaves your device."
+                    "text": "Not in Private mode: Whisper runs in your browser and your audio never leaves your device. Live dictation uses the browser's speech engine, which in Chrome and Safari sends audio to Google or Apple. AudioTools.dev has no backend and stores nothing."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is it free? Is there a length limit?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It is free with no limits. Long recordings simply take longer, depending on your device and the model you choose."
                 }
             },
             {
@@ -422,7 +452,7 @@
                 "name": "Which languages are supported?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Over 60 languages including English, Spanish, French, German, Chinese, Japanese, Russian, Arabic, Hindi, Portuguese, and many more. The available languages depend on your browser."
+                    "text": "Private mode (Whisper) understands about 100 languages. Live dictation supports 60+ languages; the list depends on your browser."
                 }
             },
             {
@@ -430,7 +460,7 @@
                 "name": "Does it work on mobile?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. Voice to text works on Chrome for Android and Safari for iOS. Tap the microphone button and speak — results appear in real-time."
+                    "text": "Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (about 45–80 MB), so use Wi-Fi the first time."
                 }
             },
             {
@@ -438,7 +468,7 @@
                 "name": "How accurate is the transcription?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Accuracy depends on your browser's speech recognition engine. Chrome (powered by Google) provides the best accuracy for most languages. Clear speech in a quiet environment gives the best results."
+                    "text": "For clear speech, Whisper Base is accurate enough for notes and drafts; Tiny is faster but makes more mistakes. Background noise, music and several people talking at once lower accuracy."
                 }
             }
         ]
@@ -465,7 +495,7 @@
     <section class="hero">
         <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C12 10 20 10 28 28 S44 46 52 28 S68 10 76 28"/><path class="g-acc" d="M98 16 H156 M98 28 H148 M98 40 H128"/></svg>
             <h1>Voice to Text</h1>
-        <p>Free online speech-to-text — live dictation in 60+ languages, or private on-device transcription of audio files</p>
+        <p>Turn recordings, voice messages and live speech into text — free, with private on-device transcription</p>
     </section>
 
     <!-- Browser compatibility warning -->
@@ -604,69 +634,71 @@
 
     <!-- SEO Content -->
     <section class="seo-content">
-        <h2>Free Online Voice to Text Transcription</h2>
-        <p>
-            Audio Tools Voice to Text is a free online speech-to-text transcription tool that converts your
-            spoken words into written text in real-time using your browser's Web Speech Recognition API — no software
-            installation and no account registration. Private mode transcribes audio files and recordings with the
-            Whisper speech model running entirely in your browser, so the audio is never uploaded anywhere.
-        </p>
+        <h2>Transcribe audio to text for free</h2>
+        <p>Voice to Text turns speech into text in two ways. <strong>Private mode</strong> transcribes audio files and recordings with the Whisper speech model running in your browser, so the audio never leaves your device. <strong>Live dictation</strong> writes down what you say in real time using your browser's speech engine. Both are free, with no account and no length limit.</p>
 
-        <h3>How It Works</h3>
-        <p>
-            Simply select your language, click "Start Recording", and speak into your microphone. The tool uses
-            your browser's built-in speech recognition engine to transcribe your speech in real-time. You can see
-            the text appearing as you speak, and when you're done, copy it to your clipboard or download it as a
-            text file.
-        </p>
+        <h3>How to transcribe an audio file</h3>
+        <ol>
+            <li>Choose the spoken language at the top.</li>
+            <li>In Private mode, pick a model: Tiny is faster, Base is more accurate.</li>
+            <li>Click “Transcribe file” and choose an audio or video file (MP3, WAV, M4A, OGG/Opus voice messages, MP4…), or click “Record &amp; transcribe” to use the microphone.</li>
+            <li>The first time, the model downloads once (about 45–80 MB) and is then kept by your browser.</li>
+            <li>Copy the text or download it as a .txt file.</li>
+        </ol>
 
-        <h3>Supported Languages</h3>
-        <p>
-            The Voice to Text tool supports over 60 languages and regional dialects, including English (US/UK),
-            Russian, German, French, Spanish, Italian, Portuguese, Chinese (Simplified/Traditional), Japanese,
-            Korean, Arabic, Hindi, and many more European and Asian languages.
-        </p>
+        <h3>Voice messages to text</h3>
+        <p>Save a voice message from WhatsApp or Telegram (an .opus or .ogg file) and open it with “Transcribe file”. It is transcribed on your device, which matters for private conversations.</p>
 
-        <h3>Use Cases</h3>
+        <h3>Private mode or live dictation?</h3>
         <ul>
-            <li>Taking notes during meetings and lectures</li>
-            <li>Dictating emails, messages, and documents</li>
-            <li>Creating subtitles and captions for videos</li>
-            <li>Transcribing interviews and podcasts</li>
-            <li>Accessibility — hands-free text input</li>
-            <li>Language learning and pronunciation practice</li>
+            <li><strong>Private mode</strong> — for files and recordings. Runs on your device and works offline once the model is downloaded. Long recordings take a while on slower phones.</li>
+            <li><strong>Live dictation</strong> — text appears as you speak. Uses your browser's speech engine, which in Chrome and Safari may send the audio to Google or Apple, and needs an internet connection.</li>
         </ul>
 
-        <h3>Privacy & Security</h3>
-        <p>
-            Live dictation uses your browser's speech recognition engine, which may send audio to the browser
-            vendor (Google in Chrome, Apple in Safari). Private mode runs the Whisper model on your device: the
-            model is downloaded once from Hugging Face, and your audio never leaves the browser. AudioTools.dev has
-            no backend — we never receive your audio or transcriptions.
-        </p>
+        <h3>Supported languages</h3>
+        <p>Whisper understands about 100 languages, including English, Chinese, Spanish, Russian, German, French, Japanese, Korean, Arabic, Hindi and Portuguese. Live dictation supports 60+ languages and regional variants; the exact list depends on your browser.</p>
 
-        <h3>Browser Compatibility</h3>
-        <p>
-            Voice to Text works best in Google Chrome, Microsoft Edge, and Safari. These browsers have built-in
-            support for the Web Speech Recognition API. Firefox has limited support for speech recognition.
-            For the best experience, we recommend using the latest version of Chrome or Edge.
-        </p>
+        <h3>Use cases</h3>
+        <ul>
+            <li>Notes from meetings, lectures and interviews</li>
+            <li>Voice messages you would rather read</li>
+            <li>Dictating emails, messages and documents</li>
+            <li>A first draft of subtitles for a video</li>
+            <li>Hands-free text input</li>
+        </ul>
+
+        <h3>Privacy</h3>
+        <p>Private mode runs the Whisper model on your device: the model is downloaded once from Hugging Face, and your audio never leaves the browser. Live dictation uses the browser's speech engine, which may send audio to the browser vendor. AudioTools.dev has no backend — we never receive your audio or transcriptions.</p>
+
+        <h3>Browser compatibility</h3>
+        <p>Private mode works in current versions of Chrome, Edge, Firefox and Safari. Live dictation works in Chrome, Edge and Safari; Firefox does not support it.</p>
+
+        <p>Need the reverse? <a href="/text-to-speech/">Text to speech</a> reads text aloud. To get the sound out of a video or shrink a long recording first, use the <a href="/converter/">audio converter</a> or the <a href="/audio-compressor/">audio compressor</a>.</p>
     </section>
 
     <section class="seo-content" style="margin-top: 0;">
         <h2>Frequently Asked Questions</h2>
-        
+
+        <h3>How do I convert a voice recording to text?</h3>
+        <p>Choose the language, click “Transcribe file” in Private mode and pick the recording. Whisper transcribes it in your browser, then you can copy the text or download it as a .txt file.</p>
+
+        <h3>Can I transcribe WhatsApp or Telegram voice messages?</h3>
+        <p>Yes. Save the voice message from the chat (an .opus or .ogg file) and open it with “Transcribe file”. It is transcribed on your device and never uploaded.</p>
+
         <h3>Is my voice data sent to a server?</h3>
-        <p>The Web Speech API requires an internet connection and sends audio to the browser vendor (Google for Chrome, Apple for Safari) for processing. Your audio is not stored on our servers — we have no backend. In Private mode, speech is transcribed by the Whisper model running in your browser, so your audio never leaves your device.</p>
-        
+        <p>Not in Private mode: Whisper runs in your browser and your audio never leaves your device. Live dictation uses the browser's speech engine, which in Chrome and Safari sends audio to Google or Apple. AudioTools.dev has no backend and stores nothing.</p>
+
+        <h3>Is it free? Is there a length limit?</h3>
+        <p>It is free with no limits. Long recordings simply take longer, depending on your device and the model you choose.</p>
+
         <h3>Which languages are supported?</h3>
-        <p>Over 60 languages including English, Spanish, French, German, Chinese, Japanese, Russian, Arabic, Hindi, Portuguese, and many more. The available languages depend on your browser.</p>
-        
+        <p>Private mode (Whisper) understands about 100 languages. Live dictation supports 60+ languages; the list depends on your browser.</p>
+
         <h3>Does it work on mobile?</h3>
-        <p>Yes. Voice to text works on Chrome for Android and Safari for iOS. Tap the microphone button and speak — results appear in real-time.</p>
-        
+        <p>Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (about 45–80 MB), so use Wi-Fi the first time.</p>
+
         <h3>How accurate is the transcription?</h3>
-        <p>Accuracy depends on your browser's speech recognition engine. Chrome (powered by Google) provides the best accuracy for most languages. Clear speech in a quiet environment gives the best results.</p>
+        <p>For clear speech, Whisper Base is accurate enough for notes and drafts; Tiny is faster but makes more mistakes. Background noise, music and several people talking at once lower accuracy.</p>
     </section>
 </div>
 
