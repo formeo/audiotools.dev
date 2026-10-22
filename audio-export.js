@@ -1,5 +1,5 @@
 // Shared download for tools that render an AudioBuffer: MP3 (default) or WAV.
-// MP3 is encoded by /media.js (LAME in WebAssembly via Mediabunny); pages declare the "mediabunny" import map.
+// MP3 is encoded by /media.js (LAME in WebAssembly via Mediabunny).
 (function () {
     // Download `buffer` as the format chosen in `select` (mp3 | wav). `wavBlob` is reused for WAV.
     window.downloadAudio = async function (buffer, wavBlob, select, baseName, button) {
