@@ -16,3 +16,11 @@ jobs:
       - run: pip install beautifulsoup4
       - name: FAQPage JSON-LD matches the visible FAQ
         run: python3 scripts/seo_sync.py --check
+      - name: Text to Speech pages don't use the word "AI"
+        # People searching "text to speech -ai" exclude pages containing the word, and they find this page in the
+        # top 10 (Search Console, Oct 2026). One "AI" anywhere on the page would drop it from those results.
+        run: |
+          if grep -nwi 'ai' text-to-speech/index.html zh/text-to-speech/index.html; then
+            echo '::error::The word "AI" appeared on a Text to Speech page; see the comment in seo-check.yml.'
+            exit 1
+          fi
