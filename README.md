@@ -8,14 +8,14 @@ Privacy-first audio tools that run entirely in your browser. No uploads, no acco
 
 | Tool | URL | Technology |
 |------|-----|------------|
-| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Web Audio API + lamejs |
+| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Mediabunny (WebCodecs + WASM encoders) |
 | **Voice to Text** | [/voice-to-text/](https://audiotools.dev/voice-to-text/) | Web Speech API + Whisper (Transformers.js) |
 | **Text to Speech** | [/text-to-speech/](https://audiotools.dev/text-to-speech/) | Web Speech Synthesis API |
 | **Audio Trimmer** | [/audio-trimmer/](https://audiotools.dev/audio-trimmer/) | Web Audio API |
 | **Speed Changer** | [/audio-speed-changer/](https://audiotools.dev/audio-speed-changer/) | WSOLA time-stretching |
 | **Volume Booster** | [/volume-booster/](https://audiotools.dev/volume-booster/) | Web Audio API, soft limiter |
 | **Audio Joiner** | [/audio-joiner/](https://audiotools.dev/audio-joiner/) | Web Audio API, crossfade |
-| **Audio Compressor** | [/audio-compressor/](https://audiotools.dev/audio-compressor/) | lamejs |
+| **Audio Compressor** | [/audio-compressor/](https://audiotools.dev/audio-compressor/) | Web Audio API + Mediabunny MP3 |
 
 Chinese pages: [/zh/](https://audiotools.dev/zh/) and [/zh/converter/](https://audiotools.dev/zh/converter/).
 
@@ -27,7 +27,9 @@ audiotools.dev/
 ├── <tool>/index.html       ← One folder per tool; tool-specific styles inline
 ├── style.css               ← Shared look: tokens, nav, footer, tool header and panel, sections
 ├── assistant.js            ← Home helper + "continue with this file" hand-off between tools
-├── audio-export.js         ← MP3 (lamejs, 192 kbps) or WAV download for edited audio
+├── media.js                ← Shared decoding/encoding on Mediabunny: convertFile (streams, video in), encodeBuffer
+├── vendor/mediabunny/      ← Self-hosted Mediabunny + MP3/FLAC/AAC encoder bundles (MPL-2.0)
+├── audio-export.js         ← MP3 (192 kbps) or WAV download for edited audio
 ├── support.js              ← GA4 events + support line after a successful result
 ├── voice-to-text/whisper-worker.js ← Whisper in a Web Worker
 ├── about/, changelog/, privacy/, terms/, 404.html
@@ -41,8 +43,9 @@ audiotools.dev/
 
 - **Decoding**: Web Audio API (WAV, MP3, FLAC, OGG, AAC, M4A, WebM, or anything else the browser can decode)
 - **WAV encoding**: custom JS encoder (lossless)
-- **MP3 encoding**: [lamejs](https://github.com/zhuker/lamejs) (64–320 kbps)
-- Output is MP3 or WAV. Nothing is uploaded; there is no server.
+- **Converter**: [Mediabunny](https://mediabunny.dev) reads audio and video containers in pieces and decodes with WebCodecs; output MP3, M4A (AAC), WAV or FLAC. Browsers without WebCodecs fall back to Web Audio decoding.
+- **MP3 / FLAC / AAC encoding**: Mediabunny encoder extensions (LAME and FLAC in WebAssembly, in a worker; AAC only where the browser has no encoder)
+- The other tools save MP3 or WAV. Nothing is uploaded; there is no server.
 
 ### Voice to Text
 
@@ -81,7 +84,7 @@ This site is the hub for the audio tools ecosystem:
 ## Tech Stack
 
 - **Frontend**: Vanilla HTML/CSS/JS (no frameworks, fast loading)
-- **Audio Processing**: Web Audio API, lamejs, Transformers.js (Whisper)
+- **Audio Processing**: Web Audio API, Mediabunny, Transformers.js (Whisper)
 - **Hosting**: GitHub Pages
 - **SEO**: JSON-LD structured data, Open Graph, semantic HTML
 

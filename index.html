@@ -91,7 +91,7 @@
                 "name": "What audio formats are supported?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The tools read WAV, MP3, FLAC, OGG, AAC, M4A and WebM, or anything else your browser can decode. Results are saved as MP3 or WAV."
+                    "text": "The tools read WAV, MP3, FLAC, OGG, AAC, M4A and WebM, or anything else your browser can decode; the converter also takes video (MP4, MOV, MKV). The converter saves MP3, M4A, WAV or FLAC, the other tools MP3 or WAV."
                 }
             },
             {
@@ -270,7 +270,7 @@
                         <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
                         <b>Convert</b>
                         <span>Change the format of any recording.</span>
-                        <small>Any audio to MP3 or WAV</small>
+                        <small>Audio or video to MP3, M4A, WAV, FLAC</small>
                     </a>
                     <a class="strip" href="/audio-trimmer/">
                         <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><polyline class="g-faint" points="4,28 12,18 20,38 28,12 36,44 44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34 124,14 132,42 140,24 148,30 156,28"/><polyline class="g-ink" points="44,20 52,36 60,8 68,48 76,16 84,40 92,10 100,46 108,22 116,34"/><path class="g-acc" d="M44 4 H38 V52 H44 M116 4 H122 V52 H116"/></svg>
@@ -347,7 +347,7 @@
             <details class="more">
                 <summary>How each tool works</summary>
                 <h3>Audio Converter</h3>
-                <p>Convert <strong>WAV, FLAC, OGG, AAC, M4A and WebM</strong> to <strong>MP3 or WAV</strong>. The <a href="/converter/">audio converter</a> decodes your audio file using the Web Audio API, then re-encodes it in the target format. WAV encoding is native and MP3 uses the LAME encoder (lamejs). File sizes up to several hundred MB are supported depending on your device's memory.</p>
+                <p>Convert audio (<strong>WAV, FLAC, OGG, AAC, M4A, WebM</strong>) or the soundtrack of a video (<strong>MP4, MOV, MKV</strong>) to <strong>MP3, M4A, WAV or FLAC</strong>. The <a href="/converter/">audio converter</a> reads the file in pieces with the browser's built-in codecs, then re-encodes it in the target format. WAV encoding is native and MP3 uses the LAME encoder (lamejs). File sizes up to several hundred MB are supported depending on your device's memory.</p>
 
                 <h3>Voice to Text</h3>
                 <p>Real-time speech transcription using the <strong>Web Speech Recognition API</strong>. The <a href="/voice-to-text/">voice-to-text</a> tool supports 60+ languages including English, Spanish, French, German, Japanese, Chinese, Korean, Russian, Arabic, Hindi, and many more. Punctuation and formatting are automatic. Great for transcribing meetings, lectures, interviews, and voice notes. <strong>Private mode</strong> transcribes audio files and recordings with the Whisper speech model running entirely in your browser — the audio never leaves your device.</p>
@@ -391,7 +391,7 @@
             </div>
             <div class="faq-item">
                 <div class="faq-q">What audio formats are supported?</div>
-                <div class="faq-a">The tools read WAV, MP3, FLAC, OGG, AAC, M4A and WebM, or anything else your browser can decode. Results are saved as MP3 or WAV.</div>
+                <div class="faq-a">The tools read WAV, MP3, FLAC, OGG, AAC, M4A and WebM, or anything else your browser can decode; the converter also takes video (MP4, MOV, MKV). The converter saves MP3, M4A, WAV or FLAC, the other tools MP3 or WAV.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Does voice-to-text work offline?</div>
