@@ -61,6 +61,14 @@
             },
             {
                 "@type": "Question",
+                "name": "Can I compress several files at once?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Drop several files: all of them are compressed with the same settings, and you can download each one or all of them as a ZIP."
+                }
+            },
+            {
+                "@type": "Question",
                 "name": "Is my audio uploaded?",
                 "acceptedAnswer": {
                     "@type": "Answer",
@@ -148,10 +156,10 @@
         <div class="tool-area">
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <p><strong>Drop audio file here</strong> or click to browse</p>
+                <p><strong>Drop audio files here</strong>, one or several, or click to browse</p>
                 <p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>
             </div>
-            <input type="file" id="fileInput" accept="audio/*">
+            <input type="file" id="fileInput" accept="audio/*" multiple>
 
             <div id="panel" class="hidden">
                 <div class="file-info">
@@ -185,6 +193,8 @@
                     <div class="size-arrow">→</div>
                     <div class="size-box size-new"><div class="num" id="estSize">—</div><div class="lbl">Estimated</div><div class="size-save" id="estSave"></div></div>
                 </div>
+
+                <ul class="batch-list" id="batchList" hidden></ul>
 
                 <div class="btn-row">
                     <button class="btn btn-primary" id="compressBtn" onclick="compress()" style="flex:1;">Compress &amp; Download</button>
@@ -225,6 +235,7 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item"><div class="faq-q">How much can I reduce file size?</div><div class="faq-a">Depending on the source, you can reduce WAV files by 5–20x by converting to MP3. A 50 MB WAV becomes ~5 MB at 128 kbps.</div></div>
             <div class="faq-item"><div class="faq-q">Does compression affect quality?</div><div class="faq-a">Lossy compression removes some data. At 192 kbps or higher, most listeners cannot tell the difference from the original.</div></div>
+            <div class="faq-item"><div class="faq-q">Can I compress several files at once?</div><div class="faq-a">Yes. Drop several files: all of them are compressed with the same settings, and you can download each one or all of them as a ZIP.</div></div>
             <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. All compression happens in your browser using the Web Audio API.</div></div>
         </section>
     </div>
@@ -258,20 +269,26 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         let audioCtx, buffer, origBytes = 0, fileBase = 'audio', lastUrl = null;
+        let batch = null, batchDuration = 0;   // several files at once (/batch.js)
+        const batchList = document.getElementById('batchList');
+        const compressText = compressBtn.textContent, downloadText = downloadBtn.textContent;
+        const B = { files: (n) => n + ' files', compress: (n) => 'Compress ' + n + ' files', zip: 'Download all (ZIP)',
+            done: (ok, n) => (ok === n ? n + ' files' : ok + ' of ' + n + ' files') };
 
         dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
-        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => handleFiles(fileInput.files));
         bitrateEl.addEventListener('change', updateEstimate);
         sampleRateEl.addEventListener('change', updateEstimate);
 
         function fmtSize(bytes){ return bytes >= 1048576 ? (bytes/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(bytes/1024))+' KB'; }
 
         function updateEstimate(){
-            if (!buffer) return;
+            const duration = batch ? batchDuration : buffer && buffer.duration;
+            if (!duration) return;
             const kbps = parseInt(bitrateEl.value, 10);
-            const est = (kbps * 1000 / 8) * buffer.duration; // CBR MP3 bytes
+            const est = (kbps * 1000 / 8) * duration; // CBR MP3 bytes
             estSizeEl.textContent = '~' + fmtSize(est);
             if (origBytes > 0){
                 const save = Math.round((1 - est/origBytes) * 100);
@@ -280,7 +297,76 @@
             }
         }
 
+        function handleFiles(list){
+            if (list.length > 1) startBatch(Array.from(list));
+            else if (list.length === 1) handleFile(list[0]);
+        }
+
+        async function startBatch(files){
+            reset();
+            const mod = await import('/batch.js');
+            batch = new mod.BatchList(batchList, files);
+            origBytes = batch.totalBytes; batchDuration = 0;
+            document.getElementById('fileName').textContent = B.files(files.length);
+            document.getElementById('fileMeta').textContent = fmtSize(origBytes);
+            origSizeEl.textContent = fmtSize(origBytes);
+            estSizeEl.textContent = '…'; estSaveEl.textContent = '';
+            compressBtn.textContent = B.compress(files.length);
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            // lengths for the size estimate, read from each file's header
+            const media = await import('/media.js'), list = batch;
+            await Promise.all(files.map((f, i) => media.probe(f).then((info) => {
+                if (batch !== list) return;
+                batchDuration += info.duration;
+                batch.meta(i, fmtSize(f.size) + ' · ' + mod.fmtTime(info.duration));
+            }).catch(() => {})));
+            if (batch === list) updateEstimate();
+        }
+
+        // One file of a batch: stream it, or decode with Web Audio where streaming isn't possible.
+        async function compressOne(file, kbps, targetSr, onProgress){
+            const media = await import('/media.js');
+            try {
+                return await media.convertFile(file, { format: 'mp3', bitrate: kbps * 1000, sampleRate: targetSr || undefined, onProgress });
+            } catch (err){
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                onProgress(0.3);
+                const buf = await resample(await audioCtx.decodeAudioData(await file.arrayBuffer()), targetSr);
+                return media.encodeBuffer(buf, { format: 'mp3', bitrate: kbps * 1000 });
+            }
+        }
+
+        async function compressBatch(){
+            const list = batch, kbps = parseInt(bitrateEl.value, 10), targetSr = parseInt(sampleRateEl.value, 10);
+            compressBtn.disabled = true; result.classList.add('hidden');
+            list.restart();
+            for (let i = 0; i < list.items.length; i++){
+                const file = list.items[i].file;
+                list.progress(i, 0);
+                try {
+                    const blob = await compressOne(file, kbps, targetSr, (p) => list.progress(i, p));
+                    list.done(i, blob, (file.name || 'audio').replace(/\.[^.]+$/, '') + '_' + kbps + 'kbps.mp3');
+                    toolSuccess('audio-compressor', downloadBtn);
+                } catch (err){
+                    list.fail(i, err.message);
+                }
+                if (batch !== list) return;   // reset meanwhile
+            }
+            const done = list.results, out = done.reduce((s, it) => s + it.blob.size, 0);
+            const inBytes = done.reduce((s, it) => s + it.file.size, 0);
+            const save = inBytes ? Math.round((1 - out / inBytes) * 100) : 0;
+            resultInfo.textContent = B.done(done.length, list.items.length) + '  ·  ' + fmtSize(out) + (save > 0 ? '  ·  −' + save + '%' : '');
+            resultAudio.hidden = true;
+            downloadBtn.textContent = B.zip;
+            downloadBtn.hidden = !done.length;
+            downloadBtn.onclick = () => list.downloadZip('audiotools-compressed.zip');
+            result.classList.remove('hidden');
+            compressBtn.disabled = false;
+        }
+
         async function handleFile(file){
+            if (batch) reset();
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             try {
                 buffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
@@ -315,6 +401,7 @@
         }
 
         async function compress(){
+            if (batch) return compressBatch();
             if (!buffer) return;
             compressBtn.disabled = true; result.classList.add('hidden');
             progressWrap.classList.remove('hidden'); progressFill.style.width = '4%'; progressText.textContent = 'Preparing…';
@@ -341,6 +428,9 @@
         }
 
         function reset(){
+            if (batch){ batch.clear(); batch = null; }
+            compressBtn.textContent = compressText; downloadBtn.textContent = downloadText;
+            downloadBtn.hidden = false; resultAudio.hidden = false;
             buffer = null; origBytes = 0;
             if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl = null; }
             resultAudio.pause(); resultAudio.removeAttribute('src'); fileInput.value = '';

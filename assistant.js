@@ -1,11 +1,123 @@
 // "Drop a file or say what you need" helper (home pages), "continue with this file" (tool pages),
-// and the hand-off of the file to the next tool page.
+// and the hand-off of the file (and settings like "compress to 10 MB") to the next tool page.
 // Everything stays in the browser: the file is analyzed with Web Audio and passed to the tool
 // through IndexedDB, which is cleared as soon as the tool picks it up.
 (function () {
     const ZH = document.documentElement.lang.startsWith('zh');
     const T = (en, zh) => (ZH ? zh : en);
     const track = (name, params) => { if (typeof gtag === 'function') gtag('event', name, params); };
+
+    // ---------- settings in plain words (EN / RU / ZH): "compress to 10 MB", "keep the first 30 s", "1.5x faster" ----------
+    const num = (v) => parseFloat(v.replace(',', '.'));
+    const has = (q, words) => words.some((w) => q.includes(w));
+    const N = '(\\d+(?:[.,]\\d+)?)';
+    const TIME = '(\\d+:\\d{1,2}(?:[.,]\\d+)?|\\d+(?:[.,]\\d+)?)\\s*(min|мин|分钟|分|s|sec|с|сек|秒)?';
+    const sec = (v, unit) => (v.includes(':') ? +v.split(':')[0] * 60 + num(v.split(':')[1]) : num(v) * (/^(min|мин|分)/.test(unit || '') ? 60 : 1));
+    const clock = (t) => Math.floor(t / 60) + ':' + String(Math.round(t % 60)).padStart(2, '0');
+    const FMT = { mp3: 'mp3', m4a: 'm4a', aac: 'm4a', wav: 'wav', flac: 'flac' };
+
+    // → { tool: settings } for every setting found in the request
+    function parseSettings(q) {
+        q = q.toLowerCase();
+        const out = {};
+        let m;
+        const louder = has(q, ['louder', 'boost', 'volume', 'amplif', 'громч', 'громк', 'усил', '大声', '音量', '放大', '增强']);
+        const faster = has(q, ['faster', 'speed up', 'быстр', 'ускор', '快', '加速']);
+        const slower = has(q, ['slower', 'slow down', 'медлен', 'замедл', '慢', '减速']);
+        const times = q.match(new RegExp(N + '\\s*(x|х|×|раза?|倍)(?![a-zа-я])'));
+        const pct = q.match(/(\d+)\s*%/);
+        // size or bitrate → compressor (or converter, if a target format is named)
+        if ((m = q.match(new RegExp(N + '\\s*(mb|мб|мегабайт|兆)')))) out['audio-compressor'] = { targetMB: num(m[1]) };
+        const kb = q.match(/(\d{2,3})\s*(kbps|kb\/s|кбит|кбпс|k)(?![a-zа-я])/);
+        const to = q.match(/(?:\bto\b|\binto\b|(?:^|\s)в\s|转成|转为|转换为|转换成|转)\s*(mp3|m4a|aac|wav|flac)/);
+        if (to) out.converter = { format: FMT[to[1]], ...(kb && { bitrate: +kb[1] }) };
+        else if (kb) out['audio-compressor'] = { ...out['audio-compressor'], bitrate: +kb[1] };
+        // volume
+        if (has(q, ['normaliz', 'нормализ', '标准化'])) out['volume-booster'] = { normalize: true };
+        else if (louder) {
+            let gain = null;
+            if ((m = q.match(/\+?(\d+(?:[.,]\d+)?)\s*(db|дб|分贝)/))) gain = 100 * Math.pow(10, num(m[1]) / 20);
+            else if (pct) gain = +pct[1] > 100 ? +pct[1] : 100 + +pct[1];
+            else if (times) gain = 100 * num(times[1]);
+            if (gain) out['volume-booster'] = { gain: Math.min(500, Math.round(gain / 5) * 5) };
+        }
+        // speed
+        if (!louder && times && (faster || slower || has(q, ['speed', 'скорост', '速度', '倍速']))) {
+            const v = num(times[1]);
+            out['audio-speed-changer'] = { speed: slower && v > 1 ? 1 / v : v };
+        } else if (!louder && pct && (faster || slower)) out['audio-speed-changer'] = { speed: faster ? 1 + pct[1] / 100 : 1 - pct[1] / 100 };
+        // trim
+        const remove = has(q, ['remove', 'delete', 'cut off', 'drop', 'убер', 'убра', 'удал', 'отрез', 'отреж', 'обрез', 'обреж', '去掉', '删除', '删掉', '剪掉']);
+        if ((m = q.match(new RegExp('(?:from|от|(?:^|\\s)с|从)\\s*' + TIME + '\\s*(?:to|до|по|-|–|到|至)\\s*' + TIME)))) out['audio-trimmer'] = { start: sec(m[1], m[2]), end: sec(m[3], m[4] || m[2]) };
+        else if ((m = q.match(new RegExp('(?:first|перв\\S*|前)\\s*' + TIME)))) out['audio-trimmer'] = remove ? { start: sec(m[1], m[2]) } : { start: 0, end: sec(m[1], m[2]) };
+        else if ((m = q.match(new RegExp('(?:last|последн\\S*|最后|后)\\s*' + TIME)))) out['audio-trimmer'] = remove ? { cutEnd: sec(m[1], m[2]) } : { fromEnd: sec(m[1], m[2]) };
+        return out;
+    }
+
+    // [start, end] in seconds for a trim setting on a recording of `d` seconds
+    function trimRange(t, d) {
+        if (t.fromEnd != null) return [Math.max(0, d - t.fromEnd), d];
+        if (t.cutEnd != null) return [0, Math.max(0, d - t.cutEnd)];
+        return [Math.min(t.start || 0, d), Math.min(t.end != null ? t.end : d, d)];
+    }
+    const RATES = [64, 128, 192, 256, 320];
+    const bitrateFor = (mb, d) => mb * 8 * 1048576 / d / 1000 * 0.97;   // kbps that fits `mb` (3% for headers)
+    const pickRate = (kbps, options = RATES) => options.filter((r) => r <= kbps).pop() || options[0];
+
+    // Short description of a setting, concrete when the recording length is known
+    function describe(tool, st, d) {
+        if (tool === 'audio-compressor') {
+            if (st.targetMB && d) { const r = pickRate(bitrateFor(st.targetMB, d)); return T(`≤ ${st.targetMB} MB → MP3 at ${r} kbps (≈ ${(r * 1000 / 8 * d / 1048576).toFixed(1)} MB)`, `≤ ${st.targetMB} MB → MP3 ${r} kbps（约 ${(r * 1000 / 8 * d / 1048576).toFixed(1)} MB）`); }
+            if (st.targetMB) return T(`Make it ${st.targetMB} MB or smaller`, `压缩到 ${st.targetMB} MB 以内`);
+            return T(`MP3 at ${pickRate(st.bitrate)} kbps`, `MP3 ${pickRate(st.bitrate)} kbps`);
+        }
+        if (tool === 'converter') return T(`Convert to ${st.format.toUpperCase()}`, `转换为 ${st.format.toUpperCase()}`) + (st.bitrate ? ` · ${st.bitrate} kbps` : '');
+        if (tool === 'volume-booster') return st.normalize ? T('Normalize the peak level', '将峰值标准化')
+            : T(`Volume ${st.gain}% (${st.gain > 100 ? '+' : ''}${(20 * Math.log10(st.gain / 100)).toFixed(1)} dB)`, `音量 ${st.gain}%（${st.gain > 100 ? '+' : ''}${(20 * Math.log10(st.gain / 100)).toFixed(1)} dB）`);
+        if (tool === 'audio-speed-changer') return T(`Speed ×${+st.speed.toFixed(2)}, pitch stays put`, `${+st.speed.toFixed(2)} 倍速，音调不变`);
+        if (tool === 'audio-trimmer') {
+            if (d) { const [a, b] = trimRange(st, d); return T(`Keep ${clock(a)}–${clock(b)}`, `保留 ${clock(a)}–${clock(b)}`); }
+            if (st.fromEnd != null) return T(`Keep the last ${clock(st.fromEnd)}`, `保留最后 ${clock(st.fromEnd)}`);
+            if (st.cutEnd != null) return T(`Remove the last ${clock(st.cutEnd)}`, `去掉最后 ${clock(st.cutEnd)}`);
+            if (st.end == null) return T(`Remove the first ${clock(st.start)}`, `去掉前 ${clock(st.start)}`);
+            return T(`Keep ${clock(st.start)}–${clock(st.end)}`, `保留 ${clock(st.start)}–${clock(st.end)}`);
+        }
+        return '';
+    }
+
+    // Tool pages: put the settings into the tool's own controls once it has loaded a file.
+    // `buffer` is the decoded file each of these tools keeps in a top-level variable.
+    const decoded = () => (typeof buffer !== 'undefined' && buffer) || null; // eslint-disable-line no-undef
+    const shown = (id) => { const el = document.getElementById(id); return el && !el.classList.contains('hidden'); };
+    function setControl(id, value, event) { const el = document.getElementById(id); el.value = value; el.dispatchEvent(new Event(event, { bubbles: true })); }
+    const APPLY = {
+        'converter': { ready: () => document.querySelector('#convertSection.show') && /Hz/.test(document.getElementById('fileMeta').textContent),
+            run: (st) => {
+                if (st.format) document.querySelector(`.format-chip[data-fmt="${st.format}"]`).click();
+                if (st.bitrate) setControl('mp3Bitrate', pickRate(st.bitrate, [128, 192, 256, 320]), 'change');
+            } },
+        'audio-compressor': { ready: () => shown('panel') && decoded(),
+            run: (st) => setControl('bitrate', pickRate(st.bitrate || bitrateFor(st.targetMB, decoded().duration)), 'change') },
+        'audio-trimmer': { ready: () => shown('editor') && decoded(),
+            run: (st) => {
+                const [a, b] = trimRange(st, decoded().duration);
+                const f = (t) => Math.floor(t / 60) + ':' + (t % 60).toFixed(2).padStart(5, '0');
+                setControl('startTime', f(a), 'change');
+                setControl('endTime', f(b), 'change');
+            } },
+        'audio-speed-changer': { ready: () => shown('panel') && decoded(), run: (st) => setControl('speed', st.speed, 'input') },
+        'volume-booster': { ready: () => shown('panel') && decoded(),
+            run: (st) => {
+                document.querySelector(`.mode-btn[data-mode="${st.normalize ? 'normalize' : 'boost'}"]`).click();
+                if (!st.normalize) setControl('gain', st.gain, 'input');
+            } },
+    };
+    function applyWhenReady(settings) {
+        const tool = location.pathname.replace(/^\/zh/, '').replace(/\//g, '');
+        const a = APPLY[tool], st = settings && settings[tool];
+        if (!a || !st) return;
+        const timer = setInterval(() => { if (a.ready()) { clearInterval(timer); a.run(st); } }, 250);
+    }
 
     // ---------- hand-off store (one pending entry) ----------
     function store(mode, fn) {
@@ -21,7 +133,7 @@
             };
         });
     }
-    const putPending = (files) => store('readwrite', (s) => s.put(files, 'pending'));
+    const putPending = (files, settings) => store('readwrite', (s) => s.put({ files, settings }, 'pending'));
     const takePending = () => store('readwrite', (s) => { const g = s.get('pending'); s.delete('pending'); return g; });
 
     // ---------- tool pages: "continue with this file" after a result ----------
@@ -41,7 +153,7 @@
             a.addEventListener('click', async (e) => {
                 e.preventDefault();
                 track('next_pick', { from: tool, tool: t });
-                await putPending([file]);
+                await putPending([file], null);
                 location.href = a.href + '#from-assistant';
             });
             el.appendChild(a);
@@ -54,9 +166,12 @@
     if (!assistant) {
         if (location.hash !== '#from-assistant') return;
         history.replaceState(null, '', location.pathname + location.search);
-        takePending().then((files) => {
+        takePending().then((pending) => {
             const input = document.getElementById('fileInput') || document.getElementById('whisperFile');
-            if (!files || !files.length || !input) return;
+            if (!pending || !input) return;
+            applyWhenReady(pending.settings);   // also works if the user picks the file here
+            const files = pending.files;
+            if (!files || !files.length) return;
             const dt = new DataTransfer();
             files.forEach((f) => dt.items.add(f));
             input.files = dt.files;
@@ -78,7 +193,7 @@
                  'тих', 'громк', 'громч', 'усил', 'нормализ', '音量', '声音太小', '太小声', '放大', '增强', '标准化'] },
         'audio-trimmer': { url: '/audio-trimmer/', name: T('Audio Trimmer', '音频剪辑'),
             kw: ['trim', 'cut', 'crop', 'shorten', 'ringtone', 'clip', 'remove the start', 'remove the end',
-                 'обрез', 'вырез', 'отрез', 'рингтон', 'укорот', '剪辑', '裁剪', '剪切', '铃声', '截取'] },
+                 'обрез', 'обреж', 'вырез', 'отрез', 'отреж', 'рингтон', 'укорот', '剪辑', '裁剪', '剪切', '铃声', '截取'] },
         'audio-joiner': { url: '/audio-joiner/', name: T('Audio Joiner', '音频合并'),
             kw: ['join', 'merge', 'combine', 'concatenate', 'several files', 'multiple files',
                  'склеить', 'склей', 'объедин', 'соедин', 'несколько', '合并', '拼接', '连接', '多个'] },
@@ -97,6 +212,7 @@
     const fileInput = document.getElementById('assistantFile');
     const results = document.getElementById('assistantResults');
     let files = null;            // files dropped on the helper, handed to the picked tool
+    let fileInfo = null;         // { duration, text, items } of the dropped file
     const used = {};
 
     function render(items, method, message) {
@@ -107,7 +223,7 @@
             p.textContent = message;
             results.appendChild(p);
         }
-        items.forEach(({ tool, why }) => {
+        items.forEach(({ tool, why, settings }) => {
             const a = document.createElement('a');
             a.className = 'assistant-pick';
             a.href = TOOLS[tool].url;
@@ -116,9 +232,9 @@
             a.querySelector('span').textContent = why;
             a.addEventListener('click', async (e) => {
                 track('assistant_pick', { tool, method });
-                if (method !== 'file') return;
+                if (!files && !settings) return;
                 e.preventDefault();
-                await putPending(files);
+                await putPending(files || [], settings ? { [tool]: settings } : null);
                 location.href = a.href + '#from-assistant';
             });
             results.appendChild(a);
@@ -130,18 +246,23 @@
     // a Chinese character carries about a word, so it counts 3x (变小 beats mp3)
     const weight = (k) => k.length * (/[\u4e00-\u9fff]/.test(k) ? 3 : 1);
     function suggestByText(q) {
+        const method = files ? 'file' : 'text';
+        const message = fileInfo && fileInfo.text;
+        const found = parseSettings(q);
         q = q.toLowerCase();
         const scored = Object.entries(TOOLS)
-            .map(([tool, t]) => [tool, t.kw.filter((k) => q.includes(k)).reduce((s, k) => s + weight(k), 0)])
+            .map(([tool, t]) => [tool, t.kw.filter((k) => q.includes(k)).reduce((s, k) => s + weight(k), 0) + (found[tool] ? 1000 : 0)])
             .filter(([, score]) => score > 0)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 3);
         if (!scored.length) {
-            render([], 'text', T('Not sure what you need — try other words, or pick a tool below.',
-                                  '没太明白您的需求——换个说法试试，或直接在下方选择工具。'));
+            render([], method, T('Not sure what you need — try other words, or pick a tool below.',
+                                 '没太明白您的需求——换个说法试试，或直接在下方选择工具。'));
             return;
         }
-        render(scored.map(([tool]) => ({ tool, why: WHY[tool] })), 'text');
+        render(scored.map(([tool]) => (found[tool]
+            ? { tool, settings: found[tool], why: describe(tool, found[tool], fileInfo && fileInfo.duration) }
+            : { tool, why: WHY[tool] })), method, message);
     }
     const WHY = {
         'converter': T('MP3, M4A, WAV or FLAC, also from video', '转换为 MP3、M4A、WAV 或 FLAC，也可从视频提取'),
@@ -158,10 +279,12 @@
     const fmtTime = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0');
     async function suggestByFile(list) {
         files = Array.from(list);
-        input.value = '';
+        fileInfo = null;
         if (files.length > 1) {
-            render([{ tool: 'audio-joiner', why: T(`${files.length} files → merge them into one`, `${files.length} 个文件 → 合并为一个`) },
-                    { tool: 'converter', why: WHY.converter }], 'file');
+            fileInfo = { text: '', items: [{ tool: 'audio-joiner', why: T(`${files.length} files → merge them into one`, `${files.length} 个文件 → 合并为一个`) },
+                                            { tool: 'converter', why: T(`Convert all ${files.length} at once, download as ZIP`, `一次转换全部 ${files.length} 个，打包下载`) },
+                                            { tool: 'audio-compressor', why: T(`Make all ${files.length} smaller at once`, `一次压缩全部 ${files.length} 个文件`) }] };
+            render(fileInfo.items, 'file');
             return;
         }
         const f = files[0];
@@ -192,15 +315,17 @@
         out.push({ tool: 'converter', why: T(`${ext} → MP3, M4A, WAV or FLAC`, `${ext} → MP3、M4A、WAV 或 FLAC`) });
         out.push({ tool: 'audio-trimmer', why: T(`Cut a part of the ${len} recording`, `从 ${len} 的录音中剪出片段`) });
         out.push({ tool: 'audio-speed-changer', why: WHY['audio-speed-changer'] });
-        render(out.slice(0, 3), 'file', `${f.name} · ${len} · ${mb.toFixed(1)} MB`);
+        fileInfo = { duration: buf.duration, text: `${f.name} · ${len} · ${mb.toFixed(1)} MB`, items: out.slice(0, 3) };
+        const q = input.value.trim();
+        if (q.length >= 2) return suggestByText(q);   // "compress to 10 MB" typed before the file was dropped
+        render(fileInfo.items, 'file', fileInfo.text);
     }
 
     let timer;
     input.addEventListener('input', () => {
         clearTimeout(timer);
-        files = null;
         const q = input.value.trim();
-        timer = setTimeout(() => (q.length >= 2 ? suggestByText(q) : render([], 'text')), 250);
+        timer = setTimeout(() => (q.length >= 2 ? suggestByText(q) : fileInfo ? render(fileInfo.items, 'file', fileInfo.text) : render([], 'text')), 250);
     });
     fileInput.addEventListener('change', () => { if (fileInput.files.length) suggestByFile(fileInput.files); fileInput.value = ''; });
     assistant.addEventListener('dragover', (e) => { e.preventDefault(); assistant.classList.add('drag'); });
