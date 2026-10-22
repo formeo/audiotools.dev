@@ -15,7 +15,7 @@
     </script>
 
     <title>在线音频转换器 — 免费，无需上传 | AudioTools.dev</title>
-    <meta name="description" content="在浏览器中将任意音频转换为 MP3 或 WAV。无需上传，不经过服务器，100% 私密。基于 Web Audio API 的免费在线音频转换器。">
+    <meta name="description" content="在浏览器中将音频或视频转换为 MP3、M4A、WAV 或 FLAC。无需上传，不经过服务器，100% 私密。免费在线音频转换器。">
     <meta name="keywords" content="在线音频转换器, 音频格式转换, WAV转MP3, MP3转WAV, FLAC转MP3, MP3转换器, 免费音频转换器, 浏览器音频转换, 无需上传">
     <link rel="canonical" href="https://audiotools.dev/zh/converter/">
     <meta property="og:type" content="website">
@@ -23,14 +23,14 @@
     <meta property="og:locale" content="zh_CN">
     <meta property="og:url" content="https://audiotools.dev/zh/converter/">
     <meta property="og:title" content="在线音频转换器 — 免费、私密、无需上传">
-    <meta property="og:description" content="直接在浏览器中将音频转换为 MP3 或 WAV。不经过服务器，100% 私密。">
+    <meta property="og:description" content="直接在浏览器中将音频或视频转换为 MP3、M4A、WAV 或 FLAC。不经过服务器，100% 私密。">
     <meta property="og:image" content="https://audiotools.dev/og/zh-converter.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="在线音频转换器 — 免费、私密、无需上传">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="在线音频转换器 — 免费、私密、无需上传">
-    <meta name="twitter:description" content="直接在浏览器中将音频转换为 MP3 或 WAV。不经过服务器，100% 私密。">
+    <meta name="twitter:description" content="直接在浏览器中将音频或视频转换为 MP3、M4A、WAV 或 FLAC。不经过服务器，100% 私密。">
     <meta name="twitter:image" content="https://audiotools.dev/og/zh-converter.png">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/converter/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/converter/">
@@ -49,7 +49,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "在线音频转换器",
-        "description": "直接在浏览器中将 WAV、FLAC、OGG、M4A、AAC、WebM 音频转换为 MP3 或 WAV，无需上传。",
+        "description": "直接在浏览器中将音频（MP3、WAV、FLAC、OGG、M4A、AAC、WebM）或视频（MP4、MOV、MKV）的声音转换为 MP3、M4A、WAV 或 FLAC，无需上传。",
         "inLanguage": "zh-CN",
         "url": "https://audiotools.dev/zh/converter/",
         "applicationCategory": "MultimediaApplication",
@@ -78,7 +78,7 @@
                 "name": "我的音频文件会上传到服务器吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "不会。所有音频转换都通过 Web Audio API 和 JavaScript 在您的浏览器中完成，文件永远不会离开您的设备。没有任何服务器端处理——您可以在开发者工具的“网络”面板中自行验证。"
+                    "text": "不会。所有转换都通过浏览器内置的编解码器和 WebAssembly 在您的浏览器中完成，文件永远不会离开您的设备。没有任何服务器端处理——您可以在开发者工具的“网络”面板中自行验证。"
                 }
             },
             {
@@ -86,7 +86,7 @@
                 "name": "最大文件大小是多少？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "由于处理在浏览器中进行，限制取决于设备的可用内存。大多数现代设备可以顺利处理 100–200 MB 的文件。对于超大文件，可以使用我们的命令行工具 go-audio-converter ——纯 Go 实现，没有文件大小限制。"
+                    "text": "转换器分块读取文件，而不是一次性载入，因此在新版浏览器中也能处理大音频文件和长视频。较旧的浏览器需要在内存中解码整个文件，大约只能处理 100–200 MB。对于超大文件，可以使用我们的命令行工具 go-audio-converter ——纯 Go 实现，没有文件大小限制。"
                 }
             },
             {
@@ -94,7 +94,7 @@
                 "name": "转换后的音质如何？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "WAV 输出是无损的，与解码后的音频完全一致。192 kbps 的 MP3 编码可满足大多数用途的高质量需求，最高可选 320 kbps。"
+                    "text": "WAV 和 FLAC 是无损格式，FLAC 的文件大小约为 WAV 的一半。192 kbps 的 MP3 和 M4A 可满足大多数用途，最高可选 320 kbps。"
                 }
             },
             {
@@ -102,7 +102,7 @@
                 "name": "可以离线使用吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "页面加载完成后即可离线使用（MP3 编码库需要加载一次）。建议收藏本页面以便快速访问。"
+                    "text": "页面和编码器加载完成后即可离线使用。建议收藏本页面以便快速访问。"
                 }
             },
             {
@@ -292,7 +292,7 @@
         <section class="hero">
             <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
             <h1>在线音频转换器</h1>
-            <p>直接在浏览器中转换音频文件。无需上传到服务器，无需注册，100% 免费。</p>
+            <p>在浏览器中将音频或视频的声音转换为 MP3、M4A、WAV 或 FLAC。无需上传，无需注册，100% 免费。</p>
             <div class="privacy-badge">
                 文件永远不会离开您的设备
             </div>
@@ -303,8 +303,8 @@
         <div class="drop-zone" id="dropZone">
             <div class="drop-prompt">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <div class="drop-text">将音频文件拖放到此处，或<b>点击选择</b></div>
-                <div class="drop-formats">WAV、MP3、FLAC、OGG、AAC、M4A、WebM — 最大 200 MB</div>
+                <div class="drop-text">将音频或视频文件拖放到此处，或<b>点击选择</b></div>
+                <div class="drop-formats">音频：MP3、WAV、FLAC、OGG、M4A、AAC、WebM · 视频：MP4、MOV、MKV、WebM</div>
             </div>
             <div class="file-info" id="fileInfo">
                 <div class="file-header">
@@ -316,7 +316,7 @@
                     <button class="file-remove" id="fileRemove" title="移除文件">✕</button>
                 </div>
             </div>
-            <input type="file" id="fileInput" accept="audio/*" hidden>
+            <input type="file" id="fileInput" accept="audio/*,video/*" hidden>
         </div>
 
         <!-- WAVEFORM -->
@@ -333,7 +333,7 @@
             </div>
 
             <div class="quality-row" id="qualityRow">
-                <label>MP3 码率：</label>
+                <label>码率：</label>
                 <select id="mp3Bitrate">
                     <option value="128">128 kbps — 良好（文件较小）</option>
                     <option value="192" selected>192 kbps — 高质量</option>
@@ -373,12 +373,12 @@
                 <div class="step">
                     <div class="step-num">1</div>
                     <div class="step-title">选择文件</div>
-                    <div class="step-desc">从设备中拖放或选择任意音频文件</div>
+                    <div class="step-desc">从设备中拖放或选择任意音频或视频文件</div>
                 </div>
                 <div class="step">
                     <div class="step-num">2</div>
                     <div class="step-title">选择格式</div>
-                    <div class="step-desc">选择输出格式：WAV 或 MP3</div>
+                    <div class="step-desc">选择输出格式：MP3、M4A、WAV 或 FLAC</div>
                 </div>
                 <div class="step">
                     <div class="step-num">3</div>
@@ -393,21 +393,21 @@
             <h2>支持的格式</h2>
             <table class="formats-table">
                 <thead>
-                    <tr><th>输入格式</th><th>→ WAV</th><th>→ MP3</th></tr>
+                    <tr><th>输入格式</th><th>→ MP3</th><th>→ M4A</th><th>→ WAV</th><th>→ FLAC</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>OGG、Opus (.ogg, .opus)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>AAC、M4A (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>视频：MP4、MOV、MKV、WebM</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
                 </tbody>
             </table>
             <p style="font-size:12px; color:var(--text2); margin-top:10px;">
-                所有解码均使用浏览器内置的 Web Audio API。MP3 编码使用
-                <a href="https://github.com/zhuker/lamejs" style="color:var(--accent2)">lamejs</a>。
-                基于开源项目 <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>。
+                文件通过 <a href="https://mediabunny.dev/" style="color:var(--accent2)">Mediabunny</a> 在浏览器中读取和转换，使用浏览器内置的编解码器。
+                MP3 和 FLAC 使用 WebAssembly 编码器；AAC（M4A）在浏览器支持时使用其自带编码器。可读取的格式取决于您的浏览器。
             </p>
         </section>
 
@@ -416,19 +416,19 @@
             <h2>常见问题</h2>
             <div class="faq-item">
                 <div class="faq-q">我的音频文件会上传到服务器吗？</div>
-                <div class="faq-a">不会。所有音频转换都通过 Web Audio API 和 JavaScript 在您的浏览器中完成，文件永远不会离开您的设备。没有任何服务器端处理——您可以在开发者工具的“网络”面板中自行验证。</div>
+                <div class="faq-a">不会。所有转换都通过浏览器内置的编解码器和 WebAssembly 在您的浏览器中完成，文件永远不会离开您的设备。没有任何服务器端处理——您可以在开发者工具的“网络”面板中自行验证。</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">最大文件大小是多少？</div>
-                <div class="faq-a">由于处理在浏览器中进行，限制取决于设备的可用内存。大多数现代设备可以顺利处理 100–200 MB 的文件。对于超大文件，可以使用我们的命令行工具 <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>——纯 Go 实现，没有文件大小限制。</div>
+                <div class="faq-a">转换器分块读取文件，而不是一次性载入，因此在新版浏览器中也能处理大音频文件和长视频。较旧的浏览器需要在内存中解码整个文件，大约只能处理 100–200 MB。对于超大文件，可以使用我们的命令行工具 <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>——纯 Go 实现，没有文件大小限制。</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">转换后的音质如何？</div>
-                <div class="faq-a">WAV 输出是无损的，与解码后的音频完全一致。192 kbps 的 MP3 编码可满足大多数用途的高质量需求，最高可选 320 kbps。</div>
+                <div class="faq-a">WAV 和 FLAC 是无损格式，FLAC 的文件大小约为 WAV 的一半。192 kbps 的 MP3 和 M4A 可满足大多数用途，最高可选 320 kbps。</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">可以离线使用吗？</div>
-                <div class="faq-a">页面加载完成后即可离线使用（MP3 编码库需要加载一次）。建议收藏本页面以便快速访问。</div>
+                <div class="faq-a">页面和编码器加载完成后即可离线使用。建议收藏本页面以便快速访问。</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">可以使用命令行工具吗？</div>
@@ -446,8 +446,8 @@
         </div>
     </footer>
 
-    <!-- lamejs for MP3 encoding -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <!-- Mediabunny (self-hosted) does the decoding and encoding; see /media.js -->
+    <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
 
     <script>
     (function() {
@@ -476,18 +476,24 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         let currentFile = null;
-        let audioBuffer = null;
+        let audioBuffer = null;   // decoded audio: for the waveform, and the fallback path
+        let duration = 0;
         let audioCtx = null;
         let selectedOutput = 'mp3';
         let resultBlob = null;
         let resultFilename = '';
 
         const FORMATS = {
-            wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
             mp3: { label: 'MP3', ext: '.mp3', mime: 'audio/mpeg' },
+            m4a: { label: 'M4A', ext: '.m4a', mime: 'audio/mp4' },
+            wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
+            flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac' },
         };
 
-        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus'];
+        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus', 'mp4', 'm4v', 'mov', 'mkv'];
+        const WAVEFORM_MAX = 100 * 1024 * 1024;   // decode for the waveform only up to this size
+        const media = () => import('/media.js');
+        media().catch(() => {});                  // warm up while the user picks a file
 
         // Detect input format
         function getFileExt(name) {
@@ -562,21 +568,28 @@
             fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase();
             result.classList.remove('show');
 
-            // Decode audio
+            // Read duration and audio parameters from the container (no full decode); fall back to Web Audio.
+            audioBuffer = null;
             try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const arrayBuf = await file.arrayBuffer();
-                audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
+                let info = null;
+                try { info = await (await media()).probe(file); } catch (e) { console.warn('[AudioTools] probe failed:', e); }
+                if (!info || file.size <= WAVEFORM_MAX) {
+                    try {
+                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        audioBuffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+                    } catch (e) { if (!info) throw e; }
+                }
+                if (currentFile !== file) return;   // another file was picked meanwhile
+                duration = info ? info.duration : audioBuffer.duration;
+                fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase() + (info && info.hasVideo ? ' (视频)' : '') +
+                    ' • ' + (info ? info.sampleRate : audioBuffer.sampleRate) + ' Hz • ' +
+                    (info ? info.channels : audioBuffer.numberOfChannels) + 'ch • ' +
+                    formatDuration(duration);
 
-                fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase() +
-                    ' • ' + audioBuffer.sampleRate + ' Hz • ' +
-                    audioBuffer.numberOfChannels + 'ch • ' +
-                    formatDuration(audioBuffer.duration);
-
-                drawWaveform(audioBuffer);
+                if (audioBuffer) drawWaveform(audioBuffer); else waveformWrap.classList.remove('show');
                 showConvertOptions(ext);
             } catch (e) {
-                fileMeta.textContent = '错误：无法解码此音频文件。' + e.message;
+                fileMeta.textContent = '错误：无法读取此文件中的音频。' + e.message;
                 console.error(e);
             }
         }
@@ -649,7 +662,7 @@
         }
 
         function updateQualityRow() {
-            if (selectedOutput === 'mp3') {
+            if (selectedOutput === 'mp3' || selectedOutput === 'm4a') {
                 qualityRow.classList.add('show');
             } else {
                 qualityRow.classList.remove('show');
@@ -660,7 +673,7 @@
         convertBtn.addEventListener('click', startConversion);
 
         async function startConversion() {
-            if (!audioBuffer) return;
+            if (!currentFile) return;
 
             convertBtn.disabled = true;
             convertBtn.classList.add('converting');
@@ -669,12 +682,24 @@
             result.classList.remove('show');
 
             try {
+                const bitrate = parseInt(mp3Bitrate.value, 10) * 1000;
+                const label = FORMATS[selectedOutput].label;
+                const m = await media();
                 let blob;
-                if (selectedOutput === 'wav') {
-                    updateProgress(10, '正在编码 WAV…');
-                    blob = await encodeWAV(audioBuffer);
-                } else if (selectedOutput === 'mp3') {
-                    blob = await encodeMP3(audioBuffer);
+                updateProgress(3, '正在编码 ' + label + '…');
+                try {
+                    blob = await m.convertFile(currentFile, { format: selectedOutput, bitrate,
+                        onProgress: (p) => updateProgress(Math.round(3 + p * 95), '正在编码 ' + label + '… ' + Math.round(p * 100) + '%') });
+                } catch (e) {
+                    // No WebCodecs, or a codec this browser can't stream: decode with Web Audio, then encode.
+                    console.warn('[AudioTools] streaming conversion failed, decoding instead:', e);
+                    if (!audioBuffer) {
+                        updateProgress(10, '正在解码音频…');
+                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        audioBuffer = await audioCtx.decodeAudioData(await currentFile.arrayBuffer());
+                    }
+                    updateProgress(50, '正在编码 ' + label + '…');
+                    blob = await m.encodeBuffer(audioBuffer, { format: selectedOutput, bitrate });
                 }
 
                 updateProgress(100, '完成！');
@@ -691,7 +716,7 @@
                     offerNext('converter', downloadBtn, new File([blob], resultFilename, { type: FORMATS[selectedOutput].mime }));
                     resultMeta.textContent = FORMATS[selectedOutput].label + ' • ' +
                         formatBytes(blob.size) + ' • ' +
-                        formatDuration(audioBuffer.duration);
+                        formatDuration(duration);
                 }, 300);
 
             } catch (e) {
@@ -707,135 +732,6 @@
         function updateProgress(pct, text) {
             progressFill.style.width = pct + '%';
             progressText.textContent = text;
-        }
-
-        // WAV encoder
-        function encodeWAV(buffer) {
-            return new Promise(resolve => {
-                const numCh = buffer.numberOfChannels;
-                const sr = buffer.sampleRate;
-                const len = buffer.length;
-
-                // Interleave channels
-                let interleaved;
-                if (numCh === 1) {
-                    interleaved = buffer.getChannelData(0);
-                } else {
-                    interleaved = new Float32Array(len * numCh);
-                    for (let i = 0; i < len; i++) {
-                        for (let ch = 0; ch < numCh; ch++) {
-                            interleaved[i * numCh + ch] = buffer.getChannelData(ch)[i];
-                        }
-                    }
-                }
-
-                // Convert to 16-bit PCM
-                const pcm = new Int16Array(interleaved.length);
-                for (let i = 0; i < interleaved.length; i++) {
-                    const s = Math.max(-1, Math.min(1, interleaved[i]));
-                    pcm[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                }
-
-                // Build WAV
-                const dataSize = pcm.length * 2;
-                const buf = new ArrayBuffer(44 + dataSize);
-                const view = new DataView(buf);
-
-                writeString(view, 0, 'RIFF');
-                view.setUint32(4, 36 + dataSize, true);
-                writeString(view, 8, 'WAVE');
-                writeString(view, 12, 'fmt ');
-                view.setUint32(16, 16, true);
-                view.setUint16(20, 1, true);
-                view.setUint16(22, numCh, true);
-                view.setUint32(24, sr, true);
-                view.setUint32(28, sr * numCh * 2, true);
-                view.setUint16(32, numCh * 2, true);
-                view.setUint16(34, 16, true);
-                writeString(view, 36, 'data');
-                view.setUint32(40, dataSize, true);
-
-                const output = new Int16Array(buf, 44);
-                output.set(pcm);
-
-                resolve(new Blob([buf], { type: 'audio/wav' }));
-            });
-        }
-
-        function writeString(view, offset, str) {
-            for (let i = 0; i < str.length; i++) {
-                view.setUint8(offset + i, str.charCodeAt(i));
-            }
-        }
-
-        // MP3 encoder (using lamejs)
-        function encodeMP3(buffer) {
-            return new Promise((resolve, reject) => {
-                if (typeof lamejs === 'undefined') {
-                    reject(new Error('MP3 编码器未加载，请刷新页面。'));
-                    return;
-                }
-
-                const numCh = Math.min(buffer.numberOfChannels, 2); // lamejs supports max 2ch
-                const sr = buffer.sampleRate;
-                const kbps = parseInt(mp3Bitrate.value);
-
-                updateProgress(5, '正在初始化 MP3 编码器…');
-
-                const mp3enc = new lamejs.Mp3Encoder(numCh, sr, kbps);
-                const blockSize = 1152;
-                const mp3Data = [];
-
-                // Get channel data as Int16
-                function floatTo16(arr) {
-                    const out = new Int16Array(arr.length);
-                    for (let i = 0; i < arr.length; i++) {
-                        const s = Math.max(-1, Math.min(1, arr[i]));
-                        out[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                    }
-                    return out;
-                }
-
-                const left = floatTo16(buffer.getChannelData(0));
-                const right = numCh > 1 ? floatTo16(buffer.getChannelData(1)) : null;
-
-                const totalBlocks = Math.ceil(left.length / blockSize);
-                let processedBlocks = 0;
-
-                // Process in chunks using setTimeout for UI responsiveness
-                function processChunk() {
-                    const end = Math.min(processedBlocks + 100, totalBlocks);
-
-                    for (let i = processedBlocks; i < end; i++) {
-                        const start = i * blockSize;
-                        const leftChunk = left.subarray(start, start + blockSize);
-
-                        let mp3buf;
-                        if (numCh === 1) {
-                            mp3buf = mp3enc.encodeBuffer(leftChunk);
-                        } else {
-                            const rightChunk = right.subarray(start, start + blockSize);
-                            mp3buf = mp3enc.encodeBuffer(leftChunk, rightChunk);
-                        }
-                        if (mp3buf.length > 0) mp3Data.push(mp3buf);
-                    }
-
-                    processedBlocks = end;
-                    const pct = Math.round((processedBlocks / totalBlocks) * 90) + 5;
-                    updateProgress(pct, `正在编码 MP3… ${pct}%`);
-
-                    if (processedBlocks < totalBlocks) {
-                        setTimeout(processChunk, 0);
-                    } else {
-                        const last = mp3enc.flush();
-                        if (last.length > 0) mp3Data.push(last);
-                        updateProgress(98, '即将完成…');
-                        resolve(new Blob(mp3Data, { type: 'audio/mpeg' }));
-                    }
-                }
-
-                setTimeout(processChunk, 0);
-            });
         }
 
         // Download

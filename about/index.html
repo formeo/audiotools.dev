@@ -111,7 +111,7 @@
 
         <h2>What you can do here</h2>
         <ul>
-            <li><a href="/converter/">Audio Converter</a> — WAV, FLAC, OGG, AAC, M4A, WebM to MP3 or WAV</li>
+            <li><a href="/converter/">Audio Converter</a> — audio or video to MP3, M4A, WAV or FLAC</li>
             <li><a href="/audio-trimmer/">Audio Trimmer</a> — cut a part of a recording on a waveform</li>
             <li><a href="/audio-joiner/">Audio Joiner</a> — merge files, with optional crossfade</li>
             <li><a href="/volume-booster/">Volume Booster</a> — make quiet audio louder or normalize it</li>
@@ -136,8 +136,7 @@
         <ul>
             <li>the pages themselves, from GitHub Pages;</li>
             <li>the Archivo typeface, from Google Fonts;</li>
-            <li>the MP3 encoder (lamejs) from cdnjs, on tools that write MP3;</li>
-            <li>the Whisper speech model from Hugging Face, once, when you use Private mode in Voice to Text;</li>
+                        <li>the Whisper speech model from Hugging Face and the Transformers.js library from jsDelivr, once, when you use Private mode in Voice to Text;</li>
             <li>Google Analytics and Yandex Metrika for anonymous page-view statistics (see the <a href="/privacy/">privacy policy</a>).</li>
         </ul>
         <p>One exception is worth knowing: live dictation in Voice to Text uses your browser's speech engine, and Chrome and Safari may send that audio to Google or Apple. Private mode does not.</p>
@@ -157,7 +156,7 @@
         <h2>How it is built</h2>
         <ul>
             <li>Decoding and processing: Web Audio API (<code>OfflineAudioContext</code>)</li>
-            <li>MP3 encoding: lamejs</li>
+            <li>Reading and encoding audio and video: <a href="https://mediabunny.dev/" rel="noopener">Mediabunny</a> (MPL-2.0, served from this site), with WebAssembly encoders for MP3 and FLAC</li>
             <li>Speed change without pitch shift: WSOLA time-stretching</li>
             <li>Private transcription: Whisper (tiny/base) via Transformers.js in a Web Worker</li>
         </ul>

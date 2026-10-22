@@ -73,6 +73,14 @@
         <h1>Changelog</h1>
         <p>What's new on AudioTools.dev, newest first. The full history is on <a href="https://github.com/formeo/audiotools.dev/commits/main" rel="noopener">GitHub</a>.</p>
         <section class="entry">
+            <h2><time datetime="2026-10-22">October 22, 2026</time></h2>
+            <ul>
+                <li>Audio Converter saves M4A (AAC) and FLAC as well as MP3 and WAV, and takes video files (MP4, MOV, MKV, WebM) to pull out the sound.</li>
+                <li>Large files: the converter now reads files in pieces instead of loading them whole, so long recordings and videos work.</li>
+                <li>A new engine under the hood: <a href="https://mediabunny.dev/" rel="noopener">Mediabunny</a>, served from this site, replaces the old lamejs MP3 encoder on every tool. MP3 encoding runs in the background, so the page no longer freezes on long files.</li>
+            </ul>
+        </section>
+        <section class="entry">
             <h2><time datetime="2026-10-20">October 20, 2026</time></h2>
             <ul>
                 <li>New link previews for each tool in messengers and social networks, and a new site icon.</li>

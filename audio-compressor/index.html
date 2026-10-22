@@ -237,8 +237,8 @@
         </div>
     </footer>
 
-    <!-- lamejs for MP3 encoding -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <!-- MP3 encoding: Mediabunny (self-hosted), see /media.js -->
+    <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -308,35 +308,10 @@
             return await oac.startRendering();
         }
 
-        // MP3 encoder (lamejs) — same approach as the Converter
-        function encodeMP3(buf, kbps){
-            return new Promise((resolve, reject) => {
-                if (typeof lamejs === 'undefined'){ reject(new Error('MP3 encoder not loaded. Please reload the page.')); return; }
-                const numCh = Math.min(buf.numberOfChannels, 2);
-                const sr = buf.sampleRate;
-                const enc = new lamejs.Mp3Encoder(numCh, sr, kbps);
-                const blockSize = 1152, mp3Data = [];
-                function to16(arr){ const o = new Int16Array(arr.length); for (let i=0;i<arr.length;i++){ const s=Math.max(-1,Math.min(1,arr[i])); o[i]=s<0?s*0x8000:s*0x7FFF; } return o; }
-                const left = to16(buf.getChannelData(0));
-                const right = numCh > 1 ? to16(buf.getChannelData(1)) : null;
-                const totalBlocks = Math.ceil(left.length / blockSize);
-                let done = 0;
-                function chunk(){
-                    const end = Math.min(done + 100, totalBlocks);
-                    for (let i=done;i<end;i++){
-                        const s = i*blockSize;
-                        const lc = left.subarray(s, s+blockSize);
-                        const mb = numCh === 1 ? enc.encodeBuffer(lc) : enc.encodeBuffer(lc, right.subarray(s, s+blockSize));
-                        if (mb.length > 0) mp3Data.push(mb);
-                    }
-                    done = end;
-                    const pct = Math.round(done/totalBlocks * 90) + 8;
-                    progressFill.style.width = pct + '%'; progressText.textContent = 'Encoding MP3… ' + pct + '%';
-                    if (done < totalBlocks) setTimeout(chunk, 0);
-                    else { const last = enc.flush(); if (last.length > 0) mp3Data.push(last); resolve(new Blob(mp3Data, { type: 'audio/mpeg' })); }
-                }
-                setTimeout(chunk, 0);
-            });
+        // MP3 encoder: LAME in WebAssembly via Mediabunny, off the main thread (/media.js)
+        async function encodeMP3(buf, kbps){
+            progressFill.style.width = '30%'; progressText.textContent = 'Encoding MP3…';
+            return (await import('/media.js')).encodeBuffer(buf, { format: 'mp3', bitrate: kbps * 1000 });
         }
 
         async function compress(){

@@ -15,7 +15,7 @@
     </script>
 
     <title>Audio Converter Online — Free, No Upload | AudioTools.dev</title>
-    <meta name="description" content="Convert any audio file to MP3 or WAV in your browser. No upload, no server, 100% private. Free online audio converter with Web Audio API.">
+    <meta name="description" content="Convert audio or video files to MP3, M4A, WAV or FLAC in your browser. No upload, no server, 100% private. Free online audio converter.">
     <meta name="keywords" content="audio converter online, convert mp3 wav, wav to mp3, mp3 converter, audio format converter, free audio converter, browser audio converter, private audio converter">
     <link rel="canonical" href="https://audiotools.dev/converter/">
     <meta property="og:type" content="website">
@@ -23,14 +23,14 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://audiotools.dev/converter/">
     <meta property="og:title" content="Audio Converter Online — Free, Private, No Upload">
-    <meta property="og:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
+    <meta property="og:description" content="Convert audio or video to MP3, M4A, WAV or FLAC directly in your browser. No server, 100% private.">
     <meta property="og:image" content="https://audiotools.dev/og/converter.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Audio Converter Online — Free, Private, No Upload">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Audio Converter Online — Free, Private, No Upload">
-    <meta name="twitter:description" content="Convert any audio file to MP3 or WAV directly in your browser. No server, 100% private.">
+    <meta name="twitter:description" content="Convert audio or video to MP3, M4A, WAV or FLAC directly in your browser. No server, 100% private.">
     <meta name="twitter:image" content="https://audiotools.dev/og/converter.png">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/converter/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/converter/">
@@ -49,7 +49,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Audio Converter Online",
-        "description": "Convert WAV, FLAC, OGG, M4A, AAC and WebM audio to MP3 or WAV directly in your browser. No upload required.",
+        "description": "Convert audio (MP3, WAV, FLAC, OGG, M4A, AAC, WebM) or the soundtrack of a video (MP4, MOV, MKV) to MP3, M4A, WAV or FLAC directly in your browser. No upload required.",
         "url": "https://audiotools.dev/converter/",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any (browser-based)",
@@ -77,7 +77,7 @@
                 "name": "Is my audio file uploaded to a server?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No. All audio conversion happens directly in your browser using Web Audio API and JavaScript. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify."
+                    "text": "No. All conversion happens directly in your browser, using its built-in codecs and WebAssembly. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify."
                 }
             },
             {
@@ -85,7 +85,7 @@
                 "name": "What is the maximum file size?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle files up to 100–200 MB without issues. For very large files, consider using our CLI tool: go-audio-converter — a pure Go converter with no file size limits."
+                    "text": "The converter reads the file in pieces instead of loading it whole, so large audio files and long videos work in current browsers. Older browsers decode the whole file in memory, which limits them to roughly 100–200 MB. For very large files, consider using our CLI tool: go-audio-converter — a pure Go converter with no file size limits."
                 }
             },
             {
@@ -93,7 +93,7 @@
                 "name": "What audio quality can I expect?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "WAV output is lossless — identical to the decoded audio. MP3 encoding at 192 kbps provides high quality suitable for most purposes. You can select up to 320 kbps for maximum quality."
+                    "text": "WAV and FLAC are lossless: FLAC keeps the same sound in a file about half the size. MP3 and M4A at 192 kbps sound high quality for most uses, and you can choose up to 320 kbps."
                 }
             },
             {
@@ -101,7 +101,7 @@
                 "name": "Does it work offline?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The converter works offline after the page is loaded (MP3 encoding library needs to load once). Bookmark this page for quick access."
+                    "text": "The converter works offline once the page and its encoders have loaded. Bookmark this page for quick access."
                 }
             },
             {
@@ -291,7 +291,7 @@
         <section class="hero">
             <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C12 8 20 8 28 28 S44 48 52 28 S68 8 76 28"/><path class="g-acc" d="M86 28 V10 H98 V46 H110 V10 H122 V46 H134 V10 H146 V28"/></svg>
             <h1>Audio Converter Online</h1>
-            <p>Convert audio files directly in your browser. No upload to server, no registration, 100% free.</p>
+            <p>Convert audio, or the soundtrack of a video, to MP3, M4A, WAV or FLAC right in your browser. No upload, no registration, 100% free.</p>
             <div class="privacy-badge">
                 Your files never leave your device
             </div>
@@ -302,8 +302,8 @@
         <div class="drop-zone" id="dropZone">
             <div class="drop-prompt">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <div class="drop-text">Drop audio file here or <b>click to browse</b></div>
-                <div class="drop-formats">WAV, MP3, FLAC, OGG, AAC, M4A, WebM — up to 200 MB</div>
+                <div class="drop-text">Drop an audio or video file here or <b>click to browse</b></div>
+                <div class="drop-formats">Audio: MP3, WAV, FLAC, OGG, M4A, AAC, WebM · Video: MP4, MOV, MKV, WebM</div>
             </div>
             <div class="file-info" id="fileInfo">
                 <div class="file-header">
@@ -315,7 +315,7 @@
                     <button class="file-remove" id="fileRemove" title="Remove file">✕</button>
                 </div>
             </div>
-            <input type="file" id="fileInput" accept="audio/*" hidden>
+            <input type="file" id="fileInput" accept="audio/*,video/*" hidden>
         </div>
 
         <!-- WAVEFORM -->
@@ -332,7 +332,7 @@
             </div>
 
             <div class="quality-row" id="qualityRow">
-                <label>MP3 Bitrate:</label>
+                <label>Bitrate:</label>
                 <select id="mp3Bitrate">
                     <option value="128">128 kbps — Good (smaller file)</option>
                     <option value="192" selected>192 kbps — High quality</option>
@@ -372,12 +372,12 @@
                 <div class="step">
                     <div class="step-num">1</div>
                     <div class="step-title">Choose File</div>
-                    <div class="step-desc">Drop or select any audio file from your device</div>
+                    <div class="step-desc">Drop or select any audio or video file from your device</div>
                 </div>
                 <div class="step">
                     <div class="step-num">2</div>
                     <div class="step-title">Pick Format</div>
-                    <div class="step-desc">Select the output format: WAV or MP3</div>
+                    <div class="step-desc">Select the output format: MP3, M4A, WAV or FLAC</div>
                 </div>
                 <div class="step">
                     <div class="step-num">3</div>
@@ -392,21 +392,22 @@
             <h2>Supported Formats</h2>
             <table class="formats-table">
                 <thead>
-                    <tr><th>Input Format</th><th>→ WAV</th><th>→ MP3</th></tr>
+                    <tr><th>Input</th><th>→ MP3</th><th>→ M4A</th><th>→ WAV</th><th>→ FLAC</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>OGG (.ogg)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>AAC (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td></tr>
-                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>MP3 (.mp3)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WAV (.wav)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>FLAC (.flac)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>OGG, Opus (.ogg, .opus)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>AAC, M4A (.aac, .m4a)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>WebM (.webm)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                    <tr><td>Video: MP4, MOV, MKV, WebM</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
                 </tbody>
             </table>
             <p style="font-size:12px; color:var(--text2); margin-top:10px;">
-                All decoding uses your browser's built-in Web Audio API. MP3 encoding uses
-                <a href="https://github.com/zhuker/lamejs" style="color:var(--accent2)">lamejs</a>.
-                Based on open source <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a>.
+                Files are read and converted in your browser with <a href="https://mediabunny.dev/" style="color:var(--accent2)">Mediabunny</a>,
+                using the browser's built-in codecs. MP3 and FLAC are encoded with WebAssembly encoders; AAC (M4A) uses
+                the browser's own encoder where it has one. Input support depends on your browser.
             </p>
         </section>
 
@@ -415,19 +416,19 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <div class="faq-q">Is my audio file uploaded to a server?</div>
-                <div class="faq-a">No. All audio conversion happens directly in your browser using Web Audio API and JavaScript. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify.</div>
+                <div class="faq-a">No. All conversion happens directly in your browser, using its built-in codecs and WebAssembly. Your files never leave your device. There is no server-side processing — check the network tab in DevTools to verify.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">What is the maximum file size?</div>
-                <div class="faq-a">Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle files up to 100–200 MB without issues. For very large files, consider using our CLI tool: <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> — a pure Go converter with no file size limits.</div>
+                <div class="faq-a">The converter reads the file in pieces instead of loading it whole, so large audio files and long videos work in current browsers. Older browsers decode the whole file in memory, which limits them to roughly 100–200 MB. For very large files, consider using our CLI tool: <a href="https://github.com/formeo/go-audio-converter" style="color:var(--accent2)">go-audio-converter</a> — a pure Go converter with no file size limits.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">What audio quality can I expect?</div>
-                <div class="faq-a">WAV output is lossless — identical to the decoded audio. MP3 encoding at 192 kbps provides high quality suitable for most purposes. You can select up to 320 kbps for maximum quality.</div>
+                <div class="faq-a">WAV and FLAC are lossless: FLAC keeps the same sound in a file about half the size. MP3 and M4A at 192 kbps sound high quality for most uses, and you can choose up to 320 kbps.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Does it work offline?</div>
-                <div class="faq-a">The converter works offline after the page is loaded (MP3 encoding library needs to load once). Bookmark this page for quick access.</div>
+                <div class="faq-a">The converter works offline once the page and its encoders have loaded. Bookmark this page for quick access.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Can I use a command-line tool instead?</div>
@@ -445,8 +446,8 @@
         </div>
     </footer>
 
-    <!-- lamejs for MP3 encoding -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <!-- Mediabunny (self-hosted) does the decoding and encoding; see /media.js -->
+    <script type="importmap">{"imports":{"mediabunny":"/vendor/mediabunny/mediabunny.min.mjs"}}</script>
 
     <script>
     (function() {
@@ -475,18 +476,24 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         let currentFile = null;
-        let audioBuffer = null;
+        let audioBuffer = null;   // decoded audio: for the waveform, and the fallback path
+        let duration = 0;
         let audioCtx = null;
         let selectedOutput = 'mp3';
         let resultBlob = null;
         let resultFilename = '';
 
         const FORMATS = {
-            wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
             mp3: { label: 'MP3', ext: '.mp3', mime: 'audio/mpeg' },
+            m4a: { label: 'M4A', ext: '.m4a', mime: 'audio/mp4' },
+            wav: { label: 'WAV', ext: '.wav', mime: 'audio/wav' },
+            flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac' },
         };
 
-        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus'];
+        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus', 'mp4', 'm4v', 'mov', 'mkv'];
+        const WAVEFORM_MAX = 100 * 1024 * 1024;   // decode for the waveform only up to this size
+        const media = () => import('/media.js');
+        media().catch(() => {});                  // warm up while the user picks a file
 
         // Detect input format
         function getFileExt(name) {
@@ -561,21 +568,28 @@
             fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase();
             result.classList.remove('show');
 
-            // Decode audio
+            // Read duration and audio parameters from the container (no full decode); fall back to Web Audio.
+            audioBuffer = null;
             try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const arrayBuf = await file.arrayBuffer();
-                audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
+                let info = null;
+                try { info = await (await media()).probe(file); } catch (e) { console.warn('[AudioTools] probe failed:', e); }
+                if (!info || file.size <= WAVEFORM_MAX) {
+                    try {
+                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        audioBuffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+                    } catch (e) { if (!info) throw e; }
+                }
+                if (currentFile !== file) return;   // another file was picked meanwhile
+                duration = info ? info.duration : audioBuffer.duration;
+                fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase() + (info && info.hasVideo ? ' (video)' : '') +
+                    ' • ' + (info ? info.sampleRate : audioBuffer.sampleRate) + ' Hz • ' +
+                    (info ? info.channels : audioBuffer.numberOfChannels) + 'ch • ' +
+                    formatDuration(duration);
 
-                fileMeta.textContent = formatBytes(file.size) + ' • ' + ext.toUpperCase() +
-                    ' • ' + audioBuffer.sampleRate + ' Hz • ' +
-                    audioBuffer.numberOfChannels + 'ch • ' +
-                    formatDuration(audioBuffer.duration);
-
-                drawWaveform(audioBuffer);
+                if (audioBuffer) drawWaveform(audioBuffer); else waveformWrap.classList.remove('show');
                 showConvertOptions(ext);
             } catch (e) {
-                fileMeta.textContent = 'Error: Could not decode this audio file. ' + e.message;
+                fileMeta.textContent = 'Error: Could not read audio from this file. ' + e.message;
                 console.error(e);
             }
         }
@@ -648,7 +662,7 @@
         }
 
         function updateQualityRow() {
-            if (selectedOutput === 'mp3') {
+            if (selectedOutput === 'mp3' || selectedOutput === 'm4a') {
                 qualityRow.classList.add('show');
             } else {
                 qualityRow.classList.remove('show');
@@ -659,7 +673,7 @@
         convertBtn.addEventListener('click', startConversion);
 
         async function startConversion() {
-            if (!audioBuffer) return;
+            if (!currentFile) return;
 
             convertBtn.disabled = true;
             convertBtn.classList.add('converting');
@@ -668,12 +682,24 @@
             result.classList.remove('show');
 
             try {
+                const bitrate = parseInt(mp3Bitrate.value, 10) * 1000;
+                const label = FORMATS[selectedOutput].label;
+                const m = await media();
                 let blob;
-                if (selectedOutput === 'wav') {
-                    updateProgress(10, 'Encoding WAV...');
-                    blob = await encodeWAV(audioBuffer);
-                } else if (selectedOutput === 'mp3') {
-                    blob = await encodeMP3(audioBuffer);
+                updateProgress(3, 'Encoding ' + label + '…');
+                try {
+                    blob = await m.convertFile(currentFile, { format: selectedOutput, bitrate,
+                        onProgress: (p) => updateProgress(Math.round(3 + p * 95), 'Encoding ' + label + '… ' + Math.round(p * 100) + '%') });
+                } catch (e) {
+                    // No WebCodecs, or a codec this browser can't stream: decode with Web Audio, then encode.
+                    console.warn('[AudioTools] streaming conversion failed, decoding instead:', e);
+                    if (!audioBuffer) {
+                        updateProgress(10, 'Decoding audio…');
+                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        audioBuffer = await audioCtx.decodeAudioData(await currentFile.arrayBuffer());
+                    }
+                    updateProgress(50, 'Encoding ' + label + '…');
+                    blob = await m.encodeBuffer(audioBuffer, { format: selectedOutput, bitrate });
                 }
 
                 updateProgress(100, 'Done!');
@@ -690,7 +716,7 @@
                     offerNext('converter', downloadBtn, new File([blob], resultFilename, { type: FORMATS[selectedOutput].mime }));
                     resultMeta.textContent = FORMATS[selectedOutput].label + ' • ' +
                         formatBytes(blob.size) + ' • ' +
-                        formatDuration(audioBuffer.duration);
+                        formatDuration(duration);
                 }, 300);
 
             } catch (e) {
@@ -706,135 +732,6 @@
         function updateProgress(pct, text) {
             progressFill.style.width = pct + '%';
             progressText.textContent = text;
-        }
-
-        // WAV encoder
-        function encodeWAV(buffer) {
-            return new Promise(resolve => {
-                const numCh = buffer.numberOfChannels;
-                const sr = buffer.sampleRate;
-                const len = buffer.length;
-
-                // Interleave channels
-                let interleaved;
-                if (numCh === 1) {
-                    interleaved = buffer.getChannelData(0);
-                } else {
-                    interleaved = new Float32Array(len * numCh);
-                    for (let i = 0; i < len; i++) {
-                        for (let ch = 0; ch < numCh; ch++) {
-                            interleaved[i * numCh + ch] = buffer.getChannelData(ch)[i];
-                        }
-                    }
-                }
-
-                // Convert to 16-bit PCM
-                const pcm = new Int16Array(interleaved.length);
-                for (let i = 0; i < interleaved.length; i++) {
-                    const s = Math.max(-1, Math.min(1, interleaved[i]));
-                    pcm[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                }
-
-                // Build WAV
-                const dataSize = pcm.length * 2;
-                const buf = new ArrayBuffer(44 + dataSize);
-                const view = new DataView(buf);
-
-                writeString(view, 0, 'RIFF');
-                view.setUint32(4, 36 + dataSize, true);
-                writeString(view, 8, 'WAVE');
-                writeString(view, 12, 'fmt ');
-                view.setUint32(16, 16, true);
-                view.setUint16(20, 1, true);
-                view.setUint16(22, numCh, true);
-                view.setUint32(24, sr, true);
-                view.setUint32(28, sr * numCh * 2, true);
-                view.setUint16(32, numCh * 2, true);
-                view.setUint16(34, 16, true);
-                writeString(view, 36, 'data');
-                view.setUint32(40, dataSize, true);
-
-                const output = new Int16Array(buf, 44);
-                output.set(pcm);
-
-                resolve(new Blob([buf], { type: 'audio/wav' }));
-            });
-        }
-
-        function writeString(view, offset, str) {
-            for (let i = 0; i < str.length; i++) {
-                view.setUint8(offset + i, str.charCodeAt(i));
-            }
-        }
-
-        // MP3 encoder (using lamejs)
-        function encodeMP3(buffer) {
-            return new Promise((resolve, reject) => {
-                if (typeof lamejs === 'undefined') {
-                    reject(new Error('MP3 encoder not loaded. Please reload the page.'));
-                    return;
-                }
-
-                const numCh = Math.min(buffer.numberOfChannels, 2); // lamejs supports max 2ch
-                const sr = buffer.sampleRate;
-                const kbps = parseInt(mp3Bitrate.value);
-
-                updateProgress(5, 'Initializing MP3 encoder...');
-
-                const mp3enc = new lamejs.Mp3Encoder(numCh, sr, kbps);
-                const blockSize = 1152;
-                const mp3Data = [];
-
-                // Get channel data as Int16
-                function floatTo16(arr) {
-                    const out = new Int16Array(arr.length);
-                    for (let i = 0; i < arr.length; i++) {
-                        const s = Math.max(-1, Math.min(1, arr[i]));
-                        out[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                    }
-                    return out;
-                }
-
-                const left = floatTo16(buffer.getChannelData(0));
-                const right = numCh > 1 ? floatTo16(buffer.getChannelData(1)) : null;
-
-                const totalBlocks = Math.ceil(left.length / blockSize);
-                let processedBlocks = 0;
-
-                // Process in chunks using setTimeout for UI responsiveness
-                function processChunk() {
-                    const end = Math.min(processedBlocks + 100, totalBlocks);
-
-                    for (let i = processedBlocks; i < end; i++) {
-                        const start = i * blockSize;
-                        const leftChunk = left.subarray(start, start + blockSize);
-
-                        let mp3buf;
-                        if (numCh === 1) {
-                            mp3buf = mp3enc.encodeBuffer(leftChunk);
-                        } else {
-                            const rightChunk = right.subarray(start, start + blockSize);
-                            mp3buf = mp3enc.encodeBuffer(leftChunk, rightChunk);
-                        }
-                        if (mp3buf.length > 0) mp3Data.push(mp3buf);
-                    }
-
-                    processedBlocks = end;
-                    const pct = Math.round((processedBlocks / totalBlocks) * 90) + 5;
-                    updateProgress(pct, `Encoding MP3... ${pct}%`);
-
-                    if (processedBlocks < totalBlocks) {
-                        setTimeout(processChunk, 0);
-                    } else {
-                        const last = mp3enc.flush();
-                        if (last.length > 0) mp3Data.push(last);
-                        updateProgress(98, 'Finalizing...');
-                        resolve(new Blob(mp3Data, { type: 'audio/mpeg' }));
-                    }
-                }
-
-                setTimeout(processChunk, 0);
-            });
         }
 
         // Download
