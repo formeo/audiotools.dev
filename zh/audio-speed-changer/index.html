@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#EEF1F0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+
+    <title>音频变速 — 在线放慢或加快音频，不变调 | AudioTools.dev</title>
+    <meta name="description" content="在 0.25 倍到 4 倍之间放慢或加快 MP3、M4A、WAV，音调不变：扒歌练琴、练外语或倍速收听。免费，无需上传。">
+    <meta name="keywords" content="音频变速, 变速不变调, 放慢音频, 慢速播放, MP3变速, 加快音频, 倍速播放, 扒歌, 歌曲放慢">
+    <link rel="canonical" href="https://audiotools.dev/zh/audio-speed-changer/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/audio-speed-changer/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/audio-speed-changer/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/audio-speed-changer/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:url" content="https://audiotools.dev/zh/audio-speed-changer/">
+    <meta property="og:title" content="音频变速 — 在线放慢或加快，不变调">
+    <meta property="og:description" content="在 0.25 倍到 4 倍之间放慢或加快 MP3、M4A、WAV，音调不变：扒歌练琴、练外语或倍速收听。免费，无需上传。">
+    <meta property="og:image" content="https://audiotools.dev/og/zh-audio-speed-changer.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="音频变速 — 在线放慢或加快，不变调">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="音频变速 — 在线放慢或加快，不变调">
+    <meta name="twitter:description" content="在 0.25 倍到 4 倍之间放慢或加快 MP3、M4A、WAV，音调不变：扒歌练琴、练外语或倍速收听。免费，无需上传。">
+    <meta name="twitter:image" content="https://audiotools.dev/og/zh-audio-speed-changer.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","inLanguage": "zh-CN","name":"音频变速 — AudioTools.dev","url":"https://audiotools.dev/zh/audio-speed-changer/","description":"在 0.25 倍到 4 倍之间放慢或加快 MP3、M4A、WAV，音调不变：扒歌练琴、练外语或倍速收听。免费，无需上传。","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "如何在不改变音调的情况下放慢音频？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "把文件拖到这里，选择低于 1x 的速度（例如 0.75x），点击“应用并处理”。WSOLA 时间伸缩会保留原有音调；结果可下载为 MP3 或 WAV。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以放慢 M4A 或 WAV 文件吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。MP3、M4A/AAC、WAV、FLAC、OGG 和 WebM 都支持。结果保存为 MP3 或 WAV。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "扒歌用什么速度最好？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "从 0.5x–0.75x 开始，熟练后再逐步提高速度。音调不变，可以按原调跟着弹。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以加快播客或语音消息吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。选择 1.25x–2x 并下载结果。60 分钟的录音在 1.5x 下只需 40 分钟。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "我的音频会被上传吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。所有处理都通过 Web Audio API 在您的浏览器中完成。"
+                }
+            }
+        ]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+        .container{max-width:860px;margin:0 auto;padding:0 20px}
+
+        .tool-area{ padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2)}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+
+        .speed-display{text-align:center;margin-bottom:8px}
+        .speed-display .val{font-size:34px;font-weight:800;color:var(--green)}
+        .speed-display .lbl{font-size:13px;color:var(--text2)}
+        input[type="range"]{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--surface2);outline:none;margin:12px 0}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--bg)}
+        .presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+        .preset{background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+        .preset:hover{border-color:var(--accent)}
+        .preset.active{background:rgba(35, 70, 245, 0.12);border-color:var(--green);color:var(--green)}
+        .duration-line{text-align:center;font-size:13px;color:var(--text2);margin:14px 0 20px}
+        .duration-line b{color:var(--text)}
+
+        .btn-row{display:flex;gap:10px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color: #fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:20px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .15s}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+
+        .hidden{display:none!important}
+
+        @media(max-width:600px){.btn-row{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <nav class="at-nav" aria-label="主导航">
+        <div class="at-nav-inner">
+            <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
+            <div class="at-nav-links">
+                <a href="/zh/converter/">转换器</a>
+                <a href="/zh/volume-booster/">音量增强</a>
+                <a href="/zh/text-to-speech/">文字转语音</a>
+                <a href="/zh/voice-to-text/">语音转文字</a>
+                <a href="/zh/">全部工具</a>
+                <a href="/audio-speed-changer/" class="at-lang" hreflang="en" lang="en">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C14 6 24 6 34 28 S54 50 64 28"/><polyline class="g-acc" points="74,28 78,12 82,44 86,12 90,44 94,12 98,44 102,12 106,44 110,12 114,44 118,12 122,44 126,12 130,44 134,12 138,44 142,12 146,44 150,28"/></svg>
+            <h1>音频变速</h1>
+            <p>放慢或加快任意音频文件——MP3、M4A、WAV——音调保持不变</p>
+        </section>
+
+        <div class="tool-area">
+            <!-- Drop zone -->
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <p><strong>将音频文件拖放到此处</strong>，或点击选择</p>
+                <p>MP3、WAV、FLAC、OGG、M4A — 在本地处理，绝不上传</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*">
+
+            <!-- Controls -->
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="移除">✕</button>
+                </div>
+
+                <div class="speed-display"><span class="val" id="speedVal">1.00x</span><div class="lbl">播放速度</div></div>
+                <input type="range" id="speed" min="0.25" max="4" step="0.05" value="1">
+                <div class="presets" id="presets">
+                    <button class="preset" data-s="0.5">0.5x</button>
+                    <button class="preset" data-s="0.75">0.75x</button>
+                    <button class="preset active" data-s="1">1x</button>
+                    <button class="preset" data-s="1.25">1.25x</button>
+                    <button class="preset" data-s="1.5">1.5x</button>
+                    <button class="preset" data-s="2">2x</button>
+                </div>
+                <div class="duration-line">时长：<b id="origDur">0:00</b> → <b id="newDur">0:00</b></div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="applyBtn" onclick="applySpeed()" style="flex:1;">应用并处理</button>
+                    <button class="btn btn-secondary" onclick="reset()">重置</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">处理中…</div>
+                </div>
+
+                <div class="result hidden" id="result">
+                    <p class="result-title">结果 — <span id="resultSpeed"></span></p>
+                    <audio id="resultAudio" controls></audio>
+                    <label class="out-format">格式 <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · 无损</option></select></label>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">下载</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">速度可调</div><div class="feature-desc">0.25 倍到 4 倍，可用滑块或快捷预设。</div></div>
+            <div class="feature"><div class="feature-title">保持音调</div><div class="feature-desc">WSOLA 时间伸缩让人声保持自然，不会变尖。</div></div>
+            <div class="feature"><div class="feature-title">下载结果</div><div class="feature-desc">把变速后的音频保存为 MP3 或 WAV。</div></div>
+            <div class="feature"><div class="feature-title">100% 私密</div><div class="feature-desc">所有处理都在浏览器中完成，文件不会离开您的设备。</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>放慢或加快音频，音调不变</h2>
+            <p>音频变速是一个在线放慢、加快音频的工具。它能把任意录音调到 0.25 倍（慢四倍）到 4 倍速，并保持原来的音调：放慢的歌曲不跑调，加快的人声也不会变尖。它在浏览器中运行，不上传任何内容。</p>
+            <h3>如何放慢音频文件</h3>
+            <ol>
+                <li>把 MP3、M4A、WAV 或其他音频文件拖到上面的框中。</li>
+                <li>选择预设（0.5x、0.75x、1.25x、1.5x、2x），或用滑块设置 0.25x 到 4x 之间的任意速度。</li>
+                <li>点击“应用并处理”，试听结果。</li>
+                <li>下载为 MP3 或 WAV。</li>
+            </ol>
+            <h3>放慢歌曲来扒歌练琴</h3>
+            <p>吉他独奏、钢琴段落和鼓的加花，用 0.5x–0.75x 学起来更容易。音调不变，所以可以按原调跟着弹。想反复练某一段，先用<a href="/zh/audio-trimmer/">音频剪辑</a>把它剪出来，再到这里放慢。</p>
+            <h3>放慢语音，用于学外语和听写</h3>
+            <p>在 0.75x 下，母语者的语速更容易跟上，听起来也不别扭。手动整理采访或讲座时，0.5x–0.75x 能让您跟上说话人的节奏。</p>
+            <h3>加快播客、讲座和语音消息</h3>
+            <p>1.5x 时，60 分钟的讲座只需 40 分钟；2x 时只需 30 分钟。得到的是一个更短的文件，可以保存并在任何地方播放，而不只是播放器里的倍速设置。</p>
+            <h3>音调保持不变</h3>
+            <p>简单的变速会连带改变音调：加快变高，放慢变低。本工具使用 WSOLA（波形相似叠加）时间伸缩，只改变速度、保留原有音调，人声和乐器听起来都很自然。</p>
+            <h3>支持的格式</h3>
+            <p>MP3、M4A/AAC、WAV、FLAC、OGG 和 WebM：浏览器能播放的都可以。结果保存为 MP3 或 WAV；如需 M4A 或 FLAC，之后用<a href="/zh/converter/">音频转换器</a>转换即可。</p>
+            <p>想要文字？<a href="/zh/voice-to-text/">语音转文字</a>可以在您的设备上转录录音。想先把几段录音连起来，请用<a href="/zh/audio-joiner/">音频合并</a>。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item"><div class="faq-q">如何在不改变音调的情况下放慢音频？</div><div class="faq-a">把文件拖到这里，选择低于 1x 的速度（例如 0.75x），点击“应用并处理”。WSOLA 时间伸缩会保留原有音调；结果可下载为 MP3 或 WAV。</div></div>
+            <div class="faq-item"><div class="faq-q">可以放慢 M4A 或 WAV 文件吗？</div><div class="faq-a">可以。MP3、M4A/AAC、WAV、FLAC、OGG 和 WebM 都支持。结果保存为 MP3 或 WAV。</div></div>
+            <div class="faq-item"><div class="faq-q">扒歌用什么速度最好？</div><div class="faq-a">从 0.5x–0.75x 开始，熟练后再逐步提高速度。音调不变，可以按原调跟着弹。</div></div>
+            <div class="faq-item"><div class="faq-q">可以加快播客或语音消息吗？</div><div class="faq-a">可以。选择 1.25x–2x 并下载结果。60 分钟的录音在 1.5x 下只需 40 分钟。</div></div>
+            <div class="faq-item"><div class="faq-q">我的音频会被上传吗？</div><div class="faq-a">不会。所有处理都通过 Web Audio API 在您的浏览器中完成。</div></div>
+        </section>
+    </div>
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/" aria-current="page">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a></nav>
+            <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
+            <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const speedEl = document.getElementById('speed');
+        const speedVal = document.getElementById('speedVal');
+        const presetsEl = document.getElementById('presets');
+        const origDurEl = document.getElementById('origDur');
+        const newDurEl = document.getElementById('newDur');
+        const applyBtn = document.getElementById('applyBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+        const resultAudio = document.getElementById('resultAudio');
+        const resultSpeed = document.getElementById('resultSpeed');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let audioCtx, buffer, fileBase = 'audio', lastUrl = null;
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+        speedEl.addEventListener('input', () => setSpeed(parseFloat(speedEl.value), false));
+        presetsEl.addEventListener('click', e => {
+            const b = e.target.closest('.preset'); if (!b) return;
+            setSpeed(parseFloat(b.dataset.s), true);
+        });
+
+        function fmt(sec){ const m = Math.floor(sec/60), s = Math.round(sec%60); return m + ':' + String(s).padStart(2,'0'); }
+
+        function setSpeed(v, fromPreset){
+            v = Math.min(4, Math.max(0.25, v));
+            speedEl.value = v;
+            speedVal.textContent = v.toFixed(2) + 'x';
+            [...presetsEl.children].forEach(b => b.classList.toggle('active', parseFloat(b.dataset.s) === v));
+            if (buffer) newDurEl.textContent = fmt(buffer.duration / v);
+        }
+
+        async function handleFile(file) {
+            if (!file) return;
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            try {
+                const arrayBuf = await file.arrayBuffer();
+                buffer = await audioCtx.decodeAudioData(arrayBuf);
+            } catch (err) {
+                alert('无法解码此音频文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
+                return;
+            }
+            fileBase = (file.name || 'audio').replace(/\.[^.]+$/, '');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = (file.size/1024/1024).toFixed(1) + ' MB';
+            origDurEl.textContent = fmt(buffer.duration);
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            result.classList.add('hidden');
+            setSpeed(1, true);
+        }
+
+        async function applySpeed(){
+            if (!buffer) return;
+            const speed = parseFloat(speedEl.value);
+            applyBtn.disabled = true;
+            result.classList.add('hidden');
+            progressWrap.classList.remove('hidden');
+            progressFill.style.width = '0%';
+            progressText.textContent = '处理中…';
+
+            let rendered;
+            if (Math.abs(speed - 1) < 1e-3) {
+                rendered = buffer; // no-op
+                progressFill.style.width = '100%';
+            } else {
+                rendered = await timeStretch(buffer, speed, p => {
+                    progressFill.style.width = Math.round(p*100) + '%';
+                });
+            }
+
+            const wav = encodeWAV(rendered);
+            const blob = new Blob([wav], { type: 'audio/wav' });
+            if (lastUrl) URL.revokeObjectURL(lastUrl);
+            lastUrl = URL.createObjectURL(blob);
+            resultAudio.src = lastUrl;
+            resultSpeed.textContent = speed.toFixed(2) + 'x  ·  ' + fmt(rendered.duration);
+            const outName = fileBase + '_' + speed.toFixed(2).replace('.', '_') + 'x';
+            downloadBtn.onclick = () => downloadAudio(rendered, blob, document.getElementById('outFormat'), outName, downloadBtn);
+
+            progressWrap.classList.add('hidden');
+            result.classList.remove('hidden');
+            toolSuccess('audio-speed-changer', downloadBtn);
+            offerNext('audio-speed-changer', downloadBtn, new File([blob], outName + '.wav', { type: 'audio/wav' }));
+            applyBtn.disabled = false;
+        }
+
+        // WSOLA time-stretch — preserves pitch. speed>1 = faster/shorter, speed<1 = slower/longer.
+        async function timeStretch(buf, speed, onProgress){
+            const sr = buf.sampleRate, ch = buf.numberOfChannels, inLen = buf.length;
+            const win = Math.max(512, Math.round(sr * 0.05));   // ~50ms grain
+            const Hs  = Math.round(win / 2);                    // synthesis hop (50% overlap)
+            const Ha  = Math.round(Hs * speed);                 // analysis hop
+            const seek = Math.round(sr * 0.010);                // similarity window (~10ms)
+            const tol  = Math.round(sr * 0.008);                // search radius (~8ms)
+
+            const w = new Float32Array(win);
+            for (let i = 0; i < win; i++) w[i] = 0.5 - 0.5 * Math.cos((2*Math.PI*i)/(win-1));
+
+            const outLen = Math.max(win, Math.floor(inLen / speed) + win);
+            const inCh = [], outCh = [];
+            for (let c = 0; c < ch; c++){ inCh.push(buf.getChannelData(c)); outCh.push(new Float32Array(outLen)); }
+            const norm = new Float32Array(outLen);
+            const mono = inCh[0];
+
+            let prevPos = 0, nominal = 0, outPos = 0, frame = 0;
+            while (outPos + win < outLen){
+                let readPos;
+                if (frame === 0){
+                    readPos = 0;
+                } else {
+                    const target = prevPos + Hs;
+                    const center = Math.round(nominal);
+                    const lo = Math.max(0, center - tol);
+                    const hi = Math.min(inLen - win - 1, center + tol);
+                    if (target + seek >= inLen) break;
+                    let best = lo, bestScore = -Infinity;
+                    for (let k = lo; k <= hi; k++){
+                        let dot = 0;
+                        for (let j = 0; j < seek; j++) dot += mono[k+j] * mono[target+j];
+                        if (dot > bestScore){ bestScore = dot; best = k; }
+                    }
+                    readPos = best;
+                }
+                if (readPos + win >= inLen) break;
+
+                for (let i = 0; i < win; i++){
+                    const wi = w[i];
+                    for (let c = 0; c < ch; c++) outCh[c][outPos+i] += inCh[c][readPos+i] * wi;
+                    norm[outPos+i] += wi;
+                }
+                prevPos = readPos;
+                nominal += Ha;
+                outPos += Hs;
+                frame++;
+                if ((frame & 63) === 0){
+                    if (onProgress) onProgress(Math.min(0.99, outPos / outLen));
+                    await new Promise(r => setTimeout(r));
+                }
+            }
+
+            const actualLen = Math.min(outLen, outPos + win);
+            const out = audioCtx.createBuffer(ch, actualLen, sr);
+            for (let c = 0; c < ch; c++){
+                const o = outCh[c], d = out.getChannelData(c);
+                for (let i = 0; i < actualLen; i++) d[i] = norm[i] > 1e-6 ? o[i] / norm[i] : 0;
+            }
+            return out;
+        }
+
+        function encodeWAV(audioBuffer){
+            const ch = audioBuffer.numberOfChannels, sr = audioBuffer.sampleRate, len = audioBuffer.length;
+            const ab = new ArrayBuffer(44 + len * ch * 2);
+            const view = new DataView(ab);
+            function s(o, str){ for (let i = 0; i < str.length; i++) view.setUint8(o+i, str.charCodeAt(i)); }
+            s(0,'RIFF'); view.setUint32(4, 36 + len*ch*2, true); s(8,'WAVE'); s(12,'fmt ');
+            view.setUint32(16,16,true); view.setUint16(20,1,true); view.setUint16(22,ch,true);
+            view.setUint32(24,sr,true); view.setUint32(28,sr*ch*2,true); view.setUint16(32,ch*2,true);
+            view.setUint16(34,16,true); s(36,'data'); view.setUint32(40, len*ch*2, true);
+            let offset = 44;
+            for (let i = 0; i < len; i++){
+                for (let c = 0; c < ch; c++){
+                    let sample = Math.max(-1, Math.min(1, audioBuffer.getChannelData(c)[i]));
+                    view.setInt16(offset, sample < 0 ? sample*0x8000 : sample*0x7FFF, true);
+                    offset += 2;
+                }
+            }
+            return ab;
+        }
+
+        function reset(){
+            buffer = null;
+            if (lastUrl){ URL.revokeObjectURL(lastUrl); lastUrl = null; }
+            resultAudio.pause(); resultAudio.removeAttribute('src');
+            fileInput.value = '';
+            panel.classList.add('hidden');
+            result.classList.add('hidden');
+            progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+        }
+    </script>
+    <script src="/audio-export.js"></script>
+    <script src="/support.js"></script>
+    <script src="/assistant.js"></script>
+</body>
+</html>
