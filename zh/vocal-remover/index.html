@@ -14,9 +14,9 @@
       gtag('config', 'G-62ZJNZFRES');
     </script>
 
-    <title>人声消除 — 即将推出 | AudioTools.dev</title>
-    <meta name="description" content="在浏览器中运行的人声消除工具：把歌曲分离成伴奏（卡拉 OK 伴奏）和人声，无需上传歌曲。即将推出。">
-    <meta name="robots" content="noindex, follow">
+    <title>人声消除 — 免费在线去人声、提取伴奏 | AudioTools.dev</title>
+    <meta name="description" content="在浏览器中去掉歌曲里的人声：得到伴奏（卡拉 OK 伴奏）和单独的人声两个文件。免费，无需上传，开源模型。">
+    <meta name="keywords" content="人声消除, 去人声, 提取伴奏, 伴奏提取, 消音, 卡拉OK伴奏, 人声分离, 提取人声, 在线去人声, 免费">
     <link rel="canonical" href="https://audiotools.dev/zh/vocal-remover/">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/vocal-remover/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/vocal-remover/">
@@ -25,13 +25,71 @@
     <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="zh_CN">
     <meta property="og:url" content="https://audiotools.dev/zh/vocal-remover/">
-    <meta property="og:title" content="人声消除 — 即将推出">
-    <meta property="og:description" content="在浏览器中运行的人声消除工具：把歌曲分离成伴奏（卡拉 OK 伴奏）和人声，无需上传歌曲。即将推出。">
-    <meta property="og:image" content="https://audiotools.dev/og/zh.png">
+    <meta property="og:title" content="人声消除 — 提取伴奏和人声，无需上传">
+    <meta property="og:description" content="在浏览器中去掉歌曲里的人声：得到伴奏（卡拉 OK 伴奏）和单独的人声两个文件。免费，无需上传，开源模型。">
+    <meta property="og:image" content="https://audiotools.dev/og/zh-vocal-remover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="人声消除 — 提取伴奏和人声，无需上传">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="人声消除 — 提取伴奏和人声，无需上传">
+    <meta name="twitter:description" content="在浏览器中去掉歌曲里的人声：得到伴奏（卡拉 OK 伴奏）和单独的人声两个文件。免费，无需上传，开源模型。">
+    <meta name="twitter:image" content="https://audiotools.dev/og/zh-vocal-remover.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","inLanguage": "zh-CN","name":"人声消除 — AudioTools.dev","url":"https://audiotools.dev/zh/vocal-remover/","description":"在浏览器中去掉歌曲里的人声：得到伴奏（卡拉 OK 伴奏）和单独的人声两个文件。免费，无需上传，开源模型。","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "如何免费去掉歌曲里的人声？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "把歌曲拖到这里，点击“消除人声”。完成后把伴奏下载为 MP3 或 WAV。完全免费，无需账号，没有限制。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "我的歌曲会上传到服务器吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。分离模型在您的浏览器中运行，只会下载一次模型文件。歌曲绝不离开您的设备。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以只提取人声（清唱）吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。您会得到两个文件：伴奏和人声，可以下载其中一个或两个都下载。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "手机上能用吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "能，适用于最新的 Chrome 和 Safari，但比电脑慢好几倍，还需要足够的空闲内存。长歌曲请用电脑。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "为什么还能听到一点人声？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。"
+                }
+            }
+        ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
@@ -40,15 +98,55 @@
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
-        .tool-area{padding:28px 32px;margin-bottom:32px}
-        .soon{display:inline-flex;padding:4px 12px;border:1.5px solid var(--ink);border-radius:999px;font-size:13px;font-weight:700;color:var(--ink)}
-        .tool-area h2{margin:18px 0 10px;font-size:20px;font-weight:800;color:var(--ink)}
-        .tool-area ul{margin:0 0 18px;padding-left:20px}
-        .tool-area li,.tool-area p{font-size:15px;line-height:1.65;color:var(--text2)}
-        .tool-area li{margin-bottom:8px}
-        .tool-area a{color:var(--accent2);text-decoration:underline;text-underline-offset:3px}
-        .meanwhile{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
-        @media (max-width:600px){.tool-area{padding:20px}}
+
+        .tool-area{padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:16px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2);white-space:nowrap}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+        .note{font-size:13px;color:var(--text2);margin-bottom:16px}
+
+        .btn-row{display:flex;gap:10px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color:#fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:20px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .3s}
+        .progress-bar.indeterminate .progress-fill{width:30%;animation:slide 1.4s ease-in-out infinite}
+        @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+
+        /* the two results, stacked like tracks in an editor; each lane's mark is its half of the hero glyph */
+        .lanes{margin-top:20px;border:1.5px solid var(--ink);border-radius:var(--radius);overflow:hidden}
+        .lane{display:grid;grid-template-columns:56px 1fr;gap:4px 16px;align-items:center;padding:16px 18px;background:var(--surface)}
+        .lane + .lane{border-top:1px solid var(--border)}
+        .lane svg{grid-row:span 2;width:56px;height:20px;fill:none;stroke-width:2.4;stroke-linecap:round}
+        .lane-title{font-size:15px;font-weight:700;color:var(--ink)}
+        .lane-title span{font-weight:400;color:var(--text2)}
+        .lane-play{display:flex;gap:10px;align-items:center}
+        .lane audio{flex:1;min-width:0;height:40px}
+        .lane .btn{padding:10px 18px}
+        .hidden{display:none!important}
+
+        @media(max-width:600px){
+            .tool-area{padding:20px}
+            .drop-zone{padding:32px 16px}
+            .btn-row{flex-direction:column}
+            .lane{grid-template-columns:1fr}
+            .lane svg{grid-row:auto}
+            .lane-play{flex-direction:column;align-items:stretch}
+        }
     </style>
 </head>
 <body>
@@ -70,31 +168,270 @@
         <section class="hero">
             <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
             <h1>人声消除</h1>
-            <p>去掉歌曲里的人声，只留下音乐——在您的设备上完成，无需上传歌曲</p>
+            <p>把歌曲分成伴奏和人声——用于卡拉 OK、练习或翻唱混音。在您的设备上运行，歌曲绝不上传</p>
         </section>
 
         <div class="tool-area">
-            <span class="soon">即将推出</span>
-            <h2>它将能做什么</h2>
-            <ul>
-                <li>把一首歌分成两个文件：伴奏（可用于卡拉 OK）和单独的人声。</li>
-                <li>和这里的其他工具一样，用开源的分离模型在浏览器中运行：歌曲绝不上传。</li>
-                <li>支持 MP3、M4A、WAV、FLAC 文件以及视频中的声音。</li>
-            </ul>
-            <p>目前还没有确定日期。新工具会在<a href="/changelog/">更新日志</a>中公布。</p>
-            <p class="meanwhile">现在就想学一首歌？可以<a href="/zh/audio-speed-changer/">放慢速度而不改变音调</a>，或用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出要练习的片段。</p>
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></div>
+                <p><strong>将歌曲拖放到此处</strong>，或点击选择</p>
+                <p>MP3、M4A、WAV、FLAC、OGG 或视频——在您的设备上处理，绝不上传</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*,video/*">
+
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="移除">✕</button>
+                </div>
+                <p class="note" id="note">在电脑上大约需要与歌曲时长相当的时间，手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">消除人声</button>
+                    <button class="btn btn-secondary" onclick="reset()">重置</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText" aria-live="polite"></div>
+                </div>
+
+                <div id="result" class="hidden">
+                    <div class="lanes">
+                        <div class="lane">
+                            <svg viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
+                            <div class="lane-title">伴奏 <span>— 去掉人声的歌曲</span></div>
+                            <div class="lane-play"><audio id="instAudio" controls></audio><button class="btn btn-primary" id="instBtn">下载</button></div>
+                        </div>
+                        <div class="lane">
+                            <svg viewBox="0 0 160 56" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/></svg>
+                            <div class="lane-title">人声 <span>— 单独的人声</span></div>
+                            <div class="lane-play"><audio id="vocAudio" controls></audio><button class="btn btn-secondary" id="vocBtn">下载</button></div>
+                        </div>
+                    </div>
+                    <label class="out-format">格式 <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · 无损</option></select></label>
+                </div>
+            </div>
         </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">一首歌，两个文件</div><div class="feature-desc">伴奏（可用作卡拉 OK 伴奏）和单独的人声。</div></div>
+            <div class="feature"><div class="feature-title">训练过的分离模型</div><div class="feature-desc">使用开源神经网络 SCNet，而不是抵消中置声道的老办法。</div></div>
+            <div class="feature"><div class="feature-title">歌曲和视频</div><div class="feature-desc">MP3、M4A、WAV、FLAC、OGG 或视频的声音。保存为 MP3 或 WAV。</div></div>
+            <div class="feature"><div class="feature-title">100% 私密</div><div class="feature-desc">歌曲在您的浏览器中分离，绝不上传。</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>免费去掉歌曲里的人声，无需上传</h2>
+            <p>人声消除会把一首歌分成两个文件：去掉演唱的伴奏，以及单独的人声。它在浏览器中运行开源音乐分离模型 SCNet，歌曲始终留在您的设备上。无需账号，无需排队，歌曲数量不限。</p>
+            <h3>如何制作伴奏或卡拉 OK 伴奏</h3>
+            <ol>
+                <li>把歌曲拖到上面的框中：MP3、M4A、WAV、FLAC、OGG 或视频。</li>
+                <li>点击“消除人声”。首次使用时会下载一次模型（13 MB）。</li>
+                <li>试听两个结果，把伴奏、人声或两者下载为 MP3 或 WAV。</li>
+            </ol>
+            <h3>适合做什么</h3>
+            <ul>
+                <li><strong>卡拉 OK 和练唱</strong>——跟着原曲伴奏演唱。</li>
+                <li><strong>学乐器</strong>——听清没有人声覆盖的吉他、钢琴或贝斯。想放慢而不变调，可以继续用<a href="/zh/audio-speed-changer/">音频变速</a>。</li>
+                <li><strong>清唱和混音</strong>——提取人声用于翻唱、混搭或采样。</li>
+                <li><strong>扒歌词</strong>——单独的人声更容易听清，还可以用<a href="/zh/voice-to-text/">语音转文字</a>记下来。</li>
+            </ul>
+            <h3>效果如何？</h3>
+            <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。</p>
+            <h3>需要多长时间？</h3>
+            <p>在较新的电脑上，大约与歌曲时长相当或更短；在支持 WebGPU 的浏览器中，它会在显卡上运行，速度更快。在手机上可能要慢好几倍，还需要足够的空闲内存，所以长歌曲最好用电脑处理。页面会显示正在处理第几段以及大约还剩多少时间。</p>
+            <h3>隐私</h3>
+            <p>歌曲在您的浏览器中用 ONNX Runtime Web 解码和分离。页面只下载一次模型文件（13 MB）和运行库；您的音频不会被发送到任何地方。AudioTools.dev 也没有可以接收它的服务器。</p>
+            <p>还需要别的？用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出一段，用<a href="/zh/volume-booster/">音量增强</a>提高音量，或用<a href="/zh/converter/">音频转换器</a>转换格式。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item"><div class="faq-q">如何免费去掉歌曲里的人声？</div><div class="faq-a">把歌曲拖到这里，点击“消除人声”。完成后把伴奏下载为 MP3 或 WAV。完全免费，无需账号，没有限制。</div></div>
+            <div class="faq-item"><div class="faq-q">我的歌曲会上传到服务器吗？</div><div class="faq-a">不会。分离模型在您的浏览器中运行，只会下载一次模型文件。歌曲绝不离开您的设备。</div></div>
+            <div class="faq-item"><div class="faq-q">可以只提取人声（清唱）吗？</div><div class="faq-a">可以。您会得到两个文件：伴奏和人声，可以下载其中一个或两个都下载。</div></div>
+            <div class="faq-item"><div class="faq-q">手机上能用吗？</div><div class="faq-a">能，适用于最新的 Chrome 和 Safari，但比电脑慢好几倍，还需要足够的空闲内存。长歌曲请用电脑。</div></div>
+            <div class="faq-item"><div class="faq-q">为什么还能听到一点人声？</div><div class="faq-a">分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。</div></div>
+        </section>
     </div>
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a></nav>
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a><a href="/zh/vocal-remover/" aria-current="page">人声消除</a></nav>
             <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
             <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
         </div>
     </footer>
 
+    <script>
+        // Model: SCNet (MIT weights), served from this site (see /vendor/neural/README.md), checked by SHA-256.
+        const MODEL = { url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13 };
+        const RATE = 44100;   // SCNet's rate: the song is decoded at it, so nothing is resampled again
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const runBtn = document.getElementById('runBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+
+        let song = null, fileBase = 'song', worker = null, job = null, urls = [];
+
+        // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them on this page.
+        // Browsers with COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from
+        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread, or WebGPU.
+        if (!crossOriginIsolated && 'serviceWorker' in navigator && (window.chrome || window.netscape)) {
+            const wasControlled = !!navigator.serviceWorker.controller;
+            navigator.serviceWorker.register('/coi-sw.js', { scope: location.pathname }).then(() => {
+                if (wasControlled) return;   // controlled yet not isolated: leave it, don't reload in a loop
+                navigator.serviceWorker.addEventListener('controllerchange', () => { if (!song && !job) location.reload(); }, { once: true });
+            }).catch(() => {});
+        }
+
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+        const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0');
+        const timeLeft = (s) => (s < 60 ? '剩余不到 1 分钟' : '约剩 ' + Math.round(s / 60) + ' 分钟');
+
+        async function handleFile(file) {
+            if (!file || job) return;
+            let buf;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: RATE });
+                buf = await ctx.decodeAudioData(await file.arrayBuffer());
+                ctx.close();
+            } catch (e) {
+                alert('无法解码此文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
+                return;
+            }
+            song = buf;
+            fileBase = (file.name || 'song').replace(/\.[^.]+$/, '');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = fmt(buf.duration) + ' · ' + (file.size / 1048576).toFixed(1) + ' MB';
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            result.classList.add('hidden');
+            runBtn.disabled = false;
+        }
+
+        // fraction 0–1 fills the bar; null animates it (working, amount unknown)
+        function setProgress(text, fraction) {
+            progressWrap.classList.remove('hidden');
+            progressText.textContent = text;
+            progressBar.classList.toggle('indeterminate', fraction === null);
+            progressFill.style.width = fraction === null ? '' : Math.round(fraction * 100) + '%';
+        }
+
+        async function gpuDevice() {
+            try {
+                const a = navigator.gpu && await navigator.gpu.requestAdapter();
+                return a && !(a.info && a.info.isFallbackAdapter) ? 'webgpu' : 'wasm';
+            } catch (e) { return 'wasm'; }
+        }
+
+        async function run(device) {
+            if (!song || job) return;
+            device = device || await gpuDevice();
+            runBtn.disabled = true;
+            result.classList.add('hidden');
+            job = { device, start: 0 };
+            setProgress('正在准备…', null);
+            worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
+            worker.onmessage = ({ data }) => {
+                if (data.type === 'download') {
+                    const mb = data.loaded / 1048576;
+                    setProgress(`正在下载模型（仅首次）：${mb.toFixed(1)} / ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
+                } else if (data.type === 'part') {
+                    if (!job.start) job.start = Date.now();
+                    const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
+                    setProgress(data.done ? `正在分离…第 ${data.done + 1} 段，共 ${data.total} 段 · ${timeLeft(left)}` : `正在分离…第 1 段，共 ${data.total} 段`, data.done / data.total);
+                } else if (data.type === 'done') {
+                    job = null;
+                    showResult(data.instrumental, data.vocals);
+                } else if (job.device === 'webgpu') {
+                    job = null;
+                    run('wasm');   // WebGPU failed here: the same model on the CPU
+                } else {
+                    job = null;
+                    progressWrap.classList.add('hidden');
+                    runBtn.disabled = false;
+                    alert('分离失败：' + data.message);
+                }
+            };
+            const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
+            worker.postMessage({ channels, sampleRate: song.sampleRate, device, model: MODEL }, channels.map((c) => c.buffer));
+        }
+
+        function toBuffer(channels) {
+            const b = new AudioBuffer({ length: channels[0].length, numberOfChannels: channels.length, sampleRate: song.sampleRate });
+            channels.forEach((c, i) => b.copyToChannel(c, i));
+            return b;
+        }
+
+        function showResult(instrumental, vocals) {
+            urls.forEach((u) => URL.revokeObjectURL(u));
+            urls = [];
+            progressWrap.classList.add('hidden');
+            runBtn.disabled = false;
+            const parts = [['inst', instrumental, '_instrumental'], ['voc', vocals, '_vocals']].map(([id, channels, suffix]) => {
+                const buffer = toBuffer(channels), wav = new Blob([encodeWAV(buffer)], { type: 'audio/wav' });
+                const url = URL.createObjectURL(wav);
+                urls.push(url);
+                document.getElementById(id + 'Audio').src = url;
+                const btn = document.getElementById(id + 'Btn');
+                btn.onclick = () => downloadAudio(buffer, wav, document.getElementById('outFormat'), fileBase + suffix, btn);
+                return { buffer, wav, name: fileBase + suffix };
+            });
+            result.classList.remove('hidden');
+            toolSuccess('vocal-remover', document.getElementById('outFormat').parentElement);
+            offerNext('vocal-remover', document.getElementById('outFormat').parentElement, new File([parts[0].wav], parts[0].name + '.wav', { type: 'audio/wav' }), ['audio-speed-changer', 'audio-trimmer']);
+        }
+
+        function encodeWAV(audioBuffer) {
+            const ch = audioBuffer.numberOfChannels, sr = audioBuffer.sampleRate, len = audioBuffer.length;
+            const ab = new ArrayBuffer(44 + len * ch * 2);
+            const view = new DataView(ab);
+            const s = (o, str) => { for (let i = 0; i < str.length; i++) view.setUint8(o + i, str.charCodeAt(i)); };
+            s(0, 'RIFF'); view.setUint32(4, 36 + len * ch * 2, true); s(8, 'WAVE'); s(12, 'fmt ');
+            view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, ch, true);
+            view.setUint32(24, sr, true); view.setUint32(28, sr * ch * 2, true); view.setUint16(32, ch * 2, true);
+            view.setUint16(34, 16, true); s(36, 'data'); view.setUint32(40, len * ch * 2, true);
+            const data = Array.from({ length: ch }, (_, c) => audioBuffer.getChannelData(c));
+            let offset = 44;
+            for (let i = 0; i < len; i++) {
+                for (let c = 0; c < ch; c++) {
+                    const v = Math.max(-1, Math.min(1, data[c][i]));
+                    view.setInt16(offset, v < 0 ? v * 0x8000 : v * 0x7FFF, true);
+                    offset += 2;
+                }
+            }
+            return ab;
+        }
+
+        function reset() {
+            if (job) { worker.terminate(); worker = null; job = null; }
+            song = null;
+            urls.forEach((u) => URL.revokeObjectURL(u));
+            urls = [];
+            ['instAudio', 'vocAudio'].forEach((id) => { const a = document.getElementById(id); a.pause(); a.removeAttribute('src'); });
+            fileInput.value = '';
+            panel.classList.add('hidden');
+            result.classList.add('hidden');
+            progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+            const next = document.getElementById('next-actions'); if (next) next.remove();
+        }
+    </script>
+    <script src="/audio-export.js"></script>
+    <script src="/support.js"></script>
     <script src="/assistant.js"></script>
 </body>
 </html>

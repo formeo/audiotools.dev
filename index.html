@@ -15,7 +15,7 @@
     </script>
 
     <title>Free Online Audio Tools — No Upload | AudioTools.dev</title>
-    <meta name="description" content="Free audio tools that run in your browser: convert, trim, join, boost volume, change speed, compress, text to speech and voice to text. No upload, no sign-up.">
+    <meta name="description" content="Free audio tools that run in your browser: convert, trim, join, boost, change speed, compress, remove vocals, text to speech and voice to text. No upload.">
     <meta name="keywords" content="audio tools online, audio converter, voice to text, text to speech, audio trimmer, mp3 converter, audio editor online, free audio tools, browser audio processing">
     <link rel="canonical" href="https://audiotools.dev/">
     <meta property="og:type" content="website">
@@ -23,14 +23,14 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://audiotools.dev/">
     <meta property="og:title" content="Audio tools that never upload your files — AudioTools.dev">
-    <meta property="og:description" content="Free audio tools that run in your browser: convert, trim, join, boost volume, change speed, compress, text to speech and voice to text. No upload, no sign-up.">
+    <meta property="og:description" content="Free audio tools that run in your browser: convert, trim, join, boost, change speed, compress, remove vocals, text to speech and voice to text. No upload.">
     <meta property="og:image" content="https://audiotools.dev/og/home.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Audio tools that never upload your files — AudioTools.dev">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Audio tools that never upload your files — AudioTools.dev">
-    <meta name="twitter:description" content="Free audio tools that run in your browser: convert, trim, join, boost volume, change speed, compress, text to speech and voice to text. No upload, no sign-up.">
+    <meta name="twitter:description" content="Free audio tools that run in your browser: convert, trim, join, boost, change speed, compress, remove vocals, text to speech and voice to text. No upload.">
     <meta name="twitter:image" content="https://audiotools.dev/og/home.png">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -61,7 +61,8 @@
             {"@type": "ListItem", "position": 5, "item": {"@type": "WebApplication", "name": "Audio Speed Changer", "url": "https://audiotools.dev/audio-speed-changer/"}},
             {"@type": "ListItem", "position": 6, "item": {"@type": "WebApplication", "name": "Volume Booster", "url": "https://audiotools.dev/volume-booster/"}},
             {"@type": "ListItem", "position": 7, "item": {"@type": "WebApplication", "name": "Audio Joiner", "url": "https://audiotools.dev/audio-joiner/"}},
-            {"@type": "ListItem", "position": 8, "item": {"@type": "WebApplication", "name": "Audio Compressor", "url": "https://audiotools.dev/audio-compressor/"}}
+            {"@type": "ListItem", "position": 8, "item": {"@type": "WebApplication", "name": "Audio Compressor", "url": "https://audiotools.dev/audio-compressor/"}},
+            {"@type": "ListItem", "position": 9, "item": {"@type": "WebApplication", "name": "Vocal Remover", "url": "https://audiotools.dev/vocal-remover/"}}
         ]
     }
     </script>
@@ -160,6 +161,8 @@
         .section .sub { margin: 14px 0 40px; font-size: 18px; color: var(--text2); max-width: 640px; }
         .strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
         .strip { display: flex; flex-direction: column; gap: 10px; padding: 24px; min-height: 220px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; transition: background 0.15s; }
+        .strip.wide { grid-column: 1 / -1; min-height: 0; display: grid; grid-template-columns: 200px auto 1fr; align-items: center; column-gap: 24px; }   /* the 9th tool: a full row, so no grid cell is left empty */
+        .strip.wide span { grid-column: 3; grid-row: 1; } .strip.wide small { grid-column: 3; grid-row: 2; } .strip.wide svg { grid-row: span 2; } .strip.wide b { grid-row: span 2; }
         .strip:hover { background: var(--surface2); color: var(--ink); }
         .strip svg { width: 100%; height: 56px; fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
         .strip b { font-stretch: 115%; font-weight: 800; font-size: 21px; }
@@ -172,6 +175,7 @@
             .strip b { font-size: 17px; }
             .strip span { font-size: 13px; line-height: 1.4; }
             .strip small { display: none; }
+            .strip.wide { display: flex; align-items: stretch; }
         }
 
         /* where your file goes */
@@ -314,6 +318,12 @@
                         <span>Turn speech into text, privately with Whisper.</span>
                         <small>Files, recordings or live dictation</small>
                     </a>
+                    <a class="strip wide" href="/vocal-remover/">
+                        <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
+                        <b>Remove vocals</b>
+                        <span>Split a song into the music and the voice.</span>
+                        <small>Karaoke track and acapella</small>
+                    </a>
                 </div>
             </div>
         </section>
@@ -407,7 +417,7 @@
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/">Vocal Remover</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>

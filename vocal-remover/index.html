@@ -14,9 +14,9 @@
       gtag('config', 'G-62ZJNZFRES');
     </script>
 
-    <title>Vocal Remover — Coming Soon | AudioTools.dev</title>
-    <meta name="description" content="A vocal remover that runs in your browser: split a song into an instrumental (karaoke) track and the vocals without uploading it. Coming soon.">
-    <meta name="robots" content="noindex, follow">
+    <title>Vocal Remover — Free Karaoke &amp; Instrumental Maker | AudioTools.dev</title>
+    <meta name="description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <meta name="keywords" content="vocal remover, remove vocals from song, karaoke maker, instrumental maker, acapella extractor, isolate vocals, backing track, vocal remover online free, no upload">
     <link rel="canonical" href="https://audiotools.dev/vocal-remover/">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/vocal-remover/">
     <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/vocal-remover/">
@@ -25,13 +25,71 @@
     <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://audiotools.dev/vocal-remover/">
-    <meta property="og:title" content="Vocal Remover — Coming Soon">
-    <meta property="og:description" content="A vocal remover that runs in your browser: split a song into an instrumental (karaoke) track and the vocals without uploading it. Coming soon.">
-    <meta property="og:image" content="https://audiotools.dev/og/home.png">
+    <meta property="og:title" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
+    <meta property="og:description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <meta property="og:image" content="https://audiotools.dev/og/vocal-remover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
+    <meta name="twitter:description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <meta name="twitter:image" content="https://audiotools.dev/og/vocal-remover.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Vocal Remover — AudioTools.dev","url":"https://audiotools.dev/vocal-remover/","description":"Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I remove vocals from a song for free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Drop the song here and click Remove vocals. When it finishes, download the instrumental as MP3 or WAV. It is free, with no account and no limit."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my song uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The separation model runs in your browser; only the model file is downloaded, once. The song never leaves your device."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I get the vocals only (acapella)?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. You get two files: the instrumental and the vocals. Download either or both."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does it work on a phone?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, in current Chrome and Safari, but it is several times slower than on a computer and needs free memory. For long songs, use a computer."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why can I still hear some of the voice?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings."
+                }
+            }
+        ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
@@ -40,15 +98,55 @@
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
         .container{max-width:860px;margin:0 auto;padding:0 20px}
-        .tool-area{padding:28px 32px;margin-bottom:32px}
-        .soon{display:inline-flex;padding:4px 12px;border:1.5px solid var(--ink);border-radius:999px;font-size:13px;font-weight:700;color:var(--ink)}
-        .tool-area h2{margin:18px 0 10px;font-size:20px;font-weight:800;color:var(--ink)}
-        .tool-area ul{margin:0 0 18px;padding-left:20px}
-        .tool-area li,.tool-area p{font-size:15px;line-height:1.65;color:var(--text2)}
-        .tool-area li{margin-bottom:8px}
-        .tool-area a{color:var(--accent2);text-decoration:underline;text-underline-offset:3px}
-        .meanwhile{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
-        @media (max-width:600px){.tool-area{padding:20px}}
+
+        .tool-area{padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        .drop-icon{font-size:36px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:16px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2);white-space:nowrap}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+        .note{font-size:13px;color:var(--text2);margin-bottom:16px}
+
+        .btn-row{display:flex;gap:10px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color:#fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-wrap{margin-top:20px}
+        .progress-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+        .progress-fill{height:100%;width:0;background:var(--green);transition:width .3s}
+        .progress-bar.indeterminate .progress-fill{width:30%;animation:slide 1.4s ease-in-out infinite}
+        @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:8px}
+
+        /* the two results, stacked like tracks in an editor; each lane's mark is its half of the hero glyph */
+        .lanes{margin-top:20px;border:1.5px solid var(--ink);border-radius:var(--radius);overflow:hidden}
+        .lane{display:grid;grid-template-columns:56px 1fr;gap:4px 16px;align-items:center;padding:16px 18px;background:var(--surface)}
+        .lane + .lane{border-top:1px solid var(--border)}
+        .lane svg{grid-row:span 2;width:56px;height:20px;fill:none;stroke-width:2.4;stroke-linecap:round}
+        .lane-title{font-size:15px;font-weight:700;color:var(--ink)}
+        .lane-title span{font-weight:400;color:var(--text2)}
+        .lane-play{display:flex;gap:10px;align-items:center}
+        .lane audio{flex:1;min-width:0;height:40px}
+        .lane .btn{padding:10px 18px}
+        .hidden{display:none!important}
+
+        @media(max-width:600px){
+            .tool-area{padding:20px}
+            .drop-zone{padding:32px 16px}
+            .btn-row{flex-direction:column}
+            .lane{grid-template-columns:1fr}
+            .lane svg{grid-row:auto}
+            .lane-play{flex-direction:column;align-items:stretch}
+        }
     </style>
 </head>
 <body>
@@ -70,31 +168,270 @@
         <section class="hero">
             <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
             <h1>Vocal Remover</h1>
-            <p>Take the voice out of a song and keep the music — on your device, without uploading the song</p>
+            <p>Split a song into the music and the vocals — for karaoke, practice or a remix. Runs on your device; the song is never uploaded</p>
         </section>
 
         <div class="tool-area">
-            <span class="soon">Coming soon</span>
-            <h2>What it will do</h2>
-            <ul>
-                <li>Split a song into two files: the instrumental (a backing or karaoke track) and the vocals on their own.</li>
-                <li>Run in your browser with an open-source separation model, like every tool here: the song is never uploaded.</li>
-                <li>Open MP3, M4A, WAV and FLAC files, and the sound of a video.</li>
-            </ul>
-            <p>There is no date yet. New tools are announced in the <a href="/changelog/">changelog</a>.</p>
-            <p class="meanwhile">Learning a song in the meantime? <a href="/audio-speed-changer/">Slow it down without changing the pitch</a>, or cut out the part you practise with the <a href="/audio-trimmer/">audio trimmer</a>.</p>
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></div>
+                <p><strong>Drop a song here</strong> or click to browse</p>
+                <p>MP3, M4A, WAV, FLAC, OGG or a video — processed on your device, never uploaded</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*,video/*">
+
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="Remove">✕</button>
+                </div>
+                <p class="note" id="note">On a computer this takes about as long as the song, on a phone longer. The first time, the separation model downloads once (13 MB).</p>
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">Remove vocals</button>
+                    <button class="btn btn-secondary" onclick="reset()">Reset</button>
+                </div>
+
+                <div class="progress-wrap hidden" id="progressWrap">
+                    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText" aria-live="polite"></div>
+                </div>
+
+                <div id="result" class="hidden">
+                    <div class="lanes">
+                        <div class="lane">
+                            <svg viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
+                            <div class="lane-title">Instrumental <span>— the song without vocals</span></div>
+                            <div class="lane-play"><audio id="instAudio" controls></audio><button class="btn btn-primary" id="instBtn">Download</button></div>
+                        </div>
+                        <div class="lane">
+                            <svg viewBox="0 0 160 56" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/></svg>
+                            <div class="lane-title">Vocals <span>— the voice on its own</span></div>
+                            <div class="lane-play"><audio id="vocAudio" controls></audio><button class="btn btn-secondary" id="vocBtn">Download</button></div>
+                        </div>
+                    </div>
+                    <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
+                </div>
+            </div>
         </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">Two files from one song</div><div class="feature-desc">The instrumental (a karaoke or backing track) and the vocals on their own.</div></div>
+            <div class="feature"><div class="feature-title">A trained separation model</div><div class="feature-desc">SCNet, an open-source neural network, not the old trick of cancelling the center channel.</div></div>
+            <div class="feature"><div class="feature-title">Songs and videos</div><div class="feature-desc">MP3, M4A, WAV, FLAC, OGG, or the soundtrack of a video. Save as MP3 or WAV.</div></div>
+            <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">The song is separated in your browser and never uploaded.</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>Remove vocals from a song, free and without uploading it</h2>
+            <p>Vocal Remover splits a song into two files: the instrumental, with the singing taken out, and the vocals on their own. It runs SCNet, an open-source music separation model, in your browser, so the song stays on your device. There is no account, no queue and no limit on the number of songs.</p>
+            <h3>How to make an instrumental or karaoke track</h3>
+            <ol>
+                <li>Drop a song on the box above: MP3, M4A, WAV, FLAC, OGG, or a video.</li>
+                <li>Click “Remove vocals”. The first time, the model downloads once (13 MB).</li>
+                <li>Listen to both results and download the instrumental, the vocals, or both, as MP3 or WAV.</li>
+            </ol>
+            <h3>What it is good for</h3>
+            <ul>
+                <li><strong>Karaoke and singing practice</strong> — sing over the original backing track.</li>
+                <li><strong>Learning an instrument</strong> — hear the guitar, piano or bass without the voice on top. To slow it down without changing the key, continue in the <a href="/audio-speed-changer/">audio speed changer</a>.</li>
+                <li><strong>Acapella and remixes</strong> — take the vocals for a cover, a mashup or a sample.</li>
+                <li><strong>Transcribing lyrics</strong> — the vocals alone are easier to follow, and <a href="/voice-to-text/">voice to text</a> can write them down.</li>
+            </ul>
+            <h3>How good is it?</h3>
+            <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs.</p>
+            <h3>How long does it take?</h3>
+            <p>On a recent computer, about as long as the song or less; in browsers with WebGPU it runs on the graphics card and is faster. On a phone it can take several times longer and needs free memory, so a computer is the better choice for long songs. The page shows which part it is working on and about how much time is left.</p>
+            <h3>Privacy</h3>
+            <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
+            <p>Need something else? Cut out a part with the <a href="/audio-trimmer/">audio trimmer</a>, make it louder with the <a href="/volume-booster/">volume booster</a>, or change the format with the <a href="/converter/">audio converter</a>.</p>
+        </section>
+
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item"><div class="faq-q">How do I remove vocals from a song for free?</div><div class="faq-a">Drop the song here and click Remove vocals. When it finishes, download the instrumental as MP3 or WAV. It is free, with no account and no limit.</div></div>
+            <div class="faq-item"><div class="faq-q">Is my song uploaded to a server?</div><div class="faq-a">No. The separation model runs in your browser; only the model file is downloaded, once. The song never leaves your device.</div></div>
+            <div class="faq-item"><div class="faq-q">Can I get the vocals only (acapella)?</div><div class="faq-a">Yes. You get two files: the instrumental and the vocals. Download either or both.</div></div>
+            <div class="faq-item"><div class="faq-q">Does it work on a phone?</div><div class="faq-a">Yes, in current Chrome and Safari, but it is several times slower than on a computer and needs free memory. For long songs, use a computer.</div></div>
+            <div class="faq-item"><div class="faq-q">Why can I still hear some of the voice?</div><div class="faq-a">A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings.</div></div>
+        </section>
     </div>
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/" aria-current="page">Vocal Remover</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
         </div>
     </footer>
 
+    <script>
+        // Model: SCNet (MIT weights), served from this site (see /vendor/neural/README.md), checked by SHA-256.
+        const MODEL = { url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13 };
+        const RATE = 44100;   // SCNet's rate: the song is decoded at it, so nothing is resampled again
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const panel = document.getElementById('panel');
+        const runBtn = document.getElementById('runBtn');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const result = document.getElementById('result');
+
+        let song = null, fileBase = 'song', worker = null, job = null, urls = [];
+
+        // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them on this page.
+        // Browsers with COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from
+        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread, or WebGPU.
+        if (!crossOriginIsolated && 'serviceWorker' in navigator && (window.chrome || window.netscape)) {
+            const wasControlled = !!navigator.serviceWorker.controller;
+            navigator.serviceWorker.register('/coi-sw.js', { scope: location.pathname }).then(() => {
+                if (wasControlled) return;   // controlled yet not isolated: leave it, don't reload in a loop
+                navigator.serviceWorker.addEventListener('controllerchange', () => { if (!song && !job) location.reload(); }, { once: true });
+            }).catch(() => {});
+        }
+
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+        const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0');
+        const timeLeft = (s) => (s < 60 ? 'less than a minute left' : 'about ' + Math.round(s / 60) + ' min left');
+
+        async function handleFile(file) {
+            if (!file || job) return;
+            let buf;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: RATE });
+                buf = await ctx.decodeAudioData(await file.arrayBuffer());
+                ctx.close();
+            } catch (e) {
+                alert('Could not decode this file. Try a different format (MP3, WAV, FLAC, OGG, M4A).');
+                return;
+            }
+            song = buf;
+            fileBase = (file.name || 'song').replace(/\.[^.]+$/, '');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = fmt(buf.duration) + ' · ' + (file.size / 1048576).toFixed(1) + ' MB';
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            result.classList.add('hidden');
+            runBtn.disabled = false;
+        }
+
+        // fraction 0–1 fills the bar; null animates it (working, amount unknown)
+        function setProgress(text, fraction) {
+            progressWrap.classList.remove('hidden');
+            progressText.textContent = text;
+            progressBar.classList.toggle('indeterminate', fraction === null);
+            progressFill.style.width = fraction === null ? '' : Math.round(fraction * 100) + '%';
+        }
+
+        async function gpuDevice() {
+            try {
+                const a = navigator.gpu && await navigator.gpu.requestAdapter();
+                return a && !(a.info && a.info.isFallbackAdapter) ? 'webgpu' : 'wasm';
+            } catch (e) { return 'wasm'; }
+        }
+
+        async function run(device) {
+            if (!song || job) return;
+            device = device || await gpuDevice();
+            runBtn.disabled = true;
+            result.classList.add('hidden');
+            job = { device, start: 0 };
+            setProgress('Preparing…', null);
+            worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
+            worker.onmessage = ({ data }) => {
+                if (data.type === 'download') {
+                    const mb = data.loaded / 1048576;
+                    setProgress(`Downloading the model (first time only): ${mb.toFixed(1)} of ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
+                } else if (data.type === 'part') {
+                    if (!job.start) job.start = Date.now();
+                    const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
+                    setProgress(data.done ? `Separating… part ${data.done + 1} of ${data.total} · ${timeLeft(left)}` : `Separating… part 1 of ${data.total}`, data.done / data.total);
+                } else if (data.type === 'done') {
+                    job = null;
+                    showResult(data.instrumental, data.vocals);
+                } else if (job.device === 'webgpu') {
+                    job = null;
+                    run('wasm');   // WebGPU failed here: the same model on the CPU
+                } else {
+                    job = null;
+                    progressWrap.classList.add('hidden');
+                    runBtn.disabled = false;
+                    alert('Separation failed: ' + data.message);
+                }
+            };
+            const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
+            worker.postMessage({ channels, sampleRate: song.sampleRate, device, model: MODEL }, channels.map((c) => c.buffer));
+        }
+
+        function toBuffer(channels) {
+            const b = new AudioBuffer({ length: channels[0].length, numberOfChannels: channels.length, sampleRate: song.sampleRate });
+            channels.forEach((c, i) => b.copyToChannel(c, i));
+            return b;
+        }
+
+        function showResult(instrumental, vocals) {
+            urls.forEach((u) => URL.revokeObjectURL(u));
+            urls = [];
+            progressWrap.classList.add('hidden');
+            runBtn.disabled = false;
+            const parts = [['inst', instrumental, '_instrumental'], ['voc', vocals, '_vocals']].map(([id, channels, suffix]) => {
+                const buffer = toBuffer(channels), wav = new Blob([encodeWAV(buffer)], { type: 'audio/wav' });
+                const url = URL.createObjectURL(wav);
+                urls.push(url);
+                document.getElementById(id + 'Audio').src = url;
+                const btn = document.getElementById(id + 'Btn');
+                btn.onclick = () => downloadAudio(buffer, wav, document.getElementById('outFormat'), fileBase + suffix, btn);
+                return { buffer, wav, name: fileBase + suffix };
+            });
+            result.classList.remove('hidden');
+            toolSuccess('vocal-remover', document.getElementById('outFormat').parentElement);
+            offerNext('vocal-remover', document.getElementById('outFormat').parentElement, new File([parts[0].wav], parts[0].name + '.wav', { type: 'audio/wav' }), ['audio-speed-changer', 'audio-trimmer']);
+        }
+
+        function encodeWAV(audioBuffer) {
+            const ch = audioBuffer.numberOfChannels, sr = audioBuffer.sampleRate, len = audioBuffer.length;
+            const ab = new ArrayBuffer(44 + len * ch * 2);
+            const view = new DataView(ab);
+            const s = (o, str) => { for (let i = 0; i < str.length; i++) view.setUint8(o + i, str.charCodeAt(i)); };
+            s(0, 'RIFF'); view.setUint32(4, 36 + len * ch * 2, true); s(8, 'WAVE'); s(12, 'fmt ');
+            view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, ch, true);
+            view.setUint32(24, sr, true); view.setUint32(28, sr * ch * 2, true); view.setUint16(32, ch * 2, true);
+            view.setUint16(34, 16, true); s(36, 'data'); view.setUint32(40, len * ch * 2, true);
+            const data = Array.from({ length: ch }, (_, c) => audioBuffer.getChannelData(c));
+            let offset = 44;
+            for (let i = 0; i < len; i++) {
+                for (let c = 0; c < ch; c++) {
+                    const v = Math.max(-1, Math.min(1, data[c][i]));
+                    view.setInt16(offset, v < 0 ? v * 0x8000 : v * 0x7FFF, true);
+                    offset += 2;
+                }
+            }
+            return ab;
+        }
+
+        function reset() {
+            if (job) { worker.terminate(); worker = null; job = null; }
+            song = null;
+            urls.forEach((u) => URL.revokeObjectURL(u));
+            urls = [];
+            ['instAudio', 'vocAudio'].forEach((id) => { const a = document.getElementById(id); a.pause(); a.removeAttribute('src'); });
+            fileInput.value = '';
+            panel.classList.add('hidden');
+            result.classList.add('hidden');
+            progressWrap.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+            const next = document.getElementById('next-actions'); if (next) next.remove();
+        }
+    </script>
+    <script src="/audio-export.js"></script>
+    <script src="/support.js"></script>
     <script src="/assistant.js"></script>
 </body>
 </html>
