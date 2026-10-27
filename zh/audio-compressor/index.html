@@ -404,11 +404,14 @@
         async function handleFile(file){
             if (batch) reset();
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            readingFile(dropZone, true);
             try {
                 buffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
             } catch (err){
                 alert('无法解码此音频文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
                 return;
+            } finally {
+                readingFile(dropZone, false);
             }
             origBytes = file.size;
             fileBase = (file.name || 'audio').replace(/\.[^.]+$/, '');

@@ -46,6 +46,10 @@
             const v = num(times[1]);
             out['audio-speed-changer'] = { speed: slower && v > 1 ? 1 / v : v };
         } else if (!louder && pct && (faster || slower)) out['audio-speed-changer'] = { speed: faster ? 1 + pct[1] / 100 : 1 - pct[1] / 100 };
+        else if (!louder && (faster || slower) && (m = q.match(new RegExp('(?:到|至|\\bto\\b|до|^|\\s)\\s*' + N + '(?![\\d.,:]|\\s*(?:%|mb|мб|k|s|с|сек|秒|分|min|мин|db|дб))')))) {
+            const v = num(m[1]);   // a bare number after "slow down / faster": 0.25–4, as the speed changer takes
+            if (v >= 0.25 && v <= 4 && v !== 1) out['audio-speed-changer'] = { speed: slower && v > 1 ? 1 / v : v };
+        }
         // trim
         const remove = has(q, ['remove', 'delete', 'cut off', 'drop', 'убер', 'убра', 'удал', 'отрез', 'отреж', 'обрез', 'обреж', '去掉', '删除', '删掉', '剪掉']);
         if ((m = q.match(new RegExp('(?:from|от|(?:^|\\s)с|从)\\s*' + TIME + '\\s*(?:to|до|по|-|–|到|至)\\s*' + TIME)))) out['audio-trimmer'] = { start: sec(m[1], m[2]), end: sec(m[3], m[4] || m[2]) };

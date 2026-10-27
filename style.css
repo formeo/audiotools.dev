@@ -140,6 +140,12 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
     .batch-status a { min-height: 44px; }
 }
 
+/* ---------- a drop zone while its file is being read (support.js readingFile) ---------- */
+.drop-zone.reading { position: relative; pointer-events: none; }
+.drop-zone.reading > * { visibility: hidden; }
+.drop-zone.reading::after { content: attr(data-reading); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; color: var(--ink); animation: reading-pulse 1.2s ease-in-out infinite; }
+@keyframes reading-pulse { 50% { opacity: 0.45; } }
+
 /* ---------- links to the format pages (MP4 to MP3, WAV to MP3, …) ---------- */
 .conversions { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding: 0; }
 .seo-content .conversions { padding: 0; }   /* beats .seo-content ul */

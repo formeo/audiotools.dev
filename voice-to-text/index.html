@@ -294,7 +294,7 @@
             word-break: break-word;
         }
         .transcript-body:empty::before {
-            content: "Your transcription will appear here...\a\a Click \"Start Recording\" and speak into your microphone.";
+            content: "Your transcription will appear here.\a\a Choose a file or record yourself: Whisper writes it down on your device.";
             color: var(--text-muted);
             font-style: italic;
             white-space: pre-wrap;
@@ -330,57 +330,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Settings panel */
-        .settings {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        .settings.open { display: block; }
-        .settings-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-        }
-        .settings-row label {
-            font-size: 14px;
-            color: var(--text);
-        }
-        .settings-row span {
-            font-size: 12px;
-            color: var(--text-muted);
-            display: block;
-            margin-top: 2px;
-        }
-        .toggle {
-            position: relative;
-            width: 44px;
-            height: 24px;
-            background: var(--border);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-            border: none;
-            outline: none;
-        }
-        .toggle.on { background: var(--accent); }
-        .toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 18px;
-            height: 18px;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform 0.2s;
-        }
-        .toggle.on::after { transform: translateX(20px); }
-
         /* Browser warning */
         .browser-warning {
             background: rgba(234, 179, 8, 0.1);
@@ -390,6 +339,7 @@
             margin-bottom: 20px;
             text-align: center;
             display: none;
+            margin: 0 0 16px;
         }
         .browser-warning p {
             color: #A16207;
@@ -415,7 +365,28 @@
         .whisper-bar.indeterminate span { width: 30%; animation: whisper-slide 1.4s ease-in-out infinite; }
         @keyframes whisper-slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
         .tool-area { padding: 20px; margin-bottom: 32px; }
-        .tool-area .actions { margin-bottom: 0; }
+        .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--text-muted); }
+        .field .lang-select { min-width: 0; width: 100%; }
+        .main-actions .btn { min-height: 44px; }
+        .ts-toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        .live summary { display: flex; flex-direction: column; gap: 2px; cursor: pointer; list-style: none; }
+        .live summary::-webkit-details-marker { display: none; }
+        .live summary b { font-size: 16px; font-weight: 600; color: var(--text); }
+        .live summary b::before { content: "+ "; color: var(--accent); }
+        .live[open] summary b::before { content: "− "; }
+        .live summary span { font-size: 13px; color: var(--text-muted); }
+        .live[open] summary { margin-bottom: 16px; }
+        .live-option { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14px; color: var(--text); }
+        .recording-indicator span { font-variant-numeric: tabular-nums; }
+        @media (max-width: 600px) {
+            .fields { grid-template-columns: 1fr; }
+            .main-actions .btn { flex: 1 1 100%; justify-content: center; }
+            .transcript-header { flex-wrap: wrap; gap: 6px; padding: 10px 16px; }
+            .actions { display: grid; grid-template-columns: 1fr 1fr; }
+            .actions .btn { justify-content: center; min-height: 44px; }
+        }
+        .tool-area .actions { margin-bottom: 20px; }
     </style>
 
     <script type="application/ld+json">
@@ -507,16 +478,15 @@
         <p>Turn recordings, voice messages and live speech into text — free, with private on-device transcription</p>
     </section>
 
-    <!-- Browser compatibility warning -->
-    <div class="browser-warning" id="browserWarning">
-        <p>Your browser doesn't support the Web Speech API. Please use <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong> for live speech recognition, or use <strong>Private mode</strong> below — it works in any modern browser.</p>
-    </div>
-
     <div class="tool-area">
-    <!-- Controls -->
-    <div class="controls">
-        <div class="controls-row">
-            <select class="lang-select" id="langSelect" aria-label="Select language">
+    <!-- Files and recordings: Whisper on the device -->
+    <div class="controls whisper">
+        <h2>Transcribe a file or a recording</h2>
+        <p class="whisper-note">Whisper runs in your browser, so your audio never leaves your device. The model is downloaded once from Hugging Face and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster.</p>
+        <div class="fields">
+            <label class="field"><span>Language</span>
+            <select class="lang-select" id="langSelect">
+                <option value="auto">🌐 Detect automatically</option>
                 <option value="en-US">🇺🇸 English (US)</option>
                 <option value="en-GB">🇬🇧 English (UK)</option>
                 <option value="ru-RU">🇷🇺 Русский</option>
@@ -565,52 +535,15 @@
                 <option value="gl-ES">Galego</option>
                 <option value="ka-GE">🇬🇪 ქართული</option>
                 <option value="sr-RS">🇷🇸 Српски</option>
-            </select>
-
-            <button class="btn btn-start" id="startBtn" onclick="startRecording()">
-                <span>●</span> Start Recording
-            </button>
-            <button class="btn btn-stop" id="stopBtn" onclick="stopRecording()" style="display:none;">
-                <span>■</span> Stop
-            </button>
-
-            <div class="recording-indicator" id="recordingIndicator">
-                <div class="pulse"></div>
-                Recording...
-            </div>
-
-            <button class="btn btn-secondary" onclick="toggleSettings()" style="margin-left:auto;" title="Settings" aria-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-        </div>
-    </div>
-
-    <!-- Settings -->
-    <div class="settings" id="settingsPanel">
-        <div class="settings-row">
-            <div>
-                <label>Continuous mode</label>
-                <span>Keep recording after pauses</span>
-            </div>
-            <button class="toggle on" id="continuousToggle" onclick="toggleContinuous()"></button>
-        </div>
-        <div class="settings-row">
-            <div>
-                <label>Auto-punctuation</label>
-                <span>Add periods after detected sentence ends</span>
-            </div>
-            <button class="toggle on" id="punctuationToggle" onclick="togglePunctuation()"></button>
-        </div>
-    </div>
-
-    <!-- Private mode: on-device Whisper -->
-    <div class="controls whisper">
-        <h2>Private mode — Whisper on your device</h2>
-        <p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster. Uses the language selected above.</p>
-        <div class="controls-row">
-            <select class="lang-select" id="whisperModel" aria-label="Select Whisper model">
+            </select></label>
+            <label class="field"><span>Model</span>
+            <select class="lang-select" id="whisperModel">
                 <option value="base" selected>Whisper Base · ~80 MB · fast</option>
                 <option value="small">Whisper Small · ~250 MB · more accurate</option>
                 <option value="turbo">Whisper Turbo · ~1.6 GB · best quality, for computers</option>
-            </select>
+            </select></label>
+        </div>
+        <div class="controls-row main-actions">
             <button class="btn btn-start" id="whisperFileBtn" onclick="document.getElementById('whisperFile').click()">Transcribe file</button>
             <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) transcribeBlob(this.files[0]); this.value = '';">
             <button class="btn btn-secondary" id="whisperRecBtn" onclick="toggleWhisperRecording()">Record &amp; transcribe</button>
@@ -624,9 +557,9 @@
         <div class="transcript-header">
             <span>Transcription</span>
             <div class="transcript-stats">
+                <label class="ts-toggle"><input type="checkbox" id="tsToggle" checked onchange="updateTranscript('')"> Timestamps</label>
                 <span id="wordCount">0 words</span>
                 <span id="charCount">0 chars</span>
-                <span id="duration">0:00</span>
             </div>
         </div>
         <div class="transcript-body" id="transcript"></div>
@@ -636,8 +569,23 @@
     <div class="actions">
         <button class="btn btn-secondary" onclick="copyText()" id="copyBtn" disabled>Copy</button>
         <button class="btn btn-secondary" onclick="downloadTxt()" id="downloadBtn" disabled>Download .txt</button>
+        <button class="btn btn-secondary" onclick="downloadSrt()" id="srtBtn" disabled title="Subtitles with timestamps">Download .srt</button>
         <button class="btn btn-secondary" onclick="clearText()" id="clearBtn" disabled>Clear</button>
     </div>
+
+    <!-- Live dictation: the browser's speech service -->
+    <details class="controls live" id="liveSection">
+        <summary><b>Live dictation</b><span>Text appears as you speak. Uses your browser's speech service, which may send the audio to Google or Apple.</span></summary>
+        <div class="browser-warning" id="browserWarning">
+            <p>Your browser doesn't support live dictation. Use <strong>Chrome</strong>, <strong>Edge</strong> or <strong>Safari</strong>, or transcribe a file or a recording above: that works in any modern browser.</p>
+        </div>
+        <div class="controls-row">
+            <button class="btn btn-secondary" id="startBtn" onclick="startRecording()"><span>●</span> Start dictation</button>
+            <button class="btn btn-stop" id="stopBtn" onclick="stopRecording()" style="display:none;"><span>■</span> Stop</button>
+            <div class="recording-indicator" id="recordingIndicator"><div class="pulse"></div> Listening… <span id="duration">0:00</span></div>
+        </div>
+        <label class="live-option"><input type="checkbox" id="continuousToggle" checked onchange="continuous = this.checked"> Keep listening after pauses</label>
+    </details>
     </div>
 
     <!-- Toast notification -->
@@ -797,7 +745,7 @@
                 setWhisperBusy(true, data.chunks > 1 ? `Transcribing on your device… part 1 of ${data.chunks}` : 'Transcribing on your device…', data.chunks > 1 ? 0 : null);
             } else if (data.type === 'partial') {
                 job.texts[data.chunk] = data.text;
-                updateTranscript(job.texts.map((t) => t.trim()).join(' '));   // shown as a draft until the whole file is done
+                updateTranscript(job.texts.map((t) => t.trim()).join(' '), true);   // a draft until the whole file is done
             } else if (data.type === 'chunk') {
                 job.done = data.done;
                 if (job.done < job.chunks) {
@@ -805,8 +753,8 @@
                     setWhisperBusy(true, `Transcribing on your device… part ${job.done + 1} of ${job.chunks} · ${timeLeft(left)}`, job.done / job.chunks);
                 }
             } else if (data.type === 'done') {
+                blocks.push({ segments: toSegments(data.chunks, data.text, job.duration), duration: job.duration });
                 job = null;
-                finalTranscript += data.text.trim() + ' ';
                 updateTranscript('');
                 setWhisperBusy(false, 'Done');
                 toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
@@ -835,13 +783,13 @@
             showToast('Could not decode this file. Try another format.');
             return;
         }
-        const lang = document.getElementById('langSelect').value.split('-')[0];
-        job = { blob, model: modelFor(document.getElementById('whisperModel').value) };
+        const value = langSelect.value, lang = value === 'auto' ? null : value.split('-')[0];
+        job = { blob, model: modelFor(document.getElementById('whisperModel').value), duration: audio.length / 16000 };
         setWhisperBusy(true, 'Loading the model…', null);
         getWhisperWorker().postMessage({
             audio,
             model: { id: job.model.id, device: job.model.device, dtype: job.model.dtype },
-            language: lang === 'nb' ? 'no' : lang,  // Whisper uses "no" for Norwegian
+            language: lang === 'nb' ? 'no' : lang,  // null: Whisper detects it; "no" is its code for Norwegian
         }, [audio.buffer]);
     }
 
@@ -874,16 +822,65 @@
     }
 
     // ============================================================
-    // Voice to Text — Web Speech API Implementation
+    // Transcript: blocks in order; Whisper's keep their timed segments
+    // ============================================================
+    let blocks = [];   // { text } from live dictation, { segments: [{ start, end, text }], duration } from Whisper
+
+    // Whisper's chunks → segments; a missing end (the last chunk) is the next start or the end of the audio
+    function toSegments(chunks, text, duration) {
+        if (!chunks || !chunks.length) return [{ start: 0, end: duration, text }];
+        return chunks.map((c, i) => ({ start: c.timestamp[0] || 0, end: c.timestamp[1] != null ? c.timestamp[1] : (chunks[i + 1] ? chunks[i + 1].timestamp[0] : duration), text: c.text }));
+    }
+    const clock = (t) => {
+        t = Math.max(0, Math.floor(t || 0));
+        const h = Math.floor(t / 3600), m = String(Math.floor(t / 60) % 60).padStart(2, '0'), sec = String(t % 60).padStart(2, '0');
+        return (h ? h + ':' : '') + m + ':' + sec;
+    };
+    function transcriptText(withTimes) {
+        return blocks.map((b) => (b.segments
+            ? b.segments.filter((x) => x.text.trim()).map((x) => (withTimes ? '[' + clock(x.start) + '] ' : '') + x.text.trim()).join(withTimes ? '\n' : ' ')
+            : b.text.trim())).filter(Boolean).join('\n\n');
+    }
+    const hasSegments = () => blocks.some((b) => b.segments && b.segments.some((x) => x.text.trim()));
+    // SubRip subtitles from the Whisper blocks; each block starts where the previous one ended
+    function srtText() {
+        const time = (x) => {
+            const ms = Math.round(Math.max(0, x) * 1000);
+            return [Math.floor(ms / 3600000), Math.floor(ms / 60000) % 60, Math.floor(ms / 1000) % 60].map((v) => String(v).padStart(2, '0')).join(':') + ',' + String(ms % 1000).padStart(3, '0');
+        };
+        const out = [];
+        let n = 0, offset = 0;
+        for (const b of blocks) {
+            if (!b.segments) continue;
+            for (const x of b.segments) if (x.text.trim()) out.push(++n + '\n' + time(offset + x.start) + ' --> ' + time(offset + x.end) + '\n' + x.text.trim() + '\n');
+            offset += b.duration;
+        }
+        return out.join('\n');
+    }
+    function liveBlock() {
+        let b = blocks[blocks.length - 1];
+        if (!b || b.segments) blocks.push(b = { text: '' });
+        return b;
+    }
+
+    // Language: remembered between visits; "auto" lets Whisper detect it, and live dictation then uses the browser's
+    const langSelect = document.getElementById('langSelect');
+    try {
+        const saved = localStorage.getItem('at_vtt_lang');
+        if (saved && [...langSelect.options].some((o) => o.value === saved)) langSelect.value = saved;
+    } catch (e) { /* storage blocked */ }
+    langSelect.addEventListener('change', () => { try { localStorage.setItem('at_vtt_lang', langSelect.value); } catch (e) { /* storage blocked */ } });
+    const liveLang = () => (langSelect.value === 'auto' ? navigator.language || 'en-US' : langSelect.value);
+
+    // ============================================================
+    // Live dictation — Web Speech API
     // ============================================================
 
     let recognition = null;
     let isRecording = false;
-    let finalTranscript = '';
     let startTime = null;
     let timerInterval = null;
     let continuous = true;
-    let autoPunctuation = true;
 
     // Check browser support
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -894,7 +891,7 @@
 
     function initRecognition() {
         recognition = new SpeechRecognition();
-        recognition.lang = document.getElementById('langSelect').value;
+        recognition.lang = liveLang();
         recognition.continuous = continuous;
         recognition.interimResults = true;
         recognition.maxAlternatives = 1;
@@ -904,7 +901,7 @@
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 const t = event.results[i][0].transcript;
                 if (event.results[i].isFinal) {
-                    finalTranscript += t + ' ';
+                    liveBlock().text += t + ' ';
                 } else {
                     interim += t;
                 }
@@ -975,18 +972,19 @@
         clearInterval(timerInterval);
         updateTranscript('');
 
-        if (finalTranscript.trim()) {
+        if (transcriptText(false)) {
             showToast('Recording stopped');
             toolSuccess('voice-to-text', document.querySelector('.actions'));
         }
     }
 
-    function updateTranscript(interim) {
+    // interim: text not final yet, shown as a draft; newBlock: it starts its own paragraph (a file being transcribed)
+    function updateTranscript(interim, newBlock) {
         const el = document.getElementById('transcript');
-        const text = finalTranscript.trim();
+        const text = transcriptText(document.getElementById('tsToggle').checked);
 
         if (interim) {
-            el.innerHTML = escapeHtml(text) + (text ? ' ' : '') +
+            el.innerHTML = escapeHtml(text) + (text ? (newBlock ? '\n\n' : ' ') : '') +
                 '<span class="transcript-interim">' + escapeHtml(interim) + '</span>';
         } else {
             el.textContent = text;
@@ -1003,10 +1001,11 @@
         document.getElementById('copyBtn').disabled = !hasText;
         document.getElementById('downloadBtn').disabled = !hasText;
         document.getElementById('clearBtn').disabled = !hasText;
+        document.getElementById('srtBtn').disabled = !hasSegments();
     }
 
     function updateStats() {
-        const text = finalTranscript.trim();
+        const text = transcriptText(false);
         const words = text ? text.split(/\s+/).length : 0;
         const chars = text.length;
         document.getElementById('wordCount').textContent = words + ' word' + (words !== 1 ? 's' : '');
@@ -1022,7 +1021,7 @@
     }
 
     function copyText() {
-        const text = finalTranscript.trim();
+        const text = transcriptText(document.getElementById('tsToggle').checked);
         if (!text) return;
         navigator.clipboard.writeText(text).then(() => {
             showToast('Copied to clipboard!');
@@ -1038,44 +1037,30 @@
         });
     }
 
-    function downloadTxt() {
-        const text = finalTranscript.trim();
-        if (!text) return;
-        const lang = document.getElementById('langSelect').value;
+    function saveText(text, ext) {
         const date = new Date().toISOString().split('T')[0];
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const blob = new Blob([text], { type: (ext === 'srt' ? 'application/x-subrip' : 'text/plain') + ';charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `transcription-${lang}-${date}.txt`;
+        a.download = `transcription-${langSelect.value}-${date}.${ext}`;
         a.click();
-        URL.revokeObjectURL(a.href);
+        setTimeout(() => URL.revokeObjectURL(a.href), 10000);
         showToast('Downloaded!');
+    }
+    function downloadTxt() {
+        const text = transcriptText(document.getElementById('tsToggle').checked);
+        if (text) saveText(text, 'txt');
+    }
+    function downloadSrt() {
+        if (hasSegments()) saveText(srtText(), 'srt');
     }
 
     function clearText() {
-        if (finalTranscript.trim() && !confirm('Clear all transcription text?')) return;
-        finalTranscript = '';
+        if (transcriptText(false) && !confirm('Clear all transcription text?')) return;
+        blocks = [];
         startTime = null;
-        document.getElementById('transcript').textContent = '';
         document.getElementById('duration').textContent = '0:00';
-        updateStats();
-        document.getElementById('copyBtn').disabled = true;
-        document.getElementById('downloadBtn').disabled = true;
-        document.getElementById('clearBtn').disabled = true;
-    }
-
-    function toggleSettings() {
-        document.getElementById('settingsPanel').classList.toggle('open');
-    }
-
-    function toggleContinuous() {
-        continuous = !continuous;
-        document.getElementById('continuousToggle').classList.toggle('on', continuous);
-    }
-
-    function togglePunctuation() {
-        autoPunctuation = !autoPunctuation;
-        document.getElementById('punctuationToggle').classList.toggle('on', autoPunctuation);
+        updateTranscript('');
     }
 
     function showToast(msg) {
@@ -1092,7 +1077,7 @@
     }
 
     // Update language on change while recording
-    document.getElementById('langSelect').addEventListener('change', function() {
+    langSelect.addEventListener('change', function() {
         if (isRecording) {
             stopRecording();
             setTimeout(startRecording, 200);

@@ -317,6 +317,7 @@
         async function handleFile(file) {
             if (!file || job) return;
             let buf;
+            readingFile(dropZone, true);
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: RATE });
                 buf = await ctx.decodeAudioData(await file.arrayBuffer());
@@ -324,6 +325,8 @@
             } catch (e) {
                 alert('无法解码此文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
                 return;
+            } finally {
+                readingFile(dropZone, false);
             }
             song = buf;
             fileBase = (file.name || 'song').replace(/\.[^.]+$/, '');

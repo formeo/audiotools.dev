@@ -201,7 +201,7 @@
 
                 <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
                 <div class="btn-row">
-                    <button class="btn btn-secondary" onclick="preview()">Preview</button>
+                    <button class="btn btn-secondary" id="previewBtn" onclick="preview()">Preview</button>
                     <button class="btn btn-primary" id="cutBtn" onclick="cutAndDownload()" style="flex:1;">Cut & Download</button>
                 </div>
             </div>
@@ -273,11 +273,17 @@
             if (!file) return;
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+            readingFile(dropZone, true);
+            try {
+                buffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+            } catch (err) {
+                alert('Could not decode this audio file. Try a different format (MP3, WAV, FLAC, OGG, M4A).');
+                return;
+            } finally {
+                readingFile(dropZone, false);
+            }
             document.getElementById('fileName').textContent = file.name;
             document.getElementById('fileMeta').textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-
-            const arrayBuf = await file.arrayBuffer();
-            buffer = await audioCtx.decodeAudioData(arrayBuf);
 
             trimStart = 0;
             trimEnd = 1;
@@ -384,8 +390,15 @@
         document.addEventListener('mouseup', () => dragging = null);
         document.addEventListener('touchend', () => dragging = null);
 
+        // Preview plays the selection; pressed again while playing, it stops
+        const previewBtn = document.getElementById('previewBtn');
+        function stopPreview() {
+            if (source) { source.onended = null; source.stop(); source = null; }
+            playhead.style.display = 'none';
+            previewBtn.textContent = 'Preview';
+        }
         function preview() {
-            if (source) { source.stop(); source = null; }
+            if (source) { stopPreview(); return; }
             source = audioCtx.createBufferSource();
             source.buffer = buffer;
             source.connect(audioCtx.destination);
@@ -398,6 +411,7 @@
             const w = waveWrap.offsetWidth;
             const startTime = audioCtx.currentTime;
             function animate() {
+                if (!source) return;
                 const elapsed = audioCtx.currentTime - startTime;
                 const frac = trimStart + (elapsed / buffer.duration);
                 if (frac >= trimEnd) { playhead.style.display = 'none'; return; }
@@ -405,7 +419,8 @@
                 requestAnimationFrame(animate);
             }
             animate();
-            source.onended = () => { playhead.style.display = 'none'; source = null; };
+            source.onended = () => { playhead.style.display = 'none'; source = null; previewBtn.textContent = 'Preview'; };
+            previewBtn.textContent = 'Stop';
         }
 
         function cutAndDownload() {
@@ -465,8 +480,8 @@
         }
 
         function reset() {
-            if (source) source.stop();
-            buffer = null; source = null;
+            stopPreview();
+            buffer = null;
             editor.classList.add('hidden');
             dropZone.classList.remove('hidden');
             fileInput.value = '';
