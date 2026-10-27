@@ -2,8 +2,9 @@
 // (vendored in /vendor/neural/). The song arrives as Float32Array channels and never leaves the browser;
 // only the model file is downloaded (once, then kept in the browser's cache).
 //
-// in:  { channels: Float32Array[], sampleRate, device: 'webgpu' | 'wasm', model: { url, sha256 } }
+// in:  { channels: Float32Array[], sampleRate, model: { url, sha256 } }   (runs on the CPU: WebAssembly)
 // out: { type: 'download', loaded, total }          model file, bytes so far
+//      { type: 'loading' }                          model ready, the session is being made
 //      { type: 'part', done, total }                 segments finished (sent as each one starts: done = its index)
 //      { type: 'done', vocals: Float32Array[], instrumental: Float32Array[] }
 //      { type: 'error', message, stage: 'load' | 'run' }
@@ -25,10 +26,11 @@ async function modelBytes({ url, sha256 }) {
     return b;
 }
 
-self.onmessage = async ({ data: { channels, sampleRate, device, model } }) => {
+self.onmessage = async ({ data: { channels, sampleRate, model } }) => {
     let stage = 'load';
     try {
         const b = await modelBytes(model);
+        self.postMessage({ type: 'loading' });
         const { stems, residual } = await separate(channels, {
             sampleRate,
             model: 'scnet',
@@ -36,7 +38,7 @@ self.onmessage = async ({ data: { channels, sampleRate, device, model } }) => {
             step: 0.5,   // each sample heard in two segments, not four: half the time, about 0.1 dB less (package README)
             session: async () => {
                 const s = await load(b, {
-                    backend: device, wasmPaths: '/vendor/neural/',
+                    backend: 'wasm', wasmPaths: '/vendor/neural/',
                     threads: self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1,   // see /coi-sw.js
                     sessionOptions: { enableCpuMemArena: false, enableMemPattern: false },
                 });

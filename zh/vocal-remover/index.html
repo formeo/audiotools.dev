@@ -185,7 +185,7 @@
                     <span class="file-meta" id="fileMeta"></span>
                     <button class="file-remove" onclick="reset()" title="移除">✕</button>
                 </div>
-                <p class="note" id="note">在电脑上大约需要与歌曲时长相当的时间，手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>
+                <p class="note" id="note">在电脑上所需时间是歌曲时长的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>
                 <div class="btn-row">
                     <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">消除人声</button>
                     <button class="btn btn-secondary" onclick="reset()">重置</button>
@@ -240,7 +240,7 @@
             <h3>效果如何？</h3>
             <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。</p>
             <h3>需要多长时间？</h3>
-            <p>在较新的电脑上，大约与歌曲时长相当或更短；在支持 WebGPU 的浏览器中，它会在显卡上运行，速度更快。在手机上可能要慢好几倍，还需要足够的空闲内存，所以长歌曲最好用电脑处理。页面会显示正在处理第几段以及大约还剩多少时间。</p>
+            <p>对浏览器来说，分离是很重的工作：在电脑上所需时间是歌曲时长的几倍，在手机上更久，还需要足够的空闲内存，所以长歌曲最好用电脑处理。页面会显示正在处理第几段以及大约还剩多少时间。</p>
             <h3>隐私</h3>
             <p>歌曲在您的浏览器中用 ONNX Runtime Web 解码和分离。页面只下载一次模型文件（13 MB）和运行库；您的音频不会被发送到任何地方。AudioTools.dev 也没有可以接收它的服务器。</p>
             <p>还需要别的？用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出一段，用<a href="/zh/volume-booster/">音量增强</a>提高音量，或用<a href="/zh/converter/">音频转换器</a>转换格式。</p>
@@ -284,7 +284,7 @@
 
         // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them on this page.
         // Browsers with COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from
-        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread, or WebGPU.
+        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread.
         if (!crossOriginIsolated && 'serviceWorker' in navigator && (window.chrome || window.netscape)) {
             const wasControlled = !!navigator.serviceWorker.controller;
             navigator.serviceWorker.register('/coi-sw.js', { scope: location.pathname }).then(() => {
@@ -330,25 +330,21 @@
             progressFill.style.width = fraction === null ? '' : Math.round(fraction * 100) + '%';
         }
 
-        async function gpuDevice() {
-            try {
-                const a = navigator.gpu && await navigator.gpu.requestAdapter();
-                return a && !(a.info && a.info.isFallbackAdapter) ? 'webgpu' : 'wasm';
-            } catch (e) { return 'wasm'; }
-        }
-
-        async function run(device) {
+        // SCNet runs on the CPU (WebAssembly). Its LSTMs gain nothing on WebGPU (the package's own default), and on
+        // WebGPU the session could stall before the first part.
+        function run() {
             if (!song || job) return;
-            device = device || await gpuDevice();
             runBtn.disabled = true;
             result.classList.add('hidden');
-            job = { device, start: 0 };
+            job = { start: 0 };
             setProgress('正在准备…', null);
             worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
             worker.onmessage = ({ data }) => {
                 if (data.type === 'download') {
                     const mb = data.loaded / 1048576;
                     setProgress(`正在下载模型（仅首次）：${mb.toFixed(1)} / ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
+                } else if (data.type === 'loading') {
+                    setProgress('正在启动模型…', null);
                 } else if (data.type === 'part') {
                     if (!job.start) job.start = Date.now();
                     const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
@@ -356,9 +352,6 @@
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
-                } else if (job.device === 'webgpu') {
-                    job = null;
-                    run('wasm');   // WebGPU failed here: the same model on the CPU
                 } else {
                     job = null;
                     progressWrap.classList.add('hidden');
@@ -367,7 +360,7 @@
                 }
             };
             const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
-            worker.postMessage({ channels, sampleRate: song.sampleRate, device, model: MODEL }, channels.map((c) => c.buffer));
+            worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL }, channels.map((c) => c.buffer));
         }
 
         function toBuffer(channels) {
