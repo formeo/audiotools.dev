@@ -152,14 +152,16 @@
         'audio-trimmer', 'audio-speed-changer', 'voice-to-text', 'vocal-remover'];   // tools with a Chinese page
     const NEXT = [['audio-compressor', 'Compress', '压缩'], ['audio-trimmer', 'Trim', '剪辑'], ['volume-booster', 'Boost volume', '增强音量'],
                   ['converter', 'Convert format', '转换格式'], ['audio-speed-changer', 'Change speed', '变速'], ['audio-joiner', 'Join with more', '合并']];
-    window.offerNext = function (tool, anchor, file) {
+    // first: tools to offer before the usual order (e.g. the speed changer after the vocal remover)
+    window.offerNext = function (tool, anchor, file, first = []) {
         const old = document.getElementById('next-actions');
         if (old) old.remove();
         const el = document.createElement('div');
         el.id = 'next-actions';
         el.className = 'next-actions';
         el.append(T('Continue with this file:', '继续处理此文件：'));
-        NEXT.filter(([t]) => t !== tool).slice(0, 3).forEach(([t, en, zh]) => {
+        const order = [...first.map((t) => NEXT.find(([n]) => n === t)).filter(Boolean), ...NEXT.filter(([t]) => !first.includes(t))];
+        order.filter(([t]) => t !== tool).slice(0, 3).forEach(([t, en, zh]) => {
             const a = document.createElement('a');
             a.href = (ZH && ZH_PAGES.includes(t) ? '/zh/' : '/') + t + '/';
             a.textContent = T(en, zh);
@@ -217,8 +219,7 @@
         'voice-to-text': { url: ZH ? '/zh/voice-to-text/' : '/voice-to-text/', name: T('Voice to Text', '语音转文字'),
             kw: ['transcri', 'to text', 'subtitle', 'speech to text', 'dictat', 'voice message', 'lecture', 'interview',
                  'расшифр', 'в текст', 'субтитр', 'голосов', 'лекци', 'диктов', '转文字', '转录', '字幕', '语音转', '听写'] },
-        // not built yet: the pick goes to a "coming soon" page and tells us how many people ask for it
-        'vocal-remover': { url: ZH ? '/zh/vocal-remover/' : '/vocal-remover/', name: T('Vocal Remover (coming soon)', '人声消除（即将推出）'),
+        'vocal-remover': { url: ZH ? '/zh/vocal-remover/' : '/vocal-remover/', name: T('Vocal Remover', '人声消除'),
             kw: ['vocal', 'karaoke', 'instrumental', 'acapella', 'a cappella', 'backing track', 'remove voice', 'remove the voice', 'remove singer',
                  'минус', 'вокал', 'караоке', 'убрать голос', 'без голоса', '伴奏', '人声', '去人声', '消音', '卡拉ok', 'ktv'] },
         'text-to-speech': { url: ZH ? '/zh/text-to-speech/' : '/text-to-speech/', name: T('Text to Speech', '文字转语音'),
@@ -295,7 +296,7 @@
         'audio-speed-changer': T('Slow down or speed up without changing pitch', '变速不变调'),
         'voice-to-text': T('Turn speech into text — Private mode runs Whisper on your device', '语音转文字——隐私模式在本机运行 Whisper'),
         'text-to-speech': T('Read text aloud in 50+ languages', '用 50 多种语言朗读文字'),
-        'vocal-remover': T('Split a song into the music and the vocals — not available yet', '把歌曲分成伴奏和人声——尚未推出'),
+        'vocal-remover': T('Split a song into the instrumental (karaoke) and the vocals', '把歌曲分成伴奏（卡拉 OK）和人声'),
     };
 
     // --- file: look at format, size, length and loudness, then suggest

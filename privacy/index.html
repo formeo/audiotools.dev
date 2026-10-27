@@ -68,7 +68,7 @@
 
     <div class="container content">
         <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: October 22, 2026</p>
+        <p class="updated">Last updated: October 27, 2026</p>
 
         <h2>The Short Version</h2>
         <p>Your audio files never leave your device. We don't collect, store, or process your audio data on any server. All audio conversion and transcription happens directly in your browser.</p>
@@ -95,6 +95,7 @@
         <ul>
             <li><strong>Audio Converter</strong> — uses the browser's built-in codecs and WebAssembly encoders (Mediabunny, served from this site) for decoding and encoding. Your files are processed in browser memory and never uploaded.</li>
             <li><strong>Voice to Text</strong> — uses the browser's built-in Web Speech Recognition API. Audio data is handled by your browser, not our servers. In Private mode, speech is transcribed by the Whisper model running in your browser; the model files are downloaded from Hugging Face, and your audio is never sent anywhere.</li>
+            <li><strong>Vocal Remover</strong> — the song is separated in your browser by the SCNet model with ONNX Runtime Web; the model and the runtime are downloaded from this site once, and the song is never uploaded. On that page a small service worker adds isolation headers so the separation can use several processor threads; it stores nothing.</li>
         </ul>
         <p>You can verify this by checking the Network tab in your browser's DevTools — no audio data is transmitted.</p>
         <p>When you drop a file on the homepage helper and pick a tool, the file is handed to that tool through your browser's local storage (IndexedDB) and deleted as soon as the tool opens it. It never leaves your device.</p>
@@ -122,7 +123,7 @@
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a></nav>
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/">Vocal Remover</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
