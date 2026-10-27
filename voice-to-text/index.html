@@ -100,7 +100,7 @@
                 "@type": "HowToStep",
                 "position": 2,
                 "name": "Pick a model",
-                "text": "In Private mode, pick a model: Tiny is faster, Base is more accurate."
+                "text": "In Private mode, pick a model: Base is faster, Small is more accurate. On a computer with WebGPU, Turbo gives the best quality."
             },
             {
                 "@type": "HowToStep",
@@ -112,7 +112,7 @@
                 "@type": "HowToStep",
                 "position": 4,
                 "name": "Wait for the model once",
-                "text": "The first time, the model downloads once (about 45–80 MB) and is then kept by your browser."
+                "text": "The first time, the model downloads once (80–250 MB; Turbo about 1.6 GB) and is then kept by your browser."
             },
             {
                 "@type": "HowToStep",
@@ -408,7 +408,12 @@
         /* Private mode (on-device Whisper) */
         .whisper h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
         .whisper-note { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
-        .whisper-status { color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
+        .whisper-status { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
+        .whisper-status.busy::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+        .whisper-bar { height: 4px; margin-top: 8px; border-radius: 2px; background: var(--border); overflow: hidden; }
+        .whisper-bar span { display: block; width: 0; height: 100%; background: var(--accent); transition: width 0.3s; }
+        .whisper-bar.indeterminate span { width: 30%; animation: whisper-slide 1.4s ease-in-out infinite; }
+        @keyframes whisper-slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
         .tool-area { padding: 20px; margin-bottom: 32px; }
         .tool-area .actions { margin-bottom: 0; }
     </style>
@@ -463,7 +468,7 @@
                 "name": "Does it work on mobile?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (about 45–80 MB), so use Wi-Fi the first time."
+                    "text": "Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (80–250 MB), so use Wi-Fi the first time."
                 }
             },
             {
@@ -471,7 +476,7 @@
                 "name": "How accurate is the transcription?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "For clear speech, Whisper Base is accurate enough for notes and drafts; Tiny is faster but makes more mistakes. Background noise, music and several people talking at once lower accuracy."
+                    "text": "For clear speech, Base is good enough for notes and drafts. Small makes noticeably fewer mistakes, especially in languages other than English, and Turbo (on a computer with WebGPU) is the most accurate. Background noise, music and several people talking at once lower accuracy."
                 }
             }
         ]
@@ -599,17 +604,19 @@
     <!-- Private mode: on-device Whisper -->
     <div class="controls whisper">
         <h2>Private mode — Whisper on your device</h2>
-        <p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached. Uses the language selected above.</p>
+        <p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster. Uses the language selected above.</p>
         <div class="controls-row">
             <select class="lang-select" id="whisperModel" aria-label="Select Whisper model">
-                <option value="Xenova/whisper-tiny">Whisper Tiny · ~45 MB · fastest</option>
-                <option value="Xenova/whisper-base" selected>Whisper Base · ~80 MB · more accurate</option>
+                <option value="base" selected>Whisper Base · ~80 MB · fast</option>
+                <option value="small">Whisper Small · ~250 MB · more accurate</option>
+                <option value="turbo">Whisper Turbo · ~1.6 GB · best quality, for computers</option>
             </select>
             <button class="btn btn-start" id="whisperFileBtn" onclick="document.getElementById('whisperFile').click()">Transcribe file</button>
             <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) transcribeBlob(this.files[0]); this.value = '';">
             <button class="btn btn-secondary" id="whisperRecBtn" onclick="toggleWhisperRecording()">Record &amp; transcribe</button>
         </div>
         <div class="whisper-status" id="whisperStatus" aria-live="polite"></div>
+        <div class="whisper-bar" id="whisperBar" hidden><span></span></div>
     </div>
 
     <!-- Transcript -->
@@ -644,9 +651,9 @@
         <h3>How to transcribe an audio file</h3>
         <ol>
             <li>Choose the spoken language at the top.</li>
-            <li>In Private mode, pick a model: Tiny is faster, Base is more accurate.</li>
+            <li>In Private mode, pick a model: Base is faster, Small is more accurate. On a computer with WebGPU, Turbo gives the best quality.</li>
             <li>Click “Transcribe file” and choose an audio or video file (MP3, WAV, M4A, OGG/Opus voice messages, MP4…), or click “Record &amp; transcribe” to use the microphone.</li>
-            <li>The first time, the model downloads once (about 45–80 MB) and is then kept by your browser.</li>
+            <li>The first time, the model downloads once (80–250 MB; Turbo about 1.6 GB) and is then kept by your browser.</li>
             <li>Copy the text or download it as a .txt file.</li>
         </ol>
 
@@ -699,10 +706,10 @@
         <p>Private mode (Whisper) understands about 100 languages. Live dictation supports 60+ languages; the list depends on your browser.</p>
 
         <h3>Does it work on mobile?</h3>
-        <p>Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (about 45–80 MB), so use Wi-Fi the first time.</p>
+        <p>Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (80–250 MB), so use Wi-Fi the first time.</p>
 
         <h3>How accurate is the transcription?</h3>
-        <p>For clear speech, Whisper Base is accurate enough for notes and drafts; Tiny is faster but makes more mistakes. Background noise, music and several people talking at once lower accuracy.</p>
+        <p>For clear speech, Base is good enough for notes and drafts. Small makes noticeably fewer mistakes, especially in languages other than English, and Turbo (on a computer with WebGPU) is the most accurate. Background noise, music and several people talking at once lower accuracy.</p>
     </section>
 </div>
 
@@ -721,13 +728,49 @@
     // ============================================================
     let whisperWorker = null;
     let whisperRecorder = null;
+    let job = null;   // the transcription in progress
 
-    function setWhisperBusy(busy, status) {
+    // Base and Small run on the graphics card (WebGPU) when the browser has it, otherwise on the CPU (WebAssembly).
+    // Turbo needs WebGPU with 16-bit floats and is listed only then. mb: download size of the model files.
+    const MODELS = {
+        base: { id: 'onnx-community/whisper-base',
+            wasm: { dtype: 'q8', mb: 80 }, webgpu: { dtype: { encoder_model: 'fp32', decoder_model_merged: 'q4' }, mb: 210 } },
+        small: { id: 'onnx-community/whisper-small',
+            wasm: { dtype: 'q8', mb: 250 }, webgpu: { dtype: { encoder_model: 'fp32', decoder_model_merged: 'q4' }, mb: 510 } },
+        turbo: { id: 'onnx-community/whisper-large-v3-turbo',
+            webgpu: { dtype: { encoder_model: 'fp16', decoder_model_merged: 'q4' }, mb: 1600 } },
+    };
+    let gpu = false;
+    (async () => {
+        let f16 = false;
+        try {
+            const adapter = navigator.gpu && await navigator.gpu.requestAdapter();
+            gpu = !!adapter;
+            f16 = !!adapter && adapter.features.has('shader-f16');
+        } catch (e) { /* no WebGPU */ }
+        const select = document.getElementById('whisperModel');
+        if (!f16) select.querySelector('option[value="turbo"]').remove();
+        if (gpu) [...select.options].forEach((o) => { if (o.value !== 'turbo') o.textContent = o.textContent.replace(/\d+ MB/, MODELS[o.value].webgpu.mb + ' MB'); });
+    })();
+    function modelFor(name) {
+        const m = MODELS[name], device = gpu && m.webgpu ? 'webgpu' : 'wasm';
+        return { name, id: m.id, device, dtype: m[device].dtype, mb: m[device].mb };
+    }
+
+    // fraction: 0–1 fills the bar, null animates it (working, amount unknown), undefined hides it
+    function setWhisperBusy(busy, status, fraction) {
         document.getElementById('whisperFileBtn').disabled = busy;
         document.getElementById('whisperRecBtn').disabled = busy;
         document.getElementById('whisperModel').disabled = busy;
-        document.getElementById('whisperStatus').textContent = status;
+        const st = document.getElementById('whisperStatus');
+        st.textContent = status;
+        st.classList.toggle('busy', busy);
+        const bar = document.getElementById('whisperBar');
+        bar.hidden = !busy || fraction === undefined;
+        bar.classList.toggle('indeterminate', fraction === null);
+        bar.firstElementChild.style.width = fraction ? Math.round(fraction * 100) + '%' : '';
     }
+    const timeLeft = (s) => (s < 60 ? 'less than a minute left' : 'about ' + Math.round(s / 60) + ' min left');
 
     // Whisper expects 16 kHz mono PCM; OfflineAudioContext resamples and downmixes.
     async function decodeTo16kMono(blob) {
@@ -747,15 +790,34 @@
         whisperWorker = new Worker('/voice-to-text/whisper-worker.js', { type: 'module' });
         whisperWorker.onmessage = ({ data }) => {
             if (data.type === 'progress') {
-                setWhisperBusy(true, `Downloading model (first time only): ${(data.loaded / 1048576).toFixed(0)} MB…`);
+                const mb = data.loaded / 1048576;
+                setWhisperBusy(true, `Downloading model (first time only): ${mb.toFixed(0)} of ~${job.model.mb} MB…`, Math.min(0.99, mb / job.model.mb));
             } else if (data.type === 'transcribing') {
-                setWhisperBusy(true, 'Transcribing on your device… (long files take a while)');
+                Object.assign(job, { chunks: data.chunks, done: 0, texts: [], start: Date.now() });
+                setWhisperBusy(true, data.chunks > 1 ? `Transcribing on your device… part 1 of ${data.chunks}` : 'Transcribing on your device…', data.chunks > 1 ? 0 : null);
+            } else if (data.type === 'partial') {
+                job.texts[data.chunk] = data.text;
+                updateTranscript(job.texts.map((t) => t.trim()).join(' '));   // shown as a draft until the whole file is done
+            } else if (data.type === 'chunk') {
+                job.done = data.done;
+                if (job.done < job.chunks) {
+                    const left = (Date.now() - job.start) / job.done * (job.chunks - job.done) / 1000;
+                    setWhisperBusy(true, `Transcribing on your device… part ${job.done + 1} of ${job.chunks} · ${timeLeft(left)}`, job.done / job.chunks);
+                }
             } else if (data.type === 'done') {
+                job = null;
                 finalTranscript += data.text.trim() + ' ';
                 updateTranscript('');
                 setWhisperBusy(false, 'Done');
                 toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
+            } else if (job.model.device === 'webgpu' && job.model.name !== 'turbo') {
+                gpu = false;   // WebGPU failed here: same model on the CPU
+                const blob = job.blob;
+                job = null;
+                transcribeBlob(blob);
             } else {
+                job = null;
+                updateTranscript('');
                 setWhisperBusy(false, '');
                 showToast('Transcription failed: ' + data.message);
             }
@@ -764,7 +826,7 @@
     }
 
     async function transcribeBlob(blob) {
-        setWhisperBusy(true, 'Decoding audio…');
+        setWhisperBusy(true, 'Decoding audio…', null);
         let audio;
         try {
             audio = await decodeTo16kMono(blob);
@@ -774,9 +836,11 @@
             return;
         }
         const lang = document.getElementById('langSelect').value.split('-')[0];
+        job = { blob, model: modelFor(document.getElementById('whisperModel').value) };
+        setWhisperBusy(true, 'Loading the model…', null);
         getWhisperWorker().postMessage({
             audio,
-            model: document.getElementById('whisperModel').value,
+            model: { id: job.model.id, device: job.model.device, dtype: job.model.dtype },
             language: lang === 'nb' ? 'no' : lang,  // Whisper uses "no" for Norwegian
         }, [audio.buffer]);
     }

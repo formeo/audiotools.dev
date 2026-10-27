@@ -101,7 +101,7 @@
                 "@type": "HowToStep",
                 "position": 2,
                 "name": "选择模型",
-                "text": "在私密模式中选择模型：Tiny 更快，Base 更准确。"
+                "text": "在私密模式中选择模型：Base 更快，Small 更准确；在支持 WebGPU 的电脑上，Turbo 效果最好。"
             },
             {
                 "@type": "HowToStep",
@@ -113,7 +113,7 @@
                 "@type": "HowToStep",
                 "position": 4,
                 "name": "等待模型下载（仅一次）",
-                "text": "首次使用时模型会下载一次（约 45–80 MB），之后由浏览器保存。"
+                "text": "首次使用时模型会下载一次（80–250 MB；Turbo 约 1.6 GB），之后由浏览器保存。"
             },
             {
                 "@type": "HowToStep",
@@ -395,7 +395,12 @@
         /* Private mode (on-device Whisper) */
         .whisper h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
         .whisper-note { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
-        .whisper-status { color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
+        .whisper-status { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 13px; margin-top: 12px; min-height: 1.6em; }
+        .whisper-status.busy::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+        .whisper-bar { height: 4px; margin-top: 8px; border-radius: 2px; background: var(--border); overflow: hidden; }
+        .whisper-bar span { display: block; width: 0; height: 100%; background: var(--accent); transition: width 0.3s; }
+        .whisper-bar.indeterminate span { width: 30%; animation: whisper-slide 1.4s ease-in-out infinite; }
+        @keyframes whisper-slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
         .tool-area { padding: 20px; margin-bottom: 32px; }
         .tool-area .actions { margin-bottom: 0; }
     </style>
@@ -450,7 +455,7 @@
                 "name": "手机上能用吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（约 45–80 MB），首次使用请连接 Wi-Fi。"
+                    "text": "能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（80–250 MB），首次使用请连接 Wi-Fi。"
                 }
             },
             {
@@ -458,7 +463,7 @@
                 "name": "转录准确吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "对于清晰的语音，Whisper Base 的准确度足以用于笔记和草稿；Tiny 更快但错误更多。背景噪音、音乐和多人同时说话会降低准确度。"
+                    "text": "对于清晰的语音，Base 足以用于笔记和草稿。Small 的错误明显更少，尤其是英语以外的语言；Turbo（在支持 WebGPU 的电脑上）最准确。背景噪音、音乐和多人同时说话会降低准确度。"
                 }
             }
         ]
@@ -586,17 +591,19 @@
     <!-- Private mode: on-device Whisper -->
     <div class="controls whisper">
         <h2>私密模式 — 在您的设备上运行 Whisper</h2>
-        <p class="whisper-note">用完全在浏览器中运行的 Whisper 语音模型转录音频文件或录音。您的音频不会离开设备。模型从 Hugging Face 下载一次并缓存。使用上方选择的语言。</p>
+        <p class="whisper-note">用完全在浏览器中运行的 Whisper 语音模型转录音频文件或录音。您的音频不会离开设备。模型从 Hugging Face 下载一次并缓存；如果浏览器支持 WebGPU，模型会在显卡上运行，速度快得多。使用上方选择的语言。</p>
         <div class="controls-row">
             <select class="lang-select" id="whisperModel" aria-label="选择 Whisper 模型">
-                <option value="Xenova/whisper-tiny">Whisper Tiny · 约 45 MB · 最快</option>
-                <option value="Xenova/whisper-base" selected>Whisper Base · 约 80 MB · 更准确</option>
+                <option value="base" selected>Whisper Base · 约 80 MB · 快</option>
+                <option value="small">Whisper Small · 约 250 MB · 更准确</option>
+                <option value="turbo">Whisper Turbo · 约 1.6 GB · 效果最好，适合电脑</option>
             </select>
             <button class="btn btn-start" id="whisperFileBtn" onclick="document.getElementById('whisperFile').click()">转录文件</button>
             <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) transcribeBlob(this.files[0]); this.value = '';">
             <button class="btn btn-secondary" id="whisperRecBtn" onclick="toggleWhisperRecording()">录音并转录</button>
         </div>
         <div class="whisper-status" id="whisperStatus" aria-live="polite"></div>
+        <div class="whisper-bar" id="whisperBar" hidden><span></span></div>
     </div>
 
     <!-- Transcript -->
@@ -631,9 +638,9 @@
         <h3>如何转录音频文件</h3>
         <ol>
             <li>在顶部选择录音所说的语言。</li>
-            <li>在私密模式中选择模型：Tiny 更快，Base 更准确。</li>
+            <li>在私密模式中选择模型：Base 更快，Small 更准确；在支持 WebGPU 的电脑上，Turbo 效果最好。</li>
             <li>点击“转录文件”并选择音频或视频文件（MP3、WAV、M4A、OGG/Opus 语音消息、MP4…），或点击“录音并转录”使用麦克风。</li>
-            <li>首次使用时模型会下载一次（约 45–80 MB），之后由浏览器保存。</li>
+            <li>首次使用时模型会下载一次（80–250 MB；Turbo 约 1.6 GB），之后由浏览器保存。</li>
             <li>复制文字，或下载为 .txt 文件。</li>
         </ol>
 
@@ -686,10 +693,10 @@
         <p>私密模式（Whisper）能识别约 100 种语言。实时听写支持 60 多种语言，具体取决于您的浏览器。</p>
 
         <h3>手机上能用吗？</h3>
-        <p>能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（约 45–80 MB），首次使用请连接 Wi-Fi。</p>
+        <p>能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（80–250 MB），首次使用请连接 Wi-Fi。</p>
 
         <h3>转录准确吗？</h3>
-        <p>对于清晰的语音，Whisper Base 的准确度足以用于笔记和草稿；Tiny 更快但错误更多。背景噪音、音乐和多人同时说话会降低准确度。</p>
+        <p>对于清晰的语音，Base 足以用于笔记和草稿。Small 的错误明显更少，尤其是英语以外的语言；Turbo（在支持 WebGPU 的电脑上）最准确。背景噪音、音乐和多人同时说话会降低准确度。</p>
     </section>
 </div>
 
@@ -708,13 +715,49 @@
     // ============================================================
     let whisperWorker = null;
     let whisperRecorder = null;
+    let job = null;   // the transcription in progress
 
-    function setWhisperBusy(busy, status) {
+    // Base and Small run on the graphics card (WebGPU) when the browser has it, otherwise on the CPU (WebAssembly).
+    // Turbo needs WebGPU with 16-bit floats and is listed only then. mb: download size of the model files.
+    const MODELS = {
+        base: { id: 'onnx-community/whisper-base',
+            wasm: { dtype: 'q8', mb: 80 }, webgpu: { dtype: { encoder_model: 'fp32', decoder_model_merged: 'q4' }, mb: 210 } },
+        small: { id: 'onnx-community/whisper-small',
+            wasm: { dtype: 'q8', mb: 250 }, webgpu: { dtype: { encoder_model: 'fp32', decoder_model_merged: 'q4' }, mb: 510 } },
+        turbo: { id: 'onnx-community/whisper-large-v3-turbo',
+            webgpu: { dtype: { encoder_model: 'fp16', decoder_model_merged: 'q4' }, mb: 1600 } },
+    };
+    let gpu = false;
+    (async () => {
+        let f16 = false;
+        try {
+            const adapter = navigator.gpu && await navigator.gpu.requestAdapter();
+            gpu = !!adapter;
+            f16 = !!adapter && adapter.features.has('shader-f16');
+        } catch (e) { /* no WebGPU */ }
+        const select = document.getElementById('whisperModel');
+        if (!f16) select.querySelector('option[value="turbo"]').remove();
+        if (gpu) [...select.options].forEach((o) => { if (o.value !== 'turbo') o.textContent = o.textContent.replace(/\d+ MB/, MODELS[o.value].webgpu.mb + ' MB'); });
+    })();
+    function modelFor(name) {
+        const m = MODELS[name], device = gpu && m.webgpu ? 'webgpu' : 'wasm';
+        return { name, id: m.id, device, dtype: m[device].dtype, mb: m[device].mb };
+    }
+
+    // fraction: 0–1 fills the bar, null animates it (working, amount unknown), undefined hides it
+    function setWhisperBusy(busy, status, fraction) {
         document.getElementById('whisperFileBtn').disabled = busy;
         document.getElementById('whisperRecBtn').disabled = busy;
         document.getElementById('whisperModel').disabled = busy;
-        document.getElementById('whisperStatus').textContent = status;
+        const st = document.getElementById('whisperStatus');
+        st.textContent = status;
+        st.classList.toggle('busy', busy);
+        const bar = document.getElementById('whisperBar');
+        bar.hidden = !busy || fraction === undefined;
+        bar.classList.toggle('indeterminate', fraction === null);
+        bar.firstElementChild.style.width = fraction ? Math.round(fraction * 100) + '%' : '';
     }
+    const timeLeft = (s) => (s < 60 ? '剩余不到 1 分钟' : '约剩 ' + Math.round(s / 60) + ' 分钟');
 
     // Whisper expects 16 kHz mono PCM; OfflineAudioContext resamples and downmixes.
     async function decodeTo16kMono(blob) {
@@ -734,15 +777,34 @@
         whisperWorker = new Worker('/voice-to-text/whisper-worker.js', { type: 'module' });
         whisperWorker.onmessage = ({ data }) => {
             if (data.type === 'progress') {
-                setWhisperBusy(true, `正在下载模型（仅首次）：${(data.loaded / 1048576).toFixed(0)} MB…`);
+                const mb = data.loaded / 1048576;
+                setWhisperBusy(true, `正在下载模型（仅首次）：${mb.toFixed(0)} / 约 ${job.model.mb} MB…`, Math.min(0.99, mb / job.model.mb));
             } else if (data.type === 'transcribing') {
-                setWhisperBusy(true, '正在您的设备上转录…（长文件需要一些时间）');
+                Object.assign(job, { chunks: data.chunks, done: 0, texts: [], start: Date.now() });
+                setWhisperBusy(true, data.chunks > 1 ? `正在您的设备上转录…第 1 段，共 ${data.chunks} 段` : '正在您的设备上转录…', data.chunks > 1 ? 0 : null);
+            } else if (data.type === 'partial') {
+                job.texts[data.chunk] = data.text;
+                updateTranscript(job.texts.map((t) => t.trim()).join(' '));   // shown as a draft until the whole file is done
+            } else if (data.type === 'chunk') {
+                job.done = data.done;
+                if (job.done < job.chunks) {
+                    const left = (Date.now() - job.start) / job.done * (job.chunks - job.done) / 1000;
+                    setWhisperBusy(true, `正在您的设备上转录…第 ${job.done + 1} 段，共 ${job.chunks} 段 · ${timeLeft(left)}`, job.done / job.chunks);
+                }
             } else if (data.type === 'done') {
+                job = null;
                 finalTranscript += data.text.trim() + ' ';
                 updateTranscript('');
                 setWhisperBusy(false, '完成');
                 toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
+            } else if (job.model.device === 'webgpu' && job.model.name !== 'turbo') {
+                gpu = false;   // WebGPU failed here: same model on the CPU
+                const blob = job.blob;
+                job = null;
+                transcribeBlob(blob);
             } else {
+                job = null;
+                updateTranscript('');
                 setWhisperBusy(false, '');
                 showToast('转录失败：' + data.message);
             }
@@ -751,7 +813,7 @@
     }
 
     async function transcribeBlob(blob) {
-        setWhisperBusy(true, '正在解码音频…');
+        setWhisperBusy(true, '正在解码音频…', null);
         let audio;
         try {
             audio = await decodeTo16kMono(blob);
@@ -761,9 +823,11 @@
             return;
         }
         const lang = document.getElementById('langSelect').value.split('-')[0];
+        job = { blob, model: modelFor(document.getElementById('whisperModel').value) };
+        setWhisperBusy(true, '正在加载模型…', null);
         getWhisperWorker().postMessage({
             audio,
-            model: document.getElementById('whisperModel').value,
+            model: { id: job.model.id, device: job.model.device, dtype: job.model.dtype },
             language: lang === 'nb' ? 'no' : lang,  // Whisper uses "no" for Norwegian
         }, [audio.buffer]);
     }

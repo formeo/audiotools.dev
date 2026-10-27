@@ -149,7 +149,7 @@
 
     // ---------- tool pages: "continue with this file" after a result ----------
     const ZH_PAGES = ['converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor',
-        'audio-trimmer', 'audio-speed-changer', 'voice-to-text'];   // tools with a Chinese page
+        'audio-trimmer', 'audio-speed-changer', 'voice-to-text', 'vocal-remover'];   // tools with a Chinese page
     const NEXT = [['audio-compressor', 'Compress', '压缩'], ['audio-trimmer', 'Trim', '剪辑'], ['volume-booster', 'Boost volume', '增强音量'],
                   ['converter', 'Convert format', '转换格式'], ['audio-speed-changer', 'Change speed', '变速'], ['audio-joiner', 'Join with more', '合并']];
     window.offerNext = function (tool, anchor, file) {
@@ -217,6 +217,10 @@
         'voice-to-text': { url: ZH ? '/zh/voice-to-text/' : '/voice-to-text/', name: T('Voice to Text', '语音转文字'),
             kw: ['transcri', 'to text', 'subtitle', 'speech to text', 'dictat', 'voice message', 'lecture', 'interview',
                  'расшифр', 'в текст', 'субтитр', 'голосов', 'лекци', 'диктов', '转文字', '转录', '字幕', '语音转', '听写'] },
+        // not built yet: the pick goes to a "coming soon" page and tells us how many people ask for it
+        'vocal-remover': { url: ZH ? '/zh/vocal-remover/' : '/vocal-remover/', name: T('Vocal Remover (coming soon)', '人声消除（即将推出）'),
+            kw: ['vocal', 'karaoke', 'instrumental', 'acapella', 'a cappella', 'backing track', 'remove voice', 'remove the voice', 'remove singer',
+                 'минус', 'вокал', 'караоке', 'убрать голос', 'без голоса', '伴奏', '人声', '去人声', '消音', '卡拉ok', 'ktv'] },
         'text-to-speech': { url: ZH ? '/zh/text-to-speech/' : '/text-to-speech/', name: T('Text to Speech', '文字转语音'),
             kw: ['text to speech', 'read aloud', 'tts', 'voice over', 'narrat', 'speak',
                  'озвуч', 'вслух', 'синтез речи', 'прочитать', '朗读', '配音', '文字转语音', '语音合成'] },
@@ -291,6 +295,7 @@
         'audio-speed-changer': T('Slow down or speed up without changing pitch', '变速不变调'),
         'voice-to-text': T('Turn speech into text — Private mode runs Whisper on your device', '语音转文字——隐私模式在本机运行 Whisper'),
         'text-to-speech': T('Read text aloud in 50+ languages', '用 50 多种语言朗读文字'),
+        'vocal-remover': T('Split a song into the music and the vocals — not available yet', '把歌曲分成伴奏和人声——尚未推出'),
     };
 
     // --- file: look at format, size, length and loudness, then suggest
