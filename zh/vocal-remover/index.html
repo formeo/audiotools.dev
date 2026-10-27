@@ -282,16 +282,29 @@
 
         let song = null, fileBase = 'song', worker = null, job = null, urls = [];
 
-        // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them on this page.
-        // Browsers with COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from
-        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread.
-        if (!crossOriginIsolated && 'serviceWorker' in navigator && (window.chrome || window.netscape)) {
-            const wasControlled = !!navigator.serviceWorker.controller;
-            navigator.serviceWorker.register('/coi-sw.js', { scope: location.pathname }).then(() => {
-                if (wasControlled) return;   // controlled yet not isolated: leave it, don't reload in a loop
+        // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them. Browsers with
+        // COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from Safari) get it;
+        // the first visit reloads once, before a song is chosen. Safari runs on one thread.
+        // The script of a worker is served by the service worker whose scope covers the URL of that worker, and every
+        // worker of an isolated page needs the headers: the separation worker (/vocal-remover/) and the thread workers of
+        // ONNX Runtime (/vendor/neural/), so all three scopes are registered from the page in either language.
+        const COI_SCOPES = ['/vocal-remover/', '/zh/vocal-remover/', '/vendor/neural/'];
+        if ('serviceWorker' in navigator && (window.chrome || window.netscape)) {
+            // listening before registering: the page can be claimed before all three registrations resolve
+            if (!crossOriginIsolated && !navigator.serviceWorker.controller)   // controlled yet not isolated: no reload loop
                 navigator.serviceWorker.addEventListener('controllerchange', () => { if (!song && !job) location.reload(); }, { once: true });
-            }).catch(() => {});
+            COI_SCOPES.forEach((scope) => navigator.serviceWorker.register('/coi-sw.js', { scope }).catch(() => {}));
         }
+        // Threads only when the scripts every thread needs are served isolated; otherwise one thread.
+        async function threadCount() {
+            if (!crossOriginIsolated) return 1;
+            try {
+                const regs = await Promise.all(['/vocal-remover/', '/vendor/neural/'].map((s) => navigator.serviceWorker.getRegistration(s)));
+                if (!regs.every((r) => r && r.active)) return 1;
+            } catch (e) { return 1; }
+            return Math.min(4, navigator.hardwareConcurrency || 1);
+        }
+        const START_TIMEOUT = 45000;   // the model not started by then with threads: start it again on one thread
 
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
@@ -332,11 +345,11 @@
 
         // SCNet runs on the CPU (WebAssembly). Its LSTMs gain nothing on WebGPU (the package's own default), and on
         // WebGPU the session could stall before the first part.
-        function run() {
+        async function run(threads) {
             if (!song || job) return;
             runBtn.disabled = true;
             result.classList.add('hidden');
-            job = { start: 0 };
+            job = { start: 0, threads: threads || await threadCount() };
             setProgress('正在准备…', null);
             worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
             worker.onmessage = ({ data }) => {
@@ -345,7 +358,13 @@
                     setProgress(`正在下载模型（仅首次）：${mb.toFixed(1)} / ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
                 } else if (data.type === 'loading') {
                     setProgress('正在启动模型…', null);
+                    if (job.threads > 1) job.timer = setTimeout(() => {
+                        if (!job || job.start) return;
+                        worker.terminate(); worker = null; job = null;
+                        run(1);
+                    }, START_TIMEOUT);
                 } else if (data.type === 'part') {
+                    clearTimeout(job.timer);
                     if (!job.start) job.start = Date.now();
                     const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
                     setProgress(data.done ? `正在分离…第 ${data.done + 1} 段，共 ${data.total} 段 · ${timeLeft(left)}` : `正在分离…第 1 段，共 ${data.total} 段`, data.done / data.total);
@@ -360,7 +379,7 @@
                 }
             };
             const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
-            worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL }, channels.map((c) => c.buffer));
+            worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL, threads: job.threads }, channels.map((c) => c.buffer));
         }
 
         function toBuffer(channels) {
@@ -410,7 +429,7 @@
         }
 
         function reset() {
-            if (job) { worker.terminate(); worker = null; job = null; }
+            if (job) { clearTimeout(job.timer); worker.terminate(); worker = null; job = null; }
             song = null;
             urls.forEach((u) => URL.revokeObjectURL(u));
             urls = [];
