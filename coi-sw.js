@@ -1,7 +1,7 @@
 // Cross-origin isolation for the Vocal Remover pages, which GitHub Pages can't give with headers.
 // ONNX Runtime needs SharedArrayBuffer to run on several CPU threads, and the browser allows it only when the page
-// (and every worker it starts) is served with COOP and COEP. Registered with the scopes /vocal-remover/ and
-// /zh/vocal-remover/ only, so no other page is touched. COEP "credentialless" lets cross-origin files without CORP
+// (and every worker it starts) is served with COOP and COEP. Registered with the scopes /vocal-remover/,
+// /zh/vocal-remover/ and /vendor/neural/ (ONNX Runtime's thread workers) only, so no other page is touched. COEP "credentialless" lets cross-origin files without CORP
 // headers (fonts, analytics) still load, just without cookies.
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
