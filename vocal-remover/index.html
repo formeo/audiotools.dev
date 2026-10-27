@@ -185,7 +185,7 @@
                     <span class="file-meta" id="fileMeta"></span>
                     <button class="file-remove" onclick="reset()" title="Remove">✕</button>
                 </div>
-                <p class="note" id="note">On a computer this takes about as long as the song, on a phone longer. The first time, the separation model downloads once (13 MB).</p>
+                <p class="note" id="note">This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).</p>
                 <div class="btn-row">
                     <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">Remove vocals</button>
                     <button class="btn btn-secondary" onclick="reset()">Reset</button>
@@ -240,7 +240,7 @@
             <h3>How good is it?</h3>
             <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs.</p>
             <h3>How long does it take?</h3>
-            <p>On a recent computer, about as long as the song or less; in browsers with WebGPU it runs on the graphics card and is faster. On a phone it can take several times longer and needs free memory, so a computer is the better choice for long songs. The page shows which part it is working on and about how much time is left.</p>
+            <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. The page shows which part it is working on and about how much time is left.</p>
             <h3>Privacy</h3>
             <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
             <p>Need something else? Cut out a part with the <a href="/audio-trimmer/">audio trimmer</a>, make it louder with the <a href="/volume-booster/">volume booster</a>, or change the format with the <a href="/converter/">audio converter</a>.</p>
@@ -284,7 +284,7 @@
 
         // Several CPU threads need cross-origin isolation, which only headers give: /coi-sw.js adds them on this page.
         // Browsers with COEP "credentialless" (Chromium, Firefox; window.chrome / window.netscape tell them apart from
-        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread, or WebGPU.
+        // Safari) get it; the first visit reloads once, before a song is chosen. Safari runs on one thread.
         if (!crossOriginIsolated && 'serviceWorker' in navigator && (window.chrome || window.netscape)) {
             const wasControlled = !!navigator.serviceWorker.controller;
             navigator.serviceWorker.register('/coi-sw.js', { scope: location.pathname }).then(() => {
@@ -330,25 +330,21 @@
             progressFill.style.width = fraction === null ? '' : Math.round(fraction * 100) + '%';
         }
 
-        async function gpuDevice() {
-            try {
-                const a = navigator.gpu && await navigator.gpu.requestAdapter();
-                return a && !(a.info && a.info.isFallbackAdapter) ? 'webgpu' : 'wasm';
-            } catch (e) { return 'wasm'; }
-        }
-
-        async function run(device) {
+        // SCNet runs on the CPU (WebAssembly). Its LSTMs gain nothing on WebGPU (the package's own default), and on
+        // WebGPU the session could stall before the first part.
+        function run() {
             if (!song || job) return;
-            device = device || await gpuDevice();
             runBtn.disabled = true;
             result.classList.add('hidden');
-            job = { device, start: 0 };
+            job = { start: 0 };
             setProgress('Preparing…', null);
             worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
             worker.onmessage = ({ data }) => {
                 if (data.type === 'download') {
                     const mb = data.loaded / 1048576;
                     setProgress(`Downloading the model (first time only): ${mb.toFixed(1)} of ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
+                } else if (data.type === 'loading') {
+                    setProgress('Starting the model…', null);
                 } else if (data.type === 'part') {
                     if (!job.start) job.start = Date.now();
                     const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
@@ -356,9 +352,6 @@
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
-                } else if (job.device === 'webgpu') {
-                    job = null;
-                    run('wasm');   // WebGPU failed here: the same model on the CPU
                 } else {
                     job = null;
                     progressWrap.classList.add('hidden');
@@ -367,7 +360,7 @@
                 }
             };
             const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
-            worker.postMessage({ channels, sampleRate: song.sampleRate, device, model: MODEL }, channels.map((c) => c.buffer));
+            worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL }, channels.map((c) => c.buffer));
         }
 
         function toBuffer(channels) {
