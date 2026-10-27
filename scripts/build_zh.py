@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE = 'https://audiotools.dev'
 ZH_PAGES = ['converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor',
-            'audio-trimmer', 'audio-speed-changer', 'voice-to-text']                                  # tools with a Chinese page
+            'audio-trimmer', 'audio-speed-changer', 'voice-to-text', 'vocal-remover']                 # tools with a Chinese page
 BUILT = ZH_PAGES[1:]                                                                               # built by this script
 
 ZH_HREF = lambda tool: f'/zh/{tool}/' if tool in ZH_PAGES else f'/{tool}/'
@@ -103,7 +103,7 @@ def build(tool, table):
 ALLOWED = {'AudioTools.dev', 'AudioTools', 'GitHub', 'DevToolKit.site', 'Boosty', 'Roman Gordienko', 'MP3', 'WAV', 'FLAC', 'OGG',
            'M4A', 'AAC', 'WebM', 'ZIP', 'Web Audio API', 'Web Speech Synthesis API', 'Speech Synthesis API', 'dBFS', 'kbps', 'TTS', 'EN', 'Google', 'Chrome', 'Safari', 'Edge', 'Windows', 'macOS', 'Android', 'LAME', 'WebAssembly', 'PCM', 'Firefox', 'Opus', 'opus', 'Telegram', 'WhatsApp', 'iPhone',
            'OfflineAudioContext', 'WSOLA', 'Whisper', 'Tiny', 'Base', 'Hugging Face', 'Apple', 'Wi-Fi',
-           'Speech recognition error:', 'Failed to start recognition:'}
+           'Speech recognition error:', 'Failed to start recognition:', 'Small', 'Turbo', 'WebGPU'}
 
 
 def leftovers(path, s):
@@ -631,11 +631,11 @@ TABLES = {
     ('"name": "Choose the language"', '"name": "选择语言"'),
     ('"text": "Choose the spoken language at the top."', '"text": "在顶部选择录音所说的语言。"'),
     ('"name": "Pick a model"', '"name": "选择模型"'),
-    ('"text": "In Private mode, pick a model: Tiny is faster, Base is more accurate."', '"text": "在私密模式中选择模型：Tiny 更快，Base 更准确。"'),
+    ('"text": "In Private mode, pick a model: Base is faster, Small is more accurate. On a computer with WebGPU, Turbo gives the best quality."', '"text": "在私密模式中选择模型：Base 更快，Small 更准确；在支持 WebGPU 的电脑上，Turbo 效果最好。"'),
     ('"name": "Choose the file"', '"name": "选择文件"'),
     ('"text": "Click Transcribe file and choose an audio or video file, or Record & transcribe to use the microphone."', '"text": "点击“转录文件”并选择音频或视频文件，或点击“录音并转录”使用麦克风。"'),
     ('"name": "Wait for the model once"', '"name": "等待模型下载（仅一次）"'),
-    ('"text": "The first time, the model downloads once (about 45–80 MB) and is then kept by your browser."', '"text": "首次使用时模型会下载一次（约 45–80 MB），之后由浏览器保存。"'),
+    ('"text": "The first time, the model downloads once (80–250 MB; Turbo about 1.6 GB) and is then kept by your browser."', '"text": "首次使用时模型会下载一次（80–250 MB；Turbo 约 1.6 GB），之后由浏览器保存。"'),
     ('"name": "Copy or download the text"', '"name": "复制或下载文字"'),
     ('"text": "Copy the text or download it as a .txt file."', '"text": "复制文字，或下载为 .txt 文件。"'),
     ('<h1>Voice to Text</h1>', '<h1>语音转文字</h1>'),
@@ -655,11 +655,12 @@ TABLES = {
     ('<label>Auto-punctuation</label>', '<label>自动标点</label>'),
     ('<span>Add periods after detected sentence ends</span>', '<span>在识别到的句子结尾加句号</span>'),
     ('<h2>Private mode — Whisper on your device</h2>', '<h2>私密模式 — 在您的设备上运行 Whisper</h2>'),
-    ('<p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached. Uses the language selected above.</p>',
-     '<p class="whisper-note">用完全在浏览器中运行的 Whisper 语音模型转录音频文件或录音。您的音频不会离开设备。模型从 Hugging Face 下载一次并缓存。使用上方选择的语言。</p>'),
+    ('<p class="whisper-note">Transcribe an audio file or a recording with the Whisper speech model running entirely in your browser. Your audio never leaves your device. The model is downloaded once from Hugging Face and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster. Uses the language selected above.</p>',
+     '<p class="whisper-note">用完全在浏览器中运行的 Whisper 语音模型转录音频文件或录音。您的音频不会离开设备。模型从 Hugging Face 下载一次并缓存；如果浏览器支持 WebGPU，模型会在显卡上运行，速度快得多。使用上方选择的语言。</p>'),
     ('aria-label="Select Whisper model"', 'aria-label="选择 Whisper 模型"'),
-    ('>Whisper Tiny · ~45 MB · fastest</option>', '>Whisper Tiny · 约 45 MB · 最快</option>'),
-    ('>Whisper Base · ~80 MB · more accurate</option>', '>Whisper Base · 约 80 MB · 更准确</option>'),
+    ('>Whisper Base · ~80 MB · fast</option>', '>Whisper Base · 约 80 MB · 快</option>'),
+    ('>Whisper Small · ~250 MB · more accurate</option>', '>Whisper Small · 约 250 MB · 更准确</option>'),
+    ('>Whisper Turbo · ~1.6 GB · best quality, for computers</option>', '>Whisper Turbo · 约 1.6 GB · 效果最好，适合电脑</option>'),
     ('>Transcribe file</button>', '>转录文件</button>'),
     ('>Record &amp; transcribe</button>', '>录音并转录</button>'),
     ('<span>Transcription</span>', '<span>转录结果</span>'),
@@ -673,10 +674,10 @@ TABLES = {
      '<p>语音转文字有两种方式。<strong>私密模式</strong>用在浏览器中运行的 Whisper 语音模型转录音频文件和录音，音频不会离开您的设备。<strong>实时听写</strong>用浏览器的语音引擎实时记下您说的话。两种方式都免费，无需账号，没有时长限制。</p>'),
     ('<h3>How to transcribe an audio file</h3>', '<h3>如何转录音频文件</h3>'),
     ('<li>Choose the spoken language at the top.</li>', '<li>在顶部选择录音所说的语言。</li>'),
-    ('<li>In Private mode, pick a model: Tiny is faster, Base is more accurate.</li>', '<li>在私密模式中选择模型：Tiny 更快，Base 更准确。</li>'),
+    ('<li>In Private mode, pick a model: Base is faster, Small is more accurate. On a computer with WebGPU, Turbo gives the best quality.</li>', '<li>在私密模式中选择模型：Base 更快，Small 更准确；在支持 WebGPU 的电脑上，Turbo 效果最好。</li>'),
     ('<li>Click “Transcribe file” and choose an audio or video file (MP3, WAV, M4A, OGG/Opus voice messages, MP4…), or click “Record &amp; transcribe” to use the microphone.</li>',
      '<li>点击“转录文件”并选择音频或视频文件（MP3、WAV、M4A、OGG/Opus 语音消息、MP4…），或点击“录音并转录”使用麦克风。</li>'),
-    ('<li>The first time, the model downloads once (about 45–80 MB) and is then kept by your browser.</li>', '<li>首次使用时模型会下载一次（约 45–80 MB），之后由浏览器保存。</li>'),
+    ('<li>The first time, the model downloads once (80–250 MB; Turbo about 1.6 GB) and is then kept by your browser.</li>', '<li>首次使用时模型会下载一次（80–250 MB；Turbo 约 1.6 GB），之后由浏览器保存。</li>'),
     ('<li>Copy the text or download it as a .txt file.</li>', '<li>复制文字，或下载为 .txt 文件。</li>'),
     ('<h3>Voice messages to text</h3>', '<h3>语音消息转文字</h3>'),
     ('<p>Save a voice message from WhatsApp or Telegram (an .opus or .ogg file) and open it with “Transcribe file”. It is transcribed on your device, which matters for private conversations.</p>',
@@ -717,13 +718,17 @@ TABLES = {
     ('<h3>Which languages are supported?</h3>', '<h3>支持哪些语言？</h3>'),
     ('<p>Private mode (Whisper) understands about 100 languages. Live dictation supports 60+ languages; the list depends on your browser.</p>', '<p>私密模式（Whisper）能识别约 100 种语言。实时听写支持 60 多种语言，具体取决于您的浏览器。</p>'),
     ('<h3>Does it work on mobile?</h3>', '<h3>手机上能用吗？</h3>'),
-    ('<p>Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (about 45–80 MB), so use Wi-Fi the first time.</p>',
-     '<p>能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（约 45–80 MB），首次使用请连接 Wi-Fi。</p>'),
+    ('<p>Yes. Both modes work in Chrome on Android and Safari on iPhone. Private mode downloads the model once (80–250 MB), so use Wi-Fi the first time.</p>',
+     '<p>能。两种模式都适用于 Android 上的 Chrome 和 iPhone 上的 Safari。私密模式需要下载一次模型（80–250 MB），首次使用请连接 Wi-Fi。</p>'),
     ('<h3>How accurate is the transcription?</h3>', '<h3>转录准确吗？</h3>'),
-    ('<p>For clear speech, Whisper Base is accurate enough for notes and drafts; Tiny is faster but makes more mistakes. Background noise, music and several people talking at once lower accuracy.</p>',
-     '<p>对于清晰的语音，Whisper Base 的准确度足以用于笔记和草稿；Tiny 更快但错误更多。背景噪音、音乐和多人同时说话会降低准确度。</p>'),
-    ("`Downloading model (first time only): ${(data.loaded / 1048576).toFixed(0)} MB…`", "`正在下载模型（仅首次）：${(data.loaded / 1048576).toFixed(0)} MB…`"),
-    ("'Transcribing on your device… (long files take a while)'", "'正在您的设备上转录…（长文件需要一些时间）'"),
+    ('<p>For clear speech, Base is good enough for notes and drafts. Small makes noticeably fewer mistakes, especially in languages other than English, and Turbo (on a computer with WebGPU) is the most accurate. Background noise, music and several people talking at once lower accuracy.</p>',
+     '<p>对于清晰的语音，Base 足以用于笔记和草稿。Small 的错误明显更少，尤其是英语以外的语言；Turbo（在支持 WebGPU 的电脑上）最准确。背景噪音、音乐和多人同时说话会降低准确度。</p>'),
+    ("`Downloading model (first time only): ${mb.toFixed(0)} of ~${job.model.mb} MB…`", "`正在下载模型（仅首次）：${mb.toFixed(0)} / 约 ${job.model.mb} MB…`"),
+    ("`Transcribing on your device… part 1 of ${data.chunks}`", "`正在您的设备上转录…第 1 段，共 ${data.chunks} 段`"),
+    ("'Transcribing on your device…'", "'正在您的设备上转录…'"),
+    ("`Transcribing on your device… part ${job.done + 1} of ${job.chunks} · ${timeLeft(left)}`", "`正在您的设备上转录…第 ${job.done + 1} 段，共 ${job.chunks} 段 · ${timeLeft(left)}`"),
+    ("(s < 60 ? 'less than a minute left' : 'about ' + Math.round(s / 60) + ' min left')", "(s < 60 ? '剩余不到 1 分钟' : '约剩 ' + Math.round(s / 60) + ' 分钟')"),
+    ("'Loading the model…'", "'正在加载模型…'"),
     ("setWhisperBusy(false, 'Done');", "setWhisperBusy(false, '完成');"),
     ("showToast('Transcription failed: ' + data.message);", "showToast('转录失败：' + data.message);"),
     ("'Decoding audio…'", "'正在解码音频…'"),
@@ -742,6 +747,23 @@ TABLES = {
     ("showToast('Copied to clipboard!');", "showToast('已复制到剪贴板');"),
     ("showToast('Downloaded!');", "showToast('已下载');"),
     ("confirm('Clear all transcription text?')", "confirm('清空全部转录文字？')"),
+],
+'vocal-remover': [
+    ('<title>Vocal Remover — Coming Soon | AudioTools.dev</title>', '<title>人声消除 — 即将推出 | AudioTools.dev</title>'),
+    ('A vocal remover that runs in your browser: split a song into an instrumental (karaoke) track and the vocals without uploading it. Coming soon.',
+     '在浏览器中运行的人声消除工具：把歌曲分离成伴奏（卡拉 OK 伴奏）和人声，无需上传歌曲。即将推出。'),
+    ('Vocal Remover — Coming Soon', '人声消除 — 即将推出'),
+    ('https://audiotools.dev/og/home.png', 'https://audiotools.dev/og/zh.png'),
+    ('<h1>Vocal Remover</h1>', '<h1>人声消除</h1>'),
+    ('<p>Take the voice out of a song and keep the music — on your device, without uploading the song</p>', '<p>去掉歌曲里的人声，只留下音乐——在您的设备上完成，无需上传歌曲</p>'),
+    ('<span class="soon">Coming soon</span>', '<span class="soon">即将推出</span>'),
+    ('<h2>What it will do</h2>', '<h2>它将能做什么</h2>'),
+    ('<li>Split a song into two files: the instrumental (a backing or karaoke track) and the vocals on their own.</li>', '<li>把一首歌分成两个文件：伴奏（可用于卡拉 OK）和单独的人声。</li>'),
+    ('<li>Run in your browser with an open-source separation model, like every tool here: the song is never uploaded.</li>', '<li>和这里的其他工具一样，用开源的分离模型在浏览器中运行：歌曲绝不上传。</li>'),
+    ('<li>Open MP3, M4A, WAV and FLAC files, and the sound of a video.</li>', '<li>支持 MP3、M4A、WAV、FLAC 文件以及视频中的声音。</li>'),
+    ('<p>There is no date yet. New tools are announced in the <a href="/changelog/">changelog</a>.</p>', '<p>目前还没有确定日期。新工具会在<a href="/changelog/">更新日志</a>中公布。</p>'),
+    ('<p class="meanwhile">Learning a song in the meantime? <a href="/audio-speed-changer/">Slow it down without changing the pitch</a>, or cut out the part you practise with the <a href="/audio-trimmer/">audio trimmer</a>.</p>',
+     '<p class="meanwhile">现在就想学一首歌？可以<a href="/audio-speed-changer/">放慢速度而不改变音调</a>，或用<a href="/audio-trimmer/">音频剪辑</a>剪出要练习的片段。</p>'),
 ],
 }
 
