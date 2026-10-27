@@ -316,6 +316,7 @@
         async function addFiles(fileList){
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             const files = [...fileList];
+            readingFile(dropZone, true);
             for (const file of files){
                 try {
                     const buf = await audioCtx.decodeAudioData(await file.arrayBuffer());
@@ -324,6 +325,7 @@
                     alert('无法解码“' + file.name + '”，已跳过。请使用 MP3、WAV、FLAC、OGG 或 M4A。');
                 }
             }
+            readingFile(dropZone, false);
             if (tracks.length){ dropZone.classList.add('hidden'); panel.classList.remove('hidden'); }
             result.classList.add('hidden');
             render();

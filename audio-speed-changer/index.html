@@ -308,12 +308,15 @@
         async function handleFile(file) {
             if (!file) return;
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            readingFile(dropZone, true);
             try {
                 const arrayBuf = await file.arrayBuffer();
                 buffer = await audioCtx.decodeAudioData(arrayBuf);
             } catch (err) {
                 alert('Could not decode this audio file. Try a different format (MP3, WAV, FLAC, OGG, M4A).');
                 return;
+            } finally {
+                readingFile(dropZone, false);
             }
             fileBase = (file.name || 'audio').replace(/\.[^.]+$/, '');
             document.getElementById('fileName').textContent = file.name;

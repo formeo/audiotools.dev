@@ -22,6 +22,14 @@
         anchor.after(el);
     };
 
+    // While a dropped file is being read (decoding a long one takes seconds), its drop zone says so.
+    window.readingFile = function (zone, on) {
+        if (!zone) return;
+        zone.dataset.reading = document.documentElement.lang.startsWith('zh') ? '正在读取文件…' : 'Reading the file…';
+        zone.classList.toggle('reading', on);
+        zone.setAttribute('aria-busy', on ? 'true' : 'false');
+    };
+
     // Any Boosty link on the page: the line above or the footer link.
     document.addEventListener('click', (e) => {
         const a = e.target.closest && e.target.closest('a[href^="' + BOOSTY + '"]');
