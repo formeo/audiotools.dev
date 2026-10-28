@@ -8,7 +8,7 @@ Privacy-first audio tools that run entirely in your browser. No uploads, no acco
 
 | Tool | URL | Technology |
 |------|-----|------------|
-| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Mediabunny (WebCodecs + WASM encoders) |
+| **Audio Converter** | [/converter/](https://audiotools.dev/converter/) | Mediabunny (WebCodecs + WASM encoders); MPEG-PS via `mpeg-ps.js` + mpg123 |
 | **Voice to Text** | [/voice-to-text/](https://audiotools.dev/voice-to-text/) | Web Speech API + Whisper (Transformers.js) |
 | **Text to Speech** | [/text-to-speech/](https://audiotools.dev/text-to-speech/) | Web Speech Synthesis API |
 | **Audio Trimmer** | [/audio-trimmer/](https://audiotools.dev/audio-trimmer/) | Web Audio API |
@@ -29,7 +29,9 @@ audiotools.dev/
 ├── style.css               ← Shared look: tokens, nav, footer, tool header and panel, sections
 ├── assistant.js            ← Home helper + "continue with this file" hand-off between tools
 ├── media.js                ← Shared decoding/encoding on Mediabunny: convertFile (streams, video in), encodeBuffer
+├── mpeg-ps.js              ← MPEG program streams (.mpg/.mpeg/.vob): takes the MPEG audio out, decodes MP1/MP2 with mpg123
 ├── vendor/mediabunny/      ← Self-hosted Mediabunny + MP3/FLAC/AAC encoder bundles (MPL-2.0)
+├── vendor/mpg123/          ← mpg123 MP1/MP2/MP3 decoder in WebAssembly (wrapper MIT, mpg123 LGPL-2.1)
 ├── batch.js                ← Several files at once: per-file list + ZIP download (Converter, Compressor)
 ├── audio-export.js         ← MP3 (192 kbps) or WAV download for edited audio
 ├── support.js              ← GA4 events + support line after a successful result
@@ -45,7 +47,7 @@ audiotools.dev/
 
 - **Decoding**: Web Audio API (WAV, MP3, FLAC, OGG, AAC, M4A, WebM, or anything else the browser can decode)
 - **WAV encoding**: custom JS encoder (lossless)
-- **Converter**: [Mediabunny](https://mediabunny.dev) reads audio and video containers in pieces and decodes with WebCodecs; output MP3, M4A (AAC), WAV or FLAC. Browsers without WebCodecs fall back to Web Audio decoding.
+- **Converter**: [Mediabunny](https://mediabunny.dev) reads audio and video containers in pieces and decodes with WebCodecs; output MP3, M4A (AAC), WAV or FLAC. Browsers without WebCodecs fall back to Web Audio decoding. MPEG program streams, which neither opens, are demuxed by `mpeg-ps.js` (file read in 4 MB pieces); MP3 sound is decoded by the browser, MP1/MP2 by mpg123 in WebAssembly; AC-3 is reported as not supported.
 - **MP3 / FLAC / AAC encoding**: Mediabunny encoder extensions (LAME and FLAC in WebAssembly, in a worker; AAC only where the browser has no encoder)
 - The other tools save MP3 or WAV. Nothing is uploaded; there is no server.
 
