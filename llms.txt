@@ -4,7 +4,7 @@
 
 ## Online Tools
 
-- [Audio Converter](https://audiotools.dev/converter/): Convert audio (WAV, FLAC, OGG, AAC, M4A, WebM) or the soundtrack of a video (MP4, MOV, MKV) to MP3, M4A, WAV or FLAC. Streams large files; converts several files at once with a ZIP download. Built on Mediabunny. No file upload.
+- [Audio Converter](https://audiotools.dev/converter/): Convert audio (WAV, FLAC, OGG, AAC, M4A, WebM) or the soundtrack of a video (MP4, MOV, MKV, MPEG .mpg/.mpeg/.vob with MP2 or MP3 sound, .ts) to MP3, M4A, WAV or FLAC. Streams large files; converts several files at once with a ZIP download. Built on Mediabunny. No file upload.
 - [Voice to Text](https://audiotools.dev/voice-to-text/): Live dictation in 60+ languages (Web Speech Recognition API), plus Private mode: transcribe audio files and recordings with Whisper running on-device (Transformers.js; Base, Small, and large-v3-turbo on computers with WebGPU) — audio never leaves the browser. Shows progress and the text as it is recognized; timestamps, .srt subtitles, automatic language detection.
 - [Text to Speech](https://audiotools.dev/text-to-speech/): Convert text to natural speech in 50+ languages. Adjustable speed (0.25x-3x), pitch, volume.
 - [Audio Trimmer](https://audiotools.dev/audio-trimmer/): Cut audio files with visual waveform editor. Drag handles, preview, download WAV.

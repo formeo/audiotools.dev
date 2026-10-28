@@ -304,7 +304,7 @@
             <div class="drop-prompt">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
                 <div class="drop-text">将一个或多个音频、视频文件拖放到此处，或<b>点击选择</b></div>
-                <div class="drop-formats">音频：MP3、WAV、FLAC、OGG、M4A、AAC、WebM · 视频：MP4、MOV、MKV、WebM</div>
+                <div class="drop-formats">音频：MP3、WAV、FLAC、OGG、M4A、AAC、WebM · 视频：MP4、MOV、MKV、WebM、MPEG</div>
             </div>
             <div class="file-info" id="fileInfo">
                 <div class="file-header">
@@ -490,9 +490,18 @@
             flac: { label: 'FLAC', ext: '.flac', mime: 'audio/flac' },
         };
 
-        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus', 'mp4', 'm4v', 'mov', 'mkv'];
+        const INPUT_EXTS = ['wav', 'mp3', 'flac', 'ogg', 'oga', 'aac', 'm4a', 'webm', 'weba', 'opus', 'mp4', 'm4v', 'mov', 'mkv',
+            'mpg', 'mpeg', 'mpe', 'vob', 'ts', 'mts', 'm2ts'];
         const WAVEFORM_MAX = 100 * 1024 * 1024;   // decode for the waveform only up to this size
         const media = () => import('/media.js');
+        // Decoded with Web Audio; MPEG program streams (.mpg, .mpeg, .vob: pack header 00 00 01 BA), which browsers
+        // can't open, go through /mpeg-ps.js
+        async function decodeFile(file) {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const h = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+            if (h[0] === 0 && h[1] === 0 && h[2] === 1 && h[3] === 0xBA) return (await import('/mpeg-ps.js')).decodeMpegPs(file, audioCtx);
+            return audioCtx.decodeAudioData(await file.arrayBuffer());
+        }
         media().catch(() => {});                  // warm up while the user picks a file
 
         // Detect input format
@@ -580,9 +589,8 @@
                 return await m.convertFile(file, { format: selectedOutput, bitrate, onProgress });
             } catch (e) {
                 console.warn('[AudioTools] streaming conversion failed, decoding instead:', e);
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 onProgress(0.3);
-                return m.encodeBuffer(await audioCtx.decodeAudioData(await file.arrayBuffer()), { format: selectedOutput, bitrate });
+                return m.encodeBuffer(await decodeFile(file), { format: selectedOutput, bitrate });
             }
         }
 
@@ -645,8 +653,7 @@
                 try { info = await (await media()).probe(file); } catch (e) { console.warn('[AudioTools] probe failed:', e); }
                 if (!info || file.size <= WAVEFORM_MAX) {
                     try {
-                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                        audioBuffer = await audioCtx.decodeAudioData(await file.arrayBuffer());
+                        audioBuffer = await decodeFile(file);
                     } catch (e) { if (!info) throw e; }
                 }
                 if (currentFile !== file) return;   // another file was picked meanwhile
@@ -766,8 +773,7 @@
                     console.warn('[AudioTools] streaming conversion failed, decoding instead:', e);
                     if (!audioBuffer) {
                         updateProgress(10, '正在解码音频…');
-                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                        audioBuffer = await audioCtx.decodeAudioData(await currentFile.arrayBuffer());
+                        audioBuffer = await decodeFile(currentFile);
                     }
                     updateProgress(50, '正在编码 ' + label + '…');
                     blob = await m.encodeBuffer(audioBuffer, { format: selectedOutput, bitrate });
