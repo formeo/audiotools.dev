@@ -294,7 +294,7 @@
             word-break: break-word;
         }
         .transcript-body:empty::before {
-            content: "Your transcription will appear here.\a\a Choose a file or record yourself: Whisper writes it down on your device.";
+            content: "Your transcription will appear here.\a\a Choose or drop a file, or record yourself: Whisper writes it down on your device.";
             color: var(--text-muted);
             font-style: italic;
             white-space: pre-wrap;
@@ -387,6 +387,46 @@
             .actions .btn { justify-content: center; min-height: 44px; }
         }
         .tool-area .actions { margin-bottom: 20px; }
+
+        /* The file, the player and the transcript that follows it */
+        .drop-hint { font-size: 13px; color: var(--text-muted); }
+        .tool-area.dragging { outline: 2px dashed var(--accent); outline-offset: -2px; }
+        .media-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; margin-bottom: 16px; }
+        .media-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .media-info { display: flex; flex-direction: column; min-width: 0; }
+        .media-info b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .media-info span, .media-note { font-size: 13px; color: var(--text-muted); }
+        .media-hint { font-size: 13px; color: var(--accent2); margin-top: 8px; }
+        .media-panel audio { display: block; width: 100%; margin-top: 12px; }
+        .media-panel audio[hidden], .media-panel video[hidden] { display: none; }
+        .media-panel video { display: block; width: 100%; max-height: 260px; margin-top: 12px; border-radius: 8px; background: #000; }
+        .media-note { margin-top: 10px; }
+        .speed-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
+        .speed-row button { font: inherit; padding: 3px 9px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+        .speed-row button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+        .speed-row .keys { margin-left: auto; }
+        .result-title { display: flex; flex-direction: column; min-width: 0; }
+        .result-title b { font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .result-title span { font-size: 12px; }
+        .transcript-body { position: relative; }
+        .transcript-body .seg { border-radius: 4px; transition: background 0.15s; }
+        .transcript-body.playable .seg { cursor: pointer; }
+        .transcript-body.playable .seg:hover { background: var(--surface2); }
+        .transcript-body .seg.current { background: #E3E8FE; }
+        .transcript-body .ts { font: inherit; font-variant-numeric: tabular-nums; color: var(--text-muted); background: none; border: 0; padding: 0; cursor: default; }
+        .transcript-body.playable .ts { color: var(--accent2); cursor: pointer; }
+        .earlier { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin: -8px 0 20px; font-size: 13px; color: var(--text-muted); }
+        .earlier div { display: flex; flex-wrap: wrap; gap: 6px; }
+        .earlier button { font: inherit; padding: 4px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .earlier button:disabled { opacity: 0.5; cursor: default; }
+        .speed-row[hidden], .earlier[hidden], .media-panel[hidden] { display: none; }
+        @media (max-width: 600px) {
+            .media-panel { padding: 12px 16px; }
+            .media-row { flex-wrap: wrap; }
+            .media-row .btn { flex: 1 1 100%; justify-content: center; min-height: 44px; }
+            .speed-row .keys { display: none; }
+            .drop-hint { display: none; }
+        }
     </style>
 
     <script type="application/ld+json">
@@ -545,19 +585,37 @@
         </div>
         <div class="controls-row main-actions">
             <button class="btn btn-start" id="whisperFileBtn" onclick="document.getElementById('whisperFile').click()">Transcribe file</button>
-            <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) transcribeBlob(this.files[0]); this.value = '';">
+            <input type="file" id="whisperFile" accept="audio/*,video/*" hidden onchange="if (this.files[0]) useFile(this.files[0]); this.value = '';">
             <button class="btn btn-secondary" id="whisperRecBtn" onclick="toggleWhisperRecording()">Record &amp; transcribe</button>
+            <span class="drop-hint">or drop an audio or video file here</span>
         </div>
         <div class="whisper-status" id="whisperStatus" aria-live="polite"></div>
         <div class="whisper-bar" id="whisperBar" hidden><span></span></div>
     </div>
 
+    <!-- The file being worked on: its name, transcribe again, and a player that follows the text -->
+    <div class="media-panel" id="mediaPanel" hidden>
+        <div class="media-row">
+            <div class="media-info"><b id="mediaName"></b><span id="mediaMeta"></span></div>
+            <button class="btn btn-secondary" id="againBtn" onclick="transcribe(activeMedia)">Transcribe again</button>
+        </div>
+        <p class="media-hint" id="mediaHint" hidden></p>
+        <audio id="mediaAudio" controls preload="metadata" hidden></audio>
+        <video id="mediaVideo" controls playsinline preload="metadata" hidden></video>
+        <p class="media-note" id="mediaNote" hidden>This file can't be played in your browser, but the text works as usual.</p>
+        <div class="speed-row" id="speedRow" role="group" aria-label="Playback speed">
+            <span>Speed</span>
+            <button type="button" data-rate="0.75">0.75×</button><button type="button" data-rate="1" class="on">1×</button><button type="button" data-rate="1.25">1.25×</button><button type="button" data-rate="1.5">1.5×</button>
+            <span class="keys">Click a line to jump there · Space: play/pause · ← →: 5 s</span>
+        </div>
+    </div>
+
     <!-- Transcript -->
     <div class="transcript-container">
         <div class="transcript-header">
-            <span>Transcription</span>
+            <span class="result-title"><b id="resultTitle">Transcription</b><span id="resultMeta"></span></span>
             <div class="transcript-stats">
-                <label class="ts-toggle"><input type="checkbox" id="tsToggle" checked onchange="updateTranscript('')"> Timestamps</label>
+                <label class="ts-toggle"><input type="checkbox" id="tsToggle" checked onchange="render()"> Timestamps</label>
                 <span id="wordCount">0 words</span>
                 <span id="charCount">0 chars</span>
             </div>
@@ -572,6 +630,7 @@
         <button class="btn btn-secondary" onclick="downloadSrt()" id="srtBtn" disabled title="Subtitles with timestamps">Download .srt</button>
         <button class="btn btn-secondary" onclick="clearText()" id="clearBtn" disabled>Clear</button>
     </div>
+    <div class="earlier" id="earlier" hidden><span>Earlier on this page:</span><div id="earlierList"></div></div>
 
     <!-- Live dictation: the browser's speech service -->
     <details class="controls live" id="liveSection">
@@ -676,7 +735,7 @@
     // ============================================================
     let whisperWorker = null;
     let whisperRecorder = null;
-    let job = null;   // the transcription in progress
+    let job = null;   // the transcription in progress: { media, model, source, lang, duration, … }
 
     // Base and Small run on the graphics card (WebGPU) when the browser has it, otherwise on the CPU (WebAssembly).
     // Turbo needs WebGPU with 16-bit floats and is listed only then. mb: download size of the model files.
@@ -716,6 +775,9 @@
         document.getElementById('whisperFileBtn').disabled = busy;
         document.getElementById('whisperRecBtn').disabled = busy;
         document.getElementById('whisperModel').disabled = busy;
+        if (SpeechRecognition) document.getElementById('startBtn').disabled = busy;   // one thing writes the text at a time
+        document.getElementById('againBtn').disabled = busy || !activeMedia;
+        document.querySelectorAll('#earlierList button').forEach((b) => { b.disabled = busy; });
         const st = document.getElementById('whisperStatus');
         st.textContent = status;
         st.classList.toggle('busy', busy);
@@ -756,7 +818,7 @@
                 setWhisperBusy(true, data.chunks > 1 ? `Transcribing on your device… part 1 of ${data.chunks}` : 'Transcribing on your device…', data.chunks > 1 ? 0 : null);
             } else if (data.type === 'partial') {
                 job.texts[data.chunk] = data.text;
-                updateTranscript(job.texts.map((t) => t.trim()).join(' '), true);   // a draft until the whole file is done
+                render(job.texts.map((t) => t.trim()).join(' '));   // a draft until the whole file is done
             } else if (data.type === 'chunk') {
                 job.done = data.done;
                 if (job.done < job.chunks) {
@@ -764,9 +826,9 @@
                     setWhisperBusy(true, `Transcribing on your device… part ${job.done + 1} of ${job.chunks} · ${timeLeft(left)}`, job.done / job.chunks);
                 }
             } else if (data.type === 'done') {
-                blocks.push({ segments: toSegments(data.chunks, data.text, job.duration), duration: job.duration });
+                const { media, model, lang, duration } = job;
                 job = null;
-                updateTranscript('');
+                show(addResult({ kind: 'whisper', media, model: model.name, lang, segments: toSegments(data.chunks, data.text, duration), duration }));
                 setWhisperBusy(false, 'Done');
                 toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
             } else {
@@ -777,35 +839,46 @@
     }
 
     function whisperFailed({ message, loading, network }) {
-        const { blob, model, source } = job;
+        const { media, model, source } = job;
         job = null;
         if (loading) trackEvent('model_load_failed', { model: model.name, device: model.device, source, reason: network ? 'network' : 'error' });
         if (loading && network && source === 'hf') {
             try { localStorage.setItem(HF_DOWN_KEY, String(Date.now())); } catch (e) { /* storage blocked */ }
-            transcribeBlob(blob, 'site');   // a fresh worker: it also drops any download still hanging in the old one
+            transcribe(media, 'site');   // a fresh worker: it also drops any download still hanging in the old one
         } else if (model.device === 'webgpu' && model.name !== 'turbo') {
             gpu = false;   // WebGPU failed here: same model on the CPU
-            transcribeBlob(blob);
+            transcribe(media);
         } else {
-            updateTranscript('');
+            render();
             setWhisperBusy(false, '');
             showToast('Transcription failed: ' + message);
         }
     }
 
-    async function transcribeBlob(blob, source = hfDown() ? 'site' : 'hf') {
+    // media: { blob, name, size, isVideo, recording } — the file stays in memory, so it can be transcribed again
+    async function transcribe(media, source = hfDown() ? 'site' : 'hf') {
+        if (!media || job) return;
+        const prev = current, prevMedia = activeMedia;
+        setActiveMedia(media);
+        current = null;   // the previous result moves to "Earlier"; this file's draft takes its place
+        render('');
         setWhisperBusy(true, 'Decoding audio…', null);
         let audio;
         try {
-            audio = await decodeTo16kMono(blob);
+            audio = await decodeTo16kMono(media.blob);
         } catch (e) {
+            current = prev;   // not a file we can read: back to what was on screen
+            setActiveMedia(prevMedia);
+            render();
             setWhisperBusy(false, '');
             showToast('Could not decode this file. Try another format.');
             return;
         }
+        media.duration = audio.length / 16000;
+        showMediaInfo();
         const value = langSelect.value, lang = value === 'auto' ? null : value.split('-')[0];
         const model = source === 'site' ? SITE_BASE : modelFor(document.getElementById('whisperModel').value);
-        job = { blob, model, source, duration: audio.length / 16000 };
+        job = { media, model, source, lang: value, duration: media.duration };
         setWhisperBusy(true, source === 'site' ? 'Hugging Face is unreachable, loading the Base model from AudioTools.dev…' : 'Loading the model…', null);
         getWhisperWorker(source).postMessage({
             audio,
@@ -836,7 +909,8 @@
             const blob = new Blob(chunks, { type: whisperRecorder.mimeType });
             whisperRecorder = null;
             btn.textContent = 'Record & transcribe';
-            transcribeBlob(blob);
+            const at = new Date();
+            transcribe({ blob, size: blob.size, isVideo: false, recording: at, name: 'Recording ' + at.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
         };
         whisperRecorder.start();
         btn.textContent = '■ Stop & transcribe';
@@ -844,9 +918,12 @@
     }
 
     // ============================================================
-    // Transcript: blocks in order; Whisper's keep their timed segments
+    // Results: one per file transcription or dictation; the newest is shown, the others are listed under "Earlier"
     // ============================================================
-    let blocks = [];   // { text } from live dictation, { segments: [{ start, end, text }], duration } from Whisper
+    let results = [];     // { kind: 'whisper' | 'live', media, model, lang, segments: [{ start, end, text }], duration, text, saved }
+    let current = null;   // the result on screen
+    const addResult = (r) => { r.saved = false; r.at = new Date(); results.push(r); return r; };
+    const resultText = (r) => (r.segments ? r.segments.map((x) => x.text.trim()).filter(Boolean).join(' ') : r.text.trim());
 
     // Whisper's chunks → segments; a missing end (the last chunk) is the next start or the end of the audio
     function toSegments(chunks, text, duration) {
@@ -859,31 +936,288 @@
         return (h ? h + ':' : '') + m + ':' + sec;
     };
     function transcriptText(withTimes) {
-        return blocks.map((b) => (b.segments
-            ? b.segments.filter((x) => x.text.trim()).map((x) => (withTimes ? '[' + clock(x.start) + '] ' : '') + x.text.trim()).join(withTimes ? '\n' : ' ')
-            : b.text.trim())).filter(Boolean).join('\n\n');
+        const r = current;
+        if (!r) return '';
+        if (!r.segments) return r.text.trim();
+        return r.segments.filter((x) => x.text.trim()).map((x) => (withTimes ? '[' + clock(x.start) + '] ' : '') + x.text.trim()).join(withTimes ? '\n' : ' ');
     }
-    const hasSegments = () => blocks.some((b) => b.segments && b.segments.some((x) => x.text.trim()));
-    // SubRip subtitles from the Whisper blocks; each block starts where the previous one ended
+    const hasSegments = () => !!(current && current.segments && current.segments.some((x) => x.text.trim()));
+    const stamp = (x, sep) => {
+        const ms = Math.round(Math.max(0, x) * 1000);
+        return [Math.floor(ms / 3600000), Math.floor(ms / 60000) % 60, Math.floor(ms / 1000) % 60].map((v) => String(v).padStart(2, '0')).join(':') + sep + String(ms % 1000).padStart(3, '0');
+    };
+    // SubRip subtitles of the result on screen
     function srtText() {
-        const time = (x) => {
-            const ms = Math.round(Math.max(0, x) * 1000);
-            return [Math.floor(ms / 3600000), Math.floor(ms / 60000) % 60, Math.floor(ms / 1000) % 60].map((v) => String(v).padStart(2, '0')).join(':') + ',' + String(ms % 1000).padStart(3, '0');
-        };
-        const out = [];
-        let n = 0, offset = 0;
-        for (const b of blocks) {
-            if (!b.segments) continue;
-            for (const x of b.segments) if (x.text.trim()) out.push(++n + '\n' + time(offset + x.start) + ' --> ' + time(offset + x.end) + '\n' + x.text.trim() + '\n');
-            offset += b.duration;
+        let n = 0;
+        return current.segments.filter((x) => x.text.trim()).map((x) => ++n + '\n' + stamp(x.start, ',') + ' --> ' + stamp(x.end, ',') + '\n' + x.text.trim() + '\n').join('\n');
+    }
+    const vttText = (r) => 'WEBVTT\n\n' + r.segments.filter((x) => x.text.trim()).map((x) => stamp(x.start, '.') + ' --> ' + stamp(x.end, '.') + '\n' + x.text.trim() + '\n').join('\n');
+
+    // Live dictation writes into its own result; Start after Stop goes on with it
+    let beforeLive = null;   // what was on screen, shown again if nothing gets dictated
+    function liveResult() {
+        if (!current || current.kind !== 'live') {
+            beforeLive = current;
+            show(addResult({ kind: 'live', media: null, lang: langSelect.value, text: '' }));
         }
-        return out.join('\n');
+        return current;
     }
-    function liveBlock() {
-        let b = blocks[blocks.length - 1];
-        if (!b || b.segments) blocks.push(b = { text: '' });
-        return b;
+
+    const langName = (value) => {
+        if (value === 'auto') return 'language detected automatically';
+        const o = [...langSelect.options].find((x) => x.value === value);
+        return o ? o.textContent.replace(/^[\u{1F1E6}-\u{1F1FF}]{2}\s*/u, '') : value;
+    };
+    const MODEL_NAMES = { base: 'Whisper Base', small: 'Whisper Small', turbo: 'Whisper Turbo' };
+    const resultTitle = (r) => (r.kind === 'live' ? 'Live dictation' : r.media.name);
+    const resultMeta = (r) => (r.kind === 'live' ? langName(r.lang) : MODEL_NAMES[r.model] + ' · ' + langName(r.lang));
+
+    // Make a result the one on screen (null: nothing yet)
+    function show(r) {
+        current = r;
+        if (r) setActiveMedia(r.media);
+        render();
     }
+
+    // draft: text still being recognized, shown after the result (or alone, while a file is being transcribed)
+    function render(draft) {
+        const el = document.getElementById('transcript');
+        const withTimes = document.getElementById('tsToggle').checked;
+        const r = current;
+        const keepScroll = !draft && r && el.shownResult === r, top = el.scrollTop;   // re-drawn (timestamps on/off): stay in place
+        el.shownResult = r;
+        el.textContent = '';
+        segNodes = [];
+        if (r && r.segments) {
+            r.segments.forEach((x, i) => {
+                const t = x.text.trim();
+                if (!t) return;
+                const node = document.createElement(withTimes ? 'div' : 'span');
+                node.className = 'seg';
+                node.dataset.i = i;
+                if (withTimes) {
+                    const ts = document.createElement('button');
+                    ts.type = 'button';
+                    ts.className = 'ts';
+                    ts.textContent = '[' + clock(x.start) + ']';
+                    node.append(ts, ' ');
+                }
+                node.append(t);
+                if (!withTimes && el.firstChild) el.append(' ');
+                el.append(node);
+                segNodes[i] = node;
+            });
+        } else if (r) {
+            el.textContent = r.text.trim();
+        }
+        if (draft) {
+            const d = document.createElement('span');
+            d.className = 'transcript-interim';
+            d.textContent = draft;
+            if (el.textContent) el.append(' ');
+            el.append(d);
+        }
+        el.scrollTop = keepScroll ? top : draft || (r && r.kind === 'live') ? el.scrollHeight : 0;
+        el.classList.toggle('playable', !!(r && r.segments && playerReady()));
+        lastSeg = -1;
+        syncHighlight();
+
+        document.getElementById('resultTitle').textContent = r ? resultTitle(r) : job ? job.media.name : 'Transcription';
+        document.getElementById('resultMeta').textContent = r ? resultMeta(r) : '';
+        updateStats();
+        const hasText = !!transcriptText(false);
+        document.getElementById('copyBtn').disabled = !hasText;
+        document.getElementById('downloadBtn').disabled = !hasText;
+        document.getElementById('clearBtn').disabled = !r;
+        document.getElementById('srtBtn').disabled = !hasSegments();
+        renderEarlier();
+        updateHint();
+        setSubtitles();
+    }
+
+    function renderEarlier() {
+        const list = document.getElementById('earlierList');
+        list.textContent = '';
+        const others = results.filter((r) => r !== current && resultText(r)).reverse();
+        document.getElementById('earlier').hidden = !others.length;
+        for (const r of others) {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.textContent = resultTitle(r) + ' · ' + (r.kind === 'live' ? r.at.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : MODEL_NAMES[r.model]);
+            b.title = resultMeta(r);
+            b.disabled = !!job || isRecording;
+            b.onclick = () => show(r);
+            list.append(b);
+        }
+    }
+
+    // ============================================================
+    // The file on screen and its player
+    // ============================================================
+    let activeMedia = null;
+    let segNodes = [], lastSeg = -1, followPausedUntil = 0;
+    const audioEl = document.getElementById('mediaAudio'), videoEl = document.getElementById('mediaVideo');
+    const player = () => (activeMedia && !activeMedia.unplayable ? (activeMedia.isVideo ? videoEl : audioEl) : null);
+    const playerReady = () => !!player();
+
+    function useFile(file) {
+        if (job) return;
+        transcribe({ blob: file, name: file.name, size: file.size, isVideo: /^video\//.test(file.type) || /\.(mp4|m4v|mov|mkv|webm|avi|3gp)$/i.test(file.name) });
+    }
+
+    function setActiveMedia(media) {
+        if (media === activeMedia) return;
+        for (const el of [audioEl, videoEl]) { el.pause(); el.hidden = true; }
+        activeMedia = media;
+        document.getElementById('mediaPanel').hidden = !media;
+        document.getElementById('mediaNote').hidden = true;
+        if (!media) return;
+        if (!media.url) media.url = URL.createObjectURL(media.blob);
+        const el = player();
+        document.getElementById('speedRow').hidden = !el;
+        document.getElementById('mediaNote').hidden = !!el;
+        if (el) {
+            el.hidden = false;
+            if (el.src !== media.url) el.src = media.url;
+            el.playbackRate = rate;
+        }
+        showMediaInfo();
+    }
+
+    function showMediaInfo() {
+        const m = activeMedia;
+        if (!m) return;
+        document.getElementById('mediaName').textContent = m.name;
+        const parts = [];
+        if (m.duration) parts.push(clock(m.duration));
+        if (!m.recording) parts.push((m.size / 1048576 < 0.1 ? '<0.1' : (m.size / 1048576).toFixed(1)) + ' MB');
+        if (m.recording) parts.push('recorded here');
+        document.getElementById('mediaMeta').textContent = parts.join(' · ');
+    }
+
+    // The file can be transcribed again; after a change of model or language, say so
+    function updateHint() {
+        const hint = document.getElementById('mediaHint'), again = document.getElementById('againBtn');
+        again.disabled = !!job || !activeMedia;
+        const r = current && current.media === activeMedia ? current : null;
+        const model = document.getElementById('whisperModel').value;
+        const modelChanged = r && r.model !== model && !hfDown();   // without Hugging Face it's always Base
+        const changed = !!(activeMedia && r && !job && (modelChanged || r.lang !== langSelect.value));
+        hint.hidden = !changed;
+        again.classList.toggle('btn-start', changed);
+        again.classList.toggle('btn-secondary', !changed);
+        if (changed) hint.textContent = 'Settings changed: transcribe it again with ' + MODEL_NAMES[model] + ', ' + langName(langSelect.value) + '?';
+    }
+    document.getElementById('whisperModel').addEventListener('change', updateHint);
+
+    // Files the browser can decode but not play (some voice-message formats): the text still works
+    for (const el of [audioEl, videoEl]) {
+        el.addEventListener('error', () => {
+            if (!activeMedia || el.hidden) return;
+            activeMedia.unplayable = true;
+            el.hidden = true;
+            document.getElementById('speedRow').hidden = true;
+            document.getElementById('mediaNote').hidden = false;
+            render();
+        });
+        el.addEventListener('timeupdate', syncHighlight);
+        el.addEventListener('seeked', () => { followPausedUntil = 0; syncHighlight(); });
+    }
+    // A .webm or .mp4 with sound only: play it in the compact audio player
+    videoEl.addEventListener('loadedmetadata', () => {
+        if (activeMedia && activeMedia.isVideo && !videoEl.videoWidth) {
+            activeMedia.isVideo = false;
+            videoEl.hidden = true;
+            audioEl.hidden = false;
+            audioEl.src = activeMedia.url;
+            audioEl.playbackRate = rate;
+            render();
+        }
+    });
+
+    // The line being played is highlighted, and the text scrolls to it unless the reader is scrolling by hand
+    function syncHighlight() {
+        const el = player();
+        const r = current;
+        if (!el || !r || !r.segments || r.media !== activeMedia) return;
+        const t = el.currentTime;
+        let i = -1;
+        const started = el.played.length || t;   // before the first play nothing is "current"
+        if (started) for (let k = 0; k < r.segments.length; k++) if (segNodes[k] && r.segments[k].start <= t + 0.05) i = k;
+        if (i >= 0 && t > r.segments[i].end + 1 && (!r.segments[i + 1] || t < r.segments[i + 1].start)) i = -1;   // a pause between lines
+        if (i === lastSeg) return;
+        if (segNodes[lastSeg]) segNodes[lastSeg].classList.remove('current');
+        lastSeg = i;
+        const node = segNodes[i];
+        if (!node) return;
+        node.classList.add('current');
+        const box = document.getElementById('transcript');
+        if (Date.now() < followPausedUntil || el.paused) return;
+        const top = node.offsetTop, bottom = top + node.offsetHeight;
+        if (top < box.scrollTop || bottom > box.scrollTop + box.clientHeight) box.scrollTo({ top: Math.max(0, top - box.clientHeight / 3), behavior: 'smooth' });
+    }
+    const transcriptBox = document.getElementById('transcript');
+    for (const ev of ['wheel', 'touchmove']) transcriptBox.addEventListener(ev, () => { followPausedUntil = Date.now() + 5000; }, { passive: true });
+
+    // A click on a line (or its time) plays from there; selecting text doesn't
+    transcriptBox.addEventListener('click', (e) => {
+        const node = e.target.closest('.seg'), el = player();
+        if (!node || !el || !current || !current.segments || current.media !== activeMedia) return;
+        if (!e.target.closest('.ts') && !window.getSelection().isCollapsed) return;
+        el.currentTime = current.segments[+node.dataset.i].start;
+        followPausedUntil = 0;
+        el.play().catch(() => {});
+    });
+
+    let rate = 1;
+    document.getElementById('speedRow').addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-rate]');
+        if (!b) return;
+        rate = +b.dataset.rate;
+        for (const el of [audioEl, videoEl]) el.playbackRate = rate;
+        document.querySelectorAll('#speedRow button').forEach((x) => x.classList.toggle('on', x === b));
+    });
+
+    // Space plays and pauses, arrows skip 5 s — unless the focus is in a field or on a control
+    document.addEventListener('keydown', (e) => {
+        const el = player();
+        if (!el || e.ctrlKey || e.metaKey || e.altKey || document.getElementById('mediaPanel').hidden) return;
+        if (e.target.closest('input,select,textarea,button,summary,a,audio,video,[contenteditable]')) return;
+        if (e.key === ' ') { e.preventDefault(); el.paused ? el.play().catch(() => {}) : el.pause(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); el.currentTime = Math.max(0, el.currentTime - 5); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); el.currentTime = Math.min(el.duration || Infinity, el.currentTime + 5); }
+    });
+
+    // Subtitles from the transcript on the video, to check the .srt by eye
+    let vttUrl = null;
+    function setSubtitles() {
+        for (const t of videoEl.querySelectorAll('track')) t.remove();
+        if (vttUrl) { URL.revokeObjectURL(vttUrl); vttUrl = null; }
+        const r = current;
+        if (!r || !r.segments || r.media !== activeMedia || !activeMedia || !activeMedia.isVideo) return;
+        vttUrl = URL.createObjectURL(new Blob([vttText(r)], { type: 'text/vtt' }));
+        const track = document.createElement('track');
+        Object.assign(track, { kind: 'subtitles', label: 'Transcript', src: vttUrl, default: true });
+        if (r.lang !== 'auto') track.srclang = r.lang.split('-')[0];
+        videoEl.append(track);
+        track.track.mode = 'showing';
+    }
+
+    // Drop a file anywhere on the tool
+    const toolArea = document.querySelector('.tool-area');
+    toolArea.addEventListener('dragover', (e) => { if ([...e.dataTransfer.types].includes('Files')) { e.preventDefault(); toolArea.classList.add('dragging'); } });
+    toolArea.addEventListener('dragleave', (e) => { if (!toolArea.contains(e.relatedTarget)) toolArea.classList.remove('dragging'); });
+    toolArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        toolArea.classList.remove('dragging');
+        const f = e.dataTransfer.files[0];
+        if (f) useFile(f);
+    });
+
+    // Leaving with text that was never copied or downloaded: the browser asks first
+    window.addEventListener('beforeunload', (e) => {
+        if (job || whisperRecorder || isRecording || results.some((r) => !r.saved && resultText(r))) { e.preventDefault(); e.returnValue = ''; }
+    });
 
     // Language: remembered between visits; "auto" lets Whisper detect it, and live dictation then uses the browser's
     const langSelect = document.getElementById('langSelect');
@@ -893,6 +1227,7 @@
     } catch (e) { /* storage blocked */ }
     langSelect.addEventListener('change', () => { try { localStorage.setItem('at_vtt_lang', langSelect.value); } catch (e) { /* storage blocked */ } });
     const liveLang = () => (langSelect.value === 'auto' ? navigator.language || 'en-US' : langSelect.value);
+    langSelect.addEventListener('change', updateHint);
 
     // ============================================================
     // Live dictation — Web Speech API
@@ -923,12 +1258,12 @@
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 const t = event.results[i][0].transcript;
                 if (event.results[i].isFinal) {
-                    liveBlock().text += t + ' ';
+                    liveResult().text += t + ' ';
                 } else {
                     interim += t;
                 }
             }
-            updateTranscript(interim);
+            render(interim);
         };
 
         recognition.onerror = function(event) {
@@ -965,6 +1300,9 @@
         try {
             recognition.start();
             isRecording = true;
+            liveResult();
+            for (const id of ['whisperFileBtn', 'whisperRecBtn', 'againBtn']) document.getElementById(id).disabled = true;
+            renderEarlier();
 
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('stopBtn').style.display = 'inline-flex';
@@ -992,38 +1330,17 @@
         document.getElementById('recordingIndicator').classList.remove('active');
 
         clearInterval(timerInterval);
-        updateTranscript('');
+        for (const id of ['whisperFileBtn', 'whisperRecBtn']) document.getElementById(id).disabled = false;
+        if (current && current.kind === 'live' && !current.text.trim()) {   // nothing was said: back to what was on screen
+            results = results.filter((r) => r !== current);
+            current = null;
+            show(results.includes(beforeLive) ? beforeLive : null);
+        } else render();
 
-        if (transcriptText(false)) {
+        if (current && current.kind === 'live' && transcriptText(false)) {
             showToast('Recording stopped');
             toolSuccess('voice-to-text', document.querySelector('.actions'));
         }
-    }
-
-    // interim: text not final yet, shown as a draft; newBlock: it starts its own paragraph (a file being transcribed)
-    function updateTranscript(interim, newBlock) {
-        const el = document.getElementById('transcript');
-        const text = transcriptText(document.getElementById('tsToggle').checked);
-
-        if (interim) {
-            el.innerHTML = escapeHtml(text) + (text ? (newBlock ? '\n\n' : ' ') : '') +
-                '<span class="transcript-interim">' + escapeHtml(interim) + '</span>';
-        } else {
-            el.textContent = text;
-        }
-
-        // Auto-scroll
-        el.scrollTop = el.scrollHeight;
-
-        // Update stats
-        updateStats();
-
-        // Enable/disable buttons
-        const hasText = text.length > 0;
-        document.getElementById('copyBtn').disabled = !hasText;
-        document.getElementById('downloadBtn').disabled = !hasText;
-        document.getElementById('clearBtn').disabled = !hasText;
-        document.getElementById('srtBtn').disabled = !hasSegments();
     }
 
     function updateStats() {
@@ -1045,6 +1362,7 @@
     function copyText() {
         const text = transcriptText(document.getElementById('tsToggle').checked);
         if (!text) return;
+        current.saved = true;
         navigator.clipboard.writeText(text).then(() => {
             showToast('Copied to clipboard!');
         }).catch(() => {
@@ -1059,12 +1377,18 @@
         });
     }
 
+    // Named after the file: interview.mp3 → interview.srt; a recording or dictation by its date and time
+    function fileStem(r) {
+        if (r.media && !r.media.recording) return r.media.name.replace(/\.[^.]+$/, '') || 'transcription';
+        const d = r.media ? r.media.recording : r.at, pad = (n) => String(n).padStart(2, '0');
+        return (r.kind === 'live' ? 'dictation-' : 'recording-') + d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes());
+    }
     function saveText(text, ext) {
-        const date = new Date().toISOString().split('T')[0];
+        current.saved = true;
         const blob = new Blob([text], { type: (ext === 'srt' ? 'application/x-subrip' : 'text/plain') + ';charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `transcription-${langSelect.value}-${date}.${ext}`;
+        a.download = fileStem(current) + '.' + ext;
         a.click();
         setTimeout(() => URL.revokeObjectURL(a.href), 10000);
         showToast('Downloaded!');
@@ -1077,12 +1401,19 @@
         if (hasSegments()) saveText(srtText(), 'srt');
     }
 
+    // Removes the result on screen; earlier ones stay
     function clearText() {
-        if (transcriptText(false) && !confirm('Clear all transcription text?')) return;
-        blocks = [];
-        startTime = null;
-        document.getElementById('duration').textContent = '0:00';
-        updateTranscript('');
+        const r = current;
+        if (!r) return;
+        if (!r.saved && transcriptText(false) && !confirm('Clear this transcription? It has not been copied or downloaded.')) return;
+        results = results.filter((x) => x !== r);
+        current = null;
+        if (r.kind === 'live') {
+            if (isRecording) stopRecording();
+            startTime = null;
+            document.getElementById('duration').textContent = '0:00';
+        }
+        render();
     }
 
     function showToast(msg) {
