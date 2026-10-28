@@ -54,7 +54,7 @@ audiotools.dev/
 ### Voice to Text
 
 - **Live dictation** uses the browser's built-in Web Speech Recognition API (Chrome/Safari may process audio on the vendor's servers).
-- **Private mode** transcribes audio files and microphone recordings with Whisper (Base and Small; large-v3-turbo where the browser has WebGPU with 16-bit floats) via [Transformers.js](https://github.com/huggingface/transformers.js) in a Web Worker (`voice-to-text/whisper-worker.js`). It runs on WebGPU when available and falls back to WebAssembly; text appears as it is recognized, with progress by 30-second part. Audio is decoded and resampled to 16 kHz mono in the browser; only the model weights are downloaded from Hugging Face and cached.
+- **Private mode** transcribes audio files and microphone recordings with Whisper (Base and Small; large-v3-turbo where the browser has WebGPU with 16-bit floats) via [Transformers.js](https://github.com/huggingface/transformers.js) in a Web Worker (`voice-to-text/whisper-worker.js`). It runs on WebGPU when available and falls back to WebAssembly; text appears as it is recognized, with progress by 30-second part. Audio is decoded and resampled to 16 kHz mono in the browser; only the model weights are downloaded from Hugging Face and cached. Where Hugging Face or jsDelivr can't be reached (a download fails or stalls for 30 s, common in China), the worker switches to copies served by the site itself: Transformers.js in `vendor/transformers/` and Whisper Base (q8, ~77 MB) in `models/Xenova/whisper-base/`; the page then uses them directly for a day and sends an anonymous `model_load_failed` event.
 
 ## SEO maintenance
 

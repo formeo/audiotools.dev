@@ -482,7 +482,7 @@
     <!-- Files and recordings: Whisper on the device -->
     <div class="controls whisper">
         <h2>Transcribe a file or a recording</h2>
-        <p class="whisper-note">Whisper runs in your browser, so your audio never leaves your device. The model is downloaded once from Hugging Face and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster.</p>
+        <p class="whisper-note">Whisper runs in your browser, so your audio never leaves your device. The model is downloaded once from Hugging Face (or from AudioTools.dev, where Hugging Face can't be reached) and cached; if your browser supports WebGPU, it runs on the graphics card, which is much faster.</p>
         <div class="fields">
             <label class="field"><span>Language</span>
             <select class="lang-select" id="langSelect">
@@ -627,7 +627,7 @@
         </ul>
 
         <h3>Privacy</h3>
-        <p>Private mode runs the Whisper model on your device: the model is downloaded once from Hugging Face, and your audio never leaves the browser. Live dictation uses the browser's speech engine, which may send audio to the browser vendor. AudioTools.dev has no backend — we never receive your audio or transcriptions.</p>
+        <p>Private mode runs the Whisper model on your device: the model is downloaded once from Hugging Face (or from AudioTools.dev, where Hugging Face can't be reached), and your audio never leaves the browser. Live dictation uses the browser's speech engine, which may send audio to the browser vendor. AudioTools.dev has no backend — we never receive your audio or transcriptions.</p>
 
         <h3>Browser compatibility</h3>
         <p>Private mode works in current versions of Chrome, Edge, Firefox and Safari. Live dictation works in Chrome, Edge and Safari; Firefox does not support it.</p>
@@ -704,6 +704,12 @@
         const m = MODELS[name], device = gpu && m.webgpu ? 'webgpu' : 'wasm';
         return { name, id: m.id, device, dtype: m[device].dtype, mb: m[device].mb };
     }
+    // Where Hugging Face can't be reached (often in China), Base comes from AudioTools.dev itself (/models/, ~77 MB).
+    // After a failure the site copy is used straight away for a day.
+    const SITE_BASE = { name: 'base', id: 'Xenova/whisper-base', device: 'wasm', dtype: 'q8', mb: 77 };
+    const HF_DOWN_KEY = 'at_hf_unreachable', DAY = 86400000;
+    const hfDown = () => { try { return Date.now() - Number(localStorage.getItem(HF_DOWN_KEY) || 0) < DAY; } catch (e) { return false; } };
+    const trackEvent = (name, params) => { if (typeof gtag === 'function') gtag('event', name, params); };
 
     // fraction: 0–1 fills the bar, null animates it (working, amount unknown), undefined hides it
     function setWhisperBusy(busy, status, fraction) {
@@ -733,13 +739,18 @@
         return (await off.startRendering()).getChannelData(0);
     }
 
-    function getWhisperWorker() {
-        if (whisperWorker) return whisperWorker;
+    let workerSource = null;
+    function getWhisperWorker(source) {   // a worker loads the library from one place, so another place needs a new worker
+        if (whisperWorker && workerSource === source) return whisperWorker;
+        if (whisperWorker) whisperWorker.terminate();
+        workerSource = source;
         whisperWorker = new Worker('/voice-to-text/whisper-worker.js', { type: 'module' });
         whisperWorker.onmessage = ({ data }) => {
             if (data.type === 'progress') {
                 const mb = data.loaded / 1048576;
-                setWhisperBusy(true, `Downloading model (first time only): ${mb.toFixed(0)} of ~${job.model.mb} MB…`, Math.min(0.99, mb / job.model.mb));
+                setWhisperBusy(true, job.source === 'site'
+                    ? `Downloading model from AudioTools.dev (first time only): ${mb.toFixed(0)} of ~${job.model.mb} MB…`
+                    : `Downloading model (first time only): ${mb.toFixed(0)} of ~${job.model.mb} MB…`, Math.min(0.99, mb / job.model.mb));
             } else if (data.type === 'transcribing') {
                 Object.assign(job, { chunks: data.chunks, done: 0, texts: [], start: Date.now() });
                 setWhisperBusy(true, data.chunks > 1 ? `Transcribing on your device… part 1 of ${data.chunks}` : 'Transcribing on your device…', data.chunks > 1 ? 0 : null);
@@ -758,22 +769,31 @@
                 updateTranscript('');
                 setWhisperBusy(false, 'Done');
                 toolSuccess('voice-to-text-whisper', document.querySelector('.actions'));
-            } else if (job.model.device === 'webgpu' && job.model.name !== 'turbo') {
-                gpu = false;   // WebGPU failed here: same model on the CPU
-                const blob = job.blob;
-                job = null;
-                transcribeBlob(blob);
             } else {
-                job = null;
-                updateTranscript('');
-                setWhisperBusy(false, '');
-                showToast('Transcription failed: ' + data.message);
+                whisperFailed(data);
             }
         };
         return whisperWorker;
     }
 
-    async function transcribeBlob(blob) {
+    function whisperFailed({ message, loading, network }) {
+        const { blob, model, source } = job;
+        job = null;
+        if (loading) trackEvent('model_load_failed', { model: model.name, device: model.device, source, reason: network ? 'network' : 'error' });
+        if (loading && network && source === 'hf') {
+            try { localStorage.setItem(HF_DOWN_KEY, String(Date.now())); } catch (e) { /* storage blocked */ }
+            transcribeBlob(blob, 'site');   // a fresh worker: it also drops any download still hanging in the old one
+        } else if (model.device === 'webgpu' && model.name !== 'turbo') {
+            gpu = false;   // WebGPU failed here: same model on the CPU
+            transcribeBlob(blob);
+        } else {
+            updateTranscript('');
+            setWhisperBusy(false, '');
+            showToast('Transcription failed: ' + message);
+        }
+    }
+
+    async function transcribeBlob(blob, source = hfDown() ? 'site' : 'hf') {
         setWhisperBusy(true, 'Decoding audio…', null);
         let audio;
         try {
@@ -784,10 +804,12 @@
             return;
         }
         const value = langSelect.value, lang = value === 'auto' ? null : value.split('-')[0];
-        job = { blob, model: modelFor(document.getElementById('whisperModel').value), duration: audio.length / 16000 };
-        setWhisperBusy(true, 'Loading the model…', null);
-        getWhisperWorker().postMessage({
+        const model = source === 'site' ? SITE_BASE : modelFor(document.getElementById('whisperModel').value);
+        job = { blob, model, source, duration: audio.length / 16000 };
+        setWhisperBusy(true, source === 'site' ? 'Hugging Face is unreachable, loading the Base model from AudioTools.dev…' : 'Loading the model…', null);
+        getWhisperWorker(source).postMessage({
             audio,
+            source,
             model: { id: job.model.id, device: job.model.device, dtype: job.model.dtype },
             language: lang === 'nb' ? 'no' : lang,  // null: Whisper detects it; "no" is its code for Norwegian
         }, [audio.buffer]);
