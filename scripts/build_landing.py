@@ -46,7 +46,7 @@ PAGES = {
             <p>The file is read in pieces instead of being loaded whole, so long videos and files of several hundred megabytes work in current browsers. Drop several MP4s at once to get each MP3 separately or all of them in a ZIP.</p>
             <h3>Videos from iPhone and Android</h3>
             <p>Phone videos are MP4 or MOV with AAC sound. Chrome, Edge and Safari read them on computers and phones; Firefox depends on the codecs your system provides.</p>''',
-    'faq_title': 'Frequently Asked Questions',
+    'faq_title': 'Frequently asked questions',
     'faq': [('How do I convert MP4 to MP3?', 'Drop the MP4 on this page, keep MP3 selected, choose a bitrate and click Convert. Download the MP3 when it is ready; the video is converted in your browser.'),
             ('Is my MP4 uploaded anywhere?', 'No. The audio is read and encoded in your browser, so the video never leaves your device.'),
             ('Does converting MP4 to MP3 reduce quality?', 'The sound in an MP4 is usually AAC, and converting it to MP3 encodes it again. At 192 kbps or more the difference is hard to hear. For no further loss, choose WAV or FLAC instead of MP3.'),
@@ -111,7 +111,7 @@ PAGES = {
             <p>MP3 plays everywhere. M4A (AAC) is a little smaller at the same quality. WAV and FLAC are lossless, which is what you want if you will edit the audio afterwards.</p>
             <h3>Videos from websites</h3>
             <p>The converter works with video files on your device. It does not download videos from YouTube or other sites.</p>''',
-    'faq_title': 'Frequently Asked Questions',
+    'faq_title': 'Frequently asked questions',
     'faq': [('How do I extract audio from a video?', 'Drop the video on this page, choose MP3 (or M4A, WAV, FLAC) and click Convert. The sound is saved as a new file; the video is converted in your browser.'),
             ('Which video formats work?', 'MP4, MOV, MKV, WebM and M4V. Phone videos with AAC sound work in Chrome, Edge and Safari; Firefox depends on your system.'),
             ('Can I get the audio as M4A or WAV instead of MP3?', 'Yes. Choose M4A, WAV or FLAC before converting. WAV and FLAC are lossless.'),
@@ -175,7 +175,7 @@ PAGES = {
             <p>No. MP3 is lossy: what it dropped when it was made cannot come back. The WAV keeps exactly the sound the MP3 had, no better and no worse. What WAV gives you is that further editing and saving loses nothing more.</p>
             <h3>How big will the WAV be?</h3>
             <p>About 10.6 MB per minute for CD-quality stereo (44.1 kHz, 16-bit), roughly ten times the MP3. A 4-minute song becomes about 42 MB.</p>''',
-    'faq_title': 'Frequently Asked Questions',
+    'faq_title': 'Frequently asked questions',
     'faq': [('How do I convert MP3 to WAV?', 'Drop the MP3 on this page, keep WAV selected and click Convert, then download the WAV. The conversion happens in your browser.'),
             ('Does converting MP3 to WAV improve quality?', 'No. The WAV has exactly the sound of the MP3; it only stops further loss when you edit and save again.'),
             ('What bit depth and sample rate is the WAV?', '16-bit PCM, with the same sample rate and number of channels as the original MP3.'),
@@ -237,7 +237,7 @@ PAGES = {
             <h3>Recordings from voice recorders and studios</h3>
             <p>Voice recorders, field recorders and DAWs save WAV, which is too big to send. Converting to MP3 makes recordings easy to email or share; drop a whole folder of them to get all the MP3s in one ZIP.</p>
             <p>To pick a size rather than a bitrate, use the <a href="/audio-compressor/">audio compressor</a>, which shows the estimated size before you start.</p>''',
-    'faq_title': 'Frequently Asked Questions',
+    'faq_title': 'Frequently asked questions',
     'faq': [('How do I convert WAV to MP3?', 'Drop the WAV on this page, keep MP3 selected, choose a bitrate and click Convert, then download the MP3. The conversion happens in your browser.'),
             ('How much smaller will the MP3 be?', 'About 11 times smaller at 128 kbps, 7 times at 192 kbps and 4 times at 320 kbps, compared with CD-quality WAV.'),
             ('Which bitrate should I choose?', '128 kbps for speech, 192 kbps for music, 320 kbps if you want the best quality MP3 can give.'),
@@ -379,6 +379,7 @@ def main():
     for slug in PAGES:
         for lang in ('en', 'zh'):
             build(slug, lang)
+    subprocess.run([sys.executable, str(ROOT / 'scripts' / 'nav.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts' / 'seo_sync.py')], check=True)
 
 

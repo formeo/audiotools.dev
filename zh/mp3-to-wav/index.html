@@ -147,10 +147,21 @@
             border-color: var(--accent);
             background: rgba(35, 70, 245, 0.05);
         }
-        .drop-zone.has-file { border-color: var(--green); border-style: solid; padding: 24px; }
+        .drop-zone.has-file { border: 0; padding: 12px; background: var(--bg); border-radius: 8px; cursor: default; }   /* the file bar, as in the other tools */
+        .drop-zone.has-file:hover { background: var(--bg); }
+        .drop-zone.has-file .file-header { margin-bottom: 0; }
+        .drop-zone.has-file .file-icon { display: none; }
+        .drop-zone.has-file .file-name { font-size: 14px; }
+        .drop-zone.has-file .file-remove { color: var(--red); }
+        .tool-area > .drop-zone:first-child { margin-top: 0; }
+        @media (max-width: 600px) {
+            .format-row { flex-wrap: wrap; }
+            .format-chips { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; }
+            .format-chip { padding: 8px 0; }
+        }
         .drop-icon { font-size: 40px; margin-bottom: 12px; }
         .drop-text { color: var(--text2); font-size: 15px; }
-        .drop-text b { color: var(--accent2); }
+        .drop-text b { color: var(--ink); }
         .drop-formats { color: var(--text2); font-size: 12px; margin-top: 8px; }
 
         /* FILE INFO */
@@ -279,12 +290,26 @@
             <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/zh/converter/">转换器</a>
-                <a href="/zh/volume-booster/">音量增强</a>
-                <a href="/zh/text-to-speech/">文字转语音</a>
+                <a href="/zh/vocal-remover/">人声消除</a>
                 <a href="/zh/voice-to-text/">语音转文字</a>
-                <a href="/zh/">全部工具</a>
+                <a href="/zh/text-to-speech/">文字转语音</a>
                 <a href="/mp3-to-wav/" class="at-lang" hreflang="en" lang="en">EN</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>工具</span></summary>
+                <ul class="at-menu-list" aria-label="全部工具">
+                    <li><a href="/zh/converter/">转换器</a></li>
+                    <li><a href="/zh/vocal-remover/">人声消除</a></li>
+                    <li><a href="/zh/voice-to-text/">语音转文字</a></li>
+                    <li><a href="/zh/text-to-speech/">文字转语音</a></li>
+                    <li><a href="/zh/volume-booster/">音量增强</a></li>
+                    <li><a href="/zh/audio-trimmer/">音频剪辑</a></li>
+                    <li><a href="/zh/audio-speed-changer/">音频变速</a></li>
+                    <li><a href="/zh/audio-joiner/">音频合并</a></li>
+                    <li><a href="/zh/audio-compressor/">音频压缩</a></li>
+                    <li class="at-menu-all"><a href="/zh/">全部工具</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -303,7 +328,8 @@
         <div class="drop-zone" id="dropZone">
             <div class="drop-prompt">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <div class="drop-text">将一个或多个音频、视频文件拖放到此处，或<b>点击选择</b></div>
+                <div class="drop-text no-touch"><b>将一个或多个音频、视频文件拖放到此处</b></div>
+                <button type="button" class="dz-choose">选择文件</button>
                 <div class="drop-formats">音频：MP3、WAV、FLAC、OGG、M4A、AAC、WebM · 视频：MP4、MOV、MKV、WebM、MPEG</div>
             </div>
             <div class="file-info" id="fileInfo">

@@ -58,11 +58,25 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -70,10 +84,10 @@
         <h1>Privacy Policy</h1>
         <p class="updated">Last updated: October 28, 2026</p>
 
-        <h2>The Short Version</h2>
+        <h2>The short version</h2>
         <p>Your audio files never leave your device. We don't collect, store, or process your audio data on any server. All audio conversion and transcription happens directly in your browser.</p>
 
-        <h2>What Data We Collect</h2>
+        <h2>What data we collect</h2>
         <p>AudioTools.dev collects minimal, anonymous analytics data to understand how the site is used and improve it:</p>
         <ul>
             <li><strong>Google Analytics</strong> — collects anonymous page view data, browser type, device type, country. No personally identifiable information. You can opt out using browser extensions like <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics Opt-out</a>.</li>
@@ -90,7 +104,7 @@
             <li>IP addresses (analytics tools may collect these per their own policies)</li>
         </ul>
 
-        <h2>How Audio Processing Works</h2>
+        <h2>How audio processing works</h2>
         <p>All AudioTools work entirely in your browser using client-side JavaScript and Web APIs:</p>
         <ul>
             <li><strong>Audio Converter</strong> — uses the browser's built-in codecs and WebAssembly encoders (Mediabunny, served from this site) for decoding and encoding. Your files are processed in browser memory and never uploaded.</li>
@@ -103,7 +117,7 @@
         <h2>Cookies</h2>
         <p>AudioTools.dev itself does not set cookies. Google Analytics and Yandex Metrika may set cookies for analytics purposes. These are standard analytics cookies used across the web.</p>
 
-        <h2>Third-Party Services</h2>
+        <h2>Third-party services</h2>
         <ul>
             <li><a href="https://policies.google.com/privacy" rel="noopener">Google Analytics</a> — website analytics</li>
             <li><a href="https://yandex.com/legal/metrica_termsofuse/" rel="noopener">Yandex Metrika</a> — website analytics</li>
@@ -111,10 +125,10 @@
             <li><a href="https://developers.google.com/fonts/faq/privacy" rel="noopener">Google Fonts</a> — the Archivo typeface</li>
         </ul>
 
-        <h2>Children's Privacy</h2>
+        <h2>Children's privacy</h2>
         <p>AudioTools.dev does not knowingly collect information from children under 13. The tools are freely available without any account, and no personal information is requested.</p>
 
-        <h2>Changes to This Policy</h2>
+        <h2>Changes to this policy</h2>
         <p>We may update this policy occasionally. Changes will be posted on this page with an updated date.</p>
 
         <h2>Contact</h2>

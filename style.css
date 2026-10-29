@@ -46,6 +46,32 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 .at-nav-links a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); }
 .at-nav-links .at-lang { font-size: 13px; padding: 3px 10px; border: 1.5px solid var(--ink); border-radius: 999px; }
 
+/* the "Tools" menu (scripts/nav.py): every tool; on phones the only navigation besides the logo and language */
+.at-logo { margin-right: auto; }
+.at-menu { position: relative; }
+.at-menu summary { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 4px 14px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: 15px; color: var(--ink); cursor: pointer; list-style: none; user-select: none; }
+.at-menu summary::-webkit-details-marker { display: none; }
+.at-menu summary:hover { color: var(--accent); border-color: var(--accent); }
+.at-menu[open] summary { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.at-menu-list { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; display: grid; min-width: 240px; margin: 0; padding: 8px; list-style: none; background: var(--surface); border: 1.5px solid var(--ink); border-radius: 14px; box-shadow: 4px 4px 0 var(--ink); }
+.at-menu-list a { display: flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.at-menu-list a:hover { background: var(--surface2); color: var(--accent); }
+.at-menu-list a[aria-current="page"] { color: var(--accent); font-weight: 700; }
+.at-menu-all { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--border); }
+@media (max-width: 860px) {
+    .at-nav-inner { flex-wrap: nowrap; gap: 12px; }
+    .at-nav-links > a:not(.at-lang) { display: none; }
+    .at-menu-list { width: min(360px, calc(100vw - 32px)); grid-template-columns: 1fr 1fr; }
+    .at-menu-all { grid-column: 1 / -1; }
+}
+@media (max-width: 370px) {
+    /* the smallest phones: the logo shrinks and the menu keeps only its icon (the word stays for screen readers) */
+    .at-logo { font-size: 17px; gap: 8px; }
+    .at-nav-inner { gap: 8px; }
+    .at-menu summary { padding: 4px 12px; }
+    .at-menu summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+
 /* ---------- footer ---------- */
 .at-footer { background: var(--ink); color: #D9DEDC; margin-top: 64px; padding: 40px 24px 48px; font-size: 14px; }
 .at-footer-inner { max-width: var(--chrome-width); margin: 0 auto; display: grid; gap: 16px; }
@@ -65,10 +91,14 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
     .at-nav-links { gap: 0 18px; }
     .at-nav-links a { display: inline-flex; align-items: center; min-height: 44px; }
     .at-nav-links .at-lang { min-height: 34px; margin: 5px 0; }
+    .at-nav { padding-left: 16px; padding-right: 16px; }
+    .at-menu summary { min-height: 44px; }
+    .at-menu-list a { min-height: 44px; }
     .at-footer-tools, .at-footer-meta { row-gap: 0; }
     .at-footer-tools a, .at-footer-meta a, .at-footer .at-support { display: inline-flex; align-items: center; min-height: 44px; }
     .at-nav-links a, .at-footer-tools a, .at-footer-meta a { min-width: 44px; justify-content: center; }
     button, select, input[type="range"] { min-height: 44px; }
+    input[type="range"] { padding-top: 19px; padding-bottom: 19px; background-clip: content-box !important; }   /* 44px to touch, the track stays thin (pages set background in shorthand) */
 }
 
 /* ---------- tool pages: header ---------- */
@@ -77,6 +107,14 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
 .hero h1 { font-size: clamp(36px, 4.6vw, 60px); font-weight: 800; font-stretch: 125%; letter-spacing: -0.025em; line-height: 1; margin: 0 0 14px; color: var(--ink); }
 .hero h1 em { font-style: normal; color: inherit; }
 .hero p { color: var(--text2); font-size: 18px; max-width: 620px; margin: 0; }
+@media (max-width: 600px) {
+    /* phones: a shorter header, so the tool starts on the first screen */
+    .hero { padding: 24px 0 20px; }
+    .hero-glyph { width: 110px; height: 32px; margin-bottom: 10px; }
+    .hero h1 { font-size: 34px; margin-bottom: 10px; }
+    .hero p { font-size: 16px; }
+    .privacy-badge { margin-top: 12px; }
+}
 
 /* ---------- tool pages: the working panel ---------- */
 .tool-area { background: var(--surface); border: 1.5px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); }
@@ -138,6 +176,20 @@ h1, h2 { font-stretch: 115%; letter-spacing: -0.015em; }
     .batch-meta { grid-row: 2; }
     .batch-status { grid-row: 1 / span 2; grid-column: 2; }
     .batch-status a { min-height: 44px; }
+}
+
+/* ---------- drop zones: a button to choose files; on touch screens there is nothing to drag, so only the button ---------- */
+.dz-choose { display: inline-flex; align-items: center; justify-content: center; margin-top: 14px; min-height: 44px; padding: 10px 22px; border: 0; border-radius: 10px; background: var(--ink); color: #FFFFFF; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.dz-choose:hover { background: #2B3136; }
+.touch-only { display: none; }
+.drop-zone .no-touch + .dz-choose { margin-top: 10px; }
+@media (hover: none) and (pointer: coarse) {
+    .no-touch { display: none !important; }
+    .touch-only { display: inline; }
+    .drop-zone .dz-choose { margin-top: 4px; }
+}
+@media (max-width: 600px) {
+    .tool-area .drop-zone { padding: 28px 16px; }
 }
 
 /* ---------- a drop zone while its file is being read (support.js readingFile) ---------- */

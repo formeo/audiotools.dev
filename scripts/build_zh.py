@@ -17,6 +17,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import nav  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 SITE = 'https://audiotools.dev'
 ZH_PAGES = ['converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor',
@@ -27,11 +30,7 @@ ZH_HREF = lambda tool: f'/zh/{tool}/' if tool in ZH_PAGES else f'/{tool}/'
 
 
 def zh_nav(current, en_href):
-    items = [('converter', '转换器'), ('volume-booster', '音量增强'), ('text-to-speech', '文字转语音'), ('voice-to-text', '语音转文字')]
-    links = [f'<a href="{ZH_HREF(t)}"{" aria-current=\"page\"" if t == current else ""}>{name}</a>' for t, name in items]
-    links.append(f'<a href="/zh/"{" aria-current=\"page\"" if current == "home" else ""}>全部工具</a>')
-    links.append(f'<a href="{en_href}" class="at-lang" hreflang="en" lang="en">EN</a>')
-    return '<div class="at-nav-links">\n' + ''.join(f'                {l}\n' for l in links) + '            </div>'
+    return nav.bar('zh', current, f'<a href="{en_href}" class="at-lang" hreflang="en" lang="en">EN</a>')
 
 
 def zh_footer(current):
@@ -92,6 +91,7 @@ def build(tool, table):
     s = TOOL_HREF_RE.sub(lambda m: f'href="/zh/{m.group(1)}/"', s)       # links to tools that have a Chinese page
     s = s.replace('href="/"', 'href="/zh/"')
     s = NAV_RE.sub(lambda m: zh_nav(tool, f'/{tool}/'), s, count=1)
+    s = nav.apply(s, 'zh', tool)   # the Tools menu in Chinese
     s = FOOTER_RE.sub(lambda m: zh_footer(tool), s, count=1)
     # Yandex Metrika (Voice to Text) is there for the Russian audience of the English page only
     s = re.sub(r'\n    <!-- Yandex Metrika counter -->.*?</noscript>\n', '\n', s, flags=re.S)
@@ -131,13 +131,16 @@ def update_hand_made(path, current, en_href):
     head, body = s[:body_start], s[body_start:]
     body = TOOL_HREF_RE.sub(lambda m: f'href="/zh/{m.group(1)}/"', body)
     body = NAV_RE.sub(lambda m: zh_nav(current, en_href), body, count=1)
+    body = nav.apply(body, 'zh', current)
     body = FOOTER_RE.sub(lambda m: zh_footer(current), body, count=1)
     path.write_text(head + body, encoding='utf-8')
 
 
 # ------------------------------------------------------------------ translations
 COMMON = [
-    ('<p><strong>Drop audio file here</strong> or click to browse</p>', '<p><strong>将音频文件拖放到此处</strong>，或点击选择</p>'),
+    ('<p class="no-touch"><strong>Drop an audio file here</strong></p>', '<p class="no-touch"><strong>将音频文件拖放到此处</strong></p>'),
+    ('<button type="button" class="dz-choose">Choose file</button>', '<button type="button" class="dz-choose">选择文件</button>'),
+    ('<button type="button" class="dz-choose">Choose files</button>', '<button type="button" class="dz-choose">选择文件</button>'),
     ('<p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>', '<p>MP3、WAV、FLAC、OGG、M4A — 在本地处理，绝不上传</p>'),
     ('title="Remove"', 'title="移除"'),
     ('>Reset</button>', '>重置</button>'),
@@ -145,9 +148,9 @@ COMMON = [
     ('>MP3 · 192 kbps</option>', '>MP3 · 192 kbps</option>'),
     ('>WAV · lossless</option>', '>WAV · 无损</option>'),
     ('<div class="feature-title">100% Private</div>', '<div class="feature-title">100% 私密</div>'),
-    ('<h2>Frequently Asked Questions</h2>', '<h2>常见问题</h2>'),
-    ('<h3>How It Works</h3>', '<h3>工作原理</h3>'),
-    ('<h3>Common Use Cases</h3>', '<h3>常见用途</h3>'),
+    ('<h2>Frequently asked questions</h2>', '<h2>常见问题</h2>'),
+    ('<h3>How it works</h3>', '<h3>工作原理</h3>'),
+    ('<h3>Common use cases</h3>', '<h3>常见用途</h3>'),
     ("alert('Could not decode this audio file. Try a different format (MP3, WAV, FLAC, OGG, M4A).');", "alert('无法解码此音频文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');"),
 ]
 
@@ -179,15 +182,15 @@ TABLES = {
     ('id="downloadBtn" style="width:100%;">Download</button>', 'id="downloadBtn" style="width:100%;">下载</button>'),
     ('<div class="feature-title">Boost up to 500%</div><div class="feature-desc">Increase volume by up to 5x with a simple slider.</div>',
      '<div class="feature-title">最高放大 500%</div><div class="feature-desc">拖动滑块即可把音量提高到 5 倍。</div>'),
-    ('<div class="feature-title">Normalize Audio</div><div class="feature-desc">Auto-detect peak and normalize to −1 dBFS, no clipping.</div>',
+    ('<div class="feature-title">Normalize audio</div><div class="feature-desc">Auto-detect peak and normalize to −1 dBFS, no clipping.</div>',
      '<div class="feature-title">音频标准化</div><div class="feature-desc">自动检测峰值并标准化到 −1 dBFS，不削波。</div>'),
-    ('<div class="feature-title">Visual Level Meter</div><div class="feature-desc">See the waveform and peak levels before and after.</div>',
+    ('<div class="feature-title">Visual level meter</div><div class="feature-desc">See the waveform and peak levels before and after.</div>',
      '<div class="feature-title">可视化电平表</div><div class="feature-desc">查看处理前后的波形和峰值电平。</div>'),
     ('<div class="feature-desc">All processing in your browser. Files never leave your device.</div>', '<div class="feature-desc">所有处理都在浏览器中完成，文件不会离开您的设备。</div>'),
-    ('<h2>Free Online Volume Booster &amp; Audio Normalizer</h2>', '<h2>免费在线音量增强与音频标准化</h2>'),
+    ('<h2>Free online volume booster &amp; audio normalizer</h2>', '<h2>免费在线音量增强与音频标准化</h2>'),
     ('<p>Volume Booster lets you increase the volume of quiet audio files or normalize audio to a consistent level. Drop a quiet recording, boost the volume or normalize it, and download the result — all in your browser without any server.</p>',
      '<p>音量增强器可以提高小声音频文件的音量，或把音频标准化到统一的电平。拖入一段小声的录音，放大或标准化后下载结果——全部在浏览器中完成，不经过任何服务器。</p>'),
-    ('<h3>Volume Boost vs Normalization</h3>', '<h3>音量放大与标准化的区别</h3>'),
+    ('<h3>Volume boost vs normalization</h3>', '<h3>音量放大与标准化的区别</h3>'),
     ('<p>Volume boost increases the entire signal by a fixed amount (for example +6 dB or 200%). Normalization analyzes the peak level and scales the volume so the loudest part reaches a target level (−1 dBFS here). Normalization is smarter — it prevents clipping while maximizing perceived loudness. When you boost manually past the ceiling, a soft limiter rounds off the peaks so the result stays clean instead of crackling.</p>',
      '<p>音量放大会把整个信号按固定幅度提高（例如 +6 dB 或 200%）。标准化则会分析峰值电平，并缩放音量，使最响的部分达到目标电平（这里是 −1 dBFS）。标准化更聪明：在尽量提高响度的同时避免削波。手动放大超过上限时，软限幅器会把峰值圆滑处理，结果依然干净，不会爆音。</p>'),
     ('<p>Drop or select your file, pick Normalize or Manual Boost, and click "Apply &amp; Process". The audio is decoded with the Web Audio API, gain is applied sample-by-sample directly in your browser, and the result is offered for download as MP3 or WAV. Nothing is uploaded.</p>',
@@ -210,8 +213,8 @@ TABLES = {
      '<div class="faq-q">可以叠加两个音频，让它们同时播放吗？</div><div class="faq-a">暂时不行。音频合并是把文件一个接一个地连起来；把多条音轨叠在一起（例如人声配背景音乐）的功能还没有。</div>'),
     ('"name":"Audio Joiner — AudioTools.dev"',
      '"name":"音频合并 — AudioTools.dev"'),
-    ('<p><strong>Drop audio files here</strong> or click to browse</p>',
-     '<p><strong>将音频文件拖放到此处</strong>，或点击选择</p>'),
+    ('<p class="no-touch"><strong>Drop audio files here</strong></p>',
+     '<p class="no-touch"><strong>将音频文件拖放到此处</strong></p>'),
     ('<p>Add several files — MP3, WAV, FLAC, OGG, M4A. Processed locally, never uploaded.</p>',
      '<p>可添加多个文件——MP3、WAV、FLAC、OGG、M4A。在本地处理，绝不上传。</p>'),
     ('>＋ Add more files</button>',
@@ -242,11 +245,11 @@ TABLES = {
      'title="下移"'),
     ("resultInfo.textContent = tracks.length + ' tracks · '",
      "resultInfo.textContent = tracks.length + ' 条音轨 · '"),
-    ('<div class="feature-title">Multiple Files</div><div class="feature-desc">Add any number of audio files and reorder them freely.</div>',
+    ('<div class="feature-title">Multiple files</div><div class="feature-desc">Add any number of audio files and reorder them freely.</div>',
      '<div class="feature-title">多个文件</div><div class="feature-desc">可添加任意数量的音频文件，并自由调整顺序。</div>'),
-    ('<div class="feature-title">Crossfade Transitions</div><div class="feature-desc">Add a smooth crossfade between tracks for seamless joins.</div>',
+    ('<div class="feature-title">Crossfade transitions</div><div class="feature-desc">Add a smooth crossfade between tracks for seamless joins.</div>',
      '<div class="feature-title">淡入淡出过渡</div><div class="feature-desc">在音轨之间添加平滑的淡入淡出，衔接自然。</div>'),
-    ('<div class="feature-title">Mix Formats</div><div class="feature-desc">Combine MP3, WAV, FLAC, OGG in any combination.</div>',
+    ('<div class="feature-title">Mix formats</div><div class="feature-desc">Combine MP3, WAV, FLAC, OGG in any combination.</div>',
      '<div class="feature-title">混合格式</div><div class="feature-desc">MP3、WAV、FLAC、OGG 可任意组合。</div>'),
     ('<div class="feature-desc">All merging in your browser. Files never leave your device.</div>',
      '<div class="feature-desc">所有合并都在浏览器中完成，文件不会离开您的设备。</div>'),
@@ -318,8 +321,8 @@ TABLES = {
 'audio-compressor': [
     ('"name":"Audio Compressor — AudioTools.dev"',
      '"name":"音频压缩 — AudioTools.dev"'),
-    ('<p><strong>Drop audio files here</strong>, one or several, or click to browse</p>',
-     '<p><strong>将一个或多个音频文件拖放到此处</strong>，或点击选择</p>'),
+    ('<p class="no-touch"><strong>Drop audio files here</strong>, one or several</p>',
+     '<p class="no-touch"><strong>将一个或多个音频文件拖放到此处</strong></p>'),
     ('<label class="ctrl-label">Bitrate — lower means smaller file</label>',
      '<label class="ctrl-label">码率——越低文件越小</label>'),
     ('>64 kbps — voice / podcast (smallest)</option>',
@@ -366,11 +369,11 @@ TABLES = {
      "alert(err.message || '压缩失败，请重试。');"),
     ("const B = { files: (n) => n + ' files', compress: (n) => 'Compress ' + n + ' files', zip: 'Download all (ZIP)',\n            done: (ok, n) => (ok === n ? n + ' files' : ok + ' of ' + n + ' files') };",
      "const B = { files: (n) => n + ' 个文件', compress: (n) => '压缩 ' + n + ' 个文件', zip: '全部下载（ZIP）',\n            done: (ok, n) => (ok === n ? n + ' 个文件' : n + ' 个中的 ' + ok + ' 个') };"),
-    ('<div class="feature-title">Bitrate Control</div><div class="feature-desc">Choose from 64 to 320 kbps for the right size vs quality.</div>',
+    ('<div class="feature-title">Bitrate control</div><div class="feature-desc">Choose from 64 to 320 kbps for the right size vs quality.</div>',
      '<div class="feature-title">码率控制</div><div class="feature-desc">在 64 到 320 kbps 之间选择，平衡体积与音质。</div>'),
-    ('<div class="feature-title">Sample Rate Options</div><div class="feature-desc">Downsample to 22 kHz or 16 kHz for even smaller files.</div>',
+    ('<div class="feature-title">Sample rate options</div><div class="feature-desc">Downsample to 22 kHz or 16 kHz for even smaller files.</div>',
      '<div class="feature-title">采样率选项</div><div class="feature-desc">降到 22 kHz 或 16 kHz，文件更小。</div>'),
-    ('<div class="feature-title">Size Preview</div><div class="feature-desc">See the estimated output size before you compress.</div>',
+    ('<div class="feature-title">Size preview</div><div class="feature-desc">See the estimated output size before you compress.</div>',
      '<div class="feature-title">大小预览</div><div class="feature-desc">压缩前即可看到预计的输出大小。</div>'),
     ('<div class="feature-desc">All compression in your browser. Files never leave your device.</div>',
      '<div class="feature-desc">所有压缩都在浏览器中完成，文件不会离开您的设备。</div>'),
@@ -470,22 +473,22 @@ TABLES = {
     ("setStatus('Paused', 'speaking');", "setStatus('已暂停', 'speaking');"),
     ("setStatus('Error: ' + e.error, 'error');", "setStatus('出错：' + e.error, 'error');"),
     ("setStatus('Your browser does not support Speech Synthesis. Try Chrome, Edge, or Safari.', 'error');", "setStatus('您的浏览器不支持语音合成，请使用 Chrome、Edge 或 Safari。', 'error');"),
-    ('<h2>Free Online Text to Speech Converter</h2>', '<h2>免费在线文字转语音</h2>'),
+    ('<h2>Free online text to speech converter</h2>', '<h2>免费在线文字转语音</h2>'),
     ("<p>AudioTools Text to Speech converts any written text into natural-sounding speech directly in your browser. It uses the <strong>Web Speech Synthesis API</strong> — a built-in browser technology that provides voices in dozens of languages. AudioTools.dev itself has no server: your text goes only to your browser's speech engine.</p>",
      '<p>AudioTools 文字转语音直接在浏览器中把任意文字转为自然的语音。它使用 <strong>Web Speech Synthesis API</strong>——浏览器内置的技术，提供数十种语言的声音。AudioTools.dev 本身没有服务器：您的文字只会交给浏览器的语音引擎。</p>'),
-    ('<h3>How It Works</h3>', '<h3>工作原理</h3>'),
+    ('<h3>How it works</h3>', '<h3>工作原理</h3>'),
     ("<p>Type or paste your text, select a voice and language, adjust speed and pitch, then click \"Speak\". The browser's speech engine processes your text locally and plays it through your speakers. Your text is never sent to AudioTools.dev. Most voices run on your device; voices marked “online” in the list (for example Chrome's “Google” voices) are processed by the browser vendor.</p>",
      '<p>输入或粘贴文字，选择声音和语言，调整语速和音调，然后点击“朗读”。浏览器的语音引擎会处理文字并通过扬声器播放。您的文字不会发送给 AudioTools.dev。大多数声音在您的设备上运行；列表中标有“在线”的声音（例如 Chrome 的“Google”声音）由浏览器厂商处理。</p>'),
-    ('<h3>Supported Languages</h3>', '<h3>支持的语言</h3>'),
+    ('<h3>Supported languages</h3>', '<h3>支持的语言</h3>'),
     ('<p>Available voices depend on your browser and operating system. Most modern browsers provide 50+ voices covering major world languages including English (US, UK, Australian), Spanish, French, German, Italian, Portuguese, Russian, Japanese, Chinese (Mandarin, Cantonese), Korean, Hindi, Arabic, and many more.</p>',
      '<p>可用的声音取决于您的浏览器和操作系统。大多数现代浏览器提供 50 多种声音，覆盖世界主要语言，包括中文（普通话、粤语）、英语（美国、英国、澳大利亚）、西班牙语、法语、德语、意大利语、葡萄牙语、俄语、日语、韩语、印地语、阿拉伯语等。</p>'),
-    ('<h3>Use Cases</h3>', '<h3>使用场景</h3>'),
+    ('<h3>Use cases</h3>', '<h3>使用场景</h3>'),
     ('<li>Proofreading — hear your writing to catch errors your eyes miss</li>', '<li>校对——听一遍自己的文字，发现眼睛容易漏掉的错误</li>'),
     ('<li>Language learning — listen to proper pronunciation in any language</li>', '<li>语言学习——听各种语言的标准发音</li>'),
     ('<li>Accessibility — convert articles and documents to audio</li>', '<li>无障碍——把文章和文档变成可以听的内容</li>'),
     ('<li>Content creation — preview voiceover scripts before recording</li>', '<li>内容创作——录音前先试听配音稿</li>'),
     ('<li>Multitasking — listen to text while doing other work</li>', '<li>多任务——一边做别的事一边听文字</li>'),
-    ('<h3>Privacy & Security</h3>', '<h3>隐私与安全</h3>'),
+    ('<h3>Privacy & security</h3>', '<h3>隐私与安全</h3>'),
     ('<p>All text-to-speech processing happens in your browser using the Web Speech Synthesis API. Your text is never sent to AudioTools.dev servers — there is no backend and nothing is stored. This is the same technology your browser uses for its built-in read-aloud features.</p>',
      '<p>文字转语音通过 Web Speech Synthesis API 在您的浏览器中完成。您的文字不会发送到 AudioTools.dev——我们没有后端，也不存储任何内容。这与浏览器自带的朗读功能使用的是同一项技术。</p>'),
     ('<p>Looking for the reverse? Try our <a href="/voice-to-text/">Voice to Text</a> tool for speech-to-text transcription, or <a href="/converter/">Audio Converter</a> for format conversion.</p>',
@@ -504,6 +507,8 @@ TABLES = {
      '<div class="faq-a">不会发送给我们：AudioTools.dev 没有后端。系统声音在您的设备上运行；标有“在线”的声音（例如 Chrome 的“Google”声音）由浏览器厂商处理，如需完全私密，请选择系统声音。</div>'),
 ],
 'audio-trimmer': [
+    ('<p class="trim-hint">Drag the blue and red handles, or <span class="no-touch">click</span><span class="touch-only">tap</span> the waveform to move the nearer one there.</p>',
+     '<p class="trim-hint">拖动蓝色和红色手柄，或点击波形，把较近的手柄移到那里。</p>'),
     ('<title>Audio Trimmer Online — Cut MP3, WAV Free | AudioTools.dev</title>', '<title>在线音频剪辑 — 免费剪切 MP3、WAV | AudioTools.dev</title>'),
     ('Free online audio trimmer. Cut and trim MP3, WAV, FLAC, OGG files in your browser. Visual waveform editor, no upload required. 100% private.',
      '免费在线音频剪辑：在浏览器中剪切、裁剪 MP3、WAV、FLAC、OGG 文件。可视化波形编辑，无需上传，100% 私密。'),
@@ -524,13 +529,13 @@ TABLES = {
     ("previewBtn.textContent = 'Preview';", "previewBtn.textContent = '试听';"),
     ("previewBtn.textContent = 'Stop';", "previewBtn.textContent = '停止';"),
     ('style="flex:1;">Cut & Download</button>', 'style="flex:1;">剪切并下载</button>'),
-    ('<h2>Free Online Audio Trimmer & Cutter</h2>', '<h2>免费在线音频剪辑</h2>'),
+    ('<h2>Free online audio trimmer & cutter</h2>', '<h2>免费在线音频剪辑</h2>'),
     ('<p>AudioTools Audio Trimmer lets you cut any audio file directly in your browser. Drop your MP3, WAV, FLAC, or OGG file, see the waveform, drag the trim handles to select the portion you want, and download the result. No upload to any server — all processing uses the <strong>Web Audio API</strong>.</p>',
      '<p>AudioTools 音频剪辑可以直接在浏览器中剪切任意音频文件。拖入 MP3、WAV、FLAC 或 OGG 文件，查看波形，拖动剪辑手柄选出需要的部分，然后下载结果。不上传到任何服务器——所有处理都使用 <strong>Web Audio API</strong>。</p>'),
-    ('<h3>How to Trim an Audio File</h3>', '<h3>如何剪辑音频文件</h3>'),
+    ('<h3>How to trim an audio file</h3>', '<h3>如何剪辑音频文件</h3>'),
     ('<p>Drop or select your audio file. A visual waveform appears with blue (start) and red (end) trim handles. Drag the handles or type exact timestamps to define your trim region. Click "Preview" to hear the selection, then "Cut & Download" to save it as MP3 or WAV.</p>',
      '<p>拖放或选择音频文件，会出现可视化波形以及蓝色（开始）和红色（结束）剪辑手柄。拖动手柄或输入精确时间来确定剪辑范围。点击“试听”收听所选部分，再点击“剪切并下载”保存为 MP3 或 WAV。</p>'),
-    ('<h3>Supported Formats</h3>', '<h3>支持的格式</h3>'),
+    ('<h3>Supported formats</h3>', '<h3>支持的格式</h3>'),
     ('<p>Input: MP3, WAV, FLAC, OGG, AAC, M4A, WebM — any format your browser can decode. Output is MP3 (192 kbps) or WAV (uncompressed, lossless), your choice. The <a href="/converter/">Audio Converter</a> reads even more formats.</p>',
      '<p>输入：MP3、WAV、FLAC、OGG、AAC、M4A、WebM——浏览器能解码的任何格式。输出可选 MP3（192 kbps）或 WAV（无压缩、无损）。<a href="/converter/">音频转换器</a>支持更多格式。</p>'),
     ('<h3>Privacy</h3>', '<h3>隐私</h3>'),
@@ -565,11 +570,11 @@ TABLES = {
     ("progressText.textContent = 'Processing…';", "progressText.textContent = '处理中…';"),
     ('<p class="result-title">Result — <span', '<p class="result-title">结果 — <span'),
     ('id="downloadBtn" style="width:100%;">Download</button>', 'id="downloadBtn" style="width:100%;">下载</button>'),
-    ('<div class="feature-title">Adjustable Speed</div><div class="feature-desc">0.25x to 4x speed with a slider and quick presets.</div>',
+    ('<div class="feature-title">Adjustable speed</div><div class="feature-desc">0.25x to 4x speed with a slider and quick presets.</div>',
      '<div class="feature-title">速度可调</div><div class="feature-desc">0.25 倍到 4 倍，可用滑块或快捷预设。</div>'),
-    ('<div class="feature-title">Pitch Preservation</div><div class="feature-desc">WSOLA time-stretching keeps voices natural — no chipmunk effect.</div>',
+    ('<div class="feature-title">Pitch preservation</div><div class="feature-desc">WSOLA time-stretching keeps voices natural — no chipmunk effect.</div>',
      '<div class="feature-title">保持音调</div><div class="feature-desc">WSOLA 时间伸缩让人声保持自然，不会变尖。</div>'),
-    ('<div class="feature-title">Download Result</div><div class="feature-desc">Save the speed-adjusted audio as MP3 or WAV.</div>',
+    ('<div class="feature-title">Download the result</div><div class="feature-desc">Save the speed-adjusted audio as MP3 or WAV.</div>',
      '<div class="feature-title">下载结果</div><div class="feature-desc">把变速后的音频保存为 MP3 或 WAV。</div>'),
     ('<div class="feature-desc">All processing in your browser. Files never leave your device.</div>', '<div class="feature-desc">所有处理都在浏览器中完成，文件不会离开您的设备。</div>'),
     ('<h2>Slow down or speed up audio without changing pitch</h2>', '<h2>放慢或加快音频，音调不变</h2>'),
@@ -677,6 +682,9 @@ TABLES = {
     ('<span>Speed</span>', '<span>速度</span>'),
     ('<span class="keys">Click a line to jump there · Space: play/pause · ← →: 5 s</span>', '<span class="keys">点击某一行即可跳到那里 · 空格：播放/暂停 · ← →：5 秒</span>'),
     ('<span>Earlier on this page:</span>', '<span>本页之前的结果：</span>'),
+    ('onclick="toggleEditing()" disabled>Edit text</button>', 'onclick="toggleEditing()" disabled>编辑文字</button>'),
+    ('<p class="edit-note" id="editNote" hidden>Editing: change the words, the times stay. Enter goes to the next line.</p>',
+     '<p class="edit-note" id="editNote" hidden>编辑中：可以修改文字，时间保持不变。按回车键跳到下一行。</p>'),
     ('<span id="wordCount">0 words</span>', '<span id="wordCount">0 词</span>'),
     ('<span id="charCount">0 chars</span>', '<span id="charCount">0 字符</span>'),
     ('>Copy</button>', '>复制</button>'),
@@ -770,6 +778,7 @@ TABLES = {
     ("hint.textContent = 'Settings changed: transcribe it again with ' + MODEL_NAMES[model] + ', ' + langName(langSelect.value) + '?';",
      "hint.textContent = '设置已更改：要用 ' + MODEL_NAMES[model] + '、' + langName(langSelect.value) + ' 重新转录吗？';"),
     ("label: 'Transcript',", "label: '转录',"),
+    ("editBtn.textContent = editing ? 'Done editing' : 'Edit text';", "editBtn.textContent = editing ? '完成编辑' : '编辑文字';"),
 ],
 'vocal-remover': [
     ('<title>Vocal Remover — Free Karaoke &amp; Instrumental Maker | AudioTools.dev</title>', '<title>人声消除 — 免费在线去人声、提取伴奏 | AudioTools.dev</title>'),
@@ -782,7 +791,8 @@ TABLES = {
     ('<h1>Vocal Remover</h1>', '<h1>人声消除</h1>'),
     ('<p>Split a song into the music and the vocals — for karaoke, practice or a remix. Runs on your device; the song is never uploaded</p>',
      '<p>把歌曲分成伴奏和人声——用于卡拉 OK、练习或翻唱混音。在您的设备上运行，歌曲绝不上传</p>'),
-    ('<p><strong>Drop a song here</strong> or click to browse</p>', '<p><strong>将歌曲拖放到此处</strong>，或点击选择</p>'),
+    ('<p class="no-touch"><strong>Drop a song here</strong></p>', '<p class="no-touch"><strong>将歌曲拖放到此处</strong></p>'),
+    ('<button type="button" class="dz-choose">Choose a song</button>', '<button type="button" class="dz-choose">选择歌曲</button>'),
     ('<p>MP3, M4A, WAV, FLAC, OGG or a video — processed on your device, never uploaded</p>', '<p>MP3、M4A、WAV、FLAC、OGG 或视频——在您的设备上处理，绝不上传</p>'),
     ('<p class="note" id="note">This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).</p>',
      '<p class="note" id="note">在电脑上所需时间是歌曲时长的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>'),
@@ -851,6 +861,7 @@ def main():
     english_page('converter')
     update_hand_made(ROOT / 'zh' / 'converter' / 'index.html', 'converter', '/converter/')
     update_hand_made(ROOT / 'zh' / 'index.html', 'home', '/')
+    nav.main()   # the bar and the Tools menu, in Chinese, on every page
     # FAQ JSON-LD is copied in English; rebuild it from the translated, visible FAQ
     subprocess.run([sys.executable, str(ROOT / 'scripts' / 'seo_sync.py')], check=True)
 

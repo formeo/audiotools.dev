@@ -111,8 +111,12 @@
 
         .waveform-wrap { position: relative; height: 160px; margin: 16px 0; background: var(--bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
         canvas { width: 100%; height: 100%; display: block; }
-        .trim-handle { position: absolute; top: 0; width: 4px; height: 100%; cursor: col-resize; z-index: 10; }
-        .trim-handle::after { content: ''; position: absolute; top: 50%; left: -6px; width: 16px; height: 28px; transform: translateY(-50%); border-radius: 4px; border: 2px solid; }
+        .waveform-wrap { cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none; }   /* a sideways drag or a tap belongs to the trimmer, scrolling to the page */
+        .trim-handle { position: absolute; top: 0; width: 4px; height: 100%; margin-left: -2px; cursor: col-resize; z-index: 10; touch-action: none; }
+        .trim-handle::before { content: ''; position: absolute; top: 0; bottom: 0; left: -20px; width: 44px; }   /* a finger-sized grip area */
+        .trim-handle::after { content: ''; position: absolute; top: 50%; left: -7px; width: 18px; height: 36px; transform: translateY(-50%); border-radius: 5px; border: 2px solid; }
+        .trim-hint { font-size: 13px; color: var(--text2); text-align: center; margin: -8px 0 12px; }
+        @media (pointer: coarse) { .trim-handle::after { left: -10px; width: 24px; height: 48px; } }
         .handle-start { background: var(--green); }
         .handle-start::after { border-color: var(--green); background: rgba(35, 70, 245, 0.2); }
         .handle-end { background: var(--red); }
@@ -136,7 +140,15 @@
 
         .hidden { display: none !important; }
 
-        @media (max-width: 600px) { .btn-row { flex-direction: column; } }
+        @media (max-width: 600px) {
+            .btn-row { flex-direction: column; }
+            .btn-row .btn { justify-content: center; }
+            .waveform-wrap { height: 140px; }
+            .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .time-input input { width: 100%; min-height: 44px; font-size: 16px; }   /* 16px: phones don't zoom into the field */
+            .time-input:last-child { justify-content: flex-end; }
+            .duration-badge { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+        }
     </style>
 </head>
 <body>
@@ -145,12 +157,26 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/zh/audio-trimmer/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/" aria-current="page">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -165,7 +191,8 @@
             <!-- Drop zone -->
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <p><strong>Drop audio file here</strong> or click to browse</p>
+                <p class="no-touch"><strong>Drop an audio file here</strong></p>
+                <button type="button" class="dz-choose">Choose file</button>
                 <p style="font-size:12px;margin-top:4px;">MP3, WAV, FLAC, OGG, AAC, M4A, WebM</p>
             </div>
             <input type="file" id="fileInput" accept="audio/*">
@@ -186,6 +213,8 @@
                     <div class="trim-handle handle-end" id="handleEnd"></div>
                     <div class="playhead" id="playhead"></div>
                 </div>
+
+                <p class="trim-hint">Drag the blue and red handles, or <span class="no-touch">click</span><span class="touch-only">tap</span> the waveform to move the nearer one there.</p>
 
                 <div class="time-row">
                     <div class="time-input">
@@ -208,13 +237,13 @@
         </div>
 
         <section class="seo-content">
-            <h2>Free Online Audio Trimmer & Cutter</h2>
+            <h2>Free online audio trimmer & cutter</h2>
             <p>AudioTools Audio Trimmer lets you cut any audio file directly in your browser. Drop your MP3, WAV, FLAC, or OGG file, see the waveform, drag the trim handles to select the portion you want, and download the result. No upload to any server — all processing uses the <strong>Web Audio API</strong>.</p>
 
-            <h3>How to Trim an Audio File</h3>
+            <h3>How to trim an audio file</h3>
             <p>Drop or select your audio file. A visual waveform appears with blue (start) and red (end) trim handles. Drag the handles or type exact timestamps to define your trim region. Click "Preview" to hear the selection, then "Cut & Download" to save it as MP3 or WAV.</p>
 
-            <h3>Supported Formats</h3>
+            <h3>Supported formats</h3>
             <p>Input: MP3, WAV, FLAC, OGG, AAC, M4A, WebM — any format your browser can decode. Output is MP3 (192 kbps) or WAV (uncompressed, lossless), your choice. The <a href="/converter/">Audio Converter</a> reads even more formats.</p>
 
             <h3>Privacy</h3>
@@ -224,7 +253,7 @@
         </section>
 
         <section class="faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently asked questions</h2>
             <div class="faq-item">
                 <div class="faq-q">How do I trim an audio file online?</div>
                 <div class="faq-a">Drop or select your file, drag the blue start and red end handles on the waveform, then click "Cut & Download". The trimmed file saves as MP3 or WAV.</div>
@@ -365,30 +394,34 @@
             updateTimes();
         }
 
-        // Drag handles
-        let dragging = null;
-        function startDrag(handle, type) {
-            handle.addEventListener('mousedown', e => { e.preventDefault(); dragging = type; });
-            handle.addEventListener('touchstart', e => { dragging = type; }, { passive: true });
-        }
-        startDrag(handleStart, 'start');
-        startDrag(handleEnd, 'end');
-
-        function onMove(clientX) {
-            if (!dragging || !buffer) return;
-            const rect = waveWrap.getBoundingClientRect();
-            let pos = (clientX - rect.left) / rect.width;
-            pos = Math.max(0, Math.min(1, pos));
-            if (dragging === 'start') { trimStart = Math.min(pos, trimEnd - 0.005); }
-            else { trimEnd = Math.max(pos, trimStart + 0.005); }
+        // Handles: drag them, or click the waveform to move the nearer one there (mouse, finger or pen)
+        let dragging = null, pending = null;
+        const posAt = (clientX) => { const r = waveWrap.getBoundingClientRect(); return Math.max(0, Math.min(1, (clientX - r.left) / r.width)); };
+        const nearer = (pos) => (Math.abs(pos - trimStart) <= Math.abs(pos - trimEnd) ? 'start' : 'end');
+        function moveEdge(edge, pos) {
+            if (edge === 'start') trimStart = Math.min(pos, trimEnd - 0.005);
+            else trimEnd = Math.max(pos, trimStart + 0.005);
             updateHandles();
             updateTimes();
         }
-
-        document.addEventListener('mousemove', e => onMove(e.clientX));
-        document.addEventListener('touchmove', e => { if (dragging) onMove(e.touches[0].clientX); });
-        document.addEventListener('mouseup', () => dragging = null);
-        document.addEventListener('touchend', () => dragging = null);
+        waveWrap.addEventListener('pointerdown', (e) => {
+            if (!buffer || e.button > 0) return;
+            const handle = e.target.closest('.trim-handle'), pos = posAt(e.clientX);
+            if (handle) dragging = handle === handleStart ? 'start' : 'end';
+            else if (e.pointerType === 'mouse') { dragging = nearer(pos); moveEdge(dragging, pos); }
+            else { pending = { x: e.clientX, pos }; return; }   // a finger on the waveform: a tap or a sideways drag moves an edge, a vertical swipe scrolls
+            try { waveWrap.setPointerCapture(e.pointerId); } catch (err) { /* not an active pointer */ }
+            e.preventDefault();
+        });
+        waveWrap.addEventListener('pointermove', (e) => {
+            if (pending && Math.abs(e.clientX - pending.x) > 8) { dragging = nearer(pending.pos); pending = null; try { waveWrap.setPointerCapture(e.pointerId); } catch (err) { /* not an active pointer */ } }
+            if (dragging) moveEdge(dragging, posAt(e.clientX));
+        });
+        waveWrap.addEventListener('pointerup', () => {
+            if (pending) moveEdge(nearer(pending.pos), pending.pos);
+            dragging = pending = null;
+        });
+        waveWrap.addEventListener('pointercancel', () => { dragging = pending = null; });   // the page scrolled instead
 
         // Preview plays the selection; pressed again while playing, it stops
         const previewBtn = document.getElementById('previewBtn');

@@ -155,12 +155,26 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/" aria-current="page">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/zh/vocal-remover/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/" aria-current="page">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -174,7 +188,8 @@
         <div class="tool-area">
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></div>
-                <p><strong>Drop a song here</strong> or click to browse</p>
+                <p class="no-touch"><strong>Drop a song here</strong></p>
+                <button type="button" class="dz-choose">Choose a song</button>
                 <p>MP3, M4A, WAV, FLAC, OGG or a video — processed on your device, never uploaded</p>
             </div>
             <input type="file" id="fileInput" accept="audio/*,video/*">
@@ -247,7 +262,7 @@
         </section>
 
         <section class="faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently asked questions</h2>
             <div class="faq-item"><div class="faq-q">How do I remove vocals from a song for free?</div><div class="faq-a">Drop the song here and click Remove vocals. When it finishes, download the instrumental as MP3 or WAV. It is free, with no account and no limit.</div></div>
             <div class="faq-item"><div class="faq-q">Is my song uploaded to a server?</div><div class="faq-a">No. The separation model runs in your browser; only the model file is downloaded, once. The song never leaves your device.</div></div>
             <div class="faq-item"><div class="faq-q">Can I get the vocals only (acapella)?</div><div class="faq-a">Yes. You get two files: the instrumental and the vocals. Download either or both.</div></div>
