@@ -12,7 +12,7 @@
 - [Volume Booster](https://audiotools.dev/volume-booster/): Increase audio volume up to 500% or normalize to consistent peak level. Soft-clipping.
 - [Audio Speed Changer](https://audiotools.dev/audio-speed-changer/): Slow down or speed up audio. 0.25x to 4x with pitch preservation.
 - [Audio Compressor](https://audiotools.dev/audio-compressor/): Reduce audio file size by adjusting bitrate and sample rate, one file or a whole batch (ZIP download).
-- [Vocal Remover](https://audiotools.dev/vocal-remover/): Split a song into the instrumental (karaoke track) and the vocals with SCNet, an open-source separation model (MIT weights), running in the browser with ONNX Runtime Web (WebAssembly). The song is never uploaded.
+- [Vocal Remover](https://audiotools.dev/vocal-remover/): Split a song into the instrumental (karaoke track) and the vocals with SCNet or, on computers, the cleaner SCNet-large, open-source separation models (MIT weights), running in the browser with ONNX Runtime Web (WebAssembly). The song is never uploaded.
 
 ## Open Source Projects (GitHub)
 

@@ -16,7 +16,7 @@ Privacy-first audio tools that run entirely in your browser. No uploads, no acco
 | **Volume Booster** | [/volume-booster/](https://audiotools.dev/volume-booster/) | Web Audio API, soft limiter |
 | **Audio Joiner** | [/audio-joiner/](https://audiotools.dev/audio-joiner/) | Web Audio API, crossfade |
 | **Audio Compressor** | [/audio-compressor/](https://audiotools.dev/audio-compressor/) | Web Audio API + Mediabunny MP3 |
-| **Vocal Remover** | [/vocal-remover/](https://audiotools.dev/vocal-remover/) | SCNet (MIT weights) via [@audio/neural-separate](https://github.com/audiojs/neural) on ONNX Runtime Web (WebAssembly) |
+| **Vocal Remover** | [/vocal-remover/](https://audiotools.dev/vocal-remover/) | SCNet, or SCNet-large as "Cleaner" on computers (MIT weights), via [@audio/neural-separate](https://github.com/audiojs/neural) on ONNX Runtime Web (WebAssembly) |
 
 Chinese pages: [/zh/](https://audiotools.dev/zh/) and a /zh/ version of every tool, for example [/zh/converter/](https://audiotools.dev/zh/converter/) and [/zh/voice-to-text/](https://audiotools.dev/zh/voice-to-text/).
 
