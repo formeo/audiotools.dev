@@ -1,8 +1,10 @@
-// Vocal removal on the device: SCNet (MIT weights) through @audio/neural-separate on ONNX Runtime Web
-// (vendored in /vendor/neural/). The song arrives as Float32Array channels and never leaves the browser;
-// only the model file is downloaded (once, then kept in the browser's cache).
+// Vocal removal on the device: SCNet or SCNet-large (MIT weights) through @audio/neural-separate on ONNX Runtime Web
+// (vendored in /vendor/neural/), on the CPU; Mel-RoFormer (MIT, Kimberley Jensen's vocals model) on WebGPU, as an
+// experiment. The song arrives as Float32Array channels and never leaves the browser; only the model file is
+// downloaded (once, then kept in the browser's cache).
 //
-// in:  { channels: Float32Array[], sampleRate, model: { url, sha256 }, threads }   (runs on the CPU: WebAssembly)
+// in:  { channels: Float32Array[], sampleRate, model: { name, url, sha256, device }, threads }
+//      name: the package's preset ('scnet', 'scnet-large', 'mel-roformer'); device 'wasm' (CPU) or 'webgpu'
 // out: { type: 'download', loaded, total }          model file, bytes so far
 //      { type: 'loading' }                          model ready, the session is being made
 //      { type: 'part', done, total }                 segments finished (sent as each one starts: done = its index)
@@ -31,13 +33,15 @@ self.onmessage = async ({ data: { channels, sampleRate, model, threads } }) => {
     try {
         const b = await modelBytes(model);
         self.postMessage({ type: 'loading' });
+        const gpu = model.device === 'webgpu';
         const { stems, residual } = await separate(channels, {
             sampleRate,
-            model: 'scnet',
+            model: model.name,
             targets: ['vocals'],
-            step: 0.5,   // each sample heard in two segments, not four: half the time, about 0.1 dB less (package README)
+            // SCNet: each sample heard in two segments, not four: half the time, 0.07–0.17 dB less (package README)
+            ...(model.name.startsWith('scnet') && { step: 0.5 }),
             session: async () => {
-                const s = await load(b, {
+                const s = await load(b, gpu ? { backend: 'webgpu', wasmPaths: '/vendor/neural/' } : {
                     backend: 'wasm', wasmPaths: '/vendor/neural/',
                     threads: self.crossOriginIsolated ? threads || 1 : 1,   // chosen by the page (see /coi-sw.js)
                     sessionOptions: { enableCpuMemArena: false, enableMemPattern: false },

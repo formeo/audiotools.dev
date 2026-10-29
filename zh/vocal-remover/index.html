@@ -84,7 +84,7 @@
                 "name": "为什么还能听到一点人声？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。"
+                    "text": "分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。在电脑上使用“更干净”，残留的人声更少。"
                 }
             }
         ]
@@ -111,6 +111,17 @@
         .file-meta{font-size:12px;color:var(--text2);white-space:nowrap}
         .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
         .note{font-size:13px;color:var(--text2);margin-bottom:16px}
+        .quality{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+        .q-opt{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface2);cursor:pointer;text-align:left}
+        .q-opt input{position:absolute;opacity:0;pointer-events:none}
+        .q-opt b{font-size:15px;color:var(--ink)}
+        .q-opt span{font-size:12px;color:var(--text2)}
+        .q-opt:has(input:checked){border-color:var(--accent);background:#EEF1FE}
+        .q-opt:has(input:checked) b{color:var(--accent)}
+        .q-opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+        .q-opt[hidden],.quality[hidden]{display:none}
+        .retry{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:12px 0 0;font-size:14px;color:var(--text2)}
+        .retry[hidden]{display:none}
 
         .btn-row{display:flex;gap:10px}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
@@ -143,9 +154,10 @@
             .tool-area{padding:20px}
             .drop-zone{padding:32px 16px}
             .btn-row{flex-direction:column}
-            .lane{grid-template-columns:1fr}
+            .lane{grid-template-columns:minmax(0,1fr)}
             .lane svg{grid-row:auto}
             .lane-play{flex-direction:column;align-items:stretch}
+            .lane audio{flex:none;width:100%}
         }
     </style>
 </head>
@@ -200,6 +212,11 @@
                     <span class="file-meta" id="fileMeta"></span>
                     <button class="file-remove" onclick="reset()" title="移除">✕</button>
                 </div>
+                <div class="quality" role="radiogroup" aria-label="质量">
+                    <label class="q-opt"><input type="radio" name="quality" value="scnet" checked><b>快速</b><span>SCNet · 13 MB · 用时为歌曲长度的几倍</span></label>
+                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>更干净</b><span>SCNet-large · 45 MB · 残留人声更少，用时约为快速的 5 倍 · 适合电脑</span></label>
+                    <label class="q-opt" id="qRoformer" hidden><input type="radio" name="quality" value="mel-roformer"><b>最佳（测试）</b><span>Mel-RoFormer · 从 Hugging Face 下载 464 MB · 显卡（WebGPU）</span></label>
+                </div>
                 <p class="note" id="note">在电脑上所需时间是歌曲时长的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>
                 <div class="btn-row">
                     <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">消除人声</button>
@@ -225,6 +242,7 @@
                         </div>
                     </div>
                     <label class="out-format">格式 <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · 无损</option></select></label>
+                    <p class="retry" id="retry" hidden>还能听到人声？<button class="btn btn-secondary" id="retryBtn" type="button">试试“更干净”</button></p>
                 </div>
             </div>
         </div>
@@ -253,11 +271,11 @@
                 <li><strong>扒歌词</strong>——单独的人声更容易听清，还可以用<a href="/zh/voice-to-text/">语音转文字</a>记下来。</li>
             </ul>
             <h3>效果如何？</h3>
-            <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。</p>
+            <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。如果还能听到人声，请选择<strong>更干净</strong>：同一模型的大版本 SCNet-large 残留的人声更少（在这些歌曲上人声 SDR 为 11.0，快速为 9.9），用时约为五倍。</p>
             <h3>需要多长时间？</h3>
-            <p>对浏览器来说，分离是很重的工作：在电脑上所需时间是歌曲时长的几倍，在手机上更久，还需要足够的空闲内存，所以长歌曲最好用电脑处理。页面会显示正在处理第几段以及大约还剩多少时间。</p>
+            <p>对浏览器来说，分离是很重的工作：在电脑上所需时间是歌曲时长的几倍，在手机上更久，还需要足够的空闲内存，所以长歌曲最好用电脑处理。“更干净”用时约为“快速”的五倍，需要 8 GB 或以上内存的电脑。页面会显示正在处理第几段以及大约还剩多少时间。</p>
             <h3>隐私</h3>
-            <p>歌曲在您的浏览器中用 ONNX Runtime Web 解码和分离。页面只下载一次模型文件（13 MB）和运行库；您的音频不会被发送到任何地方。AudioTools.dev 也没有可以接收它的服务器。</p>
+            <p>歌曲在您的浏览器中用 ONNX Runtime Web 解码和分离。页面只下载一次模型文件（13 MB，“更干净”为 45 MB）和运行库；您的音频不会被发送到任何地方。AudioTools.dev 也没有可以接收它的服务器。</p>
             <p>还需要别的？用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出一段，用<a href="/zh/volume-booster/">音量增强</a>提高音量，或用<a href="/zh/converter/">音频转换器</a>转换格式。</p>
         </section>
 
@@ -267,7 +285,7 @@
             <div class="faq-item"><div class="faq-q">我的歌曲会上传到服务器吗？</div><div class="faq-a">不会。分离模型在您的浏览器中运行，只会下载一次模型文件。歌曲绝不离开您的设备。</div></div>
             <div class="faq-item"><div class="faq-q">可以只提取人声（清唱）吗？</div><div class="faq-a">可以。您会得到两个文件：伴奏和人声，可以下载其中一个或两个都下载。</div></div>
             <div class="faq-item"><div class="faq-q">手机上能用吗？</div><div class="faq-a">能，适用于最新的 Chrome 和 Safari，但比电脑慢好几倍，还需要足够的空闲内存。长歌曲请用电脑。</div></div>
-            <div class="faq-item"><div class="faq-q">为什么还能听到一点人声？</div><div class="faq-a">分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。</div></div>
+            <div class="faq-item"><div class="faq-q">为什么还能听到一点人声？</div><div class="faq-a">分离模型只能估计人声，无法完全精确。混响、和声和高音可能留下轻微痕迹，尤其是现场录音或经过大量处理的录音。在电脑上使用“更干净”，残留的人声更少。</div></div>
         </section>
     </div>
 
@@ -281,8 +299,29 @@
     </footer>
 
     <script>
-        // Model: SCNet (MIT weights), served from this site (see /vendor/neural/README.md), checked by SHA-256.
-        const MODEL = { url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13 };
+        // Models (MIT weights), checked by SHA-256. SCNet and SCNet-large are served from this site (see
+        // /vendor/neural/README.md) and run on the CPU. Mel-RoFormer (vocals SDR 12.1 against SCNet-large's 11.0 and
+        // SCNet's 9.9, as measured by @audio/neural-separate) is too big for this site and is written for the graphics card:
+        // it is fetched from Hugging Face and shown only with ?model=mel-roformer, until it has been tried on more GPUs.
+        const MODELS = {
+            scnet: { name: 'scnet', url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13, device: 'wasm',
+                note: '在电脑上用时为歌曲长度的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。' },
+            'scnet-large': { name: 'scnet-large', url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
+                note: '“更干净”在伴奏中残留的人声更少，但用时约为“快速”的五倍，需要 8 GB 或以上内存的电脑。首次使用时会下载一次模型（45 MB）。' },
+            'mel-roformer': { name: 'mel-roformer', url: 'https://huggingface.co/audiojs/mel-roformer/resolve/c1aba02c00a0bee852d6754fe6ede8164f90a4b3/mel-roformer.fp16.onnx',
+                sha256: 'adcbbb826f12453fbb86652b503242d565a9c81cdef1bca2fe0e54752eba91ef', mb: 464, device: 'webgpu',
+                note: '测试功能：分离人声效果最好的模型，在显卡上运行。首次使用时从 Hugging Face 下载 464 MB。如果卡住，请改用“更干净”。' },
+        };
+        let MODEL = MODELS.scnet;
+        const quality = () => document.querySelector('input[name="quality"]:checked').value;
+        // Cleaner needs about 4 GB of memory while it works: not offered on phones and tablets
+        const bigMachine = !matchMedia('(pointer: coarse)').matches && !(navigator.deviceMemory && navigator.deviceMemory < 8);
+        document.getElementById('qLarge').hidden = !bigMachine;
+        if (new URLSearchParams(location.search).get('model') === 'mel-roformer' && navigator.gpu) document.getElementById('qRoformer').hidden = false;
+        document.querySelector('.quality').hidden = document.querySelectorAll('.q-opt:not([hidden])').length < 2;   // nothing to choose: no choice shown
+        document.querySelectorAll('input[name="quality"]').forEach((r) => r.addEventListener('change', () => {
+            document.getElementById('note').textContent = MODELS[quality()].note;
+        }));
         const RATE = 44100;   // SCNet's rate: the song is decoded at it, so nothing is resampled again
 
         const dropZone = document.getElementById('dropZone');
@@ -367,7 +406,9 @@
             if (!song || job) return;
             runBtn.disabled = true;
             result.classList.add('hidden');
-            job = { start: 0, threads: threads || await threadCount() };
+            MODEL = MODELS[quality()];
+            document.getElementById('retry').hidden = true;
+            job = { start: 0, threads: MODEL.device === 'webgpu' ? 1 : threads || await threadCount() };
             setProgress('正在准备…', null);
             worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
             worker.onmessage = ({ data }) => {
@@ -376,19 +417,22 @@
                     setProgress(`正在下载模型（仅首次）：${mb.toFixed(1)} / ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
                 } else if (data.type === 'loading') {
                     setProgress('正在启动模型…', null);
-                    if (job.threads > 1) job.timer = setTimeout(() => {
-                        if (!job || job.start) return;
-                        worker.terminate(); worker = null; job = null;
-                        run(1);
-                    }, START_TIMEOUT);
+                    if (MODEL.device === 'webgpu') watch(GPU_STALL);
+                    else if (job.threads > 1) watch(START_TIMEOUT);
                 } else if (data.type === 'part') {
                     clearTimeout(job.timer);
+                    if (MODEL.device === 'webgpu') watch(GPU_STALL);   // each part, too: a graphics card can stall mid-way
                     if (!job.start) job.start = Date.now();
                     const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
                     setProgress(data.done ? `正在分离…第 ${data.done + 1} 段，共 ${data.total} 段 · ${timeLeft(left)}` : `正在分离…第 1 段，共 ${data.total} 段`, data.done / data.total);
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
+                } else if (MODEL.device === 'webgpu') {   // the test model didn't download or start: the CPU's best instead
+                    clearTimeout(job.timer);
+                    worker.terminate(); worker = null; job = null;
+                    useCpuModel();
+                    run();
                 } else {
                     job = null;
                     progressWrap.classList.add('hidden');
@@ -399,6 +443,33 @@
             const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
             worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL, threads: job.threads }, channels.map((c) => c.buffer));
         }
+
+        // Nothing heard from the worker for a while: start again. Threads that never start → one thread; a graphics card
+        // that stalls → the best model for the CPU.
+        const GPU_STALL = 180000;
+        function watch(ms) {
+            clearTimeout(job.timer);
+            job.timer = setTimeout(() => {
+                if (!job) return;
+                const gpuStalled = MODEL.device === 'webgpu';
+                if (!gpuStalled && job.start) return;   // threads started fine
+                worker.terminate(); worker = null; job = null;
+                if (gpuStalled) useCpuModel();
+                run(gpuStalled ? 0 : 1);
+            }, ms);
+        }
+        function useCpuModel() {
+            const fallback = bigMachine ? 'scnet-large' : 'scnet';
+            document.querySelector(`input[name="quality"][value="${fallback}"]`).checked = true;
+            document.getElementById('note').textContent = MODELS[fallback].note;
+        }
+
+        // After Fast, one click runs the same song through Cleaner
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            document.querySelector('input[name="quality"][value="scnet-large"]').checked = true;
+            document.getElementById('note').textContent = MODELS['scnet-large'].note;
+            run();
+        });
 
         function toBuffer(channels) {
             const b = new AudioBuffer({ length: channels[0].length, numberOfChannels: channels.length, sampleRate: song.sampleRate });
@@ -421,6 +492,7 @@
                 return { buffer, wav, name: fileBase + suffix };
             });
             result.classList.remove('hidden');
+            document.getElementById('retry').hidden = !(MODEL.name === 'scnet' && bigMachine);
             toolSuccess('vocal-remover', document.getElementById('outFormat').parentElement);
             offerNext('vocal-remover', document.getElementById('outFormat').parentElement, new File([parts[0].wav], parts[0].name + '.wav', { type: 'audio/wav' }), ['audio-speed-changer', 'audio-trimmer']);
         }

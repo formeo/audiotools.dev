@@ -82,7 +82,7 @@
 
     <div class="container content">
         <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: October 28, 2026</p>
+        <p class="updated">Last updated: October 29, 2026</p>
 
         <h2>The short version</h2>
         <p>Your audio files never leave your device. We don't collect, store, or process your audio data on any server. All audio conversion and transcription happens directly in your browser.</p>
@@ -109,7 +109,7 @@
         <ul>
             <li><strong>Audio Converter</strong> — uses the browser's built-in codecs and WebAssembly encoders (Mediabunny, served from this site) for decoding and encoding. Your files are processed in browser memory and never uploaded.</li>
             <li><strong>Voice to Text</strong> — uses the browser's built-in Web Speech Recognition API. Audio data is handled by your browser, not our servers. In Private mode, speech is transcribed by the Whisper model running in your browser; the model files are downloaded from Hugging Face (or, where Hugging Face can't be reached, from AudioTools.dev itself), and your audio is never sent anywhere. If the model fails to load, an anonymous analytics event records which model, the device type (CPU or graphics card) and whether the download failed; nothing about your audio.</li>
-            <li><strong>Vocal Remover</strong> — the song is separated in your browser by the SCNet model with ONNX Runtime Web; the model and the runtime are downloaded from this site once, and the song is never uploaded. On that page a small service worker adds isolation headers so the separation can use several processor threads; it stores nothing.</li>
+            <li><strong>Vocal Remover</strong> — the song is separated in your browser by the SCNet or SCNet-large model with ONNX Runtime Web; the model and the runtime are downloaded from this site once, and the song is never uploaded. A test option, shown only when the page is opened with <code>?model=mel-roformer</code>, downloads its model from Hugging Face instead; the song still stays on your device. On that page a small service worker adds isolation headers so the separation can use several processor threads; it stores nothing.</li>
         </ul>
         <p>You can verify this by checking the Network tab in your browser's DevTools — no audio data is transmitted.</p>
         <p>When you drop a file on the homepage helper and pick a tool, the file is handed to that tool through your browser's local storage (IndexedDB) and deleted as soon as the tool opens it. It never leaves your device.</p>

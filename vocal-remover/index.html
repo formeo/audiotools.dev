@@ -84,7 +84,7 @@
                 "name": "Why can I still hear some of the voice?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings."
+                    "text": "A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings. Cleaner, on a computer, leaves less of the voice."
                 }
             }
         ]
@@ -111,6 +111,17 @@
         .file-meta{font-size:12px;color:var(--text2);white-space:nowrap}
         .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
         .note{font-size:13px;color:var(--text2);margin-bottom:16px}
+        .quality{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+        .q-opt{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface2);cursor:pointer;text-align:left}
+        .q-opt input{position:absolute;opacity:0;pointer-events:none}
+        .q-opt b{font-size:15px;color:var(--ink)}
+        .q-opt span{font-size:12px;color:var(--text2)}
+        .q-opt:has(input:checked){border-color:var(--accent);background:#EEF1FE}
+        .q-opt:has(input:checked) b{color:var(--accent)}
+        .q-opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+        .q-opt[hidden],.quality[hidden]{display:none}
+        .retry{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:12px 0 0;font-size:14px;color:var(--text2)}
+        .retry[hidden]{display:none}
 
         .btn-row{display:flex;gap:10px}
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
@@ -143,9 +154,10 @@
             .tool-area{padding:20px}
             .drop-zone{padding:32px 16px}
             .btn-row{flex-direction:column}
-            .lane{grid-template-columns:1fr}
+            .lane{grid-template-columns:minmax(0,1fr)}
             .lane svg{grid-row:auto}
             .lane-play{flex-direction:column;align-items:stretch}
+            .lane audio{flex:none;width:100%}
         }
     </style>
 </head>
@@ -200,6 +212,11 @@
                     <span class="file-meta" id="fileMeta"></span>
                     <button class="file-remove" onclick="reset()" title="Remove">✕</button>
                 </div>
+                <div class="quality" role="radiogroup" aria-label="Quality">
+                    <label class="q-opt"><input type="radio" name="quality" value="scnet" checked><b>Fast</b><span>SCNet · 13 MB · a few times the song's length</span></label>
+                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>Cleaner</b><span>SCNet-large · 45 MB · less voice left, about 5 times longer · for computers</span></label>
+                    <label class="q-opt" id="qRoformer" hidden><input type="radio" name="quality" value="mel-roformer"><b>Best (test)</b><span>Mel-RoFormer · 464 MB from Hugging Face · graphics card (WebGPU)</span></label>
+                </div>
                 <p class="note" id="note">This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).</p>
                 <div class="btn-row">
                     <button class="btn btn-primary" id="runBtn" onclick="run()" style="flex:1;">Remove vocals</button>
@@ -225,6 +242,7 @@
                         </div>
                     </div>
                     <label class="out-format">Format <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · lossless</option></select></label>
+                    <p class="retry" id="retry" hidden>Can you still hear the voice? <button class="btn btn-secondary" id="retryBtn" type="button">Try Cleaner</button></p>
                 </div>
             </div>
         </div>
@@ -253,11 +271,11 @@
                 <li><strong>Transcribing lyrics</strong> — the vocals alone are easier to follow, and <a href="/voice-to-text/">voice to text</a> can write them down.</li>
             </ul>
             <h3>How good is it?</h3>
-            <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs.</p>
+            <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs. If you can still hear the voice, choose <strong>Cleaner</strong>: SCNet-large, the bigger version of the same model, leaves less of it (vocals SDR 11.0 against 9.9 on those songs) and takes about five times as long.</p>
             <h3>How long does it take?</h3>
-            <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. The page shows which part it is working on and about how much time is left.</p>
+            <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. Cleaner takes about five times as long as Fast and needs a computer with 8 GB of memory or more. The page shows which part it is working on and about how much time is left.</p>
             <h3>Privacy</h3>
-            <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
+            <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB, or 45 MB for Cleaner) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
             <p>Need something else? Cut out a part with the <a href="/audio-trimmer/">audio trimmer</a>, make it louder with the <a href="/volume-booster/">volume booster</a>, or change the format with the <a href="/converter/">audio converter</a>.</p>
         </section>
 
@@ -267,7 +285,7 @@
             <div class="faq-item"><div class="faq-q">Is my song uploaded to a server?</div><div class="faq-a">No. The separation model runs in your browser; only the model file is downloaded, once. The song never leaves your device.</div></div>
             <div class="faq-item"><div class="faq-q">Can I get the vocals only (acapella)?</div><div class="faq-a">Yes. You get two files: the instrumental and the vocals. Download either or both.</div></div>
             <div class="faq-item"><div class="faq-q">Does it work on a phone?</div><div class="faq-a">Yes, in current Chrome and Safari, but it is several times slower than on a computer and needs free memory. For long songs, use a computer.</div></div>
-            <div class="faq-item"><div class="faq-q">Why can I still hear some of the voice?</div><div class="faq-a">A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings.</div></div>
+            <div class="faq-item"><div class="faq-q">Why can I still hear some of the voice?</div><div class="faq-a">A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings. Cleaner, on a computer, leaves less of the voice.</div></div>
         </section>
     </div>
 
@@ -281,8 +299,29 @@
     </footer>
 
     <script>
-        // Model: SCNet (MIT weights), served from this site (see /vendor/neural/README.md), checked by SHA-256.
-        const MODEL = { url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13 };
+        // Models (MIT weights), checked by SHA-256. SCNet and SCNet-large are served from this site (see
+        // /vendor/neural/README.md) and run on the CPU. Mel-RoFormer (vocals SDR 12.1 against SCNet-large's 11.0 and
+        // SCNet's 9.9, as measured by @audio/neural-separate) is too big for this site and is written for the graphics card:
+        // it is fetched from Hugging Face and shown only with ?model=mel-roformer, until it has been tried on more GPUs.
+        const MODELS = {
+            scnet: { name: 'scnet', url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13, device: 'wasm',
+                note: 'This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).' },
+            'scnet-large': { name: 'scnet-large', url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
+                note: 'Cleaner leaves less of the voice in the instrumental, but takes about five times as long as Fast, and needs a computer with 8 GB of memory or more. The first time, its model downloads once (45 MB).' },
+            'mel-roformer': { name: 'mel-roformer', url: 'https://huggingface.co/audiojs/mel-roformer/resolve/c1aba02c00a0bee852d6754fe6ede8164f90a4b3/mel-roformer.fp16.onnx',
+                sha256: 'adcbbb826f12453fbb86652b503242d565a9c81cdef1bca2fe0e54752eba91ef', mb: 464, device: 'webgpu',
+                note: 'A test: the best model for vocals, on the graphics card. The first time it downloads 464 MB from Hugging Face. If it stalls, use Cleaner.' },
+        };
+        let MODEL = MODELS.scnet;
+        const quality = () => document.querySelector('input[name="quality"]:checked').value;
+        // Cleaner needs about 4 GB of memory while it works: not offered on phones and tablets
+        const bigMachine = !matchMedia('(pointer: coarse)').matches && !(navigator.deviceMemory && navigator.deviceMemory < 8);
+        document.getElementById('qLarge').hidden = !bigMachine;
+        if (new URLSearchParams(location.search).get('model') === 'mel-roformer' && navigator.gpu) document.getElementById('qRoformer').hidden = false;
+        document.querySelector('.quality').hidden = document.querySelectorAll('.q-opt:not([hidden])').length < 2;   // nothing to choose: no choice shown
+        document.querySelectorAll('input[name="quality"]').forEach((r) => r.addEventListener('change', () => {
+            document.getElementById('note').textContent = MODELS[quality()].note;
+        }));
         const RATE = 44100;   // SCNet's rate: the song is decoded at it, so nothing is resampled again
 
         const dropZone = document.getElementById('dropZone');
@@ -367,7 +406,9 @@
             if (!song || job) return;
             runBtn.disabled = true;
             result.classList.add('hidden');
-            job = { start: 0, threads: threads || await threadCount() };
+            MODEL = MODELS[quality()];
+            document.getElementById('retry').hidden = true;
+            job = { start: 0, threads: MODEL.device === 'webgpu' ? 1 : threads || await threadCount() };
             setProgress('Preparing…', null);
             worker = worker || new Worker('/vocal-remover/separate-worker.js', { type: 'module' });
             worker.onmessage = ({ data }) => {
@@ -376,19 +417,22 @@
                     setProgress(`Downloading the model (first time only): ${mb.toFixed(1)} of ${MODEL.mb} MB…`, Math.min(0.99, mb / MODEL.mb));
                 } else if (data.type === 'loading') {
                     setProgress('Starting the model…', null);
-                    if (job.threads > 1) job.timer = setTimeout(() => {
-                        if (!job || job.start) return;
-                        worker.terminate(); worker = null; job = null;
-                        run(1);
-                    }, START_TIMEOUT);
+                    if (MODEL.device === 'webgpu') watch(GPU_STALL);
+                    else if (job.threads > 1) watch(START_TIMEOUT);
                 } else if (data.type === 'part') {
                     clearTimeout(job.timer);
+                    if (MODEL.device === 'webgpu') watch(GPU_STALL);   // each part, too: a graphics card can stall mid-way
                     if (!job.start) job.start = Date.now();
                     const left = data.done ? (Date.now() - job.start) / data.done * (data.total - data.done) / 1000 : 0;
                     setProgress(data.done ? `Separating… part ${data.done + 1} of ${data.total} · ${timeLeft(left)}` : `Separating… part 1 of ${data.total}`, data.done / data.total);
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
+                } else if (MODEL.device === 'webgpu') {   // the test model didn't download or start: the CPU's best instead
+                    clearTimeout(job.timer);
+                    worker.terminate(); worker = null; job = null;
+                    useCpuModel();
+                    run();
                 } else {
                     job = null;
                     progressWrap.classList.add('hidden');
@@ -399,6 +443,33 @@
             const channels = Array.from({ length: song.numberOfChannels }, (_, c) => song.getChannelData(c).slice());
             worker.postMessage({ channels, sampleRate: song.sampleRate, model: MODEL, threads: job.threads }, channels.map((c) => c.buffer));
         }
+
+        // Nothing heard from the worker for a while: start again. Threads that never start → one thread; a graphics card
+        // that stalls → the best model for the CPU.
+        const GPU_STALL = 180000;
+        function watch(ms) {
+            clearTimeout(job.timer);
+            job.timer = setTimeout(() => {
+                if (!job) return;
+                const gpuStalled = MODEL.device === 'webgpu';
+                if (!gpuStalled && job.start) return;   // threads started fine
+                worker.terminate(); worker = null; job = null;
+                if (gpuStalled) useCpuModel();
+                run(gpuStalled ? 0 : 1);
+            }, ms);
+        }
+        function useCpuModel() {
+            const fallback = bigMachine ? 'scnet-large' : 'scnet';
+            document.querySelector(`input[name="quality"][value="${fallback}"]`).checked = true;
+            document.getElementById('note').textContent = MODELS[fallback].note;
+        }
+
+        // After Fast, one click runs the same song through Cleaner
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            document.querySelector('input[name="quality"][value="scnet-large"]').checked = true;
+            document.getElementById('note').textContent = MODELS['scnet-large'].note;
+            run();
+        });
 
         function toBuffer(channels) {
             const b = new AudioBuffer({ length: channels[0].length, numberOfChannels: channels.length, sampleRate: song.sampleRate });
@@ -421,6 +492,7 @@
                 return { buffer, wav, name: fileBase + suffix };
             });
             result.classList.remove('hidden');
+            document.getElementById('retry').hidden = !(MODEL.name === 'scnet' && bigMachine);
             toolSuccess('vocal-remover', document.getElementById('outFormat').parentElement);
             offerNext('vocal-remover', document.getElementById('outFormat').parentElement, new File([parts[0].wav], parts[0].name + '.wav', { type: 'audio/wav' }), ['audio-speed-changer', 'audio-trimmer']);
         }
