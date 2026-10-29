@@ -146,12 +146,26 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/" aria-current="page">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/zh/volume-booster/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/" aria-current="page">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -165,7 +179,8 @@
         <div class="tool-area">
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <p><strong>Drop audio file here</strong> or click to browse</p>
+                <p class="no-touch"><strong>Drop an audio file here</strong></p>
+                <button type="button" class="dz-choose">Choose file</button>
                 <p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>
             </div>
             <input type="file" id="fileInput" accept="audio/*">
@@ -214,25 +229,25 @@
 
         <div class="features">
             <div class="feature"><div class="feature-title">Boost up to 500%</div><div class="feature-desc">Increase volume by up to 5x with a simple slider.</div></div>
-            <div class="feature"><div class="feature-title">Normalize Audio</div><div class="feature-desc">Auto-detect peak and normalize to −1 dBFS, no clipping.</div></div>
-            <div class="feature"><div class="feature-title">Visual Level Meter</div><div class="feature-desc">See the waveform and peak levels before and after.</div></div>
+            <div class="feature"><div class="feature-title">Normalize audio</div><div class="feature-desc">Auto-detect peak and normalize to −1 dBFS, no clipping.</div></div>
+            <div class="feature"><div class="feature-title">Visual level meter</div><div class="feature-desc">See the waveform and peak levels before and after.</div></div>
             <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">All processing in your browser. Files never leave your device.</div></div>
         </div>
 
         <section class="seo-content">
-            <h2>Free Online Volume Booster &amp; Audio Normalizer</h2>
+            <h2>Free online volume booster &amp; audio normalizer</h2>
             <p>Volume Booster lets you increase the volume of quiet audio files or normalize audio to a consistent level. Drop a quiet recording, boost the volume or normalize it, and download the result — all in your browser without any server.</p>
-            <h3>Volume Boost vs Normalization</h3>
+            <h3>Volume boost vs normalization</h3>
             <p>Volume boost increases the entire signal by a fixed amount (for example +6 dB or 200%). Normalization analyzes the peak level and scales the volume so the loudest part reaches a target level (−1 dBFS here). Normalization is smarter — it prevents clipping while maximizing perceived loudness. When you boost manually past the ceiling, a soft limiter rounds off the peaks so the result stays clean instead of crackling.</p>
-            <h3>How It Works</h3>
+            <h3>How it works</h3>
             <p>Drop or select your file, pick Normalize or Manual Boost, and click "Apply &amp; Process". The audio is decoded with the Web Audio API, gain is applied sample-by-sample directly in your browser, and the result is offered for download as MP3 or WAV. Nothing is uploaded.</p>
-            <h3>Common Use Cases</h3>
+            <h3>Common use cases</h3>
             <p>Boosting quiet voice recordings from phone or laptop microphones. Normalizing podcast episodes to a consistent volume. Matching volume levels across multiple tracks. Making quiet audiobook chapters louder.</p>
             <p>Need other edits? Try our <a href="/audio-trimmer/">Audio Trimmer</a>, <a href="/audio-speed-changer/">Speed Changer</a>, <a href="/converter/">Audio Converter</a>, or <a href="/text-to-speech/">Text to Speech</a>.</p>
         </section>
 
         <section class="faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently asked questions</h2>
             <div class="faq-item"><div class="faq-q">How much can I boost audio volume?</div><div class="faq-a">Up to 500% (5x). For best results use Normalize, which finds the optimal level without clipping.</div></div>
             <div class="faq-item"><div class="faq-q">What is audio normalization?</div><div class="faq-a">It analyzes the peak volume and scales the file so the loudest part reaches a target level (−1 dBFS), maximizing loudness without distortion.</div></div>
             <div class="faq-item"><div class="faq-q">Is my audio uploaded?</div><div class="faq-a">No. Everything happens in your browser using the Web Audio API.</div></div>

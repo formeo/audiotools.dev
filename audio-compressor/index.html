@@ -157,12 +157,26 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/zh/audio-compressor/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/" aria-current="page">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -176,7 +190,8 @@
         <div class="tool-area">
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <p><strong>Drop audio files here</strong>, one or several, or click to browse</p>
+                <p class="no-touch"><strong>Drop audio files here</strong>, one or several</p>
+                <button type="button" class="dz-choose">Choose files</button>
                 <p>MP3, WAV, FLAC, OGG, M4A — processed locally, never uploaded</p>
             </div>
             <input type="file" id="fileInput" accept="audio/*" multiple>
@@ -235,9 +250,9 @@
         </div>
 
         <div class="features">
-            <div class="feature"><div class="feature-title">Bitrate Control</div><div class="feature-desc">Choose from 64 to 320 kbps for the right size vs quality.</div></div>
-            <div class="feature"><div class="feature-title">Sample Rate Options</div><div class="feature-desc">Downsample to 22 kHz or 16 kHz for even smaller files.</div></div>
-            <div class="feature"><div class="feature-title">Size Preview</div><div class="feature-desc">See the estimated output size before you compress.</div></div>
+            <div class="feature"><div class="feature-title">Bitrate control</div><div class="feature-desc">Choose from 64 to 320 kbps for the right size vs quality.</div></div>
+            <div class="feature"><div class="feature-title">Sample rate options</div><div class="feature-desc">Downsample to 22 kHz or 16 kHz for even smaller files.</div></div>
+            <div class="feature"><div class="feature-title">Size preview</div><div class="feature-desc">See the estimated output size before you compress.</div></div>
             <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">All compression in your browser. Files never leave your device.</div></div>
         </div>
 
@@ -268,7 +283,7 @@
         </section>
 
         <section class="faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently asked questions</h2>
             <div class="faq-item"><div class="faq-q">How do I reduce the size of an MP3 file?</div><div class="faq-a">Re-encode it at a lower bitrate. Drop the MP3 here, pick 128 kbps or 64 kbps, and download the smaller file. Lowering the sample rate to 22050 Hz shrinks voice recordings further.</div></div>
             <div class="faq-item"><div class="faq-q">How much smaller will my file be?</div><div class="faq-a">About 1 MB per minute at 128 kbps and 0.5 MB per minute at 64 kbps. A WAV file usually becomes 5 to 20 times smaller. The tool shows the estimate before you compress.</div></div>
             <div class="faq-item"><div class="faq-q">Does compression affect quality?</div><div class="faq-a">Lossy compression removes some data. At 192 kbps or higher, most listeners cannot tell the difference from the original; for speech, 64 kbps is enough.</div></div>

@@ -12,7 +12,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent
-FAQ_HEADINGS = ('Frequently Asked Questions', '常见问题')
+FAQ_HEADINGS = ('frequently asked questions', '常见问题')
 
 
 def text(el):
@@ -24,7 +24,7 @@ def visible_faq(soup):
     items = soup.select('.faq-item')
     if items:
         return [(text(i.select_one('.faq-q')), text(i.select_one('.faq-a'))) for i in items]
-    h2 = next((h for h in soup.find_all('h2') if text(h) in FAQ_HEADINGS), None)
+    h2 = next((h for h in soup.find_all('h2') if text(h).lower() in FAQ_HEADINGS), None)
     if not h2:
         return []
     out = []

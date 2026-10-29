@@ -176,12 +176,26 @@
             <a href="/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
             <div class="at-nav-links">
                 <a href="/converter/">Converter</a>
-                <a href="/volume-booster/">Volume Booster</a>
-                <a href="/text-to-speech/">Text to Speech</a>
+                <a href="/vocal-remover/">Vocal Remover</a>
                 <a href="/voice-to-text/">Voice to Text</a>
-                <a href="/">All tools</a>
+                <a href="/text-to-speech/">Text to Speech</a>
                 <a href="/zh/audio-joiner/" class="at-lang" hreflang="zh" lang="zh">中文</a>
             </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tools</span></summary>
+                <ul class="at-menu-list" aria-label="All tools">
+                    <li><a href="/converter/">Converter</a></li>
+                    <li><a href="/vocal-remover/">Vocal Remover</a></li>
+                    <li><a href="/voice-to-text/">Voice to Text</a></li>
+                    <li><a href="/text-to-speech/">Text to Speech</a></li>
+                    <li><a href="/volume-booster/">Volume Booster</a></li>
+                    <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
+                    <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/audio-joiner/" aria-current="page">Audio Joiner</a></li>
+                    <li><a href="/audio-compressor/">Audio Compressor</a></li>
+                    <li class="at-menu-all"><a href="/">All tools</a></li>
+                </ul>
+            </details>
         </div>
     </nav>
 
@@ -195,7 +209,8 @@
         <div class="tool-area">
             <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
                 <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
-                <p><strong>Drop audio files here</strong> or click to browse</p>
+                <p class="no-touch"><strong>Drop audio files here</strong></p>
+                <button type="button" class="dz-choose">Choose files</button>
                 <p>Add several files — MP3, WAV, FLAC, OGG, M4A. Processed locally, never uploaded.</p>
             </div>
             <input type="file" id="fileInput" accept="audio/*" multiple>
@@ -231,9 +246,9 @@
         </div>
 
         <div class="features">
-            <div class="feature"><div class="feature-title">Multiple Files</div><div class="feature-desc">Add any number of audio files and reorder them freely.</div></div>
-            <div class="feature"><div class="feature-title">Crossfade Transitions</div><div class="feature-desc">Add a smooth crossfade between tracks for seamless joins.</div></div>
-            <div class="feature"><div class="feature-title">Mix Formats</div><div class="feature-desc">Combine MP3, WAV, FLAC, OGG in any combination.</div></div>
+            <div class="feature"><div class="feature-title">Multiple files</div><div class="feature-desc">Add any number of audio files and reorder them freely.</div></div>
+            <div class="feature"><div class="feature-title">Crossfade transitions</div><div class="feature-desc">Add a smooth crossfade between tracks for seamless joins.</div></div>
+            <div class="feature"><div class="feature-title">Mix formats</div><div class="feature-desc">Combine MP3, WAV, FLAC, OGG in any combination.</div></div>
             <div class="feature"><div class="feature-title">100% Private</div><div class="feature-desc">All merging in your browser. Files never leave your device.</div></div>
         </div>
 
@@ -265,7 +280,7 @@
         </section>
 
         <section class="faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently asked questions</h2>
             <div class="faq-item"><div class="faq-q">How do I merge MP3 files into one?</div><div class="faq-a">Add the MP3 files, arrange them in order, optionally set a crossfade, then click Merge &amp; Download. You get one MP3 or WAV file, made in your browser.</div></div>
             <div class="faq-item"><div class="faq-q">How do I combine two audio files?</div><div class="faq-a">Add both files, put them in the order you want and click Merge &amp; Download: the second file plays right after the first. A crossfade blends the end of the first into the start of the second.</div></div>
             <div class="faq-item"><div class="faq-q">Can I overlay two audio files so they play at the same time?</div><div class="faq-a">Not yet. Audio Joiner plays files one after another; mixing tracks on top of each other, such as a voice over music, is not available yet.</div></div>
