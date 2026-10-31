@@ -182,6 +182,7 @@
                     <li><a href="/volume-booster/">Volume Booster</a></li>
                     <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
                     <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/slowed-reverb/">Slowed + Reverb</a></li>
                     <li><a href="/audio-joiner/">Audio Joiner</a></li>
                     <li><a href="/audio-compressor/">Audio Compressor</a></li>
                     <li class="at-menu-all"><a href="/">All tools</a></li>
@@ -214,7 +215,7 @@
                 </div>
                 <div class="quality" role="radiogroup" aria-label="Quality">
                     <label class="q-opt"><input type="radio" name="quality" value="scnet" checked><b>Fast</b><span>SCNet · 13 MB · a few times the song's length</span></label>
-                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>Cleaner</b><span>SCNet-large · 45 MB · less voice left, about 5 times longer · for computers</span></label>
+                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>Cleaner</b><span>SCNet-large · 45 MB · less voice left, about 3–4 times longer · for computers</span></label>
                     <label class="q-opt" id="qRoformer" hidden><input type="radio" name="quality" value="mel-roformer"><b>Best (test)</b><span>Mel-RoFormer · 464 MB from Hugging Face · graphics card (WebGPU)</span></label>
                 </div>
                 <p class="note" id="note">This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).</p>
@@ -271,9 +272,9 @@
                 <li><strong>Transcribing lyrics</strong> — the vocals alone are easier to follow, and <a href="/voice-to-text/">voice to text</a> can write them down.</li>
             </ul>
             <h3>How good is it?</h3>
-            <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs. If you can still hear the voice, choose <strong>Cleaner</strong>: SCNet-large, the bigger version of the same model, leaves less of it (vocals SDR 11.0 against 9.9 on those songs) and takes about five times as long.</p>
+            <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs. If you can still hear the voice, choose <strong>Cleaner</strong>: SCNet-large, the bigger version of the same model, leaves less of it (vocals SDR 11.0 against 9.9 on those songs) and takes three to four times as long.</p>
             <h3>How long does it take?</h3>
-            <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. Cleaner takes about five times as long as Fast and needs a computer with 8 GB of memory or more. The page shows which part it is working on and about how much time is left.</p>
+            <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. Cleaner takes three to four times as long as Fast and needs a computer with 8 GB of memory or more. The page shows which part it is working on and about how much time is left.</p>
             <h3>Privacy</h3>
             <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB, or 45 MB for Cleaner) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
             <p>Need something else? Cut out a part with the <a href="/audio-trimmer/">audio trimmer</a>, make it louder with the <a href="/volume-booster/">volume booster</a>, or change the format with the <a href="/converter/">audio converter</a>.</p>
@@ -291,7 +292,7 @@
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/" aria-current="page">Vocal Remover</a></nav>
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/" aria-current="page">Vocal Remover</a><a href="/slowed-reverb/">Slowed + Reverb</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>
@@ -306,8 +307,10 @@
         const MODELS = {
             scnet: { name: 'scnet', url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13, device: 'wasm',
                 note: 'This takes a few times longer than the song itself on a computer, and longer still on a phone. The first time, the separation model downloads once (13 MB).' },
-            'scnet-large': { name: 'scnet-large', url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
-                note: 'Cleaner leaves less of the voice in the instrumental, but takes about five times as long as Fast, and needs a computer with 8 GB of memory or more. The first time, its model downloads once (45 MB).' },
+            // step 0.75: each sample in 1.33 segments, not 2 — 1.6× faster for 0.13 dB less (measured on a 20 s song with
+            // known stems: 294 s against 476 s, SDR 20.86 against 20.99); 1.0 was faster still but leaves no crossfade
+            'scnet-large': { name: 'scnet-large', step: 0.75, url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
+                note: 'Cleaner leaves less of the voice in the instrumental, but takes three to four times as long as Fast, and needs a computer with 8 GB of memory or more. The first time, its model downloads once (45 MB).' },
             'mel-roformer': { name: 'mel-roformer', url: 'https://huggingface.co/audiojs/mel-roformer/resolve/c1aba02c00a0bee852d6754fe6ede8164f90a4b3/mel-roformer.fp16.onnx',
                 sha256: 'adcbbb826f12453fbb86652b503242d565a9c81cdef1bca2fe0e54752eba91ef', mb: 464, device: 'webgpu',
                 note: 'A test: the best model for vocals, on the graphics card. The first time it downloads 464 MB from Hugging Face. If it stalls, use Cleaner.' },
@@ -356,7 +359,9 @@
                 const regs = await Promise.all(['/vocal-remover/', '/vendor/neural/'].map((s) => navigator.serviceWorker.getRegistration(s)));
                 if (!regs.every((r) => r && r.active)) return 1;
             } catch (e) { return 1; }
-            return Math.min(4, navigator.hardwareConcurrency || 1);
+            // up to 8: the model's work splits well over threads (1.8× from one thread to two); one core is left for the page
+            const cores = navigator.hardwareConcurrency || 1;
+            return Math.max(1, Math.min(8, cores > 4 ? cores - 1 : cores));
         }
         const START_TIMEOUT = 45000;   // the model not started by then with threads: start it again on one thread
 
@@ -428,7 +433,7 @@
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
-                } else if (MODEL.device === 'webgpu') {   // the test model didn't download or start: the CPU's best instead
+                } else if (MODEL.device === 'webgpu') {   // the test model did not download or start: the best CPU model instead
                     clearTimeout(job.timer);
                     worker.terminate(); worker = null; job = null;
                     useCpuModel();
