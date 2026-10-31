@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Site navigation on every page, English and Chinese: the links bar and the "Tools" menu.
+"""Site navigation on every page, English and Chinese: the links bar, the "Tools" menu and the footer's tool list.
 
     python3 scripts/nav.py           # rewrite the navigation of every page
     python3 scripts/nav.py --check   # exit 1 if a page is out of step (CI)
@@ -22,12 +22,19 @@ TOOLS = [
     ('volume-booster', 'Volume Booster', '音量增强'),
     ('audio-trimmer', 'Audio Trimmer', '音频剪辑'),
     ('audio-speed-changer', 'Speed Changer', '音频变速'),
+    ('slowed-reverb', 'Slowed + Reverb', '慢速混响'),
     ('audio-joiner', 'Audio Joiner', '音频合并'),
     ('audio-compressor', 'Audio Compressor', '音频压缩'),
 ]
 IN_BAR = 4
 ZH_PAGES = {'converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor', 'audio-trimmer',
-            'audio-speed-changer', 'voice-to-text', 'vocal-remover'}   # tools with a Chinese page
+            'audio-speed-changer', 'voice-to-text', 'vocal-remover', 'slowed-reverb'}   # tools with a Chinese page
+# the footer's list of every tool, short names
+FOOTER = [('converter', 'Converter', '转换器'), ('voice-to-text', 'Voice to Text', '语音转文字'), ('text-to-speech', 'Text to Speech', '文字转语音'),
+          ('audio-trimmer', 'Trimmer', '剪辑'), ('audio-speed-changer', 'Speed Changer', '变速'), ('volume-booster', 'Volume Booster', '音量增强'),
+          ('audio-joiner', 'Joiner', '合并'), ('audio-compressor', 'Compressor', '压缩'), ('vocal-remover', 'Vocal Remover', '人声消除'),
+          ('slowed-reverb', 'Slowed + Reverb', '慢速混响')]
+FOOTER_RE = re.compile(r'<nav class="at-footer-tools"[^>]*>.*?</nav>', re.S)
 
 NAV_RE = re.compile(r'<div class="at-nav-links">.*?</div>', re.S)
 MENU_RE = re.compile(r'\s*<details class="at-menu".*?</details>', re.S)
@@ -70,6 +77,12 @@ def menu(lang, current):
             f'\n            </details>')
 
 
+def footer_tools(lang, current):
+    zh = lang == 'zh'
+    links = ''.join(link(t, z if zh else e, lang, current) for t, e, z in FOOTER)
+    return f'<nav class="at-footer-tools" aria-label="{"全部工具" if zh else "All tools"}">{links}</nav>'
+
+
 def page_info(path):
     """(lang, current tool) from the file's place in the site."""
     parts = path.relative_to(ROOT).parts
@@ -89,7 +102,8 @@ def apply(s, lang, current):
     s = s[:m.start()] + bar(lang, current, lang_link.group(0) if lang_link else '') + s[m.end():]
     s = MENU_RE.sub('', s, count=1)
     m = NAV_RE.search(s)
-    return s[:m.end()] + menu(lang, current) + s[m.end():]
+    s = s[:m.end()] + menu(lang, current) + s[m.end():]
+    return FOOTER_RE.sub(lambda _: footer_tools(lang, current), s, count=1)
 
 
 def pages():

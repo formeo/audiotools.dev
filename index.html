@@ -172,10 +172,9 @@
         .section { padding-top: 72px; padding-bottom: 72px; }
         .section h2 { font-stretch: 125%; font-weight: 800; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.02em; }
         .section .sub { margin: 14px 0 40px; font-size: 18px; color: var(--text2); max-width: 640px; }
-        .strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
+        .strips { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
         .strip { display: flex; flex-direction: column; gap: 10px; padding: 24px; min-height: 220px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; transition: background 0.15s; }
-        .strip.wide { grid-column: 1 / -1; min-height: 0; display: grid; grid-template-columns: 200px auto 1fr; align-items: center; column-gap: 24px; }   /* the 9th tool: a full row, so no grid cell is left empty */
-        .strip.wide span { grid-column: 3; grid-row: 1; } .strip.wide small { grid-column: 3; grid-row: 2; } .strip.wide svg { grid-row: span 2; } .strip.wide b { grid-row: span 2; }
+        @media (min-width: 1100px) { .strips { grid-template-columns: repeat(5, 1fr); } }   /* ten tools: two full rows */
         .strip:hover { background: var(--surface2); color: var(--ink); }
         .strip svg { width: 100%; height: 56px; fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
         .strip b { font-stretch: 115%; font-weight: 800; font-size: 21px; }
@@ -188,7 +187,6 @@
             .strip b { font-size: 17px; }
             .strip span { font-size: 13px; line-height: 1.4; }
             .strip small { display: none; }
-            .strip.wide { display: flex; align-items: stretch; }
         }
 
         /* where your file goes */
@@ -261,6 +259,7 @@
                     <li><a href="/volume-booster/">Volume Booster</a></li>
                     <li><a href="/audio-trimmer/">Audio Trimmer</a></li>
                     <li><a href="/audio-speed-changer/">Speed Changer</a></li>
+                    <li><a href="/slowed-reverb/">Slowed + Reverb</a></li>
                     <li><a href="/audio-joiner/">Audio Joiner</a></li>
                     <li><a href="/audio-compressor/">Audio Compressor</a></li>
                     <li class="at-menu-all"><a href="/" aria-current="page">All tools</a></li>
@@ -274,7 +273,7 @@
             <section class="home-hero">
                 <div class="home-hero-text">
                     <h1>Audio tools that never upload your files.</h1>
-                    <p class="lead">Convert, trim, join, boost, slow down, compress, remove vocals, read aloud and transcribe — right here in your browser. Free, with no account and no limits.</p>
+                    <p class="lead">Convert, trim, join, boost, slow down, compress, remove vocals, add reverb, read aloud and transcribe — right here in your browser. Free, with no account and no limits.</p>
                     <ul class="chips"><li>No uploads</li><li>No account</li><li>No usage limits</li><li>Open source, MIT</li></ul>
                 </div>
                 <section class="assistant" id="assistant" aria-label="Find the right tool">
@@ -345,11 +344,17 @@
                         <span>Turn speech into text, privately with Whisper.</span>
                         <small>Files, recordings or live dictation</small>
                     </a>
-                    <a class="strip wide" href="/vocal-remover/">
+                    <a class="strip" href="/vocal-remover/">
                         <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path class="g-acc" stroke-dasharray="2 7" d="M4 16 C20 6 36 6 52 16 S84 26 100 16 S132 6 156 16"/><path class="g-ink" d="M4 38 C12 26 20 26 28 38 S44 50 52 38 S68 26 76 38 S92 50 100 38 S116 26 124 38 S140 50 156 38"/></svg>
                         <b>Remove vocals</b>
                         <span>Split a song into the music and the voice.</span>
                         <small>Karaoke track and acapella</small>
+                    </a>
+                    <a class="strip" href="/slowed-reverb/">
+                        <svg viewBox="0 0 160 56" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path class="g-ink" d="M4 28 C17 6 30 6 44 28 S70 50 84 28"/><path class="g-acc" d="M92 28 C99 16 106 16 112 28 S125 40 132 28"/><path class="g-faint" d="M138 28 C141 22 144 22 147 28 S153 34 156 28"/></svg>
+                        <b>Slowed + reverb</b>
+                        <span>A slower, deeper version in a big room, or sped up.</span>
+                        <small>Hear it as you adjust</small>
                     </a>
                 </div>
             </div>
@@ -444,7 +449,7 @@
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/">Vocal Remover</a></nav>
+            <nav class="at-footer-tools" aria-label="All tools"><a href="/converter/">Converter</a><a href="/voice-to-text/">Voice to Text</a><a href="/text-to-speech/">Text to Speech</a><a href="/audio-trimmer/">Trimmer</a><a href="/audio-speed-changer/">Speed Changer</a><a href="/volume-booster/">Volume Booster</a><a href="/audio-joiner/">Joiner</a><a href="/audio-compressor/">Compressor</a><a href="/vocal-remover/">Vocal Remover</a><a href="/slowed-reverb/">Slowed + Reverb</a></nav>
             <p><a href="/">AudioTools.dev</a> — free, open-source audio tools that run in your browser. Built by <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a>.</p>
             <p class="at-footer-meta"><a href="/about/">About</a><a href="/changelog/">Changelog</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">Support the project on Boosty</a></p>

@@ -182,6 +182,7 @@
                     <li><a href="/zh/volume-booster/">音量增强</a></li>
                     <li><a href="/zh/audio-trimmer/">音频剪辑</a></li>
                     <li><a href="/zh/audio-speed-changer/">音频变速</a></li>
+                    <li><a href="/zh/slowed-reverb/">慢速混响</a></li>
                     <li><a href="/zh/audio-joiner/">音频合并</a></li>
                     <li><a href="/zh/audio-compressor/">音频压缩</a></li>
                     <li class="at-menu-all"><a href="/zh/">全部工具</a></li>
@@ -214,7 +215,7 @@
                 </div>
                 <div class="quality" role="radiogroup" aria-label="质量">
                     <label class="q-opt"><input type="radio" name="quality" value="scnet" checked><b>快速</b><span>SCNet · 13 MB · 用时为歌曲长度的几倍</span></label>
-                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>更干净</b><span>SCNet-large · 45 MB · 残留人声更少，用时约为快速的 5 倍 · 适合电脑</span></label>
+                    <label class="q-opt" id="qLarge"><input type="radio" name="quality" value="scnet-large"><b>更干净</b><span>SCNet-large · 45 MB · 残留人声更少，用时约为快速的 3–4 倍 · 适合电脑</span></label>
                     <label class="q-opt" id="qRoformer" hidden><input type="radio" name="quality" value="mel-roformer"><b>最佳（测试）</b><span>Mel-RoFormer · 从 Hugging Face 下载 464 MB · 显卡（WebGPU）</span></label>
                 </div>
                 <p class="note" id="note">在电脑上所需时间是歌曲时长的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。</p>
@@ -271,9 +272,9 @@
                 <li><strong>扒歌词</strong>——单独的人声更容易听清，还可以用<a href="/zh/voice-to-text/">语音转文字</a>记下来。</li>
             </ul>
             <h3>效果如何？</h3>
-            <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。如果还能听到人声，请选择<strong>更干净</strong>：同一模型的大版本 SCNet-large 残留的人声更少（在这些歌曲上人声 SDR 为 11.0，快速为 9.9），用时约为五倍。</p>
+            <p>对于录音室录音，SCNet 能去掉大部分演唱，通常只在高音、混响尾音或和声处留下轻微痕迹。现场录音、重失真和很老的单声道歌曲分离得不那么干净。人声文件里可能残留一点鼓或吉他。该模型在 MUSDB18 音乐数据集上训练；在其测试歌曲上，人声分离效果优于广泛使用的 Demucs。如果还能听到人声，请选择<strong>更干净</strong>：同一模型的大版本 SCNet-large 残留的人声更少（在这些歌曲上人声 SDR 为 11.0，快速为 9.9），用时约为三到四倍。</p>
             <h3>需要多长时间？</h3>
-            <p>对浏览器来说，分离是很重的工作：在电脑上所需时间是歌曲时长的几倍，在手机上更久，还需要足够的空闲内存，所以长歌曲最好用电脑处理。“更干净”用时约为“快速”的五倍，需要 8 GB 或以上内存的电脑。页面会显示正在处理第几段以及大约还剩多少时间。</p>
+            <p>对浏览器来说，分离是很重的工作：在电脑上所需时间是歌曲时长的几倍，在手机上更久，还需要足够的空闲内存，所以长歌曲最好用电脑处理。“更干净”用时约为“快速”的三到四倍，需要 8 GB 或以上内存的电脑。页面会显示正在处理第几段以及大约还剩多少时间。</p>
             <h3>隐私</h3>
             <p>歌曲在您的浏览器中用 ONNX Runtime Web 解码和分离。页面只下载一次模型文件（13 MB，“更干净”为 45 MB）和运行库；您的音频不会被发送到任何地方。AudioTools.dev 也没有可以接收它的服务器。</p>
             <p>还需要别的？用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出一段，用<a href="/zh/volume-booster/">音量增强</a>提高音量，或用<a href="/zh/converter/">音频转换器</a>转换格式。</p>
@@ -291,7 +292,7 @@
 
     <footer class="at-footer">
         <div class="at-footer-inner">
-            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a><a href="/zh/vocal-remover/" aria-current="page">人声消除</a></nav>
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a><a href="/zh/vocal-remover/" aria-current="page">人声消除</a><a href="/zh/slowed-reverb/">慢速混响</a></nav>
             <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
             <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
             <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
@@ -306,8 +307,10 @@
         const MODELS = {
             scnet: { name: 'scnet', url: '/vendor/neural/scnet.int8.onnx', sha256: '3f049a0e4ce3c08264a6212a50445ba77f02a517cd4c6dc86cbe1ca130176d67', mb: 13, device: 'wasm',
                 note: '在电脑上用时为歌曲长度的几倍，在手机上更久。首次使用时会下载一次分离模型（13 MB）。' },
-            'scnet-large': { name: 'scnet-large', url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
-                note: '“更干净”在伴奏中残留的人声更少，但用时约为“快速”的五倍，需要 8 GB 或以上内存的电脑。首次使用时会下载一次模型（45 MB）。' },
+            // step 0.75: each sample in 1.33 segments, not 2 — 1.6× faster for 0.13 dB less (measured on a 20 s song with
+            // known stems: 294 s against 476 s, SDR 20.86 against 20.99); 1.0 was faster still but leaves no crossfade
+            'scnet-large': { name: 'scnet-large', step: 0.75, url: '/vendor/neural/scnet-large.int8.onnx', sha256: '7ab296cefe396a0ff651c3d08c969b6bb762f0e45ae517c1a3e9199872bb18d0', mb: 45, device: 'wasm',
+                note: '“更干净”在伴奏中残留的人声更少，但用时约为“快速”的三到四倍，需要 8 GB 或以上内存的电脑。首次使用时会下载一次模型（45 MB）。' },
             'mel-roformer': { name: 'mel-roformer', url: 'https://huggingface.co/audiojs/mel-roformer/resolve/c1aba02c00a0bee852d6754fe6ede8164f90a4b3/mel-roformer.fp16.onnx',
                 sha256: 'adcbbb826f12453fbb86652b503242d565a9c81cdef1bca2fe0e54752eba91ef', mb: 464, device: 'webgpu',
                 note: '测试功能：分离人声效果最好的模型，在显卡上运行。首次使用时从 Hugging Face 下载 464 MB。如果卡住，请改用“更干净”。' },
@@ -356,7 +359,9 @@
                 const regs = await Promise.all(['/vocal-remover/', '/vendor/neural/'].map((s) => navigator.serviceWorker.getRegistration(s)));
                 if (!regs.every((r) => r && r.active)) return 1;
             } catch (e) { return 1; }
-            return Math.min(4, navigator.hardwareConcurrency || 1);
+            // up to 8: the model's work splits well over threads (1.8× from one thread to two); one core is left for the page
+            const cores = navigator.hardwareConcurrency || 1;
+            return Math.max(1, Math.min(8, cores > 4 ? cores - 1 : cores));
         }
         const START_TIMEOUT = 45000;   // the model not started by then with threads: start it again on one thread
 
@@ -428,7 +433,7 @@
                 } else if (data.type === 'done') {
                     job = null;
                     showResult(data.instrumental, data.vocals);
-                } else if (MODEL.device === 'webgpu') {   // the test model didn't download or start: the CPU's best instead
+                } else if (MODEL.device === 'webgpu') {   // the test model did not download or start: the best CPU model instead
                     clearTimeout(job.timer);
                     worker.terminate(); worker = null; job = null;
                     useCpuModel();

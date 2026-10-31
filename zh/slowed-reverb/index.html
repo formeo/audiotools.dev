@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#EEF1F0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-62ZJNZFRES"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-62ZJNZFRES');
+    </script>
+
+    <title>慢速混响制作 — 免费在线把歌曲放慢、加混响 | AudioTools.dev</title>
+    <meta name="description" content="在浏览器中把任意歌曲做成慢速混响版、加速版或 Nightcore 版：调节速度和混响，边听边调，下载 MP3 或 WAV。免费，无需上传。">
+    <meta name="keywords" content="慢速混响, 歌曲降速, 歌曲加混响, 慢速版歌曲, 加速版歌曲, 抖音慢速版, 在线混响, nightcore, slowed reverb">
+    <link rel="canonical" href="https://audiotools.dev/zh/slowed-reverb/">
+    <link rel="alternate" hreflang="en" href="https://audiotools.dev/slowed-reverb/">
+    <link rel="alternate" hreflang="zh" href="https://audiotools.dev/zh/slowed-reverb/">
+    <link rel="alternate" hreflang="x-default" href="https://audiotools.dev/slowed-reverb/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AudioTools.dev">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:url" content="https://audiotools.dev/zh/slowed-reverb/">
+    <meta property="og:title" content="慢速混响制作 — 免费在线，无需上传">
+    <meta property="og:description" content="在浏览器中把任意歌曲做成慢速混响版、加速版或 Nightcore 版：调节速度和混响，边听边调，下载 MP3 或 WAV。免费，无需上传。">
+    <meta property="og:image" content="https://audiotools.dev/og/zh-slowed-reverb.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="慢速混响制作">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="慢速混响制作 — 免费在线，无需上传">
+    <meta name="twitter:description" content="在浏览器中把任意歌曲做成慢速混响版、加速版或 Nightcore 版：调节速度和混响，边听边调，下载 MP3 或 WAV。免费，无需上传。">
+    <meta name="twitter:image" content="https://audiotools.dev/og/zh-slowed-reverb.png">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","inLanguage": "zh-CN","name":"慢速混响 — AudioTools.dev","url":"https://audiotools.dev/zh/slowed-reverb/","description":"在浏览器中把任意歌曲做成慢速混响版、加速版或 Nightcore 版：调节速度和混响，边听边调，下载 MP3 或 WAV。免费，无需上传。","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "如何制作慢速混响版歌曲？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "把歌曲拖到本页，点击“慢速混响”预设，边听边调节速度和混响，然后点击“生成文件”并下载 MP3 或 WAV。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "慢速混响一般用多大的速度？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "通常是 0.8× 到 0.9×。预设使用 0.85×，混响 35%，房间 4 秒；慢于 0.75× 时声音开始发浑。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以做加速版或 Nightcore 版吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "可以。选择“加速”（1.25×）或“Nightcore”（1.3× 加一点混响），也可以设置最高 1.5× 的任意速度。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "放慢歌曲会改变音调吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "会，这是有意为之：音调随速度变化，就像唱片一样。如果想放慢但不改变音调，请使用音频变速。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "我的歌曲会被上传吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。一切都在您的浏览器中用 Web Audio API 完成，歌曲绝不离开您的设备。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "可以把结果发到抖音或 B 站吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "文件可以保存和播放。能否公开发布取决于原曲的版权，和任何翻混作品一样。"
+                }
+            }
+        ]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+        .container{max-width:860px;margin:0 auto;padding:0 20px}
+
+        .tool-area{padding:28px;margin-bottom:32px}
+        .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .2s}
+        .drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(35, 70, 245, 0.04)}
+        .drop-zone p{color:var(--text2);font-size:14px;margin-top:8px}
+        input[type="file"]{display:none}
+
+        .file-info{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+        .file-name{font-weight:600;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .file-meta{font-size:12px;color:var(--text2)}
+        .file-remove{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
+
+        .presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+        .preset{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+        .preset:hover{border-color:var(--accent)}
+        .preset.active{background:#EEF1FE;border-color:var(--accent);color:var(--accent)}
+
+        .knob{display:grid;grid-template-columns:110px 1fr 64px;align-items:center;gap:4px 14px;margin:6px 0}
+        .knob label{font-size:14px;font-weight:700;color:var(--ink)}
+        .knob output{font-size:14px;font-weight:700;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}
+        .knob small{grid-column:2 / -1;font-size:12px;color:var(--text2);margin-top:-6px}
+        input[type="range"]{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--surface2);outline:none;margin:12px 0}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--surface)}
+        input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--surface)}
+
+        .listen{display:flex;align-items:center;gap:12px;margin:18px 0 14px;padding:12px 14px;background:var(--bg);border-radius:10px}
+        .play{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);color:#fff;cursor:pointer}
+        .play svg{width:16px;height:16px}
+        .listen input[type="range"]{margin:0}
+        .listen .time{flex:none;font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums;min-width:86px;text-align:right}
+        .duration-line{text-align:center;font-size:13px;color:var(--text2);margin:0 0 18px}
+        .duration-line b{color:var(--text)}
+
+        .btn-row{display:flex;gap:10px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;transition:all .2s;border:none;cursor:pointer}
+        .btn-primary{background:var(--green);color:#fff}
+        .btn-primary:hover{background:var(--green2)}
+        .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--accent)}
+
+        .progress-text{text-align:center;font-size:13px;color:var(--text2);margin-top:12px}
+        .result{margin-top:20px;padding:18px;background:var(--bg);border:1px solid var(--green);border-radius:var(--radius)}
+        .result .result-title{font-size:14px;font-weight:700;margin-bottom:12px}
+        .result audio{width:100%;margin-bottom:14px}
+        .hidden{display:none!important}
+
+        @media(max-width:600px){
+            .btn-row{flex-direction:column}
+            .knob{grid-template-columns:1fr auto}
+            .knob input[type="range"]{grid-column:1 / -1;grid-row:2}
+            .knob small{grid-column:1 / -1;grid-row:3;margin-top:-10px}
+        }
+    </style>
+</head>
+<body>
+    <nav class="at-nav" aria-label="主导航">
+        <div class="at-nav-inner">
+            <a href="/zh/" class="at-logo"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true"><path class="g-acc" d="M1 10h4l2-7 3 14 3-11 3 8 2-4h9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>AudioTools.dev</a>
+            <div class="at-nav-links">
+                <a href="/zh/converter/">转换器</a>
+                <a href="/zh/vocal-remover/">人声消除</a>
+                <a href="/zh/voice-to-text/">语音转文字</a>
+                <a href="/zh/text-to-speech/">文字转语音</a>
+                <a href="/slowed-reverb/" class="at-lang" hreflang="en" lang="en">EN</a>
+            </div>
+            <details class="at-menu" ontoggle="if(this.open){var d=this;setTimeout(function(){document.addEventListener('click',function c(e){if(!d.contains(e.target))d.open=false;document.removeEventListener('click',c)})})}" onkeydown="if(event.key==='Escape'){this.open=false;this.querySelector('summary').focus()}">
+                <summary><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>工具</span></summary>
+                <ul class="at-menu-list" aria-label="全部工具">
+                    <li><a href="/zh/converter/">转换器</a></li>
+                    <li><a href="/zh/vocal-remover/">人声消除</a></li>
+                    <li><a href="/zh/voice-to-text/">语音转文字</a></li>
+                    <li><a href="/zh/text-to-speech/">文字转语音</a></li>
+                    <li><a href="/zh/volume-booster/">音量增强</a></li>
+                    <li><a href="/zh/audio-trimmer/">音频剪辑</a></li>
+                    <li><a href="/zh/audio-speed-changer/">音频变速</a></li>
+                    <li><a href="/zh/slowed-reverb/" aria-current="page">慢速混响</a></li>
+                    <li><a href="/zh/audio-joiner/">音频合并</a></li>
+                    <li><a href="/zh/audio-compressor/">音频压缩</a></li>
+                    <li class="at-menu-all"><a href="/zh/">全部工具</a></li>
+                </ul>
+            </details>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <svg class="hero-glyph" viewBox="0 0 160 56" aria-hidden="true"><path class="g-ink" d="M4 28 C17 6 30 6 44 28 S70 50 84 28"/><path class="g-acc" d="M92 28 C99 16 106 16 112 28 S125 40 132 28"/><path class="g-faint" d="M138 28 C141 22 144 22 147 28 S153 34 156 28"/></svg>
+            <h1>慢速混响</h1>
+            <p>把歌曲做成慢速混响版、加速版或 Nightcore 版——每次调节都能马上听到，文件不上传</p>
+        </section>
+
+        <div class="tool-area">
+            <div class="drop-zone" id="dropZone" onclick="fileInput.click()">
+                <div class="drop-icon"><svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30V8M15 17l9-9 9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30v8a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <p class="no-touch"><strong>将歌曲拖放到此处</strong></p>
+                <button type="button" class="dz-choose">选择歌曲</button>
+                <p>MP3、M4A、WAV、FLAC、OGG 或视频——在您的设备上处理，绝不上传</p>
+            </div>
+            <input type="file" id="fileInput" accept="audio/*,video/*">
+
+            <div id="panel" class="hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-meta" id="fileMeta"></span>
+                    <button class="file-remove" onclick="reset()" title="移除">✕</button>
+                </div>
+
+                <div class="presets" id="presets" role="group" aria-label="预设">
+                    <button type="button" class="preset" data-speed="0.85" data-reverb="35" data-room="4">慢速混响</button>
+                    <button type="button" class="preset" data-speed="0.8" data-reverb="0" data-room="4">慢速</button>
+                    <button type="button" class="preset" data-speed="1.25" data-reverb="0" data-room="4">加速</button>
+                    <button type="button" class="preset" data-speed="1.3" data-reverb="10" data-room="2">Nightcore</button>
+                    <button type="button" class="preset" data-speed="1" data-reverb="40" data-room="5">只加混响</button>
+                    <button type="button" class="preset" data-speed="1" data-reverb="0" data-room="4">原速</button>
+                </div>
+
+                <div class="knob">
+                    <label for="speed">速度</label>
+                    <input type="range" id="speed" min="0.5" max="1.5" step="0.01" value="0.85">
+                    <output id="speedOut" for="speed">0.85×</output>
+                    <small>音调随速度变化，就像唱片放慢或加快。</small>
+                </div>
+                <div class="knob">
+                    <label for="reverb">混响</label>
+                    <input type="range" id="reverb" min="0" max="100" step="1" value="35">
+                    <output id="reverbOut" for="reverb">35%</output>
+                </div>
+                <div class="knob">
+                    <label for="room">房间大小</label>
+                    <input type="range" id="room" min="1" max="8" step="0.5" value="4">
+                    <output id="roomOut" for="room">4 s</output>
+                    <small>房间回声持续的时间。</small>
+                </div>
+
+                <div class="listen">
+                    <button type="button" class="play" id="playBtn" aria-label="播放"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="playIcon" d="M3 1.5v13l11-6.5z" fill="currentColor"/></svg></button>
+                    <input type="range" id="seek" min="0" max="1" step="0.001" value="0" aria-label="播放位置">
+                    <span class="time" id="time">0:00 / 0:00</span>
+                </div>
+                <div class="duration-line">时长：<b id="origDur">0:00</b> → <b id="newDur">0:00</b></div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="renderBtn" onclick="render()" style="flex:1;">生成文件</button>
+                    <button class="btn btn-secondary" onclick="reset()">重置</button>
+                </div>
+                <p class="progress-text hidden" id="progressText" aria-live="polite">正在生成…</p>
+
+                <div class="result hidden" id="result">
+                    <p class="result-title">结果 — <span id="resultInfo"></span></p>
+                    <audio id="resultAudio" controls></audio>
+                    <label class="out-format">格式 <select id="outFormat"><option value="mp3" selected>MP3 · 192 kbps</option><option value="wav">WAV · 无损</option></select></label>
+                    <button class="btn btn-primary" id="downloadBtn" style="width:100%;">下载</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature"><div class="feature-title">边听边调</div><div class="feature-desc">播放时即可调节速度、混响和房间大小。</div></div>
+            <div class="feature"><div class="feature-title">一键预设</div><div class="feature-desc">慢速混响、慢速、加速、Nightcore 和只加混响。</div></div>
+            <div class="feature"><div class="feature-title">MP3 或 WAV</div><div class="feature-desc">完成的版本可下载为 MP3（192 kbps）或无损 WAV。</div></div>
+            <div class="feature"><div class="feature-title">100% 私密</div><div class="feature-desc">全部在浏览器中处理，文件绝不离开您的设备。</div></div>
+        </div>
+
+        <section class="seo-content">
+            <h2>把任意歌曲做成慢速混响版</h2>
+            <p>慢速混响（slowed + reverb）是把歌曲放慢一点、音调变低，再放进大房间里的那种梦幻、空旷的声音。这个工具可以用您设备上的任何歌曲来制作：选一个预设，一边播放一边调节速度和混响，然后下载 MP3 或 WAV。它也能做加速版和 Nightcore 版。一切都在浏览器中用 Web Audio API 完成，歌曲绝不上传。</p>
+            <h3>如何制作慢速混响版</h3>
+            <ol>
+                <li>把歌曲拖到上面的框中，或点击选择：MP3、M4A、WAV、FLAC、OGG 或视频。</li>
+                <li>点击“慢速混响”，然后按播放。</li>
+                <li>调节速度、混响量和房间大小，直到满意为止。</li>
+                <li>点击“生成文件”，下载为 MP3 或 WAV。</li>
+            </ol>
+            <h3>各项设置的作用</h3>
+            <ul>
+                <li><strong>速度</strong>：0.5× 到 1.5×。低于 1× 时歌曲更慢、音调更低；大多数慢速混响版在 0.8× 到 0.9× 之间。</li>
+                <li><strong>混响</strong>：在歌曲本身之外能听到多少房间的声音，从完全没有到以房间声为主。</li>
+                <li><strong>房间大小</strong>：混响持续多久，从 1 秒（小房间）到 8 秒（大厅）。</li>
+            </ul>
+            <h3>加速版和 Nightcore 版</h3>
+            <p>高于 1× 时歌曲更快、音调更高。“加速”使用 1.25×，这是抖音、TikTok 上加速版歌曲常见的速度；“Nightcore”使用 1.3× 并加一点混响。</p>
+            <h3>音调随速度变化</h3>
+            <p>就像唱片或磁带一样，歌曲放慢时音调变低，加快时变高：这正是慢速混响的标志性声音。如果想改变速度但保持原来的音调，请使用<a href="/zh/audio-speed-changer/">音频变速</a>。</p>
+            <h3>隐私</h3>
+            <p>歌曲在您的浏览器中解码、变速并加上混响，房间的回声也在您的设备上计算。不会向任何服务器发送数据，完成的文件直接从页面保存。</p>
+            <p>想先做一个伴奏版？<a href="/zh/vocal-remover/">人声消除</a>可以去掉歌曲里的人声。只想保留最精彩的部分，可以用<a href="/zh/audio-trimmer/">音频剪辑</a>剪出来。</p>
+        </section>
+
+        <section class="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item"><div class="faq-q">如何制作慢速混响版歌曲？</div><div class="faq-a">把歌曲拖到本页，点击“慢速混响”预设，边听边调节速度和混响，然后点击“生成文件”并下载 MP3 或 WAV。</div></div>
+            <div class="faq-item"><div class="faq-q">慢速混响一般用多大的速度？</div><div class="faq-a">通常是 0.8× 到 0.9×。预设使用 0.85×，混响 35%，房间 4 秒；慢于 0.75× 时声音开始发浑。</div></div>
+            <div class="faq-item"><div class="faq-q">可以做加速版或 Nightcore 版吗？</div><div class="faq-a">可以。选择“加速”（1.25×）或“Nightcore”（1.3× 加一点混响），也可以设置最高 1.5× 的任意速度。</div></div>
+            <div class="faq-item"><div class="faq-q">放慢歌曲会改变音调吗？</div><div class="faq-a">会，这是有意为之：音调随速度变化，就像唱片一样。如果想放慢但不改变音调，请使用音频变速。</div></div>
+            <div class="faq-item"><div class="faq-q">我的歌曲会被上传吗？</div><div class="faq-a">不会。一切都在您的浏览器中用 Web Audio API 完成，歌曲绝不离开您的设备。</div></div>
+            <div class="faq-item"><div class="faq-q">可以把结果发到抖音或 B 站吗？</div><div class="faq-a">文件可以保存和播放。能否公开发布取决于原曲的版权，和任何翻混作品一样。</div></div>
+        </section>
+    </div>
+    <footer class="at-footer">
+        <div class="at-footer-inner">
+            <nav class="at-footer-tools" aria-label="全部工具"><a href="/zh/converter/">转换器</a><a href="/zh/voice-to-text/">语音转文字</a><a href="/zh/text-to-speech/">文字转语音</a><a href="/zh/audio-trimmer/">剪辑</a><a href="/zh/audio-speed-changer/">变速</a><a href="/zh/volume-booster/">音量增强</a><a href="/zh/audio-joiner/">合并</a><a href="/zh/audio-compressor/">压缩</a><a href="/zh/vocal-remover/">人声消除</a><a href="/zh/slowed-reverb/" aria-current="page">慢速混响</a></nav>
+            <p><a href="/zh/">AudioTools.dev</a> — 在浏览器中运行的免费开源音频工具。由 <a href="https://github.com/formeo" rel="noopener">Roman Gordienko</a> 开发。</p>
+            <p class="at-footer-meta"><a href="/about/">关于</a><a href="/changelog/">更新日志</a><a href="/privacy/">隐私政策</a><a href="/terms/">使用条款</a><a href="https://github.com/formeo" rel="noopener">GitHub</a><a href="https://www.devtoolkit.site/" rel="noopener">DevToolKit.site</a></p>
+            <p><a class="at-support" href="https://boosty.to/formeo" rel="noopener">在 Boosty 上支持本项目</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Slowed + reverb: the song played at another rate (pitch follows, as on a record) through a reverb whose
+        // impulse response is made here (stereo noise with an exponential, darkening decay). The same graph plays live
+        // for listening and renders in an OfflineAudioContext for the file.
+        const $ = (id) => document.getElementById(id);
+        const dropZone = $('dropZone'), fileInput = $('fileInput'), panel = $('panel');
+        const speedEl = $('speed'), reverbEl = $('reverb'), roomEl = $('room'), seekEl = $('seek');
+        let ctx = null, buffer = null, fileBase = 'song', lastUrl = null;
+        let live = null;   // { src, nodes, startedAt, offset } while playing
+        let position = 0;  // seconds of the song (original time) where playing goes on from
+        const irCache = {};
+
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+        const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+        const settings = () => ({ speed: +speedEl.value, wet: +reverbEl.value / 100, room: +roomEl.value });
+
+        async function handleFile(file) {
+            if (!file) return;
+            ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+            readingFile(dropZone, true);
+            try {
+                buffer = await ctx.decodeAudioData(await file.arrayBuffer());
+            } catch (e) {
+                alert('无法解码此文件，请换一种格式（MP3、WAV、FLAC、OGG、M4A）。');
+                return;
+            } finally {
+                readingFile(dropZone, false);
+            }
+            fileBase = (file.name || 'song').replace(/\.[^.]+$/, '');
+            $('fileName').textContent = file.name;
+            $('fileMeta').textContent = fmt(buffer.duration) + ' · ' + (file.size / 1048576).toFixed(1) + ' MB';
+            $('origDur').textContent = fmt(buffer.duration);
+            position = 0;
+            dropZone.classList.add('hidden');
+            panel.classList.remove('hidden');
+            $('result').classList.add('hidden');
+            applyPreset(document.querySelector('.preset'));
+            showTime();
+        }
+
+        // ---------- reverb: a made-up room ----------
+        // Noise in each channel (its own seed, for width), 60 dB down after `seconds`; high frequencies die out
+        // faster than low ones (a one-pole low-pass that closes along the tail), after a 20 ms pre-delay.
+        function impulse(rate, seconds) {
+            const key = rate + '/' + seconds;
+            if (irCache[key]) return irCache[key];
+            const pre = Math.round(rate * 0.02), len = pre + Math.round(rate * seconds);
+            const ir = new AudioBuffer({ numberOfChannels: 2, length: len, sampleRate: rate });
+            for (let c = 0; c < 2; c++) {
+                const d = ir.getChannelData(c);
+                let seed = 1234567 + c * 7654321, lp = 0;
+                for (let i = pre; i < len; i++) {
+                    seed = (seed * 1664525 + 1013904223) >>> 0;   // a fixed sequence: the same room every time
+                    const t = (i - pre) / rate, noise = seed / 2147483648 - 1;
+                    const a = 0.85 - 0.75 * Math.min(1, t / seconds);
+                    lp += a * (noise - lp);
+                    d[i] = lp * Math.exp(-6.9 * t / seconds);
+                }
+            }
+            return (irCache[key] = ir);
+        }
+
+        // The graph, the same live and offline: source → dry ─┬→ out
+        //                                              └→ reverb → wet ┘
+        function graph(c, s) {
+            const src = c.createBufferSource();
+            src.buffer = buffer;
+            src.playbackRate.value = s.speed;
+            const dry = c.createGain(), wet = c.createGain(), verb = c.createConvolver(), out = c.createGain();
+            verb.buffer = impulse(c.sampleRate, s.room);
+            mix(dry, wet, s.wet, c, true);
+            src.connect(dry).connect(out);
+            src.connect(verb).connect(wet).connect(out);
+            out.gain.value = 0.9;
+            out.connect(c.destination);
+            return { src, dry, wet, verb };
+        }
+        // equal-power: more room means a little less of the song itself
+        function mix(dry, wet, amount, c, now) {
+            const d = Math.cos(amount * Math.PI / 4), w = Math.sin(amount * Math.PI / 2) * 0.9;
+            if (now) { dry.gain.value = d; wet.gain.value = w; return; }
+            dry.gain.setTargetAtTime(d, c.currentTime, 0.03);
+            wet.gain.setTargetAtTime(w, c.currentTime, 0.03);
+        }
+
+        // ---------- listening ----------
+        const songPos = () => (live ? Math.min(buffer.duration, live.offset + (ctx.currentTime - live.startedAt) * live.speed) : position);
+        function play() {
+            if (!buffer) return;
+            ctx.resume();
+            if (position >= buffer.duration - 0.05) position = 0;
+            const s = settings();
+            const g = graph(ctx, s);
+            live = { ...g, startedAt: ctx.currentTime, offset: position, speed: s.speed };
+            g.src.onended = () => { if (live && live.src === g.src) { position = songPos(); stop(); } };
+            g.src.start(0, position);
+            $('playIcon').setAttribute('d', 'M3 1.5h3.5v13H3zM9.5 1.5H13v13H9.5z');
+            $('playBtn').setAttribute('aria-label', '暂停');
+            requestAnimationFrame(tick);
+        }
+        function stop() {
+            if (live) {
+                position = songPos();
+                live.src.onended = null;
+                try { live.src.stop(); } catch (e) { /* already ended */ }
+                live = null;
+            }
+            $('playIcon').setAttribute('d', 'M3 1.5v13l11-6.5z');
+            $('playBtn').setAttribute('aria-label', '播放');
+            showTime();
+        }
+        function tick() {
+            if (!live) return;
+            showTime();
+            requestAnimationFrame(tick);
+        }
+        function showTime() {
+            if (!buffer) return;
+            const s = settings(), p = songPos();
+            seekEl.value = p / buffer.duration;
+            $('time').textContent = fmt(p / s.speed) + ' / ' + fmt(buffer.duration / s.speed);   // as it will sound
+        }
+        $('playBtn').addEventListener('click', () => (live ? stop() : play()));
+        seekEl.addEventListener('input', () => {
+            const was = !!live;
+            if (was) stop();
+            position = +seekEl.value * buffer.duration;
+            if (was) play(); else showTime();
+        });
+
+        // Changes reach the song while it plays
+        function onChange() {
+            const s = settings();
+            $('speedOut').textContent = s.speed.toFixed(2) + '×';
+            $('reverbOut').textContent = Math.round(s.wet * 100) + '%';
+            $('roomOut').textContent = s.room + ' s';
+            if (buffer) $('newDur').textContent = fmt(buffer.duration / s.speed);
+            document.querySelectorAll('.preset').forEach((b) => b.classList.toggle('active',
+                +b.dataset.speed === s.speed && +b.dataset.reverb === Math.round(s.wet * 100) && +b.dataset.room === s.room));
+            if (!live) return showTime();
+            if (s.speed !== live.speed) {   // keep the place in the song when the rate changes
+                live.offset = songPos(); live.startedAt = ctx.currentTime; live.speed = s.speed;
+                live.src.playbackRate.setTargetAtTime(s.speed, ctx.currentTime, 0.02);
+            }
+            mix(live.dry, live.wet, s.wet, ctx, false);
+            if (live.verb.buffer.duration !== impulse(ctx.sampleRate, s.room).duration) live.verb.buffer = impulse(ctx.sampleRate, s.room);
+        }
+        [speedEl, reverbEl, roomEl].forEach((el) => el.addEventListener('input', onChange));
+        function applyPreset(b) {
+            speedEl.value = b.dataset.speed; reverbEl.value = b.dataset.reverb; roomEl.value = b.dataset.room;
+            onChange();
+        }
+        $('presets').addEventListener('click', (e) => { const b = e.target.closest('.preset'); if (b) applyPreset(b); });
+
+        // ---------- the file ----------
+        async function render() {
+            if (!buffer) return;
+            stop();
+            const s = settings(), rate = buffer.sampleRate;
+            const tail = s.wet > 0 ? s.room : 0;
+            $('renderBtn').disabled = true;
+            $('result').classList.add('hidden');
+            $('progressText').classList.remove('hidden');
+            const off = new OfflineAudioContext(2, Math.ceil((buffer.duration / s.speed + tail) * rate), rate);
+            graph(off, s).src.start(0);
+            const out = await off.startRendering();
+            // no clipping: a peak over −1 dBFS is brought down to it
+            let peak = 0;
+            for (let c = 0; c < out.numberOfChannels; c++) { const d = out.getChannelData(c); for (let i = 0; i < d.length; i++) { const v = Math.abs(d[i]); if (v > peak) peak = v; } }
+            if (peak > 0.891) { const k = 0.891 / peak; for (let c = 0; c < out.numberOfChannels; c++) { const d = out.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] *= k; } }
+
+            const wav = new Blob([encodeWAV(out)], { type: 'audio/wav' });
+            if (lastUrl) URL.revokeObjectURL(lastUrl);
+            lastUrl = URL.createObjectURL(wav);
+            $('resultAudio').src = lastUrl;
+            const what = (s.speed < 1 ? '慢速' : s.speed > 1 ? '加速' : '原速') + (s.wet > 0 ? ' + 混响' : '');
+            $('resultInfo').textContent = what + ' · ' + s.speed.toFixed(2) + '× · ' + fmt(out.duration);
+            const name = fileBase + '_' + (s.speed < 1 ? 'slowed' : s.speed > 1 ? 'sped_up' : 'original') + (s.wet > 0 ? '_reverb' : '');
+            $('downloadBtn').onclick = () => downloadAudio(out, wav, $('outFormat'), name, $('downloadBtn'));
+            $('progressText').classList.add('hidden');
+            $('result').classList.remove('hidden');
+            $('renderBtn').disabled = false;
+            toolSuccess('slowed-reverb', $('downloadBtn'));
+            offerNext('slowed-reverb', $('downloadBtn'), new File([wav], name + '.wav', { type: 'audio/wav' }), ['audio-trimmer', 'converter']);
+        }
+
+        function encodeWAV(b) {
+            const ch = b.numberOfChannels, sr = b.sampleRate, len = b.length;
+            const ab = new ArrayBuffer(44 + len * ch * 2), view = new DataView(ab);
+            const s = (o, str) => { for (let i = 0; i < str.length; i++) view.setUint8(o + i, str.charCodeAt(i)); };
+            s(0, 'RIFF'); view.setUint32(4, 36 + len * ch * 2, true); s(8, 'WAVE'); s(12, 'fmt ');
+            view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, ch, true);
+            view.setUint32(24, sr, true); view.setUint32(28, sr * ch * 2, true); view.setUint16(32, ch * 2, true);
+            view.setUint16(34, 16, true); s(36, 'data'); view.setUint32(40, len * ch * 2, true);
+            const data = Array.from({ length: ch }, (_, c) => b.getChannelData(c));
+            let o = 44;
+            for (let i = 0; i < len; i++) for (let c = 0; c < ch; c++) {
+                const v = Math.max(-1, Math.min(1, data[c][i]));
+                view.setInt16(o, v < 0 ? v * 0x8000 : v * 0x7FFF, true); o += 2;
+            }
+            return ab;
+        }
+
+        function reset() {
+            stop();
+            buffer = null; position = 0;
+            if (lastUrl) { URL.revokeObjectURL(lastUrl); lastUrl = null; }
+            $('resultAudio').pause(); $('resultAudio').removeAttribute('src');
+            fileInput.value = '';
+            panel.classList.add('hidden');
+            $('result').classList.add('hidden');
+            $('progressText').classList.add('hidden');
+            dropZone.classList.remove('hidden');
+            const next = $('next-actions'); if (next) next.remove();
+        }
+    </script>
+    <script src="/audio-export.js"></script>
+    <script src="/support.js"></script>
+    <script src="/assistant.js"></script>
+</body>
+</html>

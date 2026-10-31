@@ -153,7 +153,7 @@
 
     // ---------- tool pages: "continue with this file" after a result ----------
     const ZH_PAGES = ['converter', 'volume-booster', 'text-to-speech', 'audio-joiner', 'audio-compressor',
-        'audio-trimmer', 'audio-speed-changer', 'voice-to-text', 'vocal-remover'];   // tools with a Chinese page
+        'audio-trimmer', 'audio-speed-changer', 'voice-to-text', 'vocal-remover', 'slowed-reverb'];   // tools with a Chinese page
     const NEXT = [['audio-compressor', 'Compress', '压缩'], ['audio-trimmer', 'Trim', '剪辑'], ['volume-booster', 'Boost volume', '增强音量'],
                   ['converter', 'Convert format', '转换格式'], ['audio-speed-changer', 'Change speed', '变速'], ['audio-joiner', 'Join with more', '合并']];
     // first: tools to offer before the usual order (e.g. the speed changer after the vocal remover)
@@ -220,6 +220,9 @@
         'audio-speed-changer': { url: ZH ? '/zh/audio-speed-changer/' : '/audio-speed-changer/', name: T('Speed Changer', '音频变速'),
             kw: ['speed', 'slow down', 'speed up', 'faster', 'slower', 'tempo',
                  'скорост', 'замедл', 'ускор', 'темп', '速度', '变速', '放慢', '加快', '加速', '减速'] },
+        'slowed-reverb': { url: ZH ? '/zh/slowed-reverb/' : '/slowed-reverb/', name: T('Slowed + Reverb', '慢速混响'),
+            kw: ['slowed', 'reverb', 'nightcore', 'sped up', 'echo', 'tiktok', 'lofi', 'lo-fi', 'dreamy',
+                 'реверб', 'эхо', 'замедленн', 'найткор', 'тикток', '混响', '慢速', '降速', '回声', '抖音', '加速版'] },
         'voice-to-text': { url: ZH ? '/zh/voice-to-text/' : '/voice-to-text/', name: T('Voice to Text', '语音转文字'),
             kw: ['transcri', 'to text', 'subtitle', 'speech to text', 'dictat', 'voice message', 'lecture', 'interview',
                  'расшифр', 'в текст', 'субтитр', 'голосов', 'лекци', 'диктов', '转文字', '转录', '字幕', '语音转', '听写'] },
@@ -301,6 +304,7 @@
         'voice-to-text': T('Turn speech into text — Private mode runs Whisper on your device', '语音转文字——隐私模式在本机运行 Whisper'),
         'text-to-speech': T('Read text aloud in 50+ languages', '用 50 多种语言朗读文字'),
         'vocal-remover': T('Split a song into the instrumental (karaoke) and the vocals', '把歌曲分成伴奏（卡拉 OK）和人声'),
+        'slowed-reverb': T('Make a slowed + reverb or sped-up version of a song', '制作歌曲的慢速混响版或加速版'),
     };
 
     // --- file: look at format, size, length and loudness, then suggest

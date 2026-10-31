@@ -39,7 +39,7 @@ self.onmessage = async ({ data: { channels, sampleRate, model, threads } }) => {
             model: model.name,
             targets: ['vocals'],
             // SCNet: each sample heard in two segments, not four: half the time, 0.07–0.17 dB less (package README)
-            ...(model.name.startsWith('scnet') && { step: 0.5 }),
+            ...(model.name.startsWith('scnet') && { step: model.step || 0.5 }),
             session: async () => {
                 const s = await load(b, gpu ? { backend: 'webgpu', wasmPaths: '/vendor/neural/' } : {
                     backend: 'wasm', wasmPaths: '/vendor/neural/',
