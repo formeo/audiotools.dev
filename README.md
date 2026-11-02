@@ -59,7 +59,7 @@ audiotools.dev/
 
 ## SEO maintenance
 
-- `python3 scripts/seo_sync.py` rewrites the FAQPage JSON-LD on every page from the FAQ that is visible on that page, and refreshes `<lastmod>` in `sitemap.xml` from git. Run it after editing a FAQ or a page (needs `beautifulsoup4`).
+- `python3 scripts/seo_sync.py` rewrites the FAQPage JSON-LD on every page from the FAQ that is visible on that page, and refreshes `<lastmod>` in `sitemap.xml` and `dateModified` in WebApplication markup from git. Run it after editing a FAQ or a page (needs `beautifulsoup4`).
 - CI (`.github/workflows/seo-check.yml`) runs `scripts/seo_sync.py --check` and fails if the markup and the visible FAQ drift apart.
 - `python3 scripts/build_zh.py` rebuilds the Chinese tool pages (all tools except the converter, which is maintained by hand) from the English ones with the translation tables in the script, and keeps hreflang, the 中文/EN switch and the Chinese navigation in step. It stops if an English string it translates has changed, and runs `scripts/seo_sync.py` at the end.
 - `python3 scripts/nav.py` writes the navigation of every page, English and Chinese: the bar with the main tools, the "Tools" menu with all of them and the footer's list of tools (on phones only the logo, the language switch and the menu are left). `build_zh.py` and `build_landing.py` run it; CI runs `nav.py --check`. To add a tool, add it to `TOOLS` and `FOOTER` there.
