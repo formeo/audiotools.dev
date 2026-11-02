@@ -1,0 +1,46 @@
+name: SEO sync
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+
+      - name: Run seo_sync
+        run: python3 scripts/seo_sync.py
+
+      - name: Open PR with updates
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet; then
+            echo "No changes — everything already in sync."
+            exit 0
+          fi
+          branch="seo-sync/$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add -A
+          git commit -m "chore(seo): sync dateModified, schema fields and sitemap lastmod"
+          git push origin "$branch"
+          gh pr create \
+            --title "chore(seo): sync dateModified, schema fields and sitemap" \
+            --body "Automated run of \`scripts/seo_sync.py\`: refreshes \`dateModified\` in WebApplication JSON-LD, backfills missing schema fields (\`author\`, \`isPartOf\`) and updates \`<lastmod>\` in \`sitemap.xml\` from git history." \
+            --head "$branch"
