@@ -14,8 +14,8 @@
       gtag('config', 'G-62ZJNZFRES');
     </script>
 
-    <title>Vocal Remover — Free Karaoke &amp; Instrumental Maker | AudioTools.dev</title>
-    <meta name="description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <title>Vocal Remover — Free Karaoke &amp; Acapella Maker | AudioTools.dev</title>
+    <meta name="description" content="Remove vocals from any song: make a karaoke instrumental or extract the acapella. Free, unlimited, no upload, no account — the song never leaves your device.">
     <meta name="keywords" content="vocal remover, remove vocals from song, karaoke maker, instrumental maker, acapella extractor, isolate vocals, backing track, vocal remover online free, no upload">
     <link rel="canonical" href="https://audiotools.dev/vocal-remover/">
     <link rel="alternate" hreflang="en" href="https://audiotools.dev/vocal-remover/">
@@ -25,22 +25,22 @@
     <meta property="og:site_name" content="AudioTools.dev">
     <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://audiotools.dev/vocal-remover/">
-    <meta property="og:title" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
-    <meta property="og:description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <meta property="og:title" content="Vocal Remover — Karaoke &amp; Acapella Maker, No Upload">
+    <meta property="og:description" content="Remove vocals from any song: make a karaoke instrumental or extract the acapella. Free, unlimited, no upload, no account — the song never leaves your device.">
     <meta property="og:image" content="https://audiotools.dev/og/vocal-remover.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
+    <meta property="og:image:alt" content="Vocal Remover — Karaoke &amp; Acapella Maker, No Upload">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vocal Remover — Karaoke and Instrumental Maker, No Upload">
-    <meta name="twitter:description" content="Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.">
+    <meta name="twitter:title" content="Vocal Remover — Karaoke &amp; Acapella Maker, No Upload">
+    <meta name="twitter:description" content="Remove vocals from any song: make a karaoke instrumental or extract the acapella. Free, unlimited, no upload, no account — the song never leaves your device.">
     <meta name="twitter:image" content="https://audiotools.dev/og/vocal-remover.png">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"WebApplication","name":"Vocal Remover — AudioTools.dev","url":"https://audiotools.dev/vocal-remover/","description":"Remove vocals from a song in your browser: get the instrumental (karaoke track) and the vocals as separate files. Free, no upload, open-source model.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Roman Gordienko","url":"https://github.com/formeo"},"isPartOf":{"@type":"WebSite","name":"AudioTools.dev","url":"https://audiotools.dev"},"dateModified":"2026-10-31"}
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Vocal Remover — AudioTools.dev","url":"https://audiotools.dev/vocal-remover/","description":"Remove vocals from any song: make a karaoke instrumental or extract the acapella. Free, unlimited, no upload, no account — the song never leaves your device.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Roman Gordienko","url":"https://github.com/formeo"},"isPartOf":{"@type":"WebSite","name":"AudioTools.dev","url":"https://audiotools.dev"},"dateModified":"2026-10-31"}
     </script>
     <script type="application/ld+json">
     {
@@ -85,6 +85,14 @@
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings. Cleaner, on a computer, leaves less of the voice."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is this a free alternative to Moises or LALAL.AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, for vocal removal. You get the instrumental and the acapella with no account, no song limit and no upload — the separation runs on your device. Paid services add more stem types and mobile apps; this page does vocals and music only."
                 }
             }
         ]
@@ -149,6 +157,9 @@
         .lane audio{flex:1;min-width:0;height:40px}
         .lane .btn{padding:10px 18px}
         .hidden{display:none!important}
+        .compare { border-collapse: collapse; width: 100%; font-size: 14px; margin: 12px 0 20px; }
+        .compare th, .compare td { border: 1.5px solid var(--ink); padding: 8px 12px; text-align: left; }
+        .compare th { background: var(--surface2); }
 
         @media(max-width:600px){
             .tool-area{padding:20px}
@@ -275,6 +286,17 @@
             <p>On studio recordings SCNet removes most of the singing, usually leaving faint traces on loud notes, reverb tails or backing vocals. Live recordings, heavy distortion and very old mono songs separate less cleanly. The vocals file can keep a little of the drums or guitar. The model was trained on the MUSDB18 music collection; on its test songs it separates vocals better than the widely used Demucs. If you can still hear the voice, choose <strong>Cleaner</strong>: SCNet-large, the bigger version of the same model, leaves less of it (vocals SDR 11.0 against 9.9 on those songs) and takes three to four times as long.</p>
             <h3>How long does it take?</h3>
             <p>Separation is heavy work for a browser: on a computer it takes a few times longer than the song itself, on a phone longer still, and it needs free memory, so a computer is the better choice for long songs. Cleaner takes three to four times as long as Fast and needs a computer with 8 GB of memory or more. The page shows which part it is working on and about how much time is left.</p>
+            <h3>Vocal Remover, Moises or LALAL.AI?</h3>
+            <p>Online vocal removers do the same job, but they work differently. Here is how this one compares:</p>
+            <table class="compare">
+                <tr><th></th><th>AudioTools.dev</th><th>Moises, LALAL.AI and similar</th></tr>
+                <tr><td>Your song</td><td>Never leaves your device</td><td>Uploaded to their servers</td></tr>
+                <tr><td>Account</td><td>Not needed</td><td>Required</td></tr>
+                <tr><td>Free use</td><td>Unlimited songs</td><td>A few songs, then a subscription</td></tr>
+                <tr><td>Waiting</td><td>Starts immediately, runs on your device</td><td>Upload and queue first</td></tr>
+                <tr><td>Source code and model</td><td>Open source (MIT)</td><td>Closed</td></tr>
+            </table>
+            <p>If you want the stems without sending your music to anyone, this page is the free alternative.</p>
             <h3>Privacy</h3>
             <p>The song is decoded and separated in your browser with ONNX Runtime Web. The page downloads the model file (13 MB, or 45 MB for Cleaner) and the runtime once; your audio is never sent anywhere. AudioTools.dev has no server that could receive it.</p>
             <p>Need something else? Cut out a part with the <a href="/audio-trimmer/">audio trimmer</a>, make it louder with the <a href="/volume-booster/">volume booster</a>, or change the format with the <a href="/converter/">audio converter</a>.</p>
@@ -287,6 +309,7 @@
             <div class="faq-item"><div class="faq-q">Can I get the vocals only (acapella)?</div><div class="faq-a">Yes. You get two files: the instrumental and the vocals. Download either or both.</div></div>
             <div class="faq-item"><div class="faq-q">Does it work on a phone?</div><div class="faq-a">Yes, in current Chrome and Safari, but it is several times slower than on a computer and needs free memory. For long songs, use a computer.</div></div>
             <div class="faq-item"><div class="faq-q">Why can I still hear some of the voice?</div><div class="faq-a">A separation model estimates the voice; it cannot know it exactly. Reverb, backing vocals and loud notes can leave faint traces, especially in live or heavily processed recordings. Cleaner, on a computer, leaves less of the voice.</div></div>
+            <div class="faq-item"><div class="faq-q">Is this a free alternative to Moises or LALAL.AI?</div><div class="faq-a">Yes, for vocal removal. You get the instrumental and the acapella with no account, no song limit and no upload — the separation runs on your device. Paid services add more stem types and mobile apps; this page does vocals and music only.</div></div>
         </section>
     </div>
 
