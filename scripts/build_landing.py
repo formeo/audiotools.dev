@@ -85,10 +85,10 @@ PAGES = {
 }},
 
 'video-to-mp3': {'format': 'mp3', 'en': {
-    'title': 'Video to MP3 Converter — Extract Audio Free | AudioTools.dev',
-    'description': 'Extract the audio from MP4, MOV, MKV or WebM videos and save it as MP3, M4A or WAV. Runs in your browser, nothing is uploaded. Free, no sign-up.',
+    'title': 'Video to MP3 Converter — Extract Audio Online | AudioTools.dev',
+    'description': 'Extract audio from video online: MP4, MOV, MKV or WebM to MP3, M4A or WAV. Free, no sign-up, nothing is uploaded — the conversion runs in your browser.',
     'keywords': 'video to mp3, extract audio from video, video to audio converter, mov to mp3, mkv to mp3, webm to mp3, convert video to mp3 free',
-    'og_title': 'Video to MP3 — Extract Audio Free, No Upload',
+    'og_title': 'Video to MP3 — Extract Audio Online, No Upload',
     'app': 'Video to MP3 Converter',
     'h1': 'Video to MP3',
     'lead': 'Pull the audio out of any video — MP4, MOV, MKV, WebM — and save it as MP3. Free, nothing is uploaded.',
