@@ -29,6 +29,7 @@ audiotools.dev/
 ├── <tool>/index.html       ← One folder per tool; tool-specific styles inline
 ├── style.css               ← Shared look: tokens, nav, footer, tool header and panel, sections
 ├── assistant.js            ← Home helper + "continue with this file" hand-off between tools
+├── assistant-model.js      ← Generated tiny fallback intent model, loaded only after a rule-based no-match
 ├── media.js                ← Shared decoding/encoding on Mediabunny: convertFile (streams, video in), encodeBuffer
 ├── mpeg-ps.js              ← MPEG program streams (.mpg/.mpeg/.vob): takes the MPEG audio out, decodes MP1/MP2 with mpg123
 ├── vendor/mediabunny/      ← Self-hosted Mediabunny + MP3/FLAC/AAC encoder bundles (MPL-2.0)
@@ -51,6 +52,12 @@ audiotools.dev/
 - **Converter**: [Mediabunny](https://mediabunny.dev) reads audio and video containers in pieces and decodes with WebCodecs; output MP3, M4A (AAC), WAV or FLAC. Browsers without WebCodecs fall back to Web Audio decoding. MPEG program streams, which neither opens, are demuxed by `mpeg-ps.js` (file read in 4 MB pieces); MP3 sound is decoded by the browser, MP1/MP2 by mpg123 in WebAssembly; AC-3 is reported as not supported.
 - **MP3 / FLAC / AAC encoding**: Mediabunny encoder extensions (LAME and FLAC in WebAssembly, in a worker; AAC only where the browser has no encoder)
 - The other tools save MP3 or WAV. Nothing is uploaded; there is no server.
+
+### Home assistant
+
+- Keyword rules and parsed settings run first. Vocal Remover suggestions include fixed, curated advice about Fast, Cleaner, the two outputs and possible remnants; no text is generated.
+- An audio-related rule-based no-match lazily loads `assistant-model.js` (~90 KB). This is a small int8 character-n-gram MLP trained only on curated EN/RU/ZH examples, with an `unsupported` class. It runs locally without an ML runtime, external inference API or model download from a third party. Low-confidence and unrelated requests stay a no-match, and stale asynchronous results are discarded. Raw queries are never added to analytics.
+- Rebuild with `python3 scripts/train_assistant_model.py` (needs `numpy` and `scikit-learn`). Run `node scripts/test_assistant.js` for behavior checks. For the held-out evaluation, run `python3 scripts/train_assistant_model.py --export-cases /tmp/assistant-cases.json` and then `node scripts/test_assistant.js /tmp/assistant-cases.json`.
 
 ### Voice to Text
 

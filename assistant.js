@@ -241,6 +241,8 @@
     let fileInfo = null;         // { duration, text, items } of the dropped file
     const used = {};
     let noMatchTimer;
+    let semanticPromise;
+    let queryVersion = 0;
 
     function render(items, method, message) {
         clearTimeout(noMatchTimer);
@@ -284,15 +286,71 @@
             .sort((a, b) => b[1] - a[1])
             .slice(0, 3);
         if (!scored.length) {
-            render([], method, T('Not sure what you need — try other words, or pick a tool below.',
-                                 '没太明白您的需求——换个说法试试，或直接在下方选择工具。'));
-            // counted once per visit, after typing settles; the text itself is never sent
-            noMatchTimer = setTimeout(() => { if (!used.nomatch) { used.nomatch = true; track('assistant_nomatch', { method }); } }, 1500);
+            semanticSuggest(q, method, message, queryVersion);
             return;
         }
         render(scored.map(([tool]) => (found[tool]
             ? { tool, settings: found[tool], why: describe(tool, found[tool], fileInfo && fileInfo.duration) }
-            : { tool, why: WHY[tool] })), method, message);
+            : { tool, why: tool === 'vocal-remover' ? VOCAL_ADVICE : WHY[tool] })), method, message);
+    }
+
+    const VOCAL_ADVICE = T(
+        'Start with Fast: you get the instrumental and vocals separately. Still hear singing? Try Cleaner on a computer. Reverb or backing vocals may remain; long songs are easier on a computer.',
+        '先用 Fast：会分别得到伴奏和人声。仍有歌声？可在电脑上尝试 Cleaner。混响或伴唱可能残留；长歌曲也更适合在电脑上处理。'
+    );
+    // Do not load a model for unrelated chit-chat. Audio-specific unsupported tasks
+    // still reach the model, whose "unsupported" class can reject them.
+    const AUDIO_DOMAIN = /audio|song|music|track|record|sound|voice|listen|hear|play|podcast|lecture|interview|narrat|speech|speaker|discussion|conversation|dialogue|article|document|essay|paragraph|story|page|sing|chorus|verse|band|instrument|melody|memo|clip|file|mp3|wav|аудио|песн|музык|трек|запис|звук|голос|слуша|слыш|воспроиз|подкаст|лекци|интервью|диктор|речь|спикер|обсужден|бесед|разговор|диалог|стать|документ|сочинен|абзац|рассказ|страниц|петь|пение|пою|куплет|припев|групп|инструмент|мелод|заметк|файл|клип|音频|音乐|歌曲|录音|声音|语音|听|播放|播客|讲座|采访|旁白|讲话|说话|讨论|对话|文章|文档|段落|故事|页面|唱|主歌|副歌|乐队|乐器|旋律|文件|影片|视频/;
+
+    function showNoMatch(method, message) {
+        render([], method, [message, T('Not sure what you need — try other words, or pick a tool below.',
+                                       '没太明白您的需求——换个说法试试，或直接在下方选择工具。')].filter(Boolean).join(' · '));
+        // counted once per visit, after typing settles; the text itself is never sent
+        noMatchTimer = setTimeout(() => { if (!used.nomatch) { used.nomatch = true; track('assistant_nomatch', { method }); } }, 1500);
+    }
+
+    function loadSemantic() {
+        if (semanticPromise) return semanticPromise;
+        semanticPromise = new Promise((resolve) => {
+            const script = document.createElement('script');
+            let settled = false;
+            const finish = (classify) => {
+                if (settled) return;
+                settled = true;
+                clearTimeout(timeout);
+                resolve(classify);
+            };
+            script.onload = () => finish(typeof window.assistantClassify === 'function' ? window.assistantClassify : null);
+            script.onerror = () => finish(null);
+            const timeout = setTimeout(() => finish(null), 5000);
+            script.src = '/assistant-model.js';
+            script.async = true;
+            document.head.appendChild(script);
+        });
+        return semanticPromise;
+    }
+
+    async function semanticSuggest(q, method, message, version) {
+        if (!AUDIO_DOMAIN.test(q)) {
+            showNoMatch(method, message);
+            return;
+        }
+        render([], method, [message, T('Checking a broader match…', '正在尝试理解其他说法…')].filter(Boolean).join(' · '));
+        const classify = await loadSemantic();
+        if (version !== queryVersion) return;   // a newer query already owns the results
+        if (!classify) {
+            showNoMatch(method, message);
+            return;
+        }
+        const [best, second] = classify(q);
+        if (best.tool === 'unsupported' || best.probability < 0.80 || best.probability - second.probability < 0.15) {
+            showNoMatch(method, message);
+            if (!used.semanticEvent) { used.semanticEvent = true; track('assistant_semantic', { outcome: 'nomatch' }); }
+            return;
+        }
+        render([{ tool: best.tool, why: best.tool === 'vocal-remover' ? VOCAL_ADVICE : WHY[best.tool] }],
+               'semantic', [message, T('Closest match — check that it fits:', '最接近的工具——请确认是否符合需求：')].filter(Boolean).join(' · '));
+        if (!used.semanticEvent) { used.semanticEvent = true; track('assistant_semantic', { outcome: 'match' }); }
     }
     const WHY = {
         'converter': T('MP3, M4A, WAV or FLAC, also from video', '转换为 MP3、M4A、WAV 或 FLAC，也可从视频提取'),
@@ -310,6 +368,7 @@
     // --- file: look at format, size, length and loudness, then suggest
     const fmtTime = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0');
     async function suggestByFile(list) {
+        queryVersion++;
         files = Array.from(list);
         fileInfo = null;
         if (files.length > 1) {
@@ -355,6 +414,7 @@
 
     let timer;
     input.addEventListener('input', () => {
+        queryVersion++;
         clearTimeout(timer);
         const q = input.value.trim();
         timer = setTimeout(() => (q.length >= 2 ? suggestByText(q) : fileInfo ? render(fileInfo.items, 'file', fileInfo.text) : render([], 'text')), 250);
